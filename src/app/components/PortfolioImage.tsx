@@ -2,20 +2,9 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 
 // Eagerly resolve any uploaded portfolio images living under src/imports.
 // Real uploads will be matched by file name; until then a labeled placeholder renders.
-const modules = import.meta.glob('/src/imports/**/*.{png,jpg,jpeg,webp,PNG,JPG,JPEG,WEBP}', {
-  eager: true,
-  query: '?url',
-  import: 'default',
-}) as Record<string, string>;
-
-const byName: Record<string, string> = {};
-for (const path in modules) {
-  const name = path.split('/').pop() ?? path;
-  byName[name.toLowerCase()] = modules[path];
-}
-
 export function resolveImage(file: string): string | undefined {
-  return byName[file.toLowerCase()];
+  if (!file) return undefined;
+  return `/projects/${file}`;
 }
 
 interface Props {
