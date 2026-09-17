@@ -158,9 +158,10 @@ export function PortfolioNav({ caseCtx }: { caseCtx?: CaseCtx }) {
             <div className="flex items-center gap-8">
               <Link
                 to="/portfolio"
-                className="font-display text-base font-semibold tracking-tight text-white hover:text-white/90"
+                className="font-display text-base font-semibold tracking-tight text-white hover:text-white/90 flex items-center gap-2.5"
               >
-                Toni Adreal
+                <img src="/favicon.png" alt="Toni Adreal" className="w-6 h-6 rounded-full object-cover" />
+                <span>Toni Adreal</span>
               </Link>
               {/* Local status / availability line */}
               <span className="hidden items-center gap-2 font-mono text-xs text-[#A7ABB2]/80 lg:inline-flex">

@@ -38,6 +38,11 @@ function coverFor(project: SourceProject) {
   return project.chapters.flatMap((chapter) => chapter.images)[0];
 }
 
+function toWebpPath(filename: string | undefined): string {
+  if (!filename) return "";
+  return `/projects/${filename.replace(/\.(png|jpg|jpeg)$/i, ".webp")}`;
+}
+
 export const adaptedProjects: Project[] = sourceProjects.map((source) => {
   const cover = coverFor(source);
   const state = stateFor(source);
@@ -55,7 +60,7 @@ export const adaptedProjects: Project[] = sourceProjects.map((source) => {
     outcomeType: state === "Shipped" ? "Verified outcome" : "Honest status",
     accessState: "Public",
     evidenceStage: stages[source.slug] ?? "System",
-    coverImage: `/projects/${cover?.file ?? ""}`,
+    coverImage: toWebpPath(cover?.file),
     coverAlt: cover?.title ?? `${source.name} project cover`,
     publicAbstract: source.overview ?? source.summary,
     relatedArtifacts: [],
@@ -69,12 +74,12 @@ export const adaptedCaseStudies: Record<string, CaseStudy> = Object.fromEntries(
   source.slug,
   {
     slug: source.slug,
-    chapters: source.chapters.map((chapter, chapterIndex) => ({
+    chapters: source.chapters.map((chapter) => ({
       id: chapter.id,
       title: chapter.title,
       body: chapter.summary ? [chapter.summary] : [],
-      images: chapter.images.filter((_, imageIndex) => chapterIndex !== 0 || imageIndex !== 0).map((image) => ({
-        src: `/projects/${image.file}`,
+      images: chapter.images.map((image) => ({
+        src: toWebpPath(image.file),
         alt: image.title,
         caption: image.caption,
         rationale: image.rationale,

@@ -5,11 +5,11 @@ import { useMotionSetting } from "../motion/MotionContext";
 import { useMotionKernel } from "../motion/MotionKernel";
 import "./reference-chrome.css";
 
-const workPreview = "/projects/Next_Card_Image_01.png";
+const workPreview = "/projects/Next_Card_Image_01.webp";
 
 const entries = [
   { title: "WORK", subtitle: "Selected projects & experiments", href: "/portfolio/work" },
-  { title: "WRITING", subtitle: "Thoughts, field notes & observations", href: "https://toni.tokenta.space/#writing" },
+  { title: "WRITING", subtitle: "Thoughts, field notes & observations", href: "#writing" },
   { title: "ABOUT", subtitle: "A little more about the person", href: "#about" },
 ] as const;
 
@@ -42,13 +42,40 @@ export default function ReferenceDirectory() {
         const content = <><span className="ref-directory-number">0{i + 1}</span><span className="ref-directory-title">{entry.title}</span><span className="ref-directory-subtitle">{entry.subtitle}</span><svg className="ref-directory-arrow" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 27 27 5M5 5h22v22" stroke="currentColor" strokeWidth="1.5" /></svg></>;
         const props = {
           className: "ref-directory-link",
-          onPointerEnter: (event: PointerEvent<HTMLAnchorElement>) => { if (canPreview && event.pointerType !== "touch") { lastX.current = event.clientX; move(event); setActive(i); } },
+          onPointerEnter: (event: PointerEvent<HTMLElement>) => { if (canPreview && event.pointerType !== "touch") { lastX.current = event.clientX; move(event); setActive(i); } },
           onPointerMove: move,
           onPointerLeave: () => { setActive(null); rotate.set(0); },
         };
         return <motion.div className="ref-directory-row" key={entry.title} initial={false} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
           <motion.div className="ref-directory-rule" initial={reduced ? false : { scaleX: 0 }} whileInView={{ scaleX: 1 }} transition={{ duration: reduced ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] }} viewport={{ once: true, margin: "0px 0px -20px 0px" }} />
-          {i === 0 ? <Link to={entry.href} {...props}>{content}</Link> : <a href={entry.href} {...props} target={i === 1 ? "_blank" : undefined} rel={i === 1 ? "noreferrer" : undefined} onClick={i === 2 ? (event) => { const target = document.getElementById("about"); if (target) { event.preventDefault(); scrollTo(target, { offset: -24 }); } } : undefined}>{content}{i === 1 && <span className="ref-sr-only"> (opens in a new tab)</span>}</a>}
+          {i === 0 ? (
+            <Link to={entry.href} {...props}>{content}</Link>
+          ) : i === 1 ? (
+            <button
+              type="button"
+              {...props}
+              onClick={(event) => {
+                event.preventDefault();
+                window.dispatchEvent(new CustomEvent("open-writing-modal"));
+              }}
+            >
+              {content}
+            </button>
+          ) : (
+            <a
+              href={entry.href}
+              {...props}
+              onClick={(event) => {
+                const target = document.getElementById("about");
+                if (target) {
+                  event.preventDefault();
+                  scrollTo(target, { offset: -24 });
+                }
+              }}
+            >
+              {content}
+            </a>
+          )}
         </motion.div>;
       })}
     </div>

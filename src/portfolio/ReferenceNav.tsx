@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router";
 import { useMotionSetting, type MotionMode } from "../motion/MotionContext";
 import { useMotionKernel } from "../motion/MotionKernel";
 import Magnetic from "../motion/Magnetic";
+import WritingModal from "./WritingModal";
 import "./reference-chrome.css";
 
 export function useReferenceClock() {
@@ -20,7 +21,7 @@ export function useReferenceClock() {
 
 const links = [
   { label: "Work", href: "/portfolio/work", kind: "route" },
-  { label: "Writing", href: "https://toni.tokenta.space/#writing", kind: "external" },
+  { label: "Writing", href: "#writing", kind: "writing" },
   { label: "About", href: "/portfolio#about", kind: "anchor" },
   { label: "Contact", href: "/portfolio#contact", kind: "anchor" },
 ] as const;
@@ -32,8 +33,27 @@ export default function ReferenceNav() {
   const time = useReferenceClock();
   const [scrolled, setScrolled] = useState(() => window.scrollY > 90);
   const [open, setOpen] = useState(false);
+  const [writingOpen, setWritingOpen] = useState(false);
   const drawer = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const handleHash = () => {
+      if (window.location.hash === "#writing") {
+        setWritingOpen(true);
+      }
+    };
+    const handleOpenModal = () => setWritingOpen(true);
+    window.addEventListener("hashchange", handleHash);
+    window.addEventListener("open-writing-modal", handleOpenModal);
+    if (window.location.hash === "#writing") {
+      setWritingOpen(true);
+    }
+    return () => {
+      window.removeEventListener("hashchange", handleHash);
+      window.removeEventListener("open-writing-modal", handleOpenModal);
+    };
+  }, []);
 
   useEffect(() => {
     const update = (value: number) => setScrolled(value > 90);
@@ -100,6 +120,20 @@ export default function ReferenceNav() {
   };
 
   const renderLink = (item: (typeof links)[number], className?: string) => {
+    if (item.kind === "writing") {
+      return (
+        <button
+          type="button"
+          className={className}
+          onClick={() => {
+            setOpen(false);
+            setWritingOpen(true);
+          }}
+        >
+          {item.label}
+        </button>
+      );
+    }
     if (item.kind === "route") return <Link className={className} to={item.href} onClick={() => setOpen(false)}>{item.label}</Link>;
     if (item.kind === "anchor") return <Link className={className} to={item.href} onClick={(event) => navigateAnchor(event, item.href)}>{item.label}</Link>;
     return <a className={className} href={item.href} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>{item.label}<span className="ref-sr-only"> (opens in a new tab)</span></a>;
@@ -109,7 +143,7 @@ export default function ReferenceNav() {
     <a className="ref-skip" href="#main-content">Skip to content</a>
     <header className={`ref-nav ${scrolled ? "is-scrolled" : ""}`}>
       <Link to="/portfolio" className="ref-brand" aria-label="Toni Adreal home">
-        <span className="ref-monogram" aria-hidden="true">ta</span>
+        <img src="/favicon.png" alt="Toni Adreal" className="ref-brand-logo" width={37} height={37} />
         <span className="ref-brand-name">Toni.</span>
       </Link>
       <span className="ref-nav-clock" aria-label={`Local time, UTC plus 8, ${time}`}>{time}<span className="ref-clock-dot" /></span>
@@ -140,5 +174,6 @@ export default function ReferenceNav() {
         </motion.div>
       </div>}
     </AnimatePresence>
+    <WritingModal open={writingOpen} onClose={() => setWritingOpen(false)} />
   </>;
 }
