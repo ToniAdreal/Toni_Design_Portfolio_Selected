@@ -1,0 +1,20 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' width='1200' height='800'>
+  <rect width='1200' height='800' fill='#0B0C0E'/>
+  <g stroke='rgba(245,246,247,0.06)' stroke-width='1'>
+    <line x1='100' y1='400' x2='1100' y2='400'/>
+    <line x1='600' y1='100' x2='600' y2='700'/>
+  </g>
+  <rect x='140' y='320' width='220' height='160' rx='8' fill='#131828' stroke='#315DFF' stroke-width='2'/>
+  <text x='250' y='380' fill='#F5F6F7' font-family='sans-serif' font-size='16' font-weight='600' text-anchor='middle'>INPUT QUEUE</text>
+  <text x='250' y='420' fill='#A7ABB2' font-family='monospace' font-size='12' text-anchor='middle'>REST / OPENAPI 3.1</text>
+  <rect x='490' y='300' width='220' height='200' rx='8' fill='#161C30' stroke='#315DFF' stroke-width='2.5'/>
+  <text x='600' y='360' fill='#FFFFFF' font-family='sans-serif' font-size='16' font-weight='700' text-anchor='middle'>HUMAN-IN-THE-LOOP</text>
+  <text x='600' y='390' fill='#315DFF' font-family='monospace' font-size='12' text-anchor='middle'>REVIEW CHECKPOINT</text>
+  <text x='600' y='440' fill='#A7ABB2' font-family='monospace' font-size='11' text-anchor='middle'>SYNTHESIS OBSERVABILITY</text>
+  <rect x='840' y='320' width='220' height='160' rx='8' fill='#131828' stroke='rgba(245,246,247,0.4)' stroke-width='1.5'/>
+  <text x='950' y='380' fill='#F5F6F7' font-family='sans-serif' font-size='16' font-weight='600' text-anchor='middle'>OUTCOME SINK</text>
+  <text x='950' y='420' fill='#A7ABB2' font-family='monospace' font-size='12' text-anchor='middle'>IMMUTABLE AUDIT RECORD</text>
+  <!-- Connector arrows -->
+  <path d='M360 400 H490' stroke='#315DFF' stroke-width='2'/>
+  <path d='M710 400 H840' stroke='#315DFF' stroke-width='2'/>
+</svg>

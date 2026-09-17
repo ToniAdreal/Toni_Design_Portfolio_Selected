@@ -1,0 +1,24 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' width='1200' height='800'>
+  <defs>
+    <linearGradient id='bg6' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' stop-color='#0B0C0E'/>
+      <stop offset='100%' stop-color='#10131A'/>
+    </linearGradient>
+  </defs>
+  <rect width='1200' height='800' fill='url(#bg6)'/>
+  <!-- Typographic Mark Drift -->
+  <g font-family='monospace' fill='rgba(245,246,247,0.14)'>
+    <text x='120' y='180' font-size='36' font-weight='700'>QUESTION</text>
+    <text x='380' y='280' font-size='48' font-weight='700' fill='rgba(49,93,255,0.6)'>EVIDENCE</text>
+    <text x='200' y='420' font-size='40' font-weight='700'>DECISION</text>
+    <text x='580' y='520' font-size='56' font-weight='700'>SYSTEM</text>
+    <text x='320' y='660' font-size='64' font-weight='800' fill='#315DFF'>OUTCOME</text>
+    <!-- Micro tokens -->
+    <text x='820' y='220' font-size='14' fill='rgba(245,246,247,0.3)'>[STATE_VECTOR_DELTA]</text>
+    <text x='740' y='360' font-size='14' fill='rgba(49,93,255,0.4)'>PROTOTYPE_SPEC // v2.4</text>
+    <text x='860' y='460' font-size='14' fill='rgba(245,246,247,0.2)'>AUDIT_TRAIL_RECOVERY</text>
+    <text x='790' y='600' font-size='14' fill='rgba(49,93,255,0.5)'>VALIDATION_SYNTHESIS</text>
+  </g>
+  <text x='60' y='80' fill='#315DFF' font-family='monospace' font-size='13' font-weight='600'>// GENERATIVE TYPE FIELD : KINETIC TYPOGRAPHY STUDY</text>
+  <text x='60' y='104' fill='rgba(167,171,178,0.7)' font-family='monospace' font-size='11'>MOTION AS AN INFORMATION SYSTEM · PROCEDURAL OVERPRINT · STUDY 2024</text>
+</svg>

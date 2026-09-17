@@ -1,0 +1,33 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' width='1200' height='800'>
+  <defs>
+    <linearGradient id='bg5' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' stop-color='#0B0C0E'/>
+      <stop offset='100%' stop-color='#131722'/>
+    </linearGradient>
+  </defs>
+  <rect width='1200' height='800' fill='url(#bg5)'/>
+  <!-- Scoring Matrix Calibration Grid -->
+  <g transform='translate(600,420)'>
+    <rect x='-380' y='-220' width='760' height='440' rx='8' fill='#111520' stroke='rgba(49,93,255,0.4)' stroke-width='1.5'/>
+    <!-- Grid rows and columns -->
+    <g stroke='rgba(245,246,247,0.06)' stroke-width='1'>
+      <line x1='-380' y1='-110' x2='380' y2='-110'/>
+      <line x1='-380' y1='0' x2='380' y2='0'/>
+      <line x1='-380' y1='110' x2='380' y2='110'/>
+      <line x1='-190' y1='-220' x2='-190' y2='220'/>
+      <line x1='0' y1='-220' x2='0' y2='220'/>
+      <line x1='190' y1='-220' x2='190' y2='220'/>
+    </g>
+    <!-- Calibrated Score Indicators -->
+    <circle cx='-285' cy='-55' r='18' fill='rgba(49,93,255,0.2)' stroke='#315DFF' stroke-width='1.5'/>
+    <text x='-285' y='-50' fill='#315DFF' font-family='monospace' font-size='11' font-weight='600' text-anchor='middle'>0.94</text>
+    <circle cx='-95' cy='55' r='22' fill='rgba(49,93,255,0.3)' stroke='#315DFF' stroke-width='2'/>
+    <text x='-95' y='60' fill='#F5F6F7' font-family='monospace' font-size='12' font-weight='600' text-anchor='middle'>0.98</text>
+    <circle cx='95' cy='-165' r='16' fill='rgba(245,246,247,0.1)' stroke='rgba(245,246,247,0.4)'/>
+    <text x='95' y='-161' fill='#A7ABB2' font-family='monospace' font-size='10' text-anchor='middle'>0.88</text>
+    <circle cx='285' cy='-55' r='26' fill='#1A233A' stroke='#315DFF' stroke-width='2'/>
+    <text x='285' y='-50' fill='#FFFFFF' font-family='monospace' font-size='13' font-weight='600' text-anchor='middle'>CALIBRATED</text>
+  </g>
+  <text x='60' y='80' fill='#315DFF' font-family='monospace' font-size='13' font-weight='600'>// AI EVALUATION HARNESS : SCORING & CALIBRATION MATRIX</text>
+  <text x='60' y='104' fill='rgba(167,171,178,0.7)' font-family='monospace' font-size='11'>HUMAN-IN-THE-LOOP SCORING · EDGE CASE TAXONOMY · RESEARCH 2023</text>
+</svg>

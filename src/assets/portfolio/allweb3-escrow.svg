@@ -1,0 +1,39 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' width='1200' height='800'>
+  <defs>
+    <linearGradient id='bg2' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' stop-color='#0B0C0E'/>
+      <stop offset='100%' stop-color='#10141B'/>
+    </linearGradient>
+    <radialGradient id='rad2' cx='55%' cy='45%' r='50%'>
+      <stop offset='0%' stop-color='#315DFF' stop-opacity='0.16'/>
+      <stop offset='100%' stop-color='#315DFF' stop-opacity='0'/>
+    </radialGradient>
+  </defs>
+  <rect width='1200' height='800' fill='url(#bg2)'/>
+  <rect width='1200' height='800' fill='url(#rad2)'/>
+  <!-- Layered Isometric Planes -->
+  <g transform='translate(600,420) rotate(-15) skewX(25)'>
+    <!-- Plane 1: Base Settlement Layer -->
+    <rect x='-260' y='-160' width='520' height='320' rx='8' fill='rgba(19,24,36,0.8)' stroke='rgba(49,93,255,0.3)' stroke-width='1.5'/>
+    <path d='M-200,-100 H200 M-200,0 H200 M-200,100 H200' stroke='rgba(245,246,247,0.08)' stroke-width='1'/>
+    <!-- Plane 2: State Invalidation Layer -->
+    <g transform='translate(0, -60)'>
+      <rect x='-220' y='-130' width='440' height='260' rx='6' fill='rgba(25,32,50,0.75)' stroke='#315DFF' stroke-width='2'/>
+      <text x='-190' y='-80' fill='#315DFF' font-family='monospace' font-size='12' font-weight='600'>STATE: PRE_COMMIT_ESCROW</text>
+      <path d='M-190,-40 H190' stroke='rgba(49,93,255,0.4)' stroke-width='1'/>
+      <circle cx='-160' cy='30' r='14' fill='#315DFF'/>
+      <text x='-130' y='34' fill='#F5F6F7' font-family='monospace' font-size='12'>SETTLED_MULTI_SIG</text>
+      <circle cx='50' cy='30' r='14' fill='rgba(245,246,247,0.2)'/>
+      <text x='80' y='34' fill='#A7ABB2' font-family='monospace' font-size='12'>RECOVERY_WINDOW</text>
+    </g>
+    <!-- Plane 3: Cryptographic Lock Header -->
+    <g transform='translate(0, -120)'>
+      <rect x='-180' y='-90' width='360' height='180' rx='6' fill='rgba(15,20,32,0.9)' stroke='rgba(245,246,247,0.5)' stroke-width='1.5'/>
+      <text x='0' y='-20' fill='#F5F6F7' font-family='sans-serif' font-size='14' font-weight='600' text-anchor='middle'>ALLWEB3 ESCROW PROTOCOL</text>
+      <text x='0' y='14' fill='#315DFF' font-family='monospace' font-size='11' text-anchor='middle'>LOCK_ID: 0x8F9C...E412</text>
+      <text x='0' y='40' fill='#A7ABB2' font-family='monospace' font-size='10' text-anchor='middle'>TIMELOCK_REVERSIBLE: VALID</text>
+    </g>
+  </g>
+  <text x='60' y='80' fill='#315DFF' font-family='monospace' font-size='13' font-weight='600'>// ALLWEB3 ESCROW : TRANSACTIONAL STATE MODEL</text>
+  <text x='60' y='104' fill='rgba(167,171,178,0.7)' font-family='monospace' font-size='11'>MULTI-STATE RECOVERY · DETERMINISTIC ESCROW TRANSITIONS · SHIPPED 2023</text>
+</svg>

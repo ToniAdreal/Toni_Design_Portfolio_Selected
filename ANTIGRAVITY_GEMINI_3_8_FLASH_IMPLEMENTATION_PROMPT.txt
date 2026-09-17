@@ -1,0 +1,335 @@
+ANTIGRAVITY EXECUTION PROMPT FOR GEMINI 3.8 FLASH
+
+You are modifying an existing React portfolio project. Work directly in this folder:
+
+E:\Web3\Web3CV_New_2026_02_01\Portfolio\Build website from specifications
+
+Read AGENTS.md before editing. Then inspect the complete active import graph and the current rendered /portfolio route. Do not only describe a solution. Implement it, run validation, fix failures, and leave the project in a working state.
+
+MISSION
+
+Transform the current portfolio from a mostly static dark editorial page into a high-fidelity motion-led experience with the interaction depth, scroll choreography, responsiveness, and finish of https://ansyn.me/.
+
+Recreate the professional mechanisms and experiential quality, not Ansyn's protected source code, assets, copy, logo, branding, or exact compositions. Keep Toni Adreal's original content, evidence-led positioning, cobalt accent, project data, and accessibility requirements.
+
+The current build is not acceptable because it implements only a stacked hero entrance, a low-opacity drifting canvas, one-time image reveals, a normal slide-out menu, and basic hover translations. The new implementation must feel like one continuous interaction system from navigation to hero, interactive scene, projects, index, archive, capabilities, and final contact.
+
+SOURCE OF TRUTH
+
+Use the detailed audit in this same folder:
+
+CODE_CHANGE_AUDIT_ANSYN_MOTION_PARITY.txt
+
+Treat that document as the implementation specification and acceptance checklist. If the existing imported Figma specification conflicts with this prompt about motion intensity, this prompt wins. Content accuracy, reduced motion, accessibility, and security constraints from the earlier specification still apply.
+
+TECHNICAL BASELINE
+
+1. React 19, TypeScript, Vite, Tailwind CSS v4, React Router, and motion/react already exist.
+2. Keep motion/react as the primary animation library.
+3. Add lenis for desktop smooth scrolling and scroll velocity only if it is not already installed.
+4. Do not add GSAP, Three.js, WebGL frameworks, or another large animation framework.
+5. Use Canvas 2D for procedural fields and the interactive atlas.
+6. Preserve route splitting for case studies.
+7. Do not expose secrets, passwords, private artifacts, or confidential case-study data in the client bundle.
+
+FIRST: CLEAN THE ACTIVE ARCHITECTURE
+
+1. Confirm which portfolio files are actually imported by src/routes.tsx and src/portfolio/PortfolioHome.tsx.
+2. There appear to be unused duplicate implementations under src/portfolio/components and src/portfolio/content. Remove them only after confirming they are unreachable.
+3. Keep a single portfolio content source at src/content/portfolio.ts.
+4. Correct .figma/make/site.json. Replace the generic document-management description with accurate portfolio metadata, set language to English, set the intended robots state, and add appropriate title and open-graph fields if supported.
+5. Replace remote Unsplash cover dependencies with optimized local assets or intentional local abstract evidence artwork. Do not leave blank frames when the network is slow.
+
+BUILD A SHARED MOTION KERNEL
+
+Create or refactor the motion layer so the entire site uses one scheduler and one resolved capability model.
+
+Required outputs:
+
+1. src/motion/MotionKernel.tsx
+2. Updated src/motion/MotionContext.tsx
+3. Reusable hooks or utilities for scroll progress, pointer smoothing, viewport data, visibility, and frame subscriptions.
+
+Requirements:
+
+1. Initialize Lenis only on fine-pointer desktop when the resolved mode permits full motion.
+2. Use one requestAnimationFrame loop for Lenis and all hot animation subscribers.
+3. Expose scroll position, normalized scroll progress, scroll velocity, direction, pointer position, pointer velocity, viewport size, and document visibility through refs or MotionValues.
+4. Do not call React setState on every pointermove, scroll event, or animation frame.
+5. Pause loops when the document is hidden and when canvas scenes are offscreen.
+6. Auto follows prefers-reduced-motion. Reduced explicitly disables enhanced motion. Full enables it where device capabilities allow.
+7. Expose capability flags for smooth scrolling, pointer effects, canvas motion, and pinned scenes.
+8. Put data-motion on the root HTML element.
+
+REPLACE THE PORTFOLIO HERO
+
+Replace the current normal 100svh hero with a desktop pinned scrollytelling journey.
+
+Create components similar to:
+
+1. src/portfolio/PortfolioHeroJourney.tsx
+2. src/portfolio/ProceduralTypeField.tsx
+3. src/portfolio/HeroWord.tsx
+4. src/portfolio/HeroScanline.tsx
+
+Desktop behavior:
+
+1. Outer height between 260svh and 300svh.
+2. Sticky inner stage at top: 0 and height: 100svh.
+3. Keep semantic H1 content in the DOM.
+4. Use QUESTION, EVIDENCE, DECISION, SYSTEM, and OUTCOME as the kinetic sequence.
+5. Map continuous scroll progress to every word's x, y, scale, opacity, blur, letter spacing, and color.
+6. Do not implement this as five independent whileInView entrances.
+
+Scroll timeline:
+
+1. 0.00 to 0.12: QUESTION reveals through staggered horizontal strips.
+2. 0.12 to 0.30: EVIDENCE takes visual priority while QUESTION moves toward the upper-left.
+3. 0.30 to 0.48: DECISION crosses the center and increases field density.
+4. 0.48 to 0.68: SYSTEM rises from the lower field and becomes the structural anchor.
+5. 0.68 to 0.84: OUTCOME resolves in cobalt as the only fully saturated word.
+6. 0.84 to 1.00: the composition separates to reveal the next scene.
+
+Procedural field:
+
+1. Use deterministic seeded token placement.
+2. Vocabulary: question, evidence, constraint, state, decision, system, outcome, audit, prototype, release, validation, recovery, interface, model.
+3. Add typographic overprint, clipped echoes, and a subtle scanline.
+4. Pointer proximity should clarify or repel nearby tokens within a bounded radius.
+5. Scroll velocity should subtly stretch or offset the field.
+6. Cap canvas DPR at 1.5 desktop and 1.0 mobile.
+7. Render a static first frame before starting requestAnimationFrame.
+8. Pause when offscreen.
+9. In Reduced mode, render one stable composition without scanline, movement, blur, or scale animation.
+
+ADD AN ORIGINAL EVIDENCE ATLAS
+
+After the hero, add an interactive Evidence Atlas that provides the same experiential function as Ansyn's draggable globe without copying its composition.
+
+Create:
+
+1. src/portfolio/EvidenceAtlas.tsx
+2. src/portfolio/evidenceAtlasRenderer.ts
+
+Implement a Canvas 2D spherical or orbital project field with these project nodes:
+
+1. Tokenta Workflow OS
+2. ALLWEB3 Escrow
+3. Next Card
+4. CyberOrigin Signals
+5. AI Evaluation Harness
+6. Generative Type Field
+
+Requirements:
+
+1. Pointer and touch dragging.
+2. Angular velocity calculated from recent input samples.
+3. Momentum after release with frame-based friction from 0.92 to 0.96.
+4. A maximum velocity cap.
+5. Arrow-key rotation.
+6. Visible mono readouts for active project, domain, year, state, and evidence stage.
+7. Node selection opens the corresponding quick view or case-study route.
+8. HTML text equivalent for assistive technology.
+9. Static, fully usable Reduced mode.
+10. Smooth visual continuity from the hero instead of a hard section break.
+
+REBUILD THE NAVIGATION
+
+Refactor src/portfolio/PortfolioNav.tsx into two scroll-dependent states.
+
+Top state:
+
+1. Transparent full navigation.
+2. Toni Adreal wordmark.
+3. Primary links.
+4. Local status or availability line.
+5. Motion setting.
+6. Contact action.
+
+Scrolled state:
+
+1. After about 0.65 viewport heights, transition the full nav into a fixed circular trigger in the upper-right.
+2. Use transform, opacity, and clip-path. Do not abruptly hide the nav.
+3. Give the trigger a subtle proximity response.
+4. Open a full-height drawer with a curved leading edge.
+5. Stagger labels by 50 to 70 ms.
+6. Preserve focus trap, Escape close, focus restoration, body-scroll lock, and visible focus styles.
+7. Reduced mode uses an immediate rectangular drawer with opacity-only changes.
+
+ADD ROUTE CURTAINS
+
+Create src/motion/RouteCurtain.tsx and connect it at the router-shell level.
+
+Requirements:
+
+1. Key transitions to location.pathname.
+2. Use a full-screen cobalt or paper curtain with a curved or diagonal edge.
+3. Show a short route label: PORTFOLIO, WORK, or the project name.
+4. Total duration between 650 and 900 ms.
+5. Do not replay the route curtain for ordinary same-page anchor jumps.
+6. Reduced mode navigates immediately or uses a sub-200 ms opacity fade.
+
+REBUILD FEATURED WORK AS MOTION CHAPTERS
+
+Refactor src/portfolio/FeaturedWork.tsx.
+
+Do not render four visually identical rows. Each project is a chapter with a large media stage, evidence column, chapter number, rule-draw entrance, and a motion behavior tied to the project concept.
+
+Implement these distinct behaviors:
+
+1. Tokenta Workflow OS: workflow nodes assemble into a system map.
+2. ALLWEB3 Escrow: transactional state lines progress and recover.
+3. Next Card: decision branches converge into a selected path.
+4. AI Evaluation Harness: noisy scoring signals resolve into a calibrated grid.
+
+Use local visual assets or code-native SVG/canvas diagrams. Preserve honest role, team, state, evidence, and outcome labels. Avoid decorative device mockups.
+
+UPGRADE THE PROJECT INDEX
+
+Refactor src/portfolio/ProjectIndex.tsx.
+
+1. Replace mousemove-driven React state with MotionValues.
+2. Add spring-smoothed preview x, y, rotation, and scale.
+3. Clamp previews to the viewport and keep them away from active text.
+4. Reveal previews with clip-path and a slight rotational settle.
+5. Add a text-scramble or decode animation on hover and focus while retaining the original accessible label.
+6. Implement FLIP row expansion using measured before-and-after positions.
+7. Animate row displacement separately from quick-view content opacity and y.
+8. Preserve keyboard and touch operation.
+9. Disable follower, scramble, and displacement effects in Reduced mode.
+
+ADD REUSABLE MICRO-INTERACTIONS
+
+Create and use:
+
+1. src/motion/Magnetic.tsx
+2. src/motion/ProximityText.tsx
+3. src/motion/RevealRule.tsx
+4. src/motion/PointerSpotlight.tsx
+
+Apply them selectively to major CTAs, menu links, project names, section labels, and the final contact action. Keep magnetic displacement between 6 and 12 pixels. Never split body copy. Disable all pointer-only behaviors on coarse pointers and in Reduced mode.
+
+CONTINUE THE SYSTEM THROUGH THE FINAL THIRD
+
+The current page becomes conventional after the project index. Redesign the remaining sections so the same motion language continues.
+
+1. Evidence Archive: desktop horizontal evidence rail with a sticky category label and variable artifact sizes; mobile vertical list.
+2. Working Method: compact scroll-scrubbed sequence reconnecting Question, Evidence, Decision, System, and Outcome. Do not create another extremely long pin.
+3. Capabilities: typographic proximity, rule drawing, and lightweight code-native diagrams instead of four static boxes.
+4. About and Contact: invert from dark to paper or cobalt, include local time and availability, animate one large contact line, and use a magnetic contact action.
+5. Add a compact final directory that gives the ending structural clarity.
+
+CONTENT RULES
+
+1. Keep the public name Toni Adreal.
+2. Do not invent metrics, outcomes, employers, project assets, URLs, publications, or confidential details.
+3. Retain requiresVerification and enabled flags.
+4. Keep restricted work restricted. Only public abstracts and safe synthetic evidence may ship.
+5. Do not show TODO strings publicly.
+6. Do not add emoji.
+7. Preserve the personal-site link and verified social links.
+8. Do not enable the placeholder email until it is confirmed.
+9. Reduce repeated explanatory copy where the motion and evidence already communicate the point.
+
+ACCESSIBILITY
+
+1. All content remains available in semantic source order.
+2. All pointer interactions have keyboard equivalents.
+3. Canvas layers are aria-hidden unless they carry meaning; meaningful states have HTML equivalents.
+4. Maintain visible focus rings above animated layers.
+5. Preserve skip links.
+6. Preserve menu focus trap, Escape close, and focus restoration.
+7. Motion settings are keyboard accessible and persistent.
+8. Reduced mode removes Lenis, pinned scrubbing, inertia, parallax, blur, scale choreography, scanline, scramble, magnetic displacement, follower previews, and route curtains.
+9. Do not rely on motion or color alone for state.
+
+RESPONSIVE BEHAVIOR
+
+Desktop 1440 and above:
+
+1. Full pinned journey.
+2. Full canvas density.
+3. Draggable Evidence Atlas.
+4. Pointer effects.
+5. Navigation transformation.
+
+Tablet 768 to 1439:
+
+1. Hero journey about 210svh.
+2. Reduced canvas density.
+3. Simplified word paths.
+4. Atlas drag retained.
+5. No preview behavior that covers text.
+
+Mobile below 768:
+
+1. No pinned hero.
+2. Native scrolling.
+3. No cursor follower.
+4. No magnetic displacement.
+5. Static or tap-driven atlas.
+6. Normal vertical evidence list.
+7. All content in natural reading order.
+
+PERFORMANCE REQUIREMENTS
+
+1. One requestAnimationFrame scheduler.
+2. No React state updates on every animation frame or pointer movement.
+3. Prefer transform, opacity, filter, and clip-path.
+4. Use ResizeObserver for layout measurements.
+5. Pause all canvas work offscreen and when document.hidden.
+6. Cap canvas DPR.
+7. Lazy-load case studies and noncritical scenes.
+8. Keep the main route below 190 KB gzip if practical.
+9. Use optimized local AVIF or WebP assets with responsive sources.
+10. Avoid large permanent backdrop-filter layers that damage frame rate.
+
+VALIDATION WORKFLOW
+
+Do not stop after the first successful render.
+
+1. Run pnpm exec tsc --noEmit.
+2. Run pnpm build.
+3. Run the local site and inspect /portfolio.
+4. Check browser console for errors and warnings caused by the application.
+5. Verify scroll choreography at 1280 by 720 and 1440 by 900.
+6. Verify responsive behavior at 768 by 1024 and 390 by 844.
+7. Verify keyboard-only navigation, menu operation, atlas rotation, project-row expansion, and route navigation.
+8. Verify Auto, Reduced, and Full modes, including persistence after reload.
+9. Verify that all project images or visual artifacts load without remote blank frames.
+10. Verify that no restricted data appears in the production bundle.
+
+NON-NEGOTIABLE ACCEPTANCE TESTS
+
+The task is not complete until:
+
+1. The desktop hero is pinned for at least two extra viewport heights.
+2. All five words continuously change position and hierarchy with scroll progress.
+3. The canvas reacts to pointer proximity and scroll velocity.
+4. The hero flows directly into the interactive Evidence Atlas.
+5. The atlas supports drag, inertial release, keyboard rotation, node selection, and Reduced mode.
+6. The navigation transforms into a circular trigger after scrolling.
+7. The curved drawer remains accessible.
+8. Route changes use a labeled full-screen curtain in Full mode.
+9. Featured projects use distinct chapter-specific motion.
+10. Project previews use MotionValues and springs, not continuous React state updates.
+11. Project expansion uses FLIP without layout jumps.
+12. The archive, method, capabilities, and footer continue the motion language.
+13. All four target viewport sizes work.
+14. Reduced mode retains all content and removes disallowed motion.
+15. TypeScript and the production build pass.
+16. There are no broken images, console errors, duplicate active component trees, or incorrect generic metadata.
+17. No Ansyn source code, logo, wording, imagery, or exact layout has been copied.
+
+DELIVERY FORMAT
+
+After implementation, provide a concise report containing:
+
+1. Files created, changed, and removed.
+2. Major interaction systems implemented.
+3. Validation commands and their results.
+4. Viewports and motion modes tested.
+5. Remaining content placeholders that require Toni's real assets or confirmation.
+6. Any measured performance tradeoffs.
+
+Do not return a plan without editing the code. Continue until the implementation and validation steps are complete or until a concrete external blocker makes further progress impossible.
