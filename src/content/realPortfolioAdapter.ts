@@ -11,6 +11,7 @@ const domains: Record<string, Domain[]> = {
   budweiser: ["Product Design", "AI", "Design Engineering"],
   mengniu: ["Product Design", "AI", "Design Engineering"],
   tokenta: ["Product Design", "AI", "Web3"],
+  hackathon: ["Design Engineering", "AI"],
 };
 
 const stages: Record<string, EvidenceStage> = {
@@ -22,6 +23,7 @@ const stages: Record<string, EvidenceStage> = {
   budweiser: "Outcome",
   mengniu: "System",
   tokenta: "System",
+  hackathon: "Outcome",
 };
 
 function stateFor(project: SourceProject): ProjectState {
@@ -83,6 +85,7 @@ export const adaptedCaseStudies: Record<string, CaseStudy> = Object.fromEntries(
         alt: image.title,
         caption: image.caption,
         rationale: image.rationale,
+        tags: image.tags,
       })),
     })),
     credits: {

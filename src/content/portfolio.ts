@@ -328,6 +328,7 @@ export interface CaseChapter {
     alt: string;
     caption: string;
     rationale: string;
+    tags?: string[];
   }>;
 }
 

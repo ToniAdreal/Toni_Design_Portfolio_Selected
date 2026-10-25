@@ -1,0 +1,161 @@
+/* Tokenta interactive case-study screens (V2).
+   Recreates the dark product UI printed in Tokenta_01.webp as real DOM.
+   Tokens taken from the case study's own design-token screens:
+   bg #0B0B0C / #151618, text #F5F5F5 / #A1A1AA, border #2A2B2E / #3B3C40,
+   accent/brand #4C8BFF, square corners, 1px hairlines, Inter + IBM Plex Mono. */
+
+.tkx {
+  background: #f4f2ec;
+  color: #111214;
+  font-family: "Inter", "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: left;
+}
+.tkx * { box-sizing: border-box; }
+.tkx button { font: inherit; cursor: pointer; }
+.tkx-mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+
+/* Slide chrome (matches the printed deck pages) */
+.tkx-slide-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: 1px solid #111214; padding: 10px 14px 8px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px;
+  letter-spacing: .04em; text-transform: uppercase;
+}
+.tkx-slide-head b { font-size: 13px; }
+.tkx-brand { font-family: "Space Grotesk", "Inter", sans-serif; font-weight: 700; letter-spacing: .02em; font-size: 15px; text-transform: none; }
+.tkx-titleblock { padding: 18px 14px 14px; display: grid; grid-template-columns: 1.4fr .8fr; gap: 24px; align-items: end; }
+.tkx-titleblock h3 { margin: 0; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.02; letter-spacing: -.03em; font-weight: 700; color: #0a0a0a; }
+.tkx-titleblock h3 span { display: block; font-weight: 400; color: #55534e; font-size: .52em; letter-spacing: -.01em; margin-top: 6px; }
+.tkx-titleblock p { margin: 0; font-size: 12px; line-height: 1.55; color: #171717; }
+.tkx-footstrip {
+  display: flex; flex-wrap: wrap; gap: 8px 0; justify-content: space-between;
+  border-top: 1px solid #111214; padding: 8px 14px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 8.5px;
+  letter-spacing: .12em; text-transform: uppercase; color: #3c3a36;
+}
+.tkx-footstrip span + span { border-left: 1px solid #c9c5bb; padding-left: 12px; margin-left: 12px; }
+
+/* Dark product panels */
+.tkx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 10px 10px; }
+@media (max-width: 760px) { .tkx-grid { grid-template-columns: 1fr; } .tkx-titleblock { grid-template-columns: 1fr; } }
+.tkx-panel { background: #101012; color: #f5f5f5; border: 1px solid #000; padding: 12px; min-width: 0; }
+.tkx-panel-head { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+.tkx-num {
+  flex: none; width: 20px; height: 20px; display: grid; place-items: center;
+  border: 1px solid #f5f5f5; font-family: "IBM Plex Mono", monospace; font-size: 11px;
+}
+.tkx-panel-head h4 { margin: 0; font-size: 14px; font-weight: 600; }
+.tkx-panel-head p { margin: 1px 0 0; font-size: 10.5px; color: #a1a1aa; }
+.tkx-panel-head .tkx-spacer { flex: 1; }
+
+/* Marketplace */
+.tkx-searchbar { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+.tkx-input, .tkx-select {
+  background: #17181a; border: 1px solid #2a2b2e; color: #f5f5f5;
+  padding: 6px 9px; font-size: 11px; border-radius: 2px; min-width: 0;
+}
+.tkx-input { flex: 1; }
+.tkx-input::placeholder { color: #7a7a7a; }
+.tkx-market { display: grid; grid-template-columns: 104px 1fr; gap: 10px; }
+.tkx-filters { border: 1px solid #2a2b2e; padding: 8px; font-size: 10px; }
+.tkx-filters h5 { margin: 0 0 6px; font-size: 8.5px; letter-spacing: .1em; color: #a1a1aa; font-family: "IBM Plex Mono", monospace; display: flex; justify-content: space-between; }
+.tkx-filters h5 button { background: none; border: 0; color: #a1a1aa; font-size: 8.5px; padding: 0; text-decoration: underline; }
+.tkx-check { display: flex; gap: 6px; align-items: center; padding: 2.5px 0; color: #d6d6d6; cursor: pointer; }
+.tkx-check input { accent-color: #4c8bff; margin: 0; }
+.tkx-check em { margin-left: auto; font-style: normal; color: #7d7d84; font-family: "IBM Plex Mono", monospace; font-size: 9px; }
+.tkx-table { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+.tkx-table th { text-align: left; font-family: "IBM Plex Mono", monospace; font-size: 8.5px; letter-spacing: .08em; color: #8e8e96; font-weight: 500; padding: 4px 6px; border-bottom: 1px solid #2a2b2e; }
+.tkx-table td { padding: 7px 6px; border-bottom: 1px solid #1d1e20; vertical-align: top; }
+.tkx-table tr:hover td { background: #151618; }
+.tkx-asset b { display: block; font-size: 11px; font-weight: 600; }
+.tkx-asset span, .tkx-sub { color: #8e8e96; font-family: "IBM Plex Mono", monospace; font-size: 9px; }
+.tkx-chip { display: inline-block; border: 1px solid #3b3c40; padding: 1px 6px; font-size: 9px; border-radius: 2px; white-space: nowrap; }
+.tkx-verified { color: #7dd87d; }
+.tkx-pager { display: flex; gap: 4px; align-items: center; justify-content: flex-end; margin-top: 8px; font-size: 10px; color: #a1a1aa; }
+.tkx-pager .tkx-count { margin-right: auto; font-family: "IBM Plex Mono", monospace; font-size: 9px; }
+.tkx-pagebtn { background: #17181a; border: 1px solid #2a2b2e; color: #d6d6d6; min-width: 22px; height: 22px; padding: 0 5px; }
+.tkx-pagebtn[aria-current="page"] { background: #f5f5f5; color: #111; border-color: #f5f5f5; }
+
+/* Verification stepper */
+.tkx-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; position: relative; margin: 4px 0 10px; }
+.tkx-steps::before { content: ""; position: absolute; top: 9px; left: 6%; right: 6%; border-top: 1px solid #3b3c40; }
+.tkx-step { background: none; border: 0; color: #f5f5f5; text-align: left; padding: 0; position: relative; }
+.tkx-step i { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: #f5f5f5; color: #111; font-style: normal; font-size: 10px; margin-bottom: 6px; position: relative; z-index: 1; }
+.tkx-step[aria-pressed="false"] i { background: #26272a; color: #a1a1aa; border: 1px solid #3b3c40; }
+.tkx-step b { display: block; font-size: 10.5px; }
+.tkx-step span { font-size: 9px; color: #a1a1aa; line-height: 1.3; display: block; }
+.tkx-cmd { border: 1px solid #2a2b2e; background: #0b0b0c; padding: 9px 10px; font-family: "IBM Plex Mono", monospace; font-size: 10px; }
+.tkx-cmd ul { margin: 6px 0; padding: 0; list-style: none; color: #c9c9ce; }
+.tkx-cmd li::before { content: "› "; color: #7d7d84; }
+.tkx-cmd footer { display: flex; justify-content: space-between; border-top: 1px solid #1d1e20; padding-top: 6px; color: #a1a1aa; }
+.tkx-pass { color: #7dd87d; }
+.tkx-assetstrip { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; border: 1px solid #2a2b2e; margin-top: 10px; padding: 8px 10px; font-size: 9.5px; }
+.tkx-assetstrip dt { color: #8e8e96; font-family: "IBM Plex Mono", monospace; font-size: 8px; letter-spacing: .06em; text-transform: uppercase; }
+.tkx-assetstrip dd { margin: 2px 0 0; }
+@media (max-width: 760px) { .tkx-assetstrip { grid-template-columns: repeat(3, 1fr); } .tkx-steps { grid-template-columns: repeat(5, 1fr); } }
+
+/* Order room */
+.tkx-room { display: grid; grid-template-columns: 128px 1fr 168px; gap: 0; border: 1px solid #2a2b2e; }
+@media (max-width: 760px) { .tkx-room { grid-template-columns: 1fr; } }
+.tkx-room > div { padding: 10px; min-width: 0; }
+.tkx-room > div + div { border-left: 1px solid #2a2b2e; }
+@media (max-width: 760px) { .tkx-room > div + div { border-left: 0; border-top: 1px solid #2a2b2e; } }
+.tkx-colhead { font-family: "IBM Plex Mono", monospace; font-size: 8.5px; letter-spacing: .1em; color: #8e8e96; text-transform: uppercase; margin: 0 0 8px; }
+.tkx-party { border: 1px solid #2a2b2e; padding: 8px; margin-bottom: 8px; font-size: 10.5px; position: relative; }
+.tkx-party b { display: block; font-size: 11px; }
+.tkx-party .tkx-dot { position: absolute; top: 8px; right: 8px; width: 6px; height: 6px; border-radius: 50%; background: #7dd87d; }
+.tkx-ghostbtn { width: 100%; background: none; border: 1px solid #3b3c40; color: #f5f5f5; padding: 6px; font-size: 10.5px; }
+.tkx-ghostbtn:hover { border-color: #f5f5f5; }
+.tkx-transcript { display: grid; gap: 9px; font-size: 11px; max-height: 300px; overflow-y: auto; padding-right: 2px; }
+.tkx-msg b { font-size: 11px; } .tkx-msg time { color: #8e8e96; font-family: "IBM Plex Mono", monospace; font-size: 9px; margin-left: 6px; }
+.tkx-msg p { margin: 2px 0 0; color: #dcdce0; }
+.tkx-composer { display: flex; gap: 6px; margin-top: 10px; }
+.tkx-send { background: #17181a; border: 1px solid #3b3c40; color: #f5f5f5; padding: 6px 14px; font-size: 11px; }
+.tkx-send:hover { background: #f5f5f5; color: #111; }
+.tkx-kv { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; font-size: 10px; }
+.tkx-kv dt { color: #8e8e96; } .tkx-kv dd { margin: 0; text-align: right; font-family: "IBM Plex Mono", monospace; font-size: 9.5px; overflow-wrap: anywhere; }
+.tkx-primary { width: 100%; margin-top: 10px; background: #101012; border: 1px solid #f5f5f5; color: #f5f5f5; padding: 8px; font-size: 11.5px; }
+.tkx-primary:hover:not(:disabled) { background: #f5f5f5; color: #111; }
+.tkx-primary:disabled { opacity: .55; cursor: default; }
+.tkx-tabs { display: flex; gap: 2px; margin-bottom: 10px; flex-wrap: wrap; }
+.tkx-tab { background: none; border: 0; border-bottom: 2px solid transparent; color: #a1a1aa; padding: 5px 9px; font-size: 11px; }
+.tkx-tab[aria-selected="true"] { color: #f5f5f5; border-bottom-color: #f5f5f5; }
+.tkx-statusline { border: 1px solid #2f5230; background: #12240f; color: #b9e6b9; padding: 8px 10px; font-size: 11px; margin-bottom: 10px; font-family: "IBM Plex Mono", monospace; }
+
+/* Escrow */
+.tkx-escrow-flow { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-bottom: 12px; }
+.tkx-state { background: #17181a; border: 1px solid #3b3c40; color: #d6d6d6; padding: 4px 9px; font-family: "IBM Plex Mono", monospace; font-size: 9px; letter-spacing: .05em; }
+.tkx-state[aria-pressed="true"] { background: #f5f5f5; color: #111; border-color: #f5f5f5; }
+.tkx-escrow-flow i { color: #7d7d84; font-style: normal; font-size: 10px; }
+.tkx-lockrow { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; margin: 10px 0; }
+.tkx-lockbox { border: 1px solid #2a2b2e; padding: 9px; font-size: 10.5px; }
+.tkx-lockbox b { display: block; font-size: 11.5px; margin: 2px 0; }
+.tkx-lockcore { width: 52px; height: 52px; border: 1px solid #3b3c40; border-radius: 50%; display: grid; place-items: center; font-size: 18px; margin: 0 auto; }
+.tkx-locklabel { text-align: center; font-size: 9px; color: #a1a1aa; margin-top: 5px; font-family: "IBM Plex Mono", monospace; overflow-wrap: anywhere; }
+.tkx-proof { background: #0b0b0c; border: 1px solid #2a2b2e; padding: 9px 10px; font-family: "IBM Plex Mono", monospace; font-size: 9.5px; color: #c9c9ce; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; }
+.tkx-defs { font-size: 10px; color: #c9c9ce; }
+.tkx-defs li { margin-bottom: 3px; }
+.tkx-defs li.is-on { color: #fff; }
+.tkx-evidence { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 10px 14px 12px; font-size: 11px; }
+.tkx-evidence a { color: #1647ec; text-decoration: none; border-bottom: 1px solid #1647ec; padding-bottom: 1px; }
+.tkx-evidence span { color: #6b675f; font-family: "IBM Plex Mono", monospace; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; align-self: center; }
+
+/* Term sheet builder */
+.tkx-form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; }
+@media (max-width: 760px) { .tkx-form { grid-template-columns: 1fr; } }
+.tkx-field label { display: block; font-family: "IBM Plex Mono", monospace; font-size: 8.5px; letter-spacing: .1em; color: #8e8e96; text-transform: uppercase; margin-bottom: 4px; }
+.tkx-field .tkx-input, .tkx-field .tkx-select { width: 100%; }
+.tkx-stepper { display: flex; gap: 6px; } .tkx-stepper .tkx-input { text-align: center; }
+.tkx-stepbtn { background: #17181a; border: 1px solid #3b3c40; color: #f5f5f5; width: 30px; flex: none; }
+.tkx-diff { border: 1px solid #2a2b2e; margin-top: 12px; font-size: 10.5px; }
+.tkx-diff table { width: 100%; border-collapse: collapse; }
+.tkx-diff th, .tkx-diff td { padding: 6px 9px; border-bottom: 1px solid #1d1e20; text-align: left; }
+.tkx-diff th { font-family: "IBM Plex Mono", monospace; font-size: 8.5px; color: #8e8e96; letter-spacing: .08em; }
+.tkx-diff .is-changed td { background: #1a1c10; }
+.tkx-diff .was { color: #e08a8a; text-decoration: line-through; }
+.tkx-diff .now { color: #b9e6b9; }
+.tkx-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.tkx-actions .tkx-primary { width: auto; margin-top: 0; padding: 8px 18px; }
+.tkx-actions .tkx-ghostbtn { width: auto; padding: 8px 18px; }

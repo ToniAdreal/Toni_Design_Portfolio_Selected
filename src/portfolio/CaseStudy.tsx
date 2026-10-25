@@ -5,6 +5,7 @@ import { caseStudies, getProject, projects, type CaseChapter, type Project } fro
 import { useMotionSetting } from "../motion/MotionContext";
 import ReferenceFooter from "./ReferenceFooter";
 import ReferenceNav from "./ReferenceNav";
+import { interactiveFor } from "./interactive/registry";
 import "./reference-case.css";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -56,7 +57,7 @@ function RestrictedView({ project }: { project: Project }) {
   </>;
 }
 
-function Chapter({ chapter, index, onEnter }: { chapter: CaseChapter; index: number; onEnter: (id: string) => void }) {
+function Chapter({ chapter, index, onEnter, projectSlug }: { chapter: CaseChapter; index: number; onEnter: (id: string) => void; projectSlug?: string }) {
   useEffect(() => {
     const element = document.getElementById(chapter.id);
     if (!element) return;
@@ -75,10 +76,16 @@ function Chapter({ chapter, index, onEnter }: { chapter: CaseChapter; index: num
       {chapter.imageAlt && <figcaption><span>{chapter.imageAlt}</span><span>Synthetic / public-safe visual</span></figcaption>}
     </figure>}
     {chapter.images && chapter.images.length > 0 && <div className="ref-case-gallery">
-      {chapter.images.map((image, imageIndex) => <figure className="ref-case-gallery-item" key={image.src}>
-        <div className="ref-case-image-mask"><img src={image.src} alt={image.alt} loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"} decoding="async" /></div>
-        <figcaption><span>{image.caption}</span><span>{image.rationale}</span></figcaption>
-      </figure>)}
+      {chapter.images.map((image, imageIndex) => {
+        // Interactive V2: every known case-study screen renders as real
+        // components (bespoke rebuild or shared KitScreen) instead of the
+        // printed image. Captions/rationale are unchanged.
+        const interactive = interactiveFor(projectSlug, chapter, image, imageIndex);
+        return <figure className="ref-case-gallery-item" key={image.src}>
+          <div className="ref-case-image-mask">{interactive ?? <img src={image.src} alt={image.alt} loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"} decoding="async" />}</div>
+          <figcaption><span>{image.caption}</span><span>{image.rationale}</span></figcaption>
+        </figure>;
+      })}
     </div>}
   </section>;
 }
@@ -127,7 +134,7 @@ export default function CaseStudy() {
       <div className="ref-case-story">
         <nav className="ref-case-index" aria-label="Case study chapters"><p>Contents</p><ol>{study.chapters.map((chapter, index) => <li key={chapter.id} className={active === chapter.id ? "is-active" : undefined}><a href={`#${chapter.id}`}><span>{String(index + 1).padStart(2, "0")}</span>{chapter.title}</a></li>)}</ol></nav>
         <article className="ref-case-article">
-          {study.chapters.map((chapter, index) => <Chapter key={chapter.id} chapter={chapter} index={index} onEnter={setActive} />)}
+          {study.chapters.map((chapter, index) => <Chapter key={chapter.id} chapter={chapter} index={index} onEnter={setActive} projectSlug={slug} />)}
           <section className="ref-case-credits"><div><p className="ref-case-label">Credits / disclosure</p><h2>What I owned.</h2></div><dl><div><dt>Ownership</dt><dd>{study.credits.ownership}</dd></div><div><dt>Collaborators</dt><dd>{study.credits.collaborators}</dd></div><div><dt>Tools</dt><dd>{study.credits.tools.join(" / ")}</dd></div><div><dt>Confidentiality</dt><dd>{study.credits.confidentiality}</dd></div></dl></section>
         </article>
       </div>

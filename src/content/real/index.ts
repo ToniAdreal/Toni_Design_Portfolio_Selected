@@ -6,13 +6,14 @@ import { budweiser } from './budweiser';
 import { cyberorigin } from './cyberorigin';
 import { mengniu } from './mengniu';
 import { tokenta } from './tokenta';
+import { hackathon } from './hackathon';
 import type { Project } from './types';
 
 /** Flagship case studies shown prominently on the homepage */
 export const flagship: Project[] = [nextCard, aurionx, cyberorigin, deepvise];
 
 /** Additional projects shown in a collapsed "More Work" section */
-export const moreWork: Project[] = [allweb3, budweiser, mengniu, tokenta];
+export const moreWork: Project[] = [allweb3, budweiser, mengniu, tokenta, hackathon];
 
 /** All projects combined */
 export const projects: Project[] = [...flagship, ...moreWork];
