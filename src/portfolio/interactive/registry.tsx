@@ -5,6 +5,9 @@ import { tokentaSlideFor } from "./TokentaSlides";
 import { tokentaEarlyFor } from "./TokentaEarly";
 import { tokentaBrandFor } from "./TokentaBrand";
 import { aurionXChapterFor } from "./AurionXChapters";
+import { allweb3ChapterFor } from "./Allweb3Chapters";
+import { dataQuestChapterFor } from "./DataQuestChapters";
+import { deepViseChapterFor } from "./DeepViseChapters";
 import { NextCardHeroApp, NextCardWireframeWall } from "./NextCardApp";
 import { nextCardChapterFor } from "./NextCardChapters";
 import { AurionXTVDesignSystem, AurionXVisualIdentity } from "./AurionXDesignSystem";
@@ -64,12 +67,16 @@ function bespoke(slug: string, chapter: ChapterLike, image: GalleryImage): React
     if (file.startsWith("AurionX_32_")) return <AurionXGlobalVoice />;
   }
   if (slug === "deepvise") {
+    const dv = deepViseChapterFor(file);
+    if (dv) return dv;
     if (title === "Executive Platform Dashboard") return <DeepViseDashboard />;
     if (title === "Dual Financial Port Selector") return <DeepVisePortSelector />;
     if (title === "Lending Institution Overview") return <DeepVisePortSelector />;
     if (title === "Fault Diagnostics & Alert Engine") return <DeepViseDashboard />;
   }
   if (slug === "allweb3") {
+    const aw = allweb3ChapterFor(file);
+    if (aw) return aw;
     if (title === "Deterministic Fee Calculator & Escrow Preview") return <Allweb3FeeCalculator />;
     if (title === "Creator Profile & Reputation Scorecard") return <Allweb3Reputation />;
     if (title === "Automated Escrow Release & Settlement") return <Allweb3Settlement />;
@@ -81,6 +88,8 @@ function bespoke(slug: string, chapter: ChapterLike, image: GalleryImage): React
     if (title === "BrewOps AI Copilot Interface") return <BrewOpsCopilot />;
   }
   if (slug === "cyberorigin") {
+    const dq = dataQuestChapterFor(file);
+    if (dq) return dq;
     if (title === "State Machine: Task Lifecycle") return <DataQuestLifecycle />;
     if (title === "Dashboard & Task Feed") return <DataQuestTaskFeed />;
     if (title === "Reviewer Workspace Overview") return <DataQuestReviewer />;
