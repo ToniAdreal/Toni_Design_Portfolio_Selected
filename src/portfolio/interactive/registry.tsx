@@ -8,6 +8,7 @@ import { aurionXChapterFor } from "./AurionXChapters";
 import { allweb3ChapterFor } from "./Allweb3Chapters";
 import { dataQuestChapterFor } from "./DataQuestChapters";
 import { deepViseChapterFor } from "./DeepViseChapters";
+import { brewOpsChapterFor } from "./BrewOpsChapters";
 import { NextCardHeroApp, NextCardWireframeWall } from "./NextCardApp";
 import { nextCardChapterFor } from "./NextCardChapters";
 import { AurionXTVDesignSystem, AurionXVisualIdentity } from "./AurionXDesignSystem";
@@ -83,6 +84,8 @@ function bespoke(slug: string, chapter: ChapterLike, image: GalleryImage): React
     if (title === "Task Workspace & Milestone Tracker") return <Allweb3Milestones />;
   }
   if (slug === "budweiser") {
+    const bo = brewOpsChapterFor(file);
+    if (bo) return bo;
     if (title === "Global Control Tower Overview") return <BrewOpsControlTower />;
     if (title === "Scenario Planning Sandbox") return <BrewOpsScenario />;
     if (title === "BrewOps AI Copilot Interface") return <BrewOpsCopilot />;
