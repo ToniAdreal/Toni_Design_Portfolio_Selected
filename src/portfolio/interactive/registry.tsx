@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
 import { KitScreen, type GalleryImage } from "./kit";
 import { tokentaInteractiveFor } from "./TokentaInteractive";
+import { tokentaSlideFor } from "./TokentaSlides";
+import { NextCardHeroApp, NextCardWireframeWall } from "./NextCardApp";
+import { AurionXTVDesignSystem, AurionXVisualIdentity } from "./AurionXDesignSystem";
 import {
   Allweb3FeeCalculator, Allweb3Milestones, Allweb3Reputation, Allweb3Settlement,
   AurionXGlobalVoice, AurionXHighlightConfig, AurionXSceneRecall,
@@ -35,15 +38,19 @@ function bespoke(slug: string, chapter: ChapterLike, image: GalleryImage): React
   const file = image.src.split("/").pop() ?? "";
   const title = image.alt;
 
-  if (slug === "tokenta") return tokentaInteractiveFor(chapter.id, title);
+  if (slug === "tokenta") return tokentaSlideFor(file) ?? tokentaInteractiveFor(chapter.id, title);
 
   if (slug === "next-card") {
+    if (file.startsWith("Next_Card_Image_01")) return <NextCardHeroApp />;
+    if (file.startsWith("Next_Card_Image_34")) return <NextCardWireframeWall />;
     if (file.startsWith("Next_Card_Image_22")) return <NextCardValueEngines />;
     if (file.startsWith("Next_Card_Image_23")) return <NextCardValueTriangle />;
     if (title === "Step 1 — ID OCR & Biometric Liveness") return <NextCardApplicationFlow />;
     if (title === "Reward Engine Logic & Category Rules") return <NextCardRewardEngine />;
   }
   if (slug === "aurionx") {
+    if (file.startsWith("AurionX_17_")) return <AurionXVisualIdentity />;
+    if (file.startsWith("AurionX_18_")) return <AurionXTVDesignSystem />;
     if (file.startsWith("AurionX_21_")) return <AurionXSceneRecall />;
     if (file.startsWith("AurionX_26_")) return <AurionXHighlightConfig />;
     if (file.startsWith("AurionX_32_")) return <AurionXGlobalVoice />;

@@ -1,0 +1,85 @@
+/* Tokenta bespoke slide rebuilds (files 06–15, 21–30).
+   Light "paper" slides transcribed from the printed deck: off-white
+   background, black type, 1px rules, square-ish corners, IBM Plex Mono
+   micro-labels. Dark variant for slides 06, 07 (cards) and 14. */
+
+.tks {
+  background: #f6f6f4;
+  color: #111;
+  border: 1px solid #d9d9d4;
+  font-family: Inter, Arial, sans-serif;
+  padding: 18px 20px 12px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.tks * { box-sizing: border-box; }
+.tks-head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  border-bottom: 1.5px solid #111; padding-bottom: 6px;
+  font-family: "IBM Plex Mono", monospace; font-size: 11px;
+}
+.tks-head b { font-size: 13px; }
+.tks-brand { font-weight: 800; letter-spacing: .04em; font-family: Inter, Arial, sans-serif; font-size: 14px; }
+.tks h3 { font-size: clamp(22px, 3.4vw, 34px); line-height: 1.05; margin: 12px 0 4px; font-weight: 800; letter-spacing: -.01em; }
+.tks .tks-lede { color: #444; font-size: 13px; margin: 0 0 14px; max-width: 62ch; }
+.tks-foot {
+  display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: space-between;
+  border-top: 1px solid #111; margin-top: 14px; padding-top: 7px;
+  font-family: "IBM Plex Mono", monospace; font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: #333;
+}
+.tks-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; background: #111; color: #fff; border-radius: 4px;
+  font-weight: 700; font-size: 11px; flex: none;
+}
+.tks-num--light { background: #fff; color: #111; border: 1px solid #555; }
+.tks-card { background: #fff; border: 1px solid #d9d9d4; border-radius: 8px; padding: 12px; }
+.tks-card.is-on { border-color: #111; box-shadow: 0 0 0 1px #111; }
+button.tks-card, button.tks-chip, button.tks-node { cursor: pointer; text-align: left; font: inherit; color: inherit; }
+.tks-chip {
+  display: inline-flex; align-items: center; gap: 6px; background: #fff; border: 1px solid #c9c9c4;
+  border-radius: 999px; padding: 4px 10px; font-size: 11px;
+}
+.tks-chip[aria-pressed="true"] { background: #111; color: #fff; border-color: #111; }
+.tks-grid { display: grid; gap: 10px; }
+.tks-table { width: 100%; border-collapse: collapse; font-size: 11px; background: #fff; }
+.tks-table th { text-align: left; font-family: "IBM Plex Mono", monospace; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: #555; border-bottom: 1px solid #ddd; padding: 5px 6px; }
+.tks-table td { border-bottom: 1px solid #eee; padding: 6px; vertical-align: top; }
+.tks-ver { color: #137a3f; font-weight: 700; }
+.tks-tag { display: inline-block; border: 1px solid #ddd; background: #f3f3f1; border-radius: 4px; padding: 1px 6px; font-size: 10px; margin: 1px 2px 1px 0; }
+.tks-btn { background: #111; color: #fff; border: 1px solid #111; border-radius: 6px; padding: 6px 14px; font-size: 11.5px; cursor: pointer; }
+.tks-btn--ghost { background: #fff; color: #111; }
+.tks-btn:disabled { opacity: .45; cursor: default; }
+.tks-note { background: #fff; border: 1px solid #d9d9d4; border-radius: 8px; padding: 10px 12px; display: flex; gap: 10px; align-items: flex-start; }
+.tks-arrow { align-self: center; color: #888; font-size: 15px; flex: none; }
+
+/* Dark slides */
+.tks--dark { background: #0b0b0c; color: #f5f5f5; border-color: #26272a; }
+.tks--dark .tks-head { border-bottom-color: #3a3b3f; }
+.tks--dark h3 { color: #fff; }
+.tks--dark .tks-lede { color: #b9b9be; }
+.tks--dark .tks-card { background: #141416; border-color: #2c2d30; color: #eee; }
+.tks--dark .tks-card.is-on { border-color: #fff; box-shadow: 0 0 0 1px #fff; }
+.tks--dark .tks-foot { border-top-color: #3a3b3f; color: #9a9aa0; }
+.tks--dark .tks-table { background: #141416; color: #eee; }
+.tks--dark .tks-table th { color: #9a9aa0; border-bottom-color: #2c2d30; }
+.tks--dark .tks-table td { border-bottom-color: #232426; }
+.tks--dark .tks-tag { background: #1d1e20; border-color: #333438; color: #ddd; }
+.tks--dark .tks-chip { background: #141416; border-color: #3a3b3f; color: #eee; }
+.tks--dark .tks-chip[aria-pressed="true"] { background: #fff; color: #111; border-color: #fff; }
+.tks--dark .tks-note { background: #141416; border-color: #2c2d30; }
+.tks--dark .tks-btn { background: #fff; color: #111; border-color: #fff; }
+.tks--dark .tks-btn--ghost { background: transparent; color: #fff; border-color: #55565a; }
+
+.tks-flow { display: flex; align-items: stretch; gap: 6px; flex-wrap: wrap; }
+.tks-node {
+  background: #fff; border: 1px solid #d0d0cb; border-radius: 8px; padding: 8px 10px; min-width: 0; flex: 1;
+}
+.tks-node[aria-pressed="true"] { border-color: #111; box-shadow: 0 0 0 1px #111; }
+.tks--dark .tks-node { background: #17181a; border-color: #333438; color: #eee; }
+.tks--dark .tks-node[aria-pressed="true"] { border-color: #fff; box-shadow: 0 0 0 1px #fff; }
+.tks-kicker { font-family: "IBM Plex Mono", monospace; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: #777; }
+.tks--dark .tks-kicker { color: #9a9aa0; }
+.tks-detail { margin-top: 10px; border: 1px dashed #bdbdb8; border-radius: 8px; padding: 10px 12px; background: #fff; }
+.tks--dark .tks-detail { background: #141416; border-color: #3a3b3f; }
+@media (max-width: 760px) { .tks-grid { grid-template-columns: 1fr !important; } .tks-flow { flex-direction: column; } }
