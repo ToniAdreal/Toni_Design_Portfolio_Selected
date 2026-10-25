@@ -9,6 +9,7 @@ import { allweb3ChapterFor } from "./Allweb3Chapters";
 import { dataQuestChapterFor } from "./DataQuestChapters";
 import { deepViseChapterFor } from "./DeepViseChapters";
 import { brewOpsChapterFor } from "./BrewOpsChapters";
+import { mengniuChapterFor } from "./MengniuChapters";
 import { NextCardHeroApp, NextCardWireframeWall } from "./NextCardApp";
 import { nextCardChapterFor } from "./NextCardChapters";
 import { AurionXTVDesignSystem, AurionXVisualIdentity } from "./AurionXDesignSystem";
@@ -98,6 +99,8 @@ function bespoke(slug: string, chapter: ChapterLike, image: GalleryImage): React
     if (title === "Reviewer Workspace Overview") return <DataQuestReviewer />;
   }
   if (slug === "mengniu") {
+    const mn = mengniuChapterFor(file);
+    if (mn) return mn;
     if (title === "Command Center Dashboard") return <MengniuCommandCenter />;
     if (title === "Intelligent Alert Center") return <MengniuAlertCenter />;
     if (title === "Digital Twin Barn Interface") return <MengniuBarnTwin />;

@@ -19,6 +19,10 @@ export default function ReferenceFooter() {
         <h2>Let’s make<br />something real.</h2>
         <Magnetic maxDistance={14}><a className="ref-contact-circle" href="https://www.linkedin.com/in/toniadreal/" target="_blank" rel="noreferrer"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 27 27 5M5 5h22v22" stroke="currentColor" strokeWidth="1.5" /></svg><span>Get in touch</span><span className="ref-sr-only">on LinkedIn (opens in a new tab)</span></a></Magnetic>
       </div>
+      <div className="ref-footer-engage">
+        <div className="ref-footer-engage-item"><span>SPONSOR</span><a href="https://toniadreal.github.io/sponsor/" target="_blank" rel="noreferrer">Sponsor this portfolio — one slot, portfolio footer $50/mo founding price <span aria-hidden="true">↗</span></a></div>
+        <div className="ref-footer-engage-item"><span>ENGAGE</span><a href="https://toniadreal.github.io/" target="_blank" rel="noreferrer">Freelance &amp; engagements — Toni Adreal <span aria-hidden="true">↗</span></a></div>
+      </div>
       <div className="ref-footer-bottom">
         <div className="ref-footer-credit"><span>© {new Date().getFullYear()} Toni Adreal</span><span>Design. Build. Keep learning.</span></div>
         <nav className="ref-footer-social" aria-label="Social and website links"><a href="https://www.linkedin.com/in/toniadreal/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/ToniAdreal" target="_blank" rel="noreferrer">GitHub</a><a href="https://x.com/toniadreal_lab" target="_blank" rel="noreferrer">X</a><a href="https://toni.tokenta.space/" target="_blank" rel="noreferrer">Personal site</a><Link to="/portfolio/work">Work</Link></nav>
