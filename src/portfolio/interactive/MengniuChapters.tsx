@@ -68,7 +68,7 @@ const GREEN = "#009A4E";
 function Mn({ n, title, sub, children, label, dark }: { n: string; title: string; sub?: string; children: React.ReactNode; label: string; dark?: boolean }) {
   return <div className={`tks${dark ? " tks--dark" : ""}`} style={dark ? { background: "#0B0F0C" } : { background: "#FDFEFD" }} role="region" aria-label={label}>
     <div className="tks-head"><span><b style={{ color: GREEN }}>◆ MENGNIU</b>&nbsp;&nbsp;|&nbsp;&nbsp;{n} of 34</span><span className="tks-brand" style={{ fontSize: 12 }}>MENGNIU DIGITAL TWIN</span></div>
-    <h3 style={{ fontSize: "clamp(19px,2.8vw,28px)" }}>{title}</h3>
+    <h3 style={{ fontSize: 42 }}>{title}</h3>
     {sub ? <p className="tks-lede">{sub}</p> : null}
     {children}
     <div className="tks-foot"><span>Mengniu — Smart Dairy Farming Intelligence Platform</span><span>Transcribed from the printed slide</span></div>

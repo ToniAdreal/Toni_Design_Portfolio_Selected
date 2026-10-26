@@ -135,7 +135,7 @@ const RED = "#e0483e";
 function Bo({ n, title, sub, children, label, dark = true, foot }: { n: string; title: ReactNode; sub?: string; children: ReactNode; label: string; dark?: boolean; foot?: string }) {
   return <div className={`tks${dark ? " tks--dark" : ""}`} style={dark ? { background: "#0a141f" } : undefined} role="region" aria-label={label}>
     <div className="tks-head"><span><b>BrewOps <span style={{ color: AMBER }}>Intelligence</span></b>&nbsp;&nbsp;|&nbsp;&nbsp;{n} of 50</span><span className="tks-brand" style={{ fontSize: 12, color: "#c8102e", fontStyle: "italic" }}>Budweiser</span></div>
-    <h3 style={{ fontSize: "clamp(20px,3vw,30px)" }}>{title}</h3>
+    <h3 style={{ fontSize: 44 }}>{title}</h3>
     {sub ? <p className="tks-lede">{sub}</p> : null}
     {children}
     <div className="tks-foot"><span>{foot ?? "BrewOps Intelligence - as printed on the slide"}</span><span>Data-informed. Human-led. Outcome-driven.</span></div>

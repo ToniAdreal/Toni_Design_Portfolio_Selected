@@ -61,7 +61,7 @@ const G = "#00ff00";
 function Aw({ n, title, sub, children, label, foot }: { n: string; title: ReactNode; sub?: string; children: ReactNode; label: string; foot?: string }) {
   return <div className="tks tks--dark aw3" role="region" aria-label={label}>
     <div className="tks-head"><span><b>W ALLWEB3</b>&nbsp;&nbsp;|&nbsp;&nbsp;{n} of 19</span><span className="tks-brand" style={{ fontSize: 12, color: G }}>ALLWEB3</span></div>
-    <h3 style={{ fontSize: "clamp(20px,3vw,30px)" }}>{title}</h3>
+    <h3 style={{ fontSize: 44 }}>{title}</h3>
     {sub ? <p className="tks-lede">{sub}</p> : null}
     {children}
     <div className="tks-foot"><span>{foot ?? "ALLWEB3 — CMP-2026-042"}</span><span>Illustrative data — as printed</span></div>

@@ -11,10 +11,10 @@ import "./nextcard-app.css";
 
 const ORANGE = "#ff4b1f";
 
-function Nc({ n, title, label, children }: { n: string; title: string; label: string; children: ReactNode }) {
-  return <div className="nc" role="region" aria-label={label}>
-    <p style={{ margin: 0, letterSpacing: ".14em", fontWeight: 700, display: "flex", justifyContent: "space-between" }}><span>NEXT <span className="nc-acc">CARD</span></span><span style={{ color: "#9a9aa0", fontWeight: 400 }}>IMAGE {n}</span></p>
-    <h3 style={{ fontSize: "clamp(19px,2.6vw,27px)" }}>{title}</h3>
+function Nc({ n, title, label, light, children }: { n: string; title: string; label: string; light?: boolean; children: ReactNode }) {
+  return <div className={`nc${light ? " nc--light" : ""}`} role="region" aria-label={label}>
+    <p style={{ margin: 0, letterSpacing: ".14em", fontWeight: 700, display: "flex", justifyContent: "space-between" }}><span>NEXT <span className="nc-acc">CARD</span></span><span style={{ color: light ? "#55534e" : "#9a9aa0", fontWeight: 400 }}>IMAGE {n}</span></p>
+    <h3 style={{ fontSize: light ? 46 : 40 }}>{title}</h3>
     {children}
     <div className="nc-foot"><span>Next Card Project</span><span>Product Design Portfolio</span><span>Confidential · For portfolio use only</span></div>
   </div>;
@@ -31,20 +31,20 @@ const FUNNEL = [
 export function NextCardAnswer() {
   const [city, setCity] = useState(0);
   const [stage, setStage] = useState(0);
-  return <Nc n="02" title="The Answer in 15 Seconds" label="Next Card executive summary — interactive rebuild of Next_Card_Image_02">
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12 }}>
-      <div><p className="nc-acc" style={{ margin: 0, fontWeight: 700, letterSpacing: ".1em" }}>WHERE</p><p style={{ fontSize: 17, fontWeight: 700, margin: "4px 0" }}>Shenzhen and Guangzhou</p><p style={{ color: "#c9c9ce", margin: 0 }}>High-density, digitally active adult Gen Z</p></div>
-      <div><p className="nc-acc" style={{ margin: 0, fontWeight: 700, letterSpacing: ".1em" }}>WHAT</p><p style={{ fontSize: 17, fontWeight: 700, margin: "4px 0" }}>Next Card</p><p style={{ color: "#c9c9ce", margin: 0 }}>Daily rewards, city perks, referral and credit-building</p></div>
-      <div><p className="nc-acc" style={{ margin: 0, fontWeight: 700, letterSpacing: ".1em" }}>HOW</p><p style={{ fontSize: 17, fontWeight: 700, margin: "4px 0" }}>300K modeled six-month acquisition target</p><p style={{ color: "#c9c9ce", margin: 0 }}>Digital, merchant and community activation funnel</p></div>
+  return <Nc n="02" title="The Answer in 15 Seconds" light label="Next Card executive summary — interactive rebuild of Next_Card_Image_02">
+    <div className="nc-cols" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12 }}>
+      <div><p className="nc-acc" style={{ margin: 0, fontWeight: 700, letterSpacing: ".1em", borderBottom: "3px solid #ff4b1f", paddingBottom: 4, display: "inline-block" }}>WHERE</p><p style={{ fontSize: 17, fontWeight: 700, margin: "4px 0" }}>Shenzhen and Guangzhou</p><p style={{ color: "#4a4a48", margin: 0 }}>High-density, digitally active adult Gen Z</p></div>
+      <div><p className="nc-acc" style={{ margin: 0, fontWeight: 700, letterSpacing: ".1em", borderBottom: "3px solid #ff4b1f", paddingBottom: 4, display: "inline-block" }}>WHAT</p><p style={{ fontSize: 17, fontWeight: 700, margin: "4px 0" }}>Next Card</p><p style={{ color: "#4a4a48", margin: 0 }}>Daily rewards, city perks, referral and credit-building</p></div>
+      <div><p className="nc-acc" style={{ margin: 0, fontWeight: 700, letterSpacing: ".1em", borderBottom: "3px solid #ff4b1f", paddingBottom: 4, display: "inline-block" }}>HOW</p><p style={{ fontSize: 17, fontWeight: 700, margin: "4px 0" }}>300K modeled six-month acquisition target</p><p style={{ color: "#4a4a48", margin: 0 }}>Digital, merchant and community activation funnel</p></div>
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginTop: 12 }}>
-      <div style={{ border: "1px solid #333438", borderRadius: 10, padding: 10 }}>
+      <div className="nc-darkcard">
         <p style={{ margin: 0 }}><b>THE OPPORTUNITY</b><br /><span style={{ color: "#c9c9ce" }}>Two Power Cities. One Massive Opportunity.</span></p>
         <p style={{ display: "flex", gap: 5, margin: "8px 0" }}>{["Guangzhou 18.7M", "Shenzhen 17.6M"].map((c, i) => <button key={c} type="button" className="nc-tab" aria-pressed={city === i} onClick={() => setCity(i)}>{c}</button>)}</p>
         {[["28.3M", "Total Population (Shenzhen + Guangzhou)"], ["94%", "Smartphone Penetration"], ["78%", "Digital Payment Adoption"], ["70%+", "Gen Z (18–28) Share in Active Users"]].map(([v, l]) => <p key={l} className="nc-row"><b className="nc-acc" style={{ fontSize: 15 }}>{v}</b><span style={{ color: "#c9c9ce" }}>{l}</span></p>)}
         <p style={{ color: "#9a9aa0", margin: "6px 0 0" }} aria-live="polite">Selected launch city: {city === 0 ? "Guangzhou — 18.7M" : "Shenzhen — 17.6M"}. Digital Activity Density: Low → High (map as printed).</p>
       </div>
-      <div style={{ border: "1px solid #333438", borderRadius: 10, padding: 10 }}>
+      <div className="nc-darkcard">
         <p style={{ margin: 0 }}><b>NEXT CARD</b><br /><span style={{ color: "#c9c9ce" }}>Built for Everyday Wins.</span></p>
         <p style={{ margin: "8px 0 0", color: "#c9c9ce" }}>Good morning, <b style={{ color: "#fff" }}>Alex</b></p>
         <p style={{ margin: "2px 0" }}>Total Balance <b style={{ fontSize: 16 }}>¥8,642.00</b><br /><span style={{ color: "#c9c9ce" }}>Available Credit ¥21,358.00</span></p>
@@ -55,7 +55,7 @@ export function NextCardAnswer() {
         <p className="nc-row"><span>Credit Score</span><b className="nc-acc">+28 ↑</b></p>
         <p style={{ margin: "6px 0 0", color: "#c9c9ce" }}>Recent Activity — Coffee Project, Shenzhen +¥18.00 (3 min ago) · Metro Ride, Shenzhen −¥2.00 (1 hr ago)</p>
       </div>
-      <div style={{ border: "1px solid #333438", borderRadius: 10, padding: 10 }}>
+      <div className="nc-darkcard">
         <p style={{ margin: 0 }}><b>ACQUISITION FUNNEL</b><br /><span style={{ color: "#c9c9ce" }}>Digital. Merchant. Community. Compounding Growth.</span></p>
         <div role="group" aria-label="Funnel stages" style={{ marginTop: 6 }}>{FUNNEL.map(([t, s, v, l], i) => <button key={t} type="button" onClick={() => setStage(i)} aria-pressed={stage === i} style={{ display: "flex", justifyContent: "space-between", width: "100%", background: stage === i ? "#2a1408" : "transparent", border: "none", borderBottom: "1px solid #232426", color: "#fff", padding: "5px 2px", cursor: "pointer", font: "inherit", textAlign: "left" }}><span><b>{t}</b> <span style={{ color: "#c9c9ce" }}>{s}</span></span><span><b className="nc-acc">{v}</b> {l}</span></button>)}</div>
         <p style={{ display: "flex", justifyContent: "space-between", margin: "8px 0 0" }} aria-live="polite"><span>CAC Target <b className="nc-acc">¥45</b></span><span>Activation Rate <b className="nc-acc">75%</b></span><span>Referral Rate <b className="nc-acc">28%</b></span></p>
@@ -391,7 +391,29 @@ export function NextCardCityEvaluation() {
       <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 6 }}>{CRITERIA.map(([name, w], i) => <span key={name} style={{ border: "1px solid #2c2d30", borderRadius: 6, padding: "4px 7px" }}>{name} ({w}%) <button type="button" className="nc-tab" aria-label={`Decrease ${name}`} onClick={() => bump(i, -1)}>−</button> <b>{scores[i]}</b> <button type="button" className="nc-tab" aria-label={`Increase ${name}`} onClick={() => bump(i, 1)}>+</button></span>)}</div>
       <p style={{ margin: "8px 0 0" }}>Recomputed weighted total: <b className="nc-acc" style={{ fontSize: 16 }}>{total.toFixed(2)}</b> / 10</p>
     </div>
-    <p style={{ color: "#c9c9ce", margin: "10px 0 0" }}>METHODOLOGY — 1. Each city is scored on a 1–10 scale for each criterion. 2. Scores are multiplied by the respective weight to calculate weighted contribution. 3. Weighted contributions are summed to derive the total score out of 10. 4. Higher total score indicates stronger overall suitability for launch. Source: Public data, industry reports, partner inputs, and Next Card internal analysis. All scores are Estimated or Modeled for strategic evaluation only. Scores are Modelled. Methodology and weights are subject to refinement.</p>
+    <div style={{ display: "grid", gridTemplateColumns: "1.25fr 1fr", gap: 12, marginTop: 12 }}>
+      <div style={{ border: "1px solid #333438", borderRadius: 8, padding: "12px 14px" }}>
+        <p style={{ margin: "0 0 10px", fontWeight: 700, letterSpacing: ".04em" }}>WEIGHTED SCORE COMPARISON <span style={{ color: "#9a9aa0", fontWeight: 400 }}>(OUT OF 10)</span></p>
+        <div style={{ display: "flex", alignItems: "flex-end", gap: 14, height: 120 }} role="img" aria-label="Bar chart of weighted totals: Shenzhen 8.50, Guangzhou 7.80, Shanghai 7.30, Beijing 6.90, Chengdu 5.65, Hangzhou 6.00">
+          {Object.entries(CITY_TOTALS).map(([c, t]) => <div key={c} style={{ flex: 1, textAlign: "center" }}>
+            <div style={{ fontWeight: 800, color: c === "Shenzhen" || c === "Guangzhou" ? ORANGE : "#fff", marginBottom: 4 }}>{t}</div>
+            <div style={{ height: `${(Number(t) / 10) * 78}px`, background: c === "Shenzhen" || c === "Guangzhou" ? "linear-gradient(180deg,#ff6a3d,#e83a10)" : "linear-gradient(180deg,#9a9aa0,#55565a)", borderRadius: "3px 3px 0 0" }} />
+            <div style={{ marginTop: 6, fontSize: 10.5, letterSpacing: ".05em", color: "#c9c9ce" }}>{c.toUpperCase()}</div>
+          </div>)}
+        </div>
+      </div>
+      <div style={{ border: "1px solid #333438", borderRadius: 8, padding: "12px 14px" }}>
+        <p className="nc-acc" style={{ margin: "0 0 8px", fontWeight: 800, letterSpacing: ".06em" }}>METHODOLOGY</p>
+        <ol style={{ margin: 0, paddingLeft: 18, color: "#e8e8ea", display: "grid", gap: 6 }}>
+          <li>Each city is scored on a 1–10 scale for each criterion.</li>
+          <li>Scores are multiplied by the respective weight to calculate weighted contribution.</li>
+          <li>Weighted contributions are summed to derive the total score out of 10.</li>
+          <li>Higher total score indicates stronger overall suitability for launch.</li>
+        </ol>
+        <p style={{ color: "#9a9aa0", fontSize: 11.5, margin: "10px 0 0" }}>Source: Public data, industry reports, partner inputs, and Next Card internal analysis. All scores are Estimated or Modeled for strategic evaluation only.</p>
+        <p style={{ color: "#9a9aa0", fontSize: 11.5, fontStyle: "italic", margin: "4px 0 0" }}>Scores are Modelled. Methodology and weights are subject to refinement.</p>
+      </div>
+    </div>
   </Nc>;
 }
 

@@ -19,7 +19,7 @@ import "./tokenta-slides.css";
 function Ax({ n, title, sub, children, label }: { n: string; title: string; sub?: string; children: React.ReactNode; label: string }) {
   return <div className="tks tks--dark" style={{ background: "#07080d" }} role="region" aria-label={label}>
     <div className="tks-head"><span><b>⋈ AurionX</b>&nbsp;&nbsp;|&nbsp;&nbsp;{n} of 41</span><span className="tks-brand" style={{ fontSize: 12 }}>AURIONX</span></div>
-    <h3 style={{ fontSize: "clamp(20px,3vw,30px)" }}>{title}</h3>
+    <h3 style={{ fontSize: 44 }}>{title}</h3>
     {sub ? <p className="tks-lede">{sub}</p> : null}
     {children}
   </div>;
@@ -62,12 +62,14 @@ export function AurionXThreeFeatures() {
   const [lang, setLang] = useState<"en" | "es">("es");
   const cur = FEATURES[f];
   return <Ax n="02" title="Three features. Three moments." label="AurionX three-feature overview — interactive rebuild of AurionX_02">
-    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(3,1fr)" }}>
-      {FEATURES.map((x, i) => <button key={x.name} type="button" className={`tks-card${i === f ? " is-on" : ""}`} aria-pressed={i === f} onClick={() => setF(i)}>
-        <b style={{ fontSize: 15 }}>{x.name}</b><p className="tks-kicker" style={{ margin: "8px 0 2px" }}>Problem</p><p style={{ color: "#c9c9ce", margin: 0 }}>{x.problem}</p>
-        <p className="tks-kicker" style={{ margin: "8px 0 2px" }}>Result</p><p style={{ margin: 0 }}>{x.result}</p></button>)}
+    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(3,1fr)", gap: 0 }}>
+      {FEATURES.map((x, i) => <button key={x.name} type="button" aria-pressed={i === f} onClick={() => setF(i)} style={{ background: "transparent", border: "none", borderLeft: i ? "1px solid #26272a" : "none", borderRadius: 0, padding: "2px 18px", textAlign: "left", color: "inherit", cursor: "pointer" }}>
+        <b style={{ fontSize: 25, fontWeight: 700, color: i === f ? "#fff" : "#e8e8ea" }}>{x.name}</b>
+        <p className="tks-kicker" style={{ margin: "16px 0 4px" }}>Problem</p><p style={{ color: "#d8d8dc", margin: 0, fontSize: 15 }}>{x.problem}</p>
+        <div style={{ background: "#101014", border: "1px solid #26272a", borderRadius: 8, padding: "10px 12px", margin: "16px 0", fontSize: 11.5, color: "#b9b9be", lineHeight: 1.55 }}>{x.facts}</div>
+        <p className="tks-kicker" style={{ margin: "8px 0 4px" }}>Result</p><p style={{ margin: 0, fontSize: 15 }}>{x.result}</p></button>)}
     </div>
-    <div className="tks-detail" aria-live="polite"><b>{cur.name}</b><p style={{ margin: "5px 0" }}>{cur.facts}</p>
+    <div className="tks-detail" aria-live="polite"><b>{cur.name}</b> — try the printed controls:
       {f === 1 && <><p className="tks-kicker">Preferred duration</p><Chips items={["3 min", "5 min", "7 min"]} value={dur} onPick={setDur} /><p className="tks-kicker" style={{ marginTop: 8 }}>Emphasis</p><Chips items={["Story", "Characters", "Action", "Emotion", "World"]} value={emph} onPick={setEmph} /></>}
       {f === 2 && <><p className="tks-kicker">Preview language</p><div style={{ display: "flex", gap: 5 }}><button type="button" className="tks-chip" aria-pressed={lang === "en"} onClick={() => setLang("en")}>Original (English)</button><button type="button" className="tks-chip" aria-pressed={lang === "es"} onClick={() => setLang("es")}>Localized (Spanish)</button></div>
         <p style={{ margin: "6px 0 0" }}>{lang === "en" ? "“This is our only chance to end the darkness.”" : "“Esta es nuestra única oportunidad para acabar con la oscuridad.”"}</p></>}

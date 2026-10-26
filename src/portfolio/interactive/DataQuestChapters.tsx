@@ -62,7 +62,7 @@ const ACC = "#5b3df5";
 function Dq({ n, title, sub, children, label, foot }: { n: string; title: string; sub?: string; children: ReactNode; label: string; foot?: string }) {
   return <div className="tks" role="region" aria-label={label} style={{ background: "#f8f7ff" }}>
     <div className="tks-head"><span><b>⬡ CyberOrigin</b>&nbsp;&nbsp;|&nbsp;&nbsp;{n} of 40</span><span className="tks-brand" style={{ fontSize: 12, color: ACC }}>DataQuest</span></div>
-    <h3 style={{ fontSize: "clamp(20px,3vw,30px)" }}>{title}</h3>
+    <h3 style={{ fontSize: 44 }}>{title}</h3>
     {sub ? <p className="tks-lede">{sub}</p> : null}
     {children}
     <div className="tks-foot"><span>DataQuest by CyberOrigin</span><span>{foot ?? "Human-action data marketplace for embodied AI"}</span></div>

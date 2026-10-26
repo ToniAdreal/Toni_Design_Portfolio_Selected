@@ -67,7 +67,7 @@ import "./tokenta-slides.css";
 function Dv({ n, title, sub, children, label, dark }: { n: string; title: string; sub?: string; children: React.ReactNode; label: string; dark?: boolean }) {
   return <div className={`tks${dark ? " tks--dark" : ""}`} style={dark ? { background: "#0B1726" } : { background: "#F6F8FB" }} role="region" aria-label={label}>
     <div className="tks-head"><span><b>◆ DeepVise</b>&nbsp;&nbsp;|&nbsp;&nbsp;{n} of 32</span><span className="tks-brand" style={{ fontSize: 12 }}>DEEPVISE</span></div>
-    <h3 style={{ fontSize: "clamp(19px,2.8vw,28px)" }}>{title}</h3>
+    <h3 style={{ fontSize: 42 }}>{title}</h3>
     {sub ? <p className="tks-lede">{sub}</p> : null}
     {children}
     <div className="tks-foot"><span>DeepVise — Federated Enterprise Health Intelligence</span><span>Transcribed from the printed slide</span></div>

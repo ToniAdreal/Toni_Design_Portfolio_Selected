@@ -25,19 +25,19 @@ const THESIS_STAGES = [
     n: 1, title: "API marketplace", sub: "Discover and connect.",
     bullets: ["Centralized catalog", "No verifiable guarantees", "Limited trust and liquidity"],
     tags: ["Discovery", "Connectivity", "Basic Listings"],
-    detail: "Marketplace table (as printed): Credit Score API — REST — FinData — Free · KYC Verification — REST — IDLabs — Free · Fraud Signals — REST — RiskCore — Free · Bank Statement — REST — OpenBank — Free.",
+    detail: "As printed: a centralized marketplace table — four REST APIs (FinData, IDLabs, RiskCore, OpenBank), all Free.",
   },
   {
     n: 2, title: "Tokenized access", sub: "Gated by tokens.",
     bullets: ["Token-gated access", "Economic alignment", "Still limited without proof of quality"],
     tags: ["Tokenized", "Gated Access", "Payment Rail"],
-    detail: "Asset: Credit Score API (REST). Access Price 18,500 TKA. Access Token: TKA — Balance 42,000 TKA. Actions printed: Purchase Access / Manage.",
+    detail: "As printed: Credit Score API at 18,500 TKA, token balance 42,000 TKA, Purchase Access / Manage actions.",
   },
   {
     n: 3, title: "Evidence-first exchange", sub: "Verifiable, escrowed, and settled.",
     bullets: ["Verification — Proves origin, quality & integrity.", "Escrow — Secure execution with clear states.", "Settlement — Finality and on-chain audit.", "Reputation — Sustained trust and liquidity."],
     tags: ["Chosen Direction"],
-    detail: "Flow as printed: Buyer (NeuralWorks, Reputation 92) → Verification (Provenance ✓, Audit ✓, Quality ✓ — Status: pass) → Escrow (18,500 TKA, Locked) → Settlement (Release + Record, On-chain) → Reputation (Reputation ↑, History on-chain). Immutable audit trail underneath.",
+    detail: "As printed: Buyer (NeuralWorks, Reputation 92) → Verification (pass) → Escrow (18,500 TKA, Locked) → Settlement (on-chain) → Reputation ↑, over an immutable audit trail.",
   },
 ];
 
@@ -52,8 +52,10 @@ export function TokentaThesisEvolution() {
     <div className="tks-grid" style={{ gridTemplateColumns: "1fr auto 1fr auto 1.35fr", alignItems: "stretch" }}>
       <button type="button" className={`tks-card${active === 0 ? " is-on" : ""}`} aria-pressed={active === 0} onClick={() => setActive(0)}>
         <span className="tks-num tks-num--light">1</span> <b>API marketplace</b><br /><span style={{ color: "#b9b9be" }}>Discover and connect.</span>
-        <table className="tks-table" style={{ marginTop: 8 }}><thead><tr><th>Asset</th><th>Type</th><th>Creator</th><th>Price</th></tr></thead>
+        <table className="tks-table tks-table--micro" style={{ marginTop: 8 }}><thead><tr><th>Asset</th><th>Type</th><th>Creator</th><th>Price</th></tr></thead>
           <tbody>{[["Credit Score API", "FinData"], ["KYC Verification", "IDLabs"], ["Fraud Signals", "RiskCore"], ["Bank Statement", "OpenBank"]].map(([a, c]) => <tr key={a}><td>{a}</td><td>REST</td><td>{c}</td><td>Free</td></tr>)}</tbody></table>
+        <ul style={{ margin: "10px 0 8px", paddingLeft: 16, color: "#c9c9ce", fontSize: 12.5 }}>{THESIS_STAGES[0].bullets.map((b) => <li key={b}>{b}</li>)}</ul>
+        <p style={{ margin: 0 }}>{THESIS_STAGES[0].tags.map((t) => <span key={t} className="tks-tag">{t}</span>)}</p>
       </button>
       <span className="tks-arrow">→</span>
       <button type="button" className={`tks-card${active === 1 ? " is-on" : ""}`} aria-pressed={active === 1} onClick={() => setActive(1)}>
@@ -62,6 +64,8 @@ export function TokentaThesisEvolution() {
         <p style={{ margin: "6px 0" }}>Access Price<br /><b style={{ fontSize: 16 }}>18,500 TKA</b></p>
         <p style={{ margin: "6px 0" }}>Access Token — TKA · Balance <b>42,000 TKA</b></p>
         <span className="tks-btn" role="button" aria-pressed={bought} onClick={(e) => { e.stopPropagation(); setBought((b) => !b); }}>{bought ? "Access Purchased ✓" : "Purchase Access"}</span>
+        <ul style={{ margin: "10px 0 8px", paddingLeft: 16, color: "#c9c9ce", fontSize: 12.5 }}>{THESIS_STAGES[1].bullets.map((b) => <li key={b}>{b}</li>)}</ul>
+        <p style={{ margin: 0 }}>{THESIS_STAGES[1].tags.map((t) => <span key={t} className="tks-tag">{t}</span>)}</p>
       </button>
       <span className="tks-arrow">→</span>
       <button type="button" className={`tks-card${active === 2 ? " is-on" : ""}`} aria-pressed={active === 2} onClick={() => setActive(2)}>
@@ -71,14 +75,12 @@ export function TokentaThesisEvolution() {
           {["Buyer — NeuralWorks · Reputation 92", "Verification — Provenance ✓ Audit ✓ Quality ✓ · Status: pass", "Escrow — 18,500 TKA · Locked", "Settlement — Release + Record · On-chain", "Reputation — Reputation ↑ · History on-chain"].map((t, i, arr) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<span className="tks-node" style={{ fontSize: 10.5 }}>{t}</span></span>)}
         </div>
         <p style={{ margin: "8px 0 0", border: "1px dashed #3a3b3f", borderRadius: 6, padding: "5px 8px", textAlign: "center" }}>Immutable audit trail</p>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 14px", marginTop: 10, fontSize: 12.5, color: "#c9c9ce" }}>{THESIS_STAGES[2].bullets.map((b) => <span key={b}>{b}</span>)}</div>
+        <p style={{ margin: "10px 0 0", borderTop: "1px solid #2c2d30", paddingTop: 8, fontSize: 13 }}><b>Stronger together:</b> verification, escrow, settlement, and reputation make liquidity credible and networks compounding.</p>
       </button>
     </div>
     <div className="tks-detail" aria-live="polite">
-      <b>{s.n}. {s.title}</b> — {s.sub}
-      <ul style={{ margin: "6px 0" }}>{s.bullets.map((b) => <li key={b}>{b}</li>)}</ul>
-      <p style={{ margin: "4px 0" }}>{s.detail}</p>
-      <p style={{ margin: 0 }}>{s.tags.map((t) => <span key={t} className="tks-tag">{t}</span>)}</p>
-      {active === 2 && <p style={{ margin: "8px 0 0" }}><b>Stronger together:</b> verification, escrow, settlement, and reputation make liquidity credible and networks compounding.</p>}
+      <b>{s.n}. {s.title}</b> — {s.detail}
     </div>
     <Foot />
   </div>;
@@ -794,7 +796,7 @@ export function TokentaTerminalOverview() {
         <div className="tks-card" style={{ background: "#141416", borderColor: "#2c2d30", color: "#eee" }}>
           <b>Marketplace</b>
           <p style={{ margin: "6px 0" }}>{["All markets", "Stablecoin", "RWAs", "Credit", "FX"].map((t) => <button key={t} type="button" className="tks-chip" style={{ marginRight: 4, background: marketTab === t ? "#fff" : "#1d1e20", color: marketTab === t ? "#111" : "#ddd", borderColor: "#333438" }} aria-pressed={marketTab === t} onClick={() => setMarketTab(t)}>{t}</button>)}</p>
-          <table className="tks-table" style={{ background: "transparent", color: "#eee" }}><thead><tr><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>Market</th><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>Price</th><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>24H Change</th><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>Volume (24H)</th></tr></thead>
+          <table className="tks-table tks-table--micro" style={{ background: "transparent", color: "#eee" }}><thead><tr><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>Market</th><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>Price</th><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>24H Change</th><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>Volume (24H)</th></tr></thead>
             <tbody>{markets.map((r) => <tr key={r[0]}>{r.map((c, i) => <td key={i} style={{ borderBottomColor: "#232426", color: i === 2 ? (c.startsWith("+") ? "#4ade80" : "#f87171") : undefined }}>{c}</td>)}</tr>)}{markets.length === 0 && <tr><td colSpan={4} style={{ color: "#9a9aa0" }}>No markets in this tab on the printed terminal.</td></tr>}</tbody></table>
           <p style={{ color: "#9a9aa0", margin: "6px 0 0" }}>View all markets →</p>
         </div>
@@ -807,7 +809,7 @@ export function TokentaTerminalOverview() {
         </div>
         <div className="tks-card" style={{ background: "#141416", borderColor: "#2c2d30", color: "#eee" }}>
           <b>Order book</b> <span style={{ float: "right", color: "#9a9aa0" }}>0.0001 ▾</span>
-          <table className="tks-table" style={{ background: "transparent", color: "#eee" }}><thead><tr><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>Price (USDC)</th><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>Size (USDT)</th><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>Total (USDT)</th></tr></thead>
+          <table className="tks-table tks-table--micro" style={{ background: "transparent", color: "#eee" }}><thead><tr><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>Price (USDC)</th><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>Size (USDT)</th><th style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>Total (USDT)</th></tr></thead>
             <tbody>{ORDER_BOOK_ASKS.map((r) => <tr key={r[0]}>{r.map((c, i) => <td key={i} style={{ borderBottomColor: "#232426", color: i === 0 ? "#f87171" : undefined }}>{c}</td>)}</tr>)}
               <tr><td colSpan={3} style={{ textAlign: "center", color: "#9a9aa0" }}>1.0001 — Spread 0.0001</td></tr>
               {ORDER_BOOK_BIDS.map((r) => <tr key={r[0]}>{r.map((c, i) => <td key={i} style={{ borderBottomColor: "#232426", color: i === 0 ? "#4ade80" : undefined }}>{c}</td>)}</tr>)}</tbody></table>
@@ -815,7 +817,7 @@ export function TokentaTerminalOverview() {
       </div>
       <div className="tks-card" style={{ background: "#141416", borderColor: "#2c2d30", color: "#eee", marginTop: 10 }}>
         <b>Execution log (live)</b> <span style={{ float: "right", color: "#9a9aa0" }}>View all →</span>
-        <div style={{ overflowX: "auto" }}><table className="tks-table" style={{ background: "transparent", color: "#eee" }}><thead><tr>{["Time (UTC)", "Market", "Side", "Price (USDC)", "Size (USDT)", "Counterparty", "Tx ID", "Status"].map((h) => <th key={h} style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>{h}</th>)}</tr></thead>
+        <div style={{ overflowX: "auto" }}><table className="tks-table tks-table--micro" style={{ background: "transparent", color: "#eee" }}><thead><tr>{["Time (UTC)", "Market", "Side", "Price (USDC)", "Size (USDT)", "Counterparty", "Tx ID", "Status"].map((h) => <th key={h} style={{ color: "#9a9aa0", borderBottomColor: "#2c2d30" }}>{h}</th>)}</tr></thead>
           <tbody>{EXEC_LOG.map((r) => <tr key={r[0] + r[1]}><td style={{ borderBottomColor: "#232426" }}>{r[0]}</td><td style={{ borderBottomColor: "#232426" }}>{r[1]}</td><td style={{ borderBottomColor: "#232426", color: r[2] === "Buy" ? "#4ade80" : "#f87171" }}>{r[2]}</td><td style={{ borderBottomColor: "#232426" }}>{r[3]}</td><td style={{ borderBottomColor: "#232426" }}>{r[4]}</td><td style={{ borderBottomColor: "#232426" }}>{r[5]}</td><td style={{ borderBottomColor: "#232426" }}>{r[6]}</td><td style={{ borderBottomColor: "#232426" }}><span className="tks-ver">● Settled</span></td></tr>)}</tbody></table></div>
       </div>
     </div>
@@ -892,7 +894,7 @@ export function TokentaMarketplaceGrid() {
     <Head n="27" kicker="Marketplace grid" />
     <h3>Marketplace grid.</h3>
     <p className="tks-lede">Discovery was designed so buyers can compare unfamiliar AI assets without losing verification context.</p>
-    <div className="tks-grid" style={{ gridTemplateColumns: "200px 1fr" }}>
+    <div className="tks-grid" style={{ gridTemplateColumns: "185px 1fr" }}>
       <div className="tks-card">
         <p style={{ margin: "0 0 6px", display: "flex", justifyContent: "space-between" }}><b>Filters</b><button type="button" className="tks-chip" onClick={() => { setTypes([]); setCaps([]); }}>Reset all ⟳</button></p>
         <p className="tks-kicker">Asset type</p>
@@ -912,8 +914,8 @@ export function TokentaMarketplaceGrid() {
           <button type="button" className="tks-chip" aria-pressed={view === "grid"} onClick={() => setView("grid")}>▦ Grid</button>
           <button type="button" className="tks-chip" aria-pressed={view === "list"} onClick={() => setView("list")}>☰ List</button></p>
         <p style={{ color: "#555", margin: "0 0 6px" }}><b>Verified ranking</b> — Assets are ranked by verified score, reflecting the depth and quality of attested evidence. <b>Evidence visibility</b> — Proof counts and capability tags surface verification context before a buyer opens the details.</p>
-        {view === "list" ? <div style={{ overflowX: "auto" }}><table className="tks-table"><thead><tr><th>Asset</th><th>Creator</th><th>Type</th><th>Verified</th><th>Capabilities</th><th>Price</th><th>Volume (30d)</th><th>Listed</th></tr></thead>
-          <tbody>{rows.map((a) => <tr key={a.name}><td><b>{a.name}</b><br /><span style={{ color: "#777" }}>{a.sub}</span></td><td>{a.creator} <span className="tks-ver">✓</span></td><td>{a.type}</td><td><span className="tks-ver">🛡 {a.score}</span><br /><span style={{ color: "#777" }}>{a.proofs} proofs</span></td><td>{a.caps.map((c) => <span key={c} className="tks-tag">{c}</span>)}</td><td><b>{a.price}</b><br /><span style={{ color: "#777" }}>{a.per}</span></td><td><b>{a.vol}</b><br /><span style={{ color: "#777" }}>{a.txns}</span></td><td style={{ whiteSpace: "nowrap" }}>{a.listed}</td></tr>)}{rows.length === 0 && <tr><td colSpan={8} style={{ color: "#777" }}>No printed listings match those filters.</td></tr>}</tbody></table></div>
+        {view === "list" ? <div style={{ overflowX: "auto" }}><table className="tks-table tks-table--micro"><thead><tr><th>Asset</th><th>Creator</th><th>Type</th><th>Verified</th><th>Capabilities</th><th>Price</th><th>Volume (30d)</th><th>Listed</th></tr></thead>
+          <tbody>{rows.map((a) => <tr key={a.name}><td style={{ whiteSpace: "nowrap" }}><b>{a.name}</b><br /><span style={{ color: "#777" }}>{a.sub}</span></td><td style={{ whiteSpace: "nowrap" }}>{a.creator} <span className="tks-ver">✓</span></td><td>{a.type}</td><td><span className="tks-ver">🛡 {a.score}</span><br /><span style={{ color: "#777" }}>{a.proofs} proofs</span></td><td>{a.caps.map((c) => <span key={c} className="tks-tag">{c}</span>)}</td><td><b>{a.price}</b><br /><span style={{ color: "#777" }}>{a.per}</span></td><td><b>{a.vol}</b><br /><span style={{ color: "#777" }}>{a.txns}</span></td><td style={{ whiteSpace: "nowrap" }}>{a.listed}</td></tr>)}{rows.length === 0 && <tr><td colSpan={8} style={{ color: "#777" }}>No printed listings match those filters.</td></tr>}</tbody></table></div>
         : <div className="tks-grid" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>{rows.map((a) => <div key={a.name} className="tks-card"><b>{a.name}</b><p style={{ color: "#777", margin: "2px 0" }}>{a.sub} · {a.creator} ✓</p><p style={{ margin: "3px 0" }}><span className="tks-ver">🛡 {a.score}</span> · {a.proofs} proofs</p><p style={{ margin: "3px 0" }}>{a.caps.map((c) => <span key={c} className="tks-tag">{c}</span>)}</p><p style={{ margin: "3px 0" }}><b>{a.price}</b> {a.per} · {a.vol}</p></div>)}</div>}
         <p style={{ margin: "8px 0 0", color: "#777" }} aria-live="polite">Showing {rows.length} of the 8 listings printed on the original slide (612 assets match in the printed UI).</p>
       </div>
@@ -951,7 +953,7 @@ export function TokentaBuyerSellerViews() {
     </p>
     {view === "buyer" ? <div className="tks-card">
       <div style={{ overflowX: "auto" }}><table className="tks-table"><thead><tr><th>Asset</th><th>Key facts</th><th>Verification</th><th>Compare</th><th>Decision aids</th><th>Last updated</th></tr></thead>
-        <tbody>{WATCHLIST.map((a) => <tr key={a.name}><td><b>{a.name}</b><br />{a.loc}<br /><span className="tks-tag">{a.tag}</span></td>
+        <tbody>{WATCHLIST.map((a) => <tr key={a.name}><td style={{ whiteSpace: "nowrap" }}><b>{a.name}</b><br />{a.loc}<br /><span className="tks-tag">{a.tag}</span></td>
           <td>Price {a.price}<br />NOI {a.noi}<br />Cap rate {a.cap}<br />Year built {a.year}</td>
           <td><b style={{ fontSize: 15 }}>{a.ver}%</b><br /><span className={a.status === "Verified" ? "tks-ver" : undefined}>{a.status}</span><br />{a.checks}<br />See details →</td>
           <td>{a.compare.map((c) => <span key={c} style={{ display: "block" }}>{c}</span>)}</td>
@@ -959,7 +961,7 @@ export function TokentaBuyerSellerViews() {
       <p style={{ margin: "8px 0 0" }}><b>Watchlist summary</b> — 3 Assets · $234.5M Total price · 5.2% Avg. cap rate · 85% Avg. verification <span style={{ float: "right" }} className="tks-btn tks-btn--ghost">⭳ Export watchlist</span></p>
     </div> : <div className="tks-card">
       <div style={{ overflowX: "auto" }}><table className="tks-table"><thead><tr><th>Asset</th><th>Status</th><th>Verification</th><th>Volume</th><th>Performance (30D)</th><th>Last updated</th></tr></thead>
-        <tbody>{INVENTORY.map((a) => <tr key={a.name}><td><b>{a.name}</b><br />{a.loc}<br /><span className="tks-tag">{a.tag}</span></td>
+        <tbody>{INVENTORY.map((a) => <tr key={a.name}><td style={{ whiteSpace: "nowrap" }}><b>{a.name}</b><br />{a.loc}<br /><span className="tks-tag">{a.tag}</span></td>
           <td><b>{a.state === "Live" ? "● Live" : a.state === "Draft" ? "● Draft" : "● Paused"}</b><br />{a.listed}</td>
           <td><b style={{ fontSize: 15 }}>{a.ver}%</b><br /><span className={a.status === "Verified" ? "tks-ver" : undefined}>{a.status}</span><br />{a.checks}<br />See details →</td>
           <td>Views {a.views}<br />Engaged {a.engaged}<br />Inquiries {a.inquiries}</td>

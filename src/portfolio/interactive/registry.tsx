@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { KitScreen, type GalleryImage } from "./kit";
+import { SlideScale } from "./SlideScale";
 import { tokentaInteractiveFor } from "./TokentaInteractive";
 import { tokentaSlideFor } from "./TokentaSlides";
 import { tokentaEarlyFor } from "./TokentaEarly";
@@ -116,10 +117,36 @@ function bespoke(slug: string, chapter: ChapterLike, image: GalleryImage): React
   return null;
 }
 
+/**
+ * Design-canvas width per component family (detail-fidelity pass):
+ * slide-deck kits (.tks / .nc) are designed at 980px; the dense
+ * product-UI kits (.ix / .tkx) were designed near-native at ~780px
+ * and keep that canvas so their small mono type stays legible.
+ */
+function canvasWidth(slug: string, chapter: ChapterLike, image: GalleryImage): number {
+  const file = image.src.split("/").pop() ?? "";
+  const title = image.alt;
+  switch (slug) {
+    case "tokenta": return tokentaInteractiveFor(chapter.id, title) ? 780 : 980;
+    case "next-card":
+      if (file.startsWith("Next_Card_Image_01") || file.startsWith("Next_Card_Image_34")) return 980;
+      return nextCardChapterFor(file) ? 980 : 780;
+    case "aurionx":
+      if (file.startsWith("AurionX_17_") || file.startsWith("AurionX_18_")) return 980;
+      return aurionXChapterFor(file) ? 980 : 780;
+    case "deepvise": return deepViseChapterFor(file) ? 980 : 780;
+    case "allweb3": return allweb3ChapterFor(file) ? 980 : 780;
+    case "budweiser": return brewOpsChapterFor(file) ? 980 : 780;
+    case "cyberorigin": return dataQuestChapterFor(file) ? 980 : 780;
+    case "mengniu": return mengniuChapterFor(file) ? 980 : 780;
+    default: return 780;
+  }
+}
+
 export function interactiveFor(slug: string | undefined, chapter: ChapterLike, image: GalleryImage, index: number): ReactNode | null {
   if (!slug || !KNOWN_SLUGS.has(slug)) return null;
   const hit = bespoke(slug, chapter, image);
-  if (hit) return hit;
+  if (hit) return <SlideScale width={canvasWidth(slug, chapter, image)}>{hit}</SlideScale>;
   const images = chapter.images ?? [image];
   return <KitScreen slug={slug} chapterTitle={chapter.title} images={images} activeIndex={index} />;
 }
