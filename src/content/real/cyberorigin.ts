@@ -63,30 +63,30 @@ export const cyberorigin: Project = {
         },
         {
           file: 'CyberOrigin_02.png',
-          title: 'Platform Ecosystem Map',
-          caption: 'A high-level diagram illustrating the data lifecycle from human contributor capture to reviewer validation, and finally to researcher consumption. It visualizes the flow of tasks, data, and rewards across the two-sided marketplace.',
-          rationale: 'Provides mental scaffolding for understanding the complex multi-stakeholder ecosystem before diving into specific features.',
+          title: 'Implemented Prototype Architecture',
+          caption: 'The implemented prototype architecture — a front-end boundary with no back end, as printed.',
+          rationale: 'Showing what was actually built, not what was planned.',
           tags: ['Ecosystem', 'Strategy']
         },
         {
           file: 'CyberOrigin_03.png',
-          title: 'Core Value Propositions',
-          caption: 'Visual breakdown of the three primary pillars: High-Fidelity Capture, Scalable QA, and Fair Compensation. Each pillar is supported by key interface snippets that demonstrate the platform\'s capability in these areas.',
-          rationale: 'Translates abstract platform benefits into concrete product features that stakeholders can easily digest.',
+          title: 'The Embodied-AI Data Loop',
+          caption: 'The embodied-AI data loop at the heart of DataQuest.',
+          rationale: 'The loop is the product: capture, review, train, repeat.',
           tags: ['Value Prop', 'Product Strategy']
         },
         {
           file: 'CyberOrigin_04.png',
-          title: 'Cross-Platform Experience',
-          caption: 'Showcases the unified design language spanning the native iOS application for mobile contributors and the responsive web application for desktop-bound reviewers and researchers. Ensures a cohesive brand presence across all touchpoints.',
-          rationale: 'Demonstrates versatility in designing for distinct contexts of use while maintaining brand and systemic consistency.',
+          title: 'CyberOrigin Ecosystem Diagram',
+          caption: 'The CyberOrigin ecosystem diagram — contributors, platform, and researchers in one system.',
+          rationale: 'The ecosystem drawn with all three sides present.',
           tags: ['Cross-Platform', 'UI Design']
         },
         {
           file: 'CyberOrigin_05.png',
-          title: 'The AI Training Pipeline',
-          caption: 'Explains how the collected raw action data is processed, annotated, and formatted for embodied AI training. Highlights the transformation from chaotic human environments to structured, machine-readable datasets.',
-          rationale: 'Connects the UX of data collection to the ultimate technical goal of advancing AI models.',
+          title: 'Initial Responsive Web Prototype (V0)',
+          caption: 'The initial responsive web prototype — the historical V0 of the product.',
+          rationale: 'V0 kept in the deck as evidence of the path taken.',
           tags: ['Data Pipeline', 'AI']
         }
       ]
@@ -98,37 +98,37 @@ export const cyberorigin: Project = {
       images: [
         {
           file: 'CyberOrigin_06.png',
-          title: 'User Demographics & Behaviors',
-          caption: 'Summary of generative research findings detailing the motivations, technical literacy, and environmental constraints of our target contributor pool. The data highlights a need for low-friction, highly guided interactions.',
-          rationale: 'Roots design decisions in empirical evidence, ensuring the interface serves actual user needs rather than assumptions.',
+          title: 'What the First Prototype Resolved and Exposed',
+          caption: 'What the first prototype resolved, and what it exposed.',
+          rationale: 'A prototype review that keeps the failures in.',
           tags: ['UX Research', 'Demographics']
         },
         {
           file: 'CyberOrigin_07.png',
-          title: 'Persona: The Gig Contributor',
-          caption: 'Detailed profile of "Alex," a gig worker motivated by flexible income. Focuses on their need for quick onboarding, clear task instructions, and transparent payout mechanisms to build trust in the platform.',
-          rationale: 'Humanizes quantitative data to create empathy and guide feature prioritization for the supply side of the marketplace.',
+          title: 'Contributor Journey',
+          caption: 'The contributor journey in nine steps; the slide notes its stages are evidence-based hypotheses in the absence of formal user interviews.',
+          rationale: 'A journey labelled as hypothesis where the evidence is thin.',
           tags: ['Persona', 'Contributor']
         },
         {
           file: 'CyberOrigin_08.png',
-          title: 'Persona: The AI Researcher',
-          caption: 'Profile of "Dr. Chen," an ML scientist requiring diverse, edge-case rich datasets for robotics. Highlights their pain points with current data quality and the need for granular filtering and export capabilities.',
-          rationale: 'Ensures the demand side of the marketplace is equipped with the necessary tools to derive value from the collected data.',
+          title: 'Data Lifecycle and Quality Model',
+          caption: 'The data lifecycle and the quality model that governs it.',
+          rationale: 'Quality modelled alongside the lifecycle it polices.',
           tags: ['Persona', 'Researcher']
         },
         {
           file: 'CyberOrigin_09.png',
-          title: 'Persona: The QA Specialist',
-          caption: 'Insights into the reviewer persona who bridges the gap between contributor and researcher. Details their workflow needs for high-throughput evaluation, anomaly detection, and providing constructive feedback.',
-          rationale: 'Highlights the critical role of human-in-the-loop validation for maintaining dataset integrity.',
+          title: 'Low-Fidelity Exploration — Wireframe Wall',
+          caption: 'Low-fidelity exploration: the wireframe wall behind the mobile capture experience.',
+          rationale: 'Exploration breadth before commitment.',
           tags: ['Persona', 'Reviewer']
         },
         {
           file: 'CyberOrigin_10.png',
-          title: 'Journey Mapping: First Capture',
-          caption: 'An emotional journey map tracking a new contributor\'s experience from downloading the app to receiving approval for their first submitted task. Identifies key friction points and opportunities for delight.',
-          rationale: 'Visualizes the end-to-end user experience to pinpoint moments where proactive guidance or positive reinforcement is needed.',
+          title: 'Mobile Home Screen',
+          caption: 'The mobile home screen (phone) for contributors.',
+          rationale: 'The contributor’s front door, on the device they actually use.',
           tags: ['Journey Map', 'UX']
         }
       ]
@@ -140,30 +140,30 @@ export const cyberorigin: Project = {
       images: [
         {
           file: 'CyberOrigin_11.png',
-          title: 'Global Information Architecture',
-          caption: 'Comprehensive sitemap outlining the structural hierarchy of both the mobile app and web dashboard. Demonstrates how complex features are organized into intuitive navigational models for different user roles.',
-          rationale: 'Provides a blueprint for scalable navigation that can accommodate future feature additions without cluttering the interface.',
+          title: 'Solo Ownership Timeline (2025)',
+          caption: 'The solo ownership timeline for 2025 — one designer across the whole product.',
+          rationale: 'Ownership timeline as accountability record.',
           tags: ['IA', 'Sitemap']
         },
         {
           file: 'CyberOrigin_12.png',
-          title: 'User Flow: Task Discovery & Acceptance',
-          caption: 'Step-by-step flow diagram showing how contributors browse available tasks, evaluate requirements, and commit to a capture session. Highlights the implementation of urgency and location-based filtering.',
-          rationale: 'Optimizes the conversion funnel by reducing cognitive load during the task selection process.',
+          title: 'What the Product Must Explain Before Capture',
+          caption: 'The trust contract: what the product must explain before a contributor captures anything.',
+          rationale: 'Explanation before capture is a quality feature.',
           tags: ['User Flow', 'Discovery']
         },
         {
           file: 'CyberOrigin_13.png',
-          title: 'User Flow: Guided Data Capture',
-          caption: 'Detailed sequence of the core recording loop, illustrating pre-flight checks, real-time feedback mechanisms, and post-capture review before submission. Emphasizes error prevention and recovery.',
-          rationale: 'Ensures data quality at the source by guiding users through complex spatial and environmental requirements.',
+          title: 'Data Bottleneck Map',
+          caption: 'The data bottleneck map — where capture, review, and supply jam.',
+          rationale: 'Bottlenecks mapped before they are solved.',
           tags: ['User Flow', 'Capture']
         },
         {
           file: 'CyberOrigin_14.png',
-          title: 'User Flow: The Review Process',
-          caption: 'Diagram mapping the QA specialist\'s workflow for evaluating submitted tasks. Shows the paths for approval, rejection with feedback, and escalation to senior reviewers for edge cases.',
-          rationale: 'Designs for high throughput and consistency in the review process, minimizing bottlenecks in data availability.',
+          title: 'Value Exchange',
+          caption: 'The value exchange between contributors and researchers.',
+          rationale: 'A marketplace diagrammed as an exchange, not a funnel.',
           tags: ['User Flow', 'Review']
         },
         {
@@ -189,30 +189,30 @@ export const cyberorigin: Project = {
         },
         {
           file: 'CyberOrigin_17.png',
-          title: 'Pre-flight Context Setup',
-          caption: 'The interface guiding users to prepare their environment before recording. Includes interactive checklists for lighting, space clearance, and required props to ensure data viability.',
-          rationale: 'Prevents wasted effort by confirming environmental prerequisites before the user begins the recording process.',
+          title: 'Profile & Wallet (V0, Historical)',
+          caption: 'Profile and wallet dashboard from the V0 prototype — kept in the deck as a historical artifact.',
+          rationale: 'Historical surfaces labelled as historical.',
           tags: ['Onboarding', 'Preparation']
         },
         {
           file: 'CyberOrigin_18.png',
-          title: 'Augmented Reality Guidance',
-          caption: 'The live camera view augmented with real-time UI overlays that provide feedback on framing, motion speed, and spatial positioning. Utilizes device sensors to guide the user dynamically.',
-          rationale: 'Lowers the barrier to entry for complex data capture by providing immediate, in-context correction.',
+          title: 'Evidence and Claim Map',
+          caption: 'The evidence and claim map tying product claims to their evidence.',
+          rationale: 'Claims that cannot point at evidence do not ship.',
           tags: ['AR', 'Camera Interface']
         },
         {
           file: 'CyberOrigin_19.png',
-          title: 'Post-Capture Review & Trim',
-          caption: 'A streamlined editor allowing contributors to review their recording, trim unnecessary padding at the start and end, and verify quality against the task rubric before finalizing submission.',
-          rationale: 'Empowers users to self-correct and improve their submission quality, reducing the burden on human reviewers.',
+          title: 'Naming and Reward Cleanup',
+          caption: 'Naming and reward cleanup — terminology and reward language made consistent.',
+          rationale: 'Cleanup as a design task in its own right.',
           tags: ['Video Editing', 'Review']
         },
         {
           file: 'CyberOrigin_20.png',
-          title: 'Earnings & Reputation Wallet',
-          caption: 'A transparent view of pending and completed payouts, alongside the user\'s quality score and progression towards higher tier tasks. Visualizes the direct correlation between data quality and earning potential.',
-          rationale: 'Builds trust and incentivizes continuous improvement through clear financial and status rewards.',
+          title: 'Role and Job Map',
+          caption: 'The role and job map across the marketplace’s five roles.',
+          rationale: 'Roles defined by their jobs.',
           tags: ['Fintech', 'Gamification']
         }
       ]
@@ -224,37 +224,37 @@ export const cyberorigin: Project = {
       images: [
         {
           file: 'CyberOrigin_21.png',
-          title: 'Multi-Tier Role Hierarchy',
-          caption: 'Visual representation of the progression system, showing how contributors can level up from novice to expert status based on submission volume and quality scores, unlocking more complex and lucrative tasks.',
-          rationale: 'Creates a compelling long-term retention loop while organically cultivating a highly skilled contributor pool.',
+          title: 'Contributor Journey — Detailed',
+          caption: 'The detailed contributor journey, with drop-off risks and trust signals marked.',
+          rationale: 'The journey annotated with its own failure points.',
           tags: ['Progression', 'System Design']
         },
         {
           file: 'CyberOrigin_22.png',
-          title: 'Job Map: Kitchen Interaction Tasks',
-          caption: 'Detailed breakdown of the requirements for capturing complex culinary actions. Outlines the specific metadata, camera angles, and object interactions needed for this high-value dataset category.',
-          rationale: 'Demonstrates the platform\'s capability to handle nuanced, context-heavy data collection protocols.',
+          title: 'From Broad Browsing to Bounded Task Completion',
+          caption: 'Before/after: from broad browsing to bounded task completion.',
+          rationale: 'Bounded tasks are the marketplace’s quality lever.',
           tags: ['Job Map', 'Domain Specific']
         },
         {
           file: 'CyberOrigin_23.png',
-          title: 'Job Map: Locomotion & Navigation',
-          caption: 'Guidelines for capturing human movement across different terrains and environments. Highlights the UI components required for tracking trajectory, pace, and spatial mapping.',
-          rationale: 'Showcases solutions for data capture that involve significant physical movement and environmental variability.',
+          title: 'Product Principles',
+          caption: 'The product principles governing the DataQuest design.',
+          rationale: 'Principles stated where the flows can be judged against them.',
           tags: ['Job Map', 'Motion']
         },
         {
           file: 'CyberOrigin_24.png',
-          title: 'Job Map: Device & Appliance Usage',
-          caption: 'Instructions for recording interactions with smart home devices and traditional appliances. Focuses on capturing fine motor skills and the causal relationship between action and device state change.',
-          rationale: 'Highlights the design\'s adaptability to capture intricate details necessary for fine-manipulation AI training.',
+          title: 'Scope Map',
+          caption: 'The scope map — what the prototype covers and what it leaves out.',
+          rationale: 'Scope drawn as a map, not implied.',
           tags: ['Job Map', 'Interaction']
         },
         {
           file: 'CyberOrigin_25.png',
-          title: 'Skill Verification Flows',
-          caption: 'The onboarding interfaces for specific task categories, requiring users to pass short interactive quizzes or submit calibration videos to prove competence before accessing paid tasks.',
-          rationale: 'Acts as a quality gatekeeper, ensuring users understand the nuances of a task type before polluting the dataset.',
+          title: 'Data Lifecycle — Nine Stages',
+          caption: 'The data lifecycle in nine stages, plus the ownership lane.',
+          rationale: 'Ownership tracked through every stage.',
           tags: ['Verification', 'Quality Assurance']
         }
       ]
@@ -273,30 +273,30 @@ export const cyberorigin: Project = {
         },
         {
           file: 'CyberOrigin_27.png',
-          title: 'Video Annotation & Scrubbing Tools',
-          caption: 'Detailed view of the custom video player equipped with frame-by-frame scrubbing, spatial bookmarking, and tools for highlighting specific errors or areas of interest within the capture.',
-          rationale: 'Provides the granular control necessary to validate complex temporal and spatial actions accurately.',
+          title: 'Quality Score Model',
+          caption: 'The quality score model used to judge captures.',
+          rationale: 'Scoring made explicit so contributors can aim at it.',
           tags: ['Tooling', 'Annotation']
         },
         {
           file: 'CyberOrigin_28.png',
-          title: 'Feedback Construction Interface',
-          caption: 'A modular system for reviewers to assemble constructive feedback for rejected tasks. Utilizes predefined snippets based on common errors, supplemented with custom notes to educate the contributor.',
-          rationale: 'Standardizes feedback to reduce bias while providing actionable guidance to improve future contributor performance.',
+          title: 'Reward Calculation',
+          caption: 'The printed reward-calculation example, shown as printed on the slide.',
+          rationale: 'The worked example kept exactly as the deck prints it.',
           tags: ['Feedback', 'Workflow']
         },
         {
           file: 'CyberOrigin_29.png',
-          title: 'Marketplace Supply/Demand Analytics',
-          caption: 'An operations dashboard visualizing the real-time balance of available tasks versus active contributors. Includes predictive modeling to inform dynamic pricing and incentive structures.',
-          rationale: 'Empowers platform administrators to maintain marketplace liquidity and address bottlenecks proactively.',
+          title: 'Ledger and Settlement Flow',
+          caption: 'The ledger and settlement flow — how contributor earnings are recorded and paid.',
+          rationale: 'Money movement drawn with the same care as data movement.',
           tags: ['Analytics', 'Data Viz']
         },
         {
           file: 'CyberOrigin_30.png',
-          title: 'Dispute Resolution Center',
-          caption: 'The interface for handling appeals when contributors contest a rejection. Presents a side-by-side view of the original submission, reviewer feedback, and the contributor\'s rationale for a senior moderator to adjudicate.',
-          rationale: 'Ensures fairness and maintains trust within the community through a transparent arbitration process.',
+          title: 'Reward Model Options',
+          caption: 'Reward model options compared for the marketplace.',
+          rationale: 'Options compared before one is chosen.',
           tags: ['Moderation', 'Trust & Safety']
         }
       ]
@@ -308,37 +308,37 @@ export const cyberorigin: Project = {
       images: [
         {
           file: 'CyberOrigin_31.png',
-          title: 'Core Aesthetic Concept',
-          caption: 'The moodboard and foundational design principles driving the CyberOrigin aesthetic. Blends utilitarian clarity for task execution with subtle futuristic elements to reflect the AI-driven nature of the platform.',
-          rationale: 'Establishes a unique visual identity that feels both accessible to gig workers and credible to enterprise researchers.',
+          title: 'DataQuest Information Architecture',
+          caption: 'The real information architecture: 10 sections and 34+ screens.',
+          rationale: 'The IA the product actually shipped with.',
           tags: ['Art Direction', 'Visual Design']
         },
         {
           file: 'CyberOrigin_32.png',
-          title: 'Color Palette & Typography',
-          caption: 'Detailed specification of the brand colors, emphasizing high-contrast combinations for legibility in various lighting conditions. Highlights the typographic hierarchy chosen for dense data presentation.',
-          rationale: 'Ensures accessibility and readability remain paramount, especially for mobile users capturing data outdoors.',
+          title: 'DataQuest Task Taxonomy',
+          caption: 'The task taxonomy, with a live classifier in the rebuild.',
+          rationale: 'Taxonomy as a working tool, not a poster.',
           tags: ['Typography', 'Color']
         },
         {
           file: 'CyberOrigin_33.png',
-          title: 'Component Library: Mobile',
-          caption: 'A selection of fundamental UI components tailored for iOS, including large touch targets, clear state indicators, and haptic feedback specifications to support one-handed operation during capture.',
-          rationale: 'Accelerates development while ensuring a tactile, responsive feel crucial for a tool used in active environments.',
+          title: 'Component Library',
+          caption: 'The full component-library board for the DataQuest system.',
+          rationale: 'The library at board scale.',
           tags: ['Design System', 'Mobile Components']
         },
         {
           file: 'CyberOrigin_34.png',
-          title: 'Component Library: Web Dashboard',
-          caption: 'The desktop counterpart to the mobile system, featuring data-dense tables, complex filtering models, and standardized charting components for the reviewer and researcher interfaces.',
-          rationale: 'Maintains visual consistency while adapting functional paradigms for mouse-and-keyboard, information-heavy contexts.',
+          title: 'Conceptual Object Model',
+          caption: 'The conceptual object model behind the marketplace.',
+          rationale: 'Objects before screens.',
           tags: ['Design System', 'Web Components']
         },
         {
           file: 'CyberOrigin_35.png',
-          title: 'Iconography & Feedback States',
-          caption: 'The custom icon set designed for the platform, alongside a comprehensive overview of success, warning, error, and loading states. Emphasizes unambiguous communication of system status.',
-          rationale: 'Reduces cognitive load by relying on universally recognizable symbols and clear visual affordances for critical interactions.',
+          title: 'Low-Fidelity Exploration Board',
+          caption: 'The low-fidelity exploration board — the street-view variant of the file 09 board.',
+          rationale: 'A second exploration pass, in a second context.',
           tags: ['Iconography', 'UI States']
         }
       ]
@@ -350,37 +350,37 @@ export const cyberorigin: Project = {
       images: [
         {
           file: 'CyberOrigin_36.png',
-          title: 'High-Level System Architecture',
-          caption: 'A diagram illustrating the technical stack, showcasing the relationship between the client applications, the scalable cloud backend, and the data processing pipelines that prepare the AI training sets.',
-          rationale: 'Communicates an understanding of the engineering complexities involved in handling large-scale, high-fidelity video and sensor data.',
+          title: 'Task Card Comparison (co-dq-30)',
+          caption: 'Task-card A/B/C comparison with the printed recommendation (co-dq-30).',
+          rationale: 'Comparison with the recommendation on the record.',
           tags: ['Architecture', 'Tech Stack']
         },
         {
           file: 'CyberOrigin_37.png',
-          title: 'Real-Time Edge Processing',
-          caption: 'Visualizes how the mobile application leverages on-device machine learning (CoreML) to provide instant feedback on framing and lighting before the data is ever sent to the server.',
-          rationale: 'Highlights the strategic use of edge computing to reduce server costs and improve the user experience with zero-latency guidance.',
+          title: 'Contributor Flow: Capture Task',
+          caption: 'The contributor capture-task flow as a wireflow.',
+          rationale: 'The core flow, wired end to end.',
           tags: ['Edge Computing', 'Innovation']
         },
         {
           file: 'CyberOrigin_38.png',
-          title: 'Data Privacy & Anonymization',
-          caption: 'The workflow for automatically blurring faces, license plates, and sensitive information in the captured videos. Details the consent management UI and the technical masking process.',
-          rationale: 'Addresses critical regulatory and ethical concerns, ensuring user safety and compliance with global privacy standards.',
+          title: 'Decision Log (co-dq-32)',
+          caption: 'The decision log (co-dq-32) — decisions and their reasoning, on record.',
+          rationale: 'Decisions logged where reviewers can find them.',
           tags: ['Privacy', 'Ethics']
         },
         {
           file: 'CyberOrigin_39.png',
-          title: 'Performance Optimization Metrics',
-          caption: 'A dashboard showing improvements in upload speeds, app start times, and battery consumption achieved through iterative design and engineering optimizations.',
-          rationale: 'Demonstrates a commitment to measurable outcomes and the importance of performance as a core user experience metric.',
+          title: 'Evolution of a Unified System',
+          caption: 'The evolution of DataQuest into a unified system.',
+          rationale: 'Evolution shown, not just the end state.',
           tags: ['Performance', 'Metrics']
         },
         {
           file: 'CyberOrigin_40.png',
-          title: 'Future Roadmap & Vision',
-          caption: 'A conceptual look at upcoming features, including support for specialized hardware integrations (wearables, smart glasses) and automated AI-assisted preliminary reviews to further scale the platform.',
-          rationale: 'Positions the project not just as a completed artifact, but as a living platform poised to evolve alongside the rapidly advancing field of embodied AI.',
+          title: 'Visual Foundations',
+          caption: 'Visual foundations: the design-system basis of the deck (violet-to-blue, as printed).',
+          rationale: 'Foundations close the deck they opened.',
           tags: ['Roadmap', 'Vision']
         }
       ]
