@@ -12,6 +12,7 @@ import { deepViseChapterFor } from "./DeepViseChapters";
 import { brewOpsChapterFor } from "./BrewOpsChapters";
 import { mengniuChapterFor } from "./MengniuChapters";
 import { NextCardHeroApp, NextCardWireframeWall } from "./NextCardApp";
+import { NextCardWireframeWallShowcase } from "./NextCardPhones";
 import { nextCardChapterFor } from "./NextCardChapters";
 import { AurionXTVDesignSystem, AurionXVisualIdentity } from "./AurionXDesignSystem";
 import {
@@ -52,7 +53,7 @@ function bespoke(slug: string, chapter: ChapterLike, image: GalleryImage): React
 
   if (slug === "next-card") {
     if (file.startsWith("Next_Card_Image_01")) return <NextCardHeroApp />;
-    if (file.startsWith("Next_Card_Image_34")) return <NextCardWireframeWall />;
+    if (file.startsWith("Next_Card_Image_34")) return <NextCardWireframeWallShowcase />;
     if (file.startsWith("Next_Card_Image_22")) return <NextCardValueEngines />;
     if (file.startsWith("Next_Card_Image_23")) return <NextCardValueTriangle />;
     if (title === "Step 1 — ID OCR & Biometric Liveness") return <NextCardApplicationFlow />;

@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import "./nextcard-app.css";
+import { NextCardApplicationShowcase, NextCardApprovalShowcase, NextCardBenefitsShowcase, NextCardCampaignShowcase, NextCardComponentSystemShowcase, NextCardCreditBuilderShowcase, NextCardDashboardShowcase, NextCardFrictionShowcase, NextCardMissionsShowcase, NextCardPerksShowcase, NextCardRewardsShowcase, NextCardSquadShowcase, NextCardStateMatrixShowcase } from "./NextCardPhones";
 
 /**
  * Next Card chapter rebuilds — transcribed from the ACTUAL image files
@@ -886,25 +887,27 @@ const ITERATIONS: Array<[string, string, [string, string], [string, string], ...
 ];
 export function NextCardIterationBoard() {
   const [d, setD] = useState(0);
-  const [opt, setOpt] = useState<"A" | "B">("B");
-  const cur = ITERATIONS[d];
-  const shown = opt === "A" ? cur[2] : cur[3];
-  return <Nc n="35" title="Iteration Board" label="Next Card iteration board — interactive rebuild of Next_Card_Image_35">
-    <p style={{ color: "#c9c9ce", marginTop: 0 }}>Credit Card Concept — evaluating key design directions through options. Each decision is made based on user value, clarity, and long-term impact.</p>
-    <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }} role="group" aria-label="Decision areas">{ITERATIONS.map(([t], i) => <button key={t} type="button" className="nc-tab" aria-pressed={d === i} onClick={() => { setD(i); setOpt("B"); }}>{String(i + 1).padStart(2, "0")} {t}</button>)}</div>
-    <p style={{ margin: "8px 0 0", color: "#c9c9ce" }}>{cur[0]} — {cur[1]}</p>
-    <div style={{ display: "flex", gap: 5, marginTop: 8 }} role="group" aria-label="Options">
-      <button type="button" className="nc-tab" aria-pressed={opt === "A"} onClick={() => setOpt("A")}>Option A — {cur[2][0]}</button>
-      <button type="button" className="nc-tab" aria-pressed={opt === "B"} onClick={() => setOpt("B")}>Option B — {cur[3][0]}</button>
-      <span className="nc-tab" style={{ borderColor: ORANGE }}>FINAL DECISION ✓ {cur[4]}</span>
-    </div>
-    <div style={{ background: "#f3ede4", color: "#141414", borderRadius: 10, padding: 12, marginTop: 10 }} aria-live="polite">
-      <p style={{ margin: 0, fontWeight: 700 }}>Option {opt} — {shown[0]}</p>
-      <p style={{ margin: "5px 0 0" }}>{shown[1]}</p>
-    </div>
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 10 }}>
-      <div style={{ border: "1px solid #2c2d30", borderRadius: 8, padding: 10 }}><p className="nc-acc" style={{ margin: 0, fontWeight: 700 }}>REASON</p><p style={{ fontWeight: 700, margin: "4px 0" }}>{cur[5]}</p><p style={{ color: "#c9c9ce", margin: 0 }}>{cur[6]}</p></div>
-      <div style={{ border: "1px solid #2c2d30", borderRadius: 8, padding: 10 }}><p className="nc-acc" style={{ margin: 0, fontWeight: 700 }}>EXPECTED EFFECT</p><p style={{ fontWeight: 700, margin: "4px 0" }}>{cur[7]}</p><p style={{ color: "#c9c9ce", margin: 0 }}>{cur[8]}</p></div>
+  const cellCard = (title: string, body: string, chosen: boolean) => <div style={{ background: "#f3ede4", color: "#141414", borderRadius: 8, padding: "7px 8px", border: chosen ? `2px solid ${ORANGE}` : "2px solid transparent" }}>
+    <p style={{ margin: 0, fontWeight: 700, fontSize: 11 }}>{title}{chosen ? <span className="nc-acc"> ✓</span> : null}</p>
+    <p style={{ margin: "3px 0 0", fontSize: 10.5, lineHeight: 1.45 }}>{body}</p>
+  </div>;
+  return <Nc n="35" title="Iteration Board" label="Next Card iteration board — full printed table rebuild of Next_Card_Image_35">
+    <p style={{ color: "#c9c9ce", marginTop: 0 }}>Credit Card Concept — evaluating key design directions through options. Each decision is made based on user value, clarity, and long-term impact. The full board, as printed — select a row to highlight it.</p>
+    <div style={{ overflowX: "auto" }}>
+      <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: 0, fontSize: 11.5 }}>
+        <thead><tr>{["Decision Area", "Option A", "Option B", "Final Decision ✓", "Reason", "Expected Effect"].map((h) => <th key={h} style={{ textAlign: "left", padding: "7px 8px", borderBottom: `2px solid ${ORANGE}`, color: h.startsWith("Final") ? ORANGE : "#f5f5f5", fontSize: 11, letterSpacing: ".04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>{h}</th>)}</tr></thead>
+        <tbody>{ITERATIONS.map((row, i) => {
+          const finalIsA = row[4] === row[2][0];
+          return <tr key={row[0]} onClick={() => setD(i)} aria-selected={d === i} style={{ cursor: "pointer", background: d === i ? "#17130f" : "transparent" }}>
+            <td style={{ padding: "9px 8px", borderBottom: "1px solid #2c2d30", verticalAlign: "top", minWidth: 108 }}><b className="nc-acc">{String(i + 1).padStart(2, "0")}</b><br /><b>{row[0]}</b><br /><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>{row[1]}</span></td>
+            <td style={{ padding: "9px 6px", borderBottom: "1px solid #2c2d30", verticalAlign: "top", minWidth: 168 }}>{cellCard(row[2][0], row[2][1], finalIsA)}</td>
+            <td style={{ padding: "9px 6px", borderBottom: "1px solid #2c2d30", verticalAlign: "top", minWidth: 168 }}>{cellCard(row[3][0], row[3][1], !finalIsA)}</td>
+            <td style={{ padding: "9px 8px", borderBottom: "1px solid #2c2d30", verticalAlign: "top", minWidth: 104 }}><b className="nc-acc">✓ {row[4]}</b></td>
+            <td style={{ padding: "9px 8px", borderBottom: "1px solid #2c2d30", verticalAlign: "top", minWidth: 130 }}><b>{row[5]}</b><br /><span style={{ color: "#c9c9ce" }}>{row[6]}</span></td>
+            <td style={{ padding: "9px 8px", borderBottom: "1px solid #2c2d30", verticalAlign: "top", minWidth: 130 }}><b>{row[7]}</b><br /><span style={{ color: "#c9c9ce" }}>{row[8]}</span></td>
+          </tr>;
+        })}</tbody>
+      </table>
     </div>
     <p style={{ color: "#9a9aa0", margin: "10px 0 0" }}>These decisions are based on user research, Gen Z behaviors, and product goals for Next Card.</p>
   </Nc>;
@@ -1551,20 +1554,20 @@ export function nextCardChapterFor(file: string) {
   if (file.startsWith("Next_Card_Image_32")) return <NextCardTimeline32 />;
   if (file.startsWith("Next_Card_Image_33")) return <NextCardCampaignSystem />;
   if (file.startsWith("Next_Card_Image_35")) return <NextCardIterationBoard />;
-  if (file.startsWith("Next_Card_Image_36")) return <NextCardFriction />;
+  if (file.startsWith("Next_Card_Image_36")) return <NextCardFrictionShowcase />;
   if (file.startsWith("Next_Card_Image_37")) return <NextCardInspiration />;
   if (file.startsWith("Next_Card_Image_38")) return <NextCardBrandSystem />;
-  if (file.startsWith("Next_Card_Image_40")) return <NextCardComponentSystem />;
-  if (file.startsWith("Next_Card_Image_41")) return <NextCardLandingPage />;
-  if (file.startsWith("Next_Card_Image_42")) return <NextCardBenefits />;
-  if (file.startsWith("Next_Card_Image_43")) return <NextCardApplicationSequence />;
-  if (file.startsWith("Next_Card_Image_44")) return <NextCardApproval />;
-  if (file.startsWith("Next_Card_Image_45")) return <NextCardHomeDashboard />;
-  if (file.startsWith("Next_Card_Image_46")) return <NextCardRewardsHub />;
-  if (file.startsWith("Next_Card_Image_47")) return <NextCardLocalPerks />;
-  if (file.startsWith("Next_Card_Image_48")) return <NextCardCreditBuilder />;
-  if (file.startsWith("Next_Card_Image_49")) return <NextCardSquad />;
-  if (file.startsWith("Next_Card_Image_50")) return <NextCardMissions />;
-  if (file.startsWith("Next_Card_Image_51")) return <NextCardStateMatrix />;
+  if (file.startsWith("Next_Card_Image_40")) return <NextCardComponentSystemShowcase />;
+  if (file.startsWith("Next_Card_Image_41")) return <NextCardCampaignShowcase />;
+  if (file.startsWith("Next_Card_Image_42")) return <NextCardBenefitsShowcase />;
+  if (file.startsWith("Next_Card_Image_43")) return <NextCardApplicationShowcase />;
+  if (file.startsWith("Next_Card_Image_44")) return <NextCardApprovalShowcase />;
+  if (file.startsWith("Next_Card_Image_45")) return <NextCardDashboardShowcase />;
+  if (file.startsWith("Next_Card_Image_46")) return <NextCardRewardsShowcase />;
+  if (file.startsWith("Next_Card_Image_47")) return <NextCardPerksShowcase />;
+  if (file.startsWith("Next_Card_Image_48")) return <NextCardCreditBuilderShowcase />;
+  if (file.startsWith("Next_Card_Image_49")) return <NextCardSquadShowcase />;
+  if (file.startsWith("Next_Card_Image_50")) return <NextCardMissionsShowcase />;
+  if (file.startsWith("Next_Card_Image_51")) return <NextCardStateMatrixShowcase />;
   return null;
 }

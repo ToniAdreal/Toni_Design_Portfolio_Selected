@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from "react";
 import "./tokenta-slides.css";
 import "./allweb3-chapters.css";
+import { Allweb3AdminWall, Allweb3CriteriaColumns, Allweb3EcosystemTriangle, Allweb3EveryRoleMosaic, Allweb3IATray, Allweb3LayersBands, Allweb3LegacyVs, Allweb3LegibleLoop, Allweb3MultiPortalWall, Allweb3OpaqueWorkflow, Allweb3PainMapFull, Allweb3PermissionsGlyphs, Allweb3RoleScopeTree, Allweb3SharedObjectWall, Allweb3ThreePortalsMatrix, Allweb3TrustGap, Allweb3TrustLoop } from "./Allweb3Rebuilds";
 
 /**
  * Bespoke rebuilds of the 15 remaining ALLWEB3 gallery slots,
@@ -550,6 +551,20 @@ export function Allweb3Management() {
   const [reason, setReason] = useState("Repeated violation of campaign guidelines and community conduct policy.");
   const r = MGMT_ROWS[row];
   return <Aw n="16" title="Creator and Project Management" sub="Role-based oversight with verifiable identity, performance, risk signals, and full administrative audit trail. Admin Console — Super Admin." label="ALLWEB3 creator and project management — interactive rebuild of 16.webp" foot="ALLWEB3 — Admin Console · Creators & Projects">
+    <div style={{ display: "flex", gap: 12 }}>
+      <div style={{ width: 132, flex: "none", fontSize: 11 }}>
+        <p style={{ margin: "0 0 4px", color: G, fontWeight: 700, letterSpacing: ".06em" }}>ADMIN CONSOLE</p>
+        {["Overview", "Analytics"].map((t) => <p key={t} style={{ margin: "3.5px 0" }}>{t}</p>)}
+        <p style={{ margin: "8px 0 4px", color: G, fontWeight: 700, letterSpacing: ".06em" }}>MANAGEMENT</p>
+        <p style={{ margin: "3.5px 0", background: "#12240f", border: "1px solid #2c5a2c", borderRadius: 6, padding: "3px 6px" }}>Creators &amp; Projects</p>
+        {["Campaigns", "Applications", "Disputes", "Payouts"].map((t) => <p key={t} style={{ margin: "3.5px 0" }}>{t}</p>)}
+        <p style={{ margin: "8px 0 4px", color: G, fontWeight: 700, letterSpacing: ".06em" }}>RISK &amp; SAFETY</p>
+        {["Risk Dashboard", "Watchlist", "Alerts"].map((t) => <p key={t} style={{ margin: "3.5px 0" }}>{t}</p>)}
+        <p style={{ margin: "8px 0 4px", color: G, fontWeight: 700, letterSpacing: ".06em" }}>SYSTEM</p>
+        {["Roles & Permissions", "Audit Log", "Settings"].map((t) => <p key={t} style={{ margin: "3.5px 0" }}>{t}</p>)}
+        <div style={{ borderTop: "1px solid #223522", marginTop: 10, paddingTop: 7 }}><b>Admin</b><br /><span className="aw3-dim">Super Admin</span></div>
+      </div>
+      <div style={{ flex: 1, minWidth: 0 }}>
     <div className="tks-grid" style={{ gridTemplateColumns: "repeat(4,1fr)" }}>
       {[["Role-Based Access", "Granular permissions for safe administration."], ["Wallet-Verified Identity", "On-chain verification ensures accountability."], ["Action with Evidence", "No admin action without confirmation and reason."], ["Full Audit Trail", "Immutable, chronological record of every action."]].map(([t, d]) => <div key={t} className="tks-card"><b style={{ color: G, fontSize: 11.5 }}>{t}</b><p className="aw3-dim" style={{ margin: "3px 0 0" }}>{d}</p></div>)}
     </div>
@@ -603,15 +618,18 @@ export function Allweb3Management() {
         <p style={{ margin: 0 }}><span style={{ color: G }}>✓ Suspension confirmed</span> — as recorded in the printed audit trail (ID: ACT-987654321).</p>
         <button type="button" className="tks-btn tks-btn--ghost" style={{ marginTop: 8 }} onClick={() => setStage("drawer")}>Back to action drawer</button>
       </div>}
-      {(stage === "confirm" || stage === "done") && <div style={{ marginTop: 10 }}>
-        <p className="tks-kicker" style={{ margin: "0 0 4px" }}>Audit Trail — View Full Log</p>
-        {AUDIT_TRAIL.map(([when, what, meta]) => <p key={when} style={{ margin: "4px 0" }}><span className="aw3-dim">{when}</span> · {what} · <span className="aw3-dim">{meta}</span></p>)}
-      </div>}
+    </div>
+    <div className="tks-card" style={{ marginTop: 10 }}>
+      <p className="tks-kicker" style={{ marginTop: 0 }}>4 · Confirmation &amp; Audit Trail — always on record (View Full Log)</p>
+      {AUDIT_TRAIL.map(([when, what, meta]) => <p key={when} style={{ margin: "4px 0" }}><span className="aw3-dim">{when}</span> · {what} · <span className="aw3-dim">{meta}</span></p>)}
+    </div>
+      </div>
     </div>
   </Aw>;
 }
 
-/* ---------------- 17 — Admin Portal Overview (data title: Admin Governance Terminal) ---------------- */
+/* ---------------- 17 — Admin Portal Overview
+} (data title: Admin Governance Terminal) ---------------- */
 const PRINCIPLES: Array<[string, string]> = [
   ["Protect Integrity", "Tools to detect, review, and resolve issues."],
   ["Ensure Fairness", "Consistent outcomes across campaigns and participants."],
@@ -721,11 +739,19 @@ export function Allweb3DisputeResolution() {
         <p style={{ margin: 0 }}>Evidence Submitted — <b>5 items ›</b></p></div>
     </div>
     <p className="tks-kicker" style={{ margin: "12px 0 4px" }}>Evidence Timeline — Sort: Oldest First (select an entry)</p>
-    <div className="tks-flow" role="group">{EVIDENCE_TIMELINE.map(([when, t], i) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={i === ev} onClick={() => setEv(i)}><span className="tks-kicker">{when}</span><br /><b>{t}</b></button></span>)}</div>
-    <div className="tks-detail" aria-live="polite"><b>{EVIDENCE_TIMELINE[ev][1]}</b> — {EVIDENCE_TIMELINE[ev][2]}{EVIDENCE_TIMELINE[ev][3] ? <> · <span style={{ color: EVIDENCE_TIMELINE[ev][3] === "Rejected" ? "#ff8a8a" : G }}>{EVIDENCE_TIMELINE[ev][3] === "Verified" ? "✓ Verified" : EVIDENCE_TIMELINE[ev][3] === "Rejected" ? "✗ Rejected" : "◌ Pending"}</span></> : null}</div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 6 }} role="group" aria-label="Evidence timeline">
+      {EVIDENCE_TIMELINE.map(([when, t, desc, st], i) => <button key={t} type="button" aria-pressed={i === ev} onClick={() => setEv(i)} style={{ background: "#0a120a", border: `1.5px solid ${st === "Verified" ? "#2fbf71" : st === "Rejected" ? "#ff4d4f" : st === "Pending" ? "#8a908a" : "#223522"}`, borderStyle: st === "Pending" ? "dashed" : "solid", outline: i === ev ? `2px solid ${G}` : "none", borderRadius: 9, color: "#e8f5e8", padding: "7px 8px", cursor: "pointer", font: "inherit", textAlign: "left" }}>
+        <span className="tks-kicker" style={{ display: "block" }}>{when}</span><b style={{ fontSize: 11.5, display: "block", margin: "2px 0" }}>{t}</b>
+        <span className="aw3-dim" style={{ fontSize: 10.5, display: "block" }}>{desc}</span>
+        {st ? <span style={{ display: "block", marginTop: 4, fontWeight: 700, color: st === "Verified" ? "#2fbf71" : st === "Rejected" ? "#ff8a8a" : "#c9c9ce" }}>{st === "Verified" ? "✓ Verified" : st === "Rejected" ? "✗ Rejected" : "◌ Pending"}</span> : null}
+      </button>)}
+    </div>
     <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1.2fr 1fr", marginTop: 10 }}>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Validator Vote Distribution — 7 of 9 validators submitted · 7 Votes</p>
-        {VOTES.map(([name, count, pct], i) => <p key={name} style={{ margin: "5px 0" }}><button type="button" className="tks-chip" aria-pressed={i === vote} onClick={() => setVote(i)}>{name}</button> <b>{count} ({pct})</b></p>)}
+        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          <div style={{ width: 74, height: 74, flex: "none", borderRadius: "50%", background: "conic-gradient(#2fbf71 0 57%, #ffb020 57% 86%, #ff4d4f 86% 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ width: 48, height: 48, borderRadius: "50%", background: "#0a120a", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 10.5, textAlign: "center" }}>7 Votes</span></div>
+          <div>{VOTES.map(([name, count, pct], i) => { const col = ["#2fbf71", "#ffb020", "#ff4d4f", "#8a908a"][i]; return <p key={name} style={{ margin: "3px 0" }}><button type="button" className="tks-chip" aria-pressed={i === vote} onClick={() => setVote(i)} style={{ borderColor: col }}><span style={{ color: col }}>●</span> {name}</button> <b>{count} ({pct})</b></p>; })}</div>
+        </div>
         <p className="aw3-dim" aria-live="polite" style={{ margin: "6px 0 0" }}>{VOTES[vote][0]}: {VOTES[vote][1]} of 7 votes ({VOTES[vote][2]}).</p></div>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Internal Notes</p>
         <p style={{ margin: "5px 0" }}><b>Admin Analyst</b> <span className="tks-tag">Note</span> <span className="aw3-dim">May 21, 09:15 UTC</span><br />Content deliverables verified. Performance dip aligns with platform-wide reach decline (May 10–18).</p>
@@ -743,11 +769,11 @@ export function Allweb3DisputeResolution() {
         <p style={{ margin: "6px 0 0" }}>Time Elapsed <b>2d 10h 27m</b> · Time Remaining <b style={{ color: G }}>1d 14h 32m</b></p>
         <p style={{ color: "#ffb84d", margin: "6px 0 0" }}>⚠ Escalation Eligible in 1d 14h — If no decision is issued by the SLA deadline.</p></div>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Final Settlement Decision — Select a decision and add rationale</p>
-        <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1fr" }}>{DECISIONS.map(([t, d], i) => <button key={t} type="button" className={`tks-card${decision === i ? " is-on" : ""}`} aria-pressed={decision === i} onClick={() => { setDecision(i); setConfirmed(false); }}><b>{t}</b><p className="aw3-dim" style={{ margin: "3px 0 0" }}>{d}</p></button>)}</div>
+        <div style={{ display: "grid", gap: 6 }}>{DECISIONS.map(([t, d], i) => { const tint = ["rgba(47,191,113,.13)", "rgba(255,176,32,.13)", "rgba(255,77,79,.13)", "rgba(138,144,138,.13)"][i]; const bc = ["#2fbf71", "#ffb020", "#ff4d4f", "#8a908a"][i]; return <button key={t} type="button" aria-pressed={decision === i} onClick={() => { setDecision(i); setConfirmed(false); }} style={{ background: tint, border: `1.5px solid ${decision === i ? bc : "#223522"}`, borderRadius: 9, color: "#e8f5e8", padding: "8px 10px", cursor: "pointer", font: "inherit", textAlign: "left" }}><span style={{ color: bc, marginRight: 7 }}>{decision === i ? "◉" : "○"}</span><b>{t}</b><p className="aw3-dim" style={{ margin: "3px 0 0 19px" }}>{d}</p></button>; })}</div>
         <label style={{ display: "block", marginTop: 8 }}>Rationale (required)
           <textarea className="aw3-area" rows={2} value={rationale} onChange={(e) => { setRationale(e.target.value); setConfirmed(false); }} placeholder="Add rationale for the decision…" aria-label="Decision rationale, required" /></label>
         <p style={{ display: "flex", gap: 6, margin: "8px 0 0", alignItems: "center" }}>
-          <button type="button" className="tks-btn" disabled={decision === null || rationale.trim().length === 0} onClick={() => setConfirmed(true)}>🔒 Confirm Decision</button>
+          <button type="button" className="tks-btn" style={decision === null || rationale.trim().length === 0 ? { background: "#3a403a", borderColor: "#3a403a", color: "#9a9aa0" } : undefined} disabled={decision === null || rationale.trim().length === 0} onClick={() => setConfirmed(true)}>🔒 Confirm Decision</button>
           <span aria-live="polite">{confirmed && decision !== null ? `Decision staged in this rebuild: ${DECISIONS[decision][0]} — as printed, all decisions are recorded on-chain for transparency and auditability.` : "The printed Confirm Decision stays locked until a decision and a rationale are both present."}</span>
         </p></div>
     </div>
@@ -812,20 +838,24 @@ export function Allweb3ThreePortals() {
 
 /* ---------------- Dispatcher ---------------- */
 export function allweb3ChapterFor(file: string): ReactNode | null {
-  if (file === "1.webp") return <Allweb3MultiPortal />;
-  if (file === "2.webp") return <Allweb3SharedObject />;
-  if (file === "3.webp") return <Allweb3RoleScope />;
-  if (file === "4.webp") return <Allweb3EveryRole />;
-  if (file === "6.webp") return <Allweb3PainMap />;
-  if (file === "9.webp") return <Allweb3Legible />;
-  if (file === "10.webp") return <Allweb3SuccessCriteria />;
-  if (file === "11.webp") return <Allweb3Ecosystem />;
-  if (file === "12.webp") return <Allweb3Layers />;
-  if (file === "14.webp") return <Allweb3Permissions />;
-  if (file === "15.webp") return <Allweb3TopLevelIA />;
+  if (file === "1.webp") return <Allweb3MultiPortalWall />;
+  if (file === "2.webp") return <Allweb3SharedObjectWall />;
+  if (file === "3.webp") return <Allweb3RoleScopeTree />;
+  if (file === "4.webp") return <Allweb3EveryRoleMosaic />;
+  if (file === "5.webp") return <Allweb3OpaqueWorkflow />;
+  if (file === "6.webp") return <Allweb3PainMapFull />;
+  if (file === "7.webp") return <Allweb3LegacyVs />;
+  if (file === "8.webp") return <Allweb3TrustGap />;
+  if (file === "9.webp") return <Allweb3LegibleLoop />;
+  if (file === "10.webp") return <Allweb3CriteriaColumns />;
+  if (file === "11.webp") return <Allweb3EcosystemTriangle />;
+  if (file === "12.webp") return <Allweb3LayersBands />;
+  if (file === "13.webp") return <Allweb3TrustLoop />;
+  if (file === "14.webp") return <Allweb3PermissionsGlyphs />;
+  if (file === "15.webp") return <Allweb3IATray />;
   if (file === "16.webp") return <Allweb3Management />;
-  if (file === "17.webp") return <Allweb3AdminPortal />;
+  if (file === "17.webp") return <Allweb3AdminWall />;
   if (file === "18.webp") return <Allweb3DisputeResolution />;
-  if (file === "19.webp") return <Allweb3ThreePortals />;
+  if (file === "19.webp") return <Allweb3ThreePortalsMatrix />;
   return null;
 }

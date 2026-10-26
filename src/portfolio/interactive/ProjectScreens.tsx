@@ -158,24 +158,31 @@ const AX_CANDIDATES = [
 ];
 
 export function AurionXSceneRecall() {
-  const [state, setState] = useState(0);
   const [picked, setPicked] = useState(0);
+  const [active, setActive] = useState(4);
+  // Pass 2: all six states shown side by side, as printed (the slide's
+  // argument is the comparison); picking a candidate in panel 5 updates
+  // the jump target in panel 6.
+  const bar = (pct: number) => <span style={{ display: "block", height: 3.5, background: "#26262b", borderRadius: 2, marginTop: 5 }}><span style={{ display: "block", width: `${pct}%`, height: "100%", background: "linear-gradient(90deg,#00E5FF,#7B61FF)", borderRadius: 2 }} /></span>;
+  const panel = (i: number, children: React.ReactNode) => <div onClick={() => setActive(i)} style={{ cursor: "pointer" }}>
+    <div style={{ background: "linear-gradient(160deg,#141a28,#05070c)", border: `1.5px solid ${active === i ? "#7B61FF" : "#26262b"}`, borderRadius: 8, padding: "8px 9px", minHeight: 118, fontSize: 10.3, lineHeight: 1.55 }}>{children}</div>
+    <p style={{ margin: "6px 0 0", fontSize: 10.6 }}><b>{AX_STATES[i].n} · {AX_STATES[i].name}</b></p>
+    <p style={{ margin: "2px 0 0", fontSize: 9.8, color: "#a1a1aa", lineHeight: 1.5 }}>{AX_STATES[i].line}</p>
+  </div>;
   return <div className="ix" role="region" aria-label="AurionX — Scene Recall interaction sequence (interactive)" style={{ background: "#060607", color: "#f5f5f5" }}>
     <Head n="21" kicker="Scene Recall — High-Fidelity Interaction Sequence" brand="AURIONX" />
-    <div className="ix-title"><h3 style={{ color: "#fff" }}>One continuous moment. Six distinct states.<span style={{ color: "#a1a1aa" }}>Step through the sequence, then pick a scene candidate.</span></h3></div>
+    <div className="ix-title"><h3 style={{ color: "#fff" }}>One continuous moment. Six distinct states.<span style={{ color: "#a1a1aa" }}>All six states of one request, side by side — pick a candidate in panel 5 and panel 6 jumps to it.</span></h3></div>
     <div className="ix-body">
-      <div className="ix-stepper" role="group" aria-label="Sequence states">
-        {AX_STATES.map((s, i) => <button key={s.n} type="button" className="ix-step" aria-pressed={state === i} onClick={() => setState(i)}><i>{s.n}</i>{s.name}</button>)}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 8 }}>
+        {panel(0, <><span style={{ color: "#8fb7ff" }}>▶ Playback</span>{bar(38)}<p className="ix-mono" style={{ margin: "6px 0 0", fontSize: 9.6 }}>32:14 / 84:07</p><p style={{ margin: "4px 0 0", color: "#a1a1aa" }}>The same film scene plays underneath every state.</p></>)}
+        {panel(1, <><span style={{ fontSize: 19, color: "#00E5FF" }}>◉</span><p style={{ margin: "4px 0 0" }}>AurionX activation ring — <b>listening</b></p></>)}
+        {panel(2, <><span style={{ color: "#8fb7ff" }}>Live transcription</span><p style={{ margin: "4px 0 0", fontStyle: "italic" }}>“Find the scene where the hero confronts his brother in the kitchen.”</p></>)}
+        {panel(3, <><span style={{ color: "#8fb7ff" }}>Interpreted request</span><p style={{ margin: "4px 0 0" }}>Find the scene where the hero confronts his brother in the kitchen.</p><p style={{ margin: "5px 0 0" }}>Confidence: <b>High</b></p><span style={{ display: "block", height: 5, background: "#26262b", borderRadius: 3, marginTop: 3 }}><span style={{ display: "block", width: "88%", height: "100%", background: "linear-gradient(90deg,#00E5FF,#7B61FF)", borderRadius: 3 }} /></span></>)}
+        {panel(4, <><span style={{ color: "#8fb7ff" }}>Top scene candidates</span><div style={{ display: "grid", gap: 4, marginTop: 5 }}>
+          {AX_CANDIDATES.map((c, i) => <button key={c.name} type="button" aria-pressed={picked === i} onClick={(e) => { e.stopPropagation(); setPicked(i); setActive(5); }} style={{ textAlign: "left", background: picked === i ? "#16202f" : "#101014", border: `1px solid ${picked === i ? "#2979FF" : "#2c2d33"}`, borderRadius: 6, padding: "4px 6px", cursor: "pointer", font: "inherit", color: "#f5f5f5", fontSize: 9.4, lineHeight: 1.45 }}><b>{c.name}</b> · {c.dur}<br /><span style={{ color: "#8fb7ff" }}>{c.conf}</span></button>)}
+        </div></>)}
+        {panel(5, <><span style={{ color: "#8fb7ff" }}>Jumping to scene</span><p style={{ margin: "4px 0 0" }} aria-live="polite">{AX_CANDIDATES[picked].name} · <b>43:02</b></p>{bar(51)}<p className="ix-mono" style={{ margin: "5px 0 0", fontSize: 9.6 }}>43:02 / 84:07</p></>)}
       </div>
-      <div className="ix-tv" aria-live="polite">
-        <p className="ix-mono" style={{ fontSize: 12, color: "#e8e8ec", margin: 0 }}>{state === 5 ? `Jumping to scene — ${AX_CANDIDATES[picked].name} · 43:02 ━━━━━━━━━●───── 84:07` : AX_STATES[state].tv}</p>
-        {state === 4 && <div style={{ display: "grid", gap: 6, marginTop: 12 }}>
-          {AX_CANDIDATES.map((c, i) => <button key={c.name} type="button" className="ix-row" aria-pressed={picked === i} onClick={() => { setPicked(i); setState(5); }}>
-            <b>{c.name}</b> <span style={{ float: "right" }} className="ix-mono">{c.dur}</span><br /><span style={{ color: "#8fb7ff", fontSize: 10 }}>{c.conf}</span>
-          </button>)}
-        </div>}
-      </div>
-      <p style={{ fontSize: 12, color: "#c9c9ce", margin: "10px 0 0" }} aria-live="polite"><b>{AX_STATES[state].name}.</b> {AX_STATES[state].line}</p>
     </div>
     <Foot left="AurionX — Sony TV · 10-foot UI" />
   </div>;
@@ -189,34 +196,33 @@ const AX_HL_STEPS = [
 ];
 
 export function AurionXHighlightConfig() {
-  const [step, setStep] = useState(0);
   const [choices, setChoices] = useState<number[]>([0, 1, 3, 0]);
   const [done, setDone] = useState(false);
-  const s = AX_HL_STEPS[step];
-  return <div className="ix" role="region" aria-label="AurionX — Highlight Configuration wizard (interactive)" style={{ background: "#060607", color: "#f5f5f5" }}>
+  const [focus, setFocus] = useState(1);
+  // Pass 2: the printed slide is a 2×2 storyboard — all four steps at
+  // once, each over the same film backdrop, each with its voice-shortcut
+  // pill. Selections stay live in every panel.
+  const stepPanel = (si: number) => { const s = AX_HL_STEPS[si]; return <div key={s.title} onClick={() => setFocus(si)} style={{ background: "linear-gradient(165deg,#131a28,#05070c)", border: `1.5px solid ${focus === si ? "#7B61FF" : "#26262b"}`, borderRadius: 10, padding: "10px 12px", cursor: "pointer" }}>
+    <p className="ix-mono" style={{ fontSize: 9.6, color: "#8fb7ff", margin: "0 0 3px" }}>STEP {si + 1} OF 4</p>
+    <h4 style={{ margin: "0 0 2px", fontSize: 15.5 }}>{s.title}</h4>
+    <p style={{ margin: "0 0 9px", color: "#a1a1aa", fontSize: 11 }}>{s.q}</p>
+    <div style={{ display: "grid", gap: 5 }}>
+      {s.options.map((o, i) => <button key={o} type="button" aria-pressed={choices[si] === i} onClick={(e) => { e.stopPropagation(); const next = [...choices]; next[si] = i; setChoices(next); setDone(false); }} style={{ textAlign: "left", background: choices[si] === i ? "#141c2e" : "#0c0d11", border: choices[si] === i ? "1.5px solid transparent" : "1px solid #2c2d33", backgroundImage: choices[si] === i ? "linear-gradient(#141c2e,#141c2e), linear-gradient(90deg,#2979FF,#7B61FF)" : undefined, backgroundOrigin: "border-box", backgroundClip: choices[si] === i ? "padding-box, border-box" : undefined, borderRadius: 7, padding: "6px 9px", cursor: "pointer", font: "inherit", color: "#f5f5f5", fontSize: 11 }}>{o}</button>)}
+    </div>
+    {si === 3 ? <button type="button" className="ix-btn" style={{ background: "linear-gradient(90deg,#2979FF,#7B61FF)", border: "none", color: "#fff", marginTop: 9 }} onClick={(e) => { e.stopPropagation(); setDone(true); }}>Generate preview</button> : null}
+    <p className="ix-mono" style={{ fontSize: 9.6, color: "#8e8e96", margin: "10px 0 0" }}>🎙 Voice shortcut: {s.voice}</p>
+  </div>; };
+  return <div className="ix" role="region" aria-label="AurionX — Highlight Configuration (interactive)" style={{ background: "#060607", color: "#f5f5f5" }}>
     <Head n="26" kicker="5-Minute Intelligent Cut — Highlight Configuration" brand="AURIONX" />
-    <div className="ix-title"><h3 style={{ color: "#fff" }}>Create a personalized highlight.<span style={{ color: "#a1a1aa" }}>Focus moves with directional input — Use Up, Down, Left, Right to navigate · Press Select to confirm · Press Back to return. Voice shortcuts available at any time.</span></h3></div>
-    <div className="ix-body"><div className="ix-tv" style={{ aspectRatio: "auto", minHeight: 260, justifyContent: "flex-start" }}>
-      {!done ? <>
-        <p className="ix-mono" style={{ fontSize: 10, color: "#8fb7ff", margin: "0 0 4px" }}>Step {step + 1} of 4</p>
-        <h4 style={{ margin: "0 0 2px", fontSize: 18 }}>{s.title}</h4>
-        <p style={{ margin: "0 0 12px", color: "#a1a1aa", fontSize: 12 }}>{s.q}</p>
-        <div style={{ display: "grid", gap: 7 }}>
-          {s.options.map((o, i) => <button key={o} type="button" className="ix-row" aria-pressed={choices[step] === i} onClick={() => { const next = [...choices]; next[step] = i; setChoices(next); }}>{o}</button>)}
-        </div>
-        <p className="ix-mono" style={{ fontSize: 10, color: "#8e8e96", marginTop: 12 }}>🎙 Voice shortcut: {s.voice}</p>
-        <div style={{ display: "flex", gap: 8, marginTop: 6 }}>
-          <button type="button" className="ix-btn ghost" disabled={step === 0} onClick={() => setStep(step - 1)}>Back</button>
-          {step < 3
-            ? <button type="button" className="ix-btn" onClick={() => setStep(step + 1)}>Select →</button>
-            : <button type="button" className="ix-btn" onClick={() => setDone(true)}>Generate preview</button>}
-        </div>
-      </> : <div aria-live="polite">
-        <h4 style={{ margin: "0 0 8px", fontSize: 18 }}>Preview ready</h4>
-        <ul className="ix-list">{AX_HL_STEPS.map((x, i) => <li key={x.title} className="ix-row" style={{ cursor: "default" }}><span className="ix-mono" style={{ fontSize: 9, color: "#8fb7ff" }}>{x.title.toUpperCase()}</span><br />{x.options[choices[i]]}</li>)}</ul>
-        <button type="button" className="ix-btn ghost" style={{ marginTop: 10 }} onClick={() => { setDone(false); setStep(0); }}>Start over</button>
-      </div>}
-    </div></div>
+    <div className="ix-title"><h3 style={{ color: "#fff" }}>Create a personalized highlight.<span style={{ color: "#a1a1aa" }}>All four steps at once, as printed — set each panel, then generate the preview.</span></h3></div>
+    <div className="ix-body">
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9 }}>{AX_HL_STEPS.map((_, si) => stepPanel(si))}</div>
+      {done ? <p style={{ margin: "10px 0 0", fontSize: 12 }} aria-live="polite"><b>Preview ready</b> — {AX_HL_STEPS.map((x, i) => x.options[choices[i]].split(" — ")[0]).join(" · ")}</p> : null}
+      <p style={{ margin: "12px 0 0", display: "flex", justifyContent: "space-between", gap: 14, fontSize: 10.6, color: "#8e8e96" }}>
+        <span>Focus moves with directional input — Use Up, Down, Left, Right to navigate · Press Select to confirm · Press Back to return.</span>
+        <span>Voice shortcuts available at any time.</span>
+      </p>
+    </div>
     <Foot left="AurionX — 5-Minute Cut" />
   </div>;
 }

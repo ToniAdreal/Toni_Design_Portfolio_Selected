@@ -22,3 +22,45 @@
 .nc--light .nc-tab[aria-pressed="true"] { background: #ff4b1f; color: #fff; border-color: #ff4b1f; }
 .nc-darkcard { background: #0a0a0b; color: #f5f5f5; border: 1px solid #26272a; border-radius: 14px; padding: 18px; }
 .nc--light .nc-cols > div + div { border-left: 1px solid #d8d4c8; padding-left: 16px; }
+
+/* ---- Pass 2: phone-frame showcase kit (.ncp) — visual phone rows matching the printed showcase slides ---- */
+.nc .ncp-row { display: flex; gap: 10px; align-items: flex-start; }
+.nc .ncp-phone { background: #0a0a0c; border: 1.5px solid #34353b; border-radius: 26px; padding: 9px 9px 11px; color: #f5f5f5; font-size: 10.5px; line-height: 1.45; flex: none; position: relative; text-align: left; font-family: Inter, Arial, sans-serif; }
+.nc .ncp-phone.light { background: #f4f0e7; color: #17181a; border-color: #cfc8b8; }
+.nc .ncp-phone.wire { background: #f4f4f2; color: #17181a; border-color: #d9d9d6; border-radius: 18px; }
+.nc button.ncp-phone { cursor: pointer; }
+.nc button.ncp-phone[aria-pressed="true"], .nc .ncp-phone.sel { border-color: #ff4b1f; box-shadow: 0 0 0 1px #ff4b1f, 0 10px 24px rgba(0,0,0,.45); }
+.nc .ncp-status { display: flex; justify-content: space-between; align-items: center; font-size: 8.5px; color: #9a9aa0; margin-bottom: 5px; font-family: "IBM Plex Mono", monospace; }
+.nc .ncp-phone.light .ncp-status, .nc .ncp-phone.wire .ncp-status { color: #8a8578; }
+.nc .ncp-notch { width: 52px; height: 13px; border-radius: 8px; background: #000; border: 1px solid #232428; margin: 0 auto; }
+.nc .ncp-phone.light .ncp-notch, .nc .ncp-phone.wire .ncp-notch { background: #17181a; border-color: #17181a; }
+.nc .ncp-head { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 11px; margin: 2px 0 7px; }
+.nc .ncp-card { background: #16171b; border: 1px solid #26272c; border-radius: 11px; padding: 8px 9px; margin-bottom: 7px; }
+.nc .ncp-card.white { background: #ffffff; color: #141414; border-color: #e8e8e8; }
+.nc .ncp-card.flat { background: #fbfaf7; color: #17181a; border-color: #e3ded2; }
+.nc .ncp-kick { color: #ff4b1f; font-size: 8.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.nc .ncp-dim { color: #9a9aa0; } .nc .ncp-mut { color: #c9c9ce; }
+.nc .ncp-phone.light .ncp-dim, .nc .ncp-phone.wire .ncp-dim { color: #6f6a5e; }
+.nc .ncp-phone.light .ncp-mut, .nc .ncp-phone.wire .ncp-mut { color: #3c3c40; }
+.nc .ncp-bar { height: 5px; border-radius: 3px; background: #26272c; overflow: hidden; }
+.nc .ncp-bar > span { display: block; height: 100%; background: linear-gradient(90deg, #ff4b1f, #ff703d); border-radius: 3px; }
+.nc .ncp-phone.light .ncp-bar, .nc .ncp-phone.wire .ncp-bar { background: #e2ddd2; }
+.nc .ncp-cta { display: block; width: 100%; background: linear-gradient(90deg, #ff4b1f, #ff703d); color: #fff; border: none; border-radius: 999px; padding: 7px 8px; font-weight: 700; cursor: pointer; font-size: 10.5px; font-family: inherit; text-align: center; }
+.nc .ncp-cta.ghost { background: transparent; border: 1px solid #3a3b40; color: #f5f5f5; }
+.nc .ncp-cta.white { background: #fff; color: #141414; }
+.nc .ncp-nav { display: flex; justify-content: space-between; border-top: 1px solid #232428; padding-top: 6px; margin-top: 7px; font-size: 8px; color: #9a9aa0; text-align: center; }
+.nc .ncp-nav b { color: #ff4b1f; font-weight: 700; }
+.nc .ncp-cap { font-size: 10.5px; margin: 0 0 5px; color: #c9c9ce; } .nc .ncp-cap b { color: #ff4b1f; font-weight: 800; margin-right: 5px; }
+.nc .ncp-rail { flex: none; width: 168px; }
+.nc .ncp-railitem { border-top: 1px solid #232428; padding: 7px 0; }
+.nc .ncp-railitem:first-child { border-top: none; padding-top: 0; }
+.nc .ncp-readout { border-top: 1px solid #2c2d30; margin-top: 12px; padding-top: 8px; color: #c9c9ce; font-size: 12.5px; }
+.nc .ncp-marker { display: inline-flex; width: 15px; height: 15px; border-radius: 50%; background: #ff4b1f; color: #fff; font-size: 9px; font-weight: 800; align-items: center; justify-content: center; flex: none; }
+.nc .ncp-field { border: 1px solid #ddd6c8; background: #fff; border-radius: 7px; padding: 5px 7px; color: #8a8578; margin-bottom: 6px; font-size: 9.5px; }
+.nc .ncp-toggle { width: 26px; height: 15px; border-radius: 999px; background: #3a3b40; border: none; position: relative; cursor: pointer; flex: none; padding: 0; }
+.nc .ncp-toggle::after { content: ""; position: absolute; top: 2px; left: 2px; width: 11px; height: 11px; border-radius: 50%; background: #fff; transition: left .15s; }
+.nc .ncp-toggle[aria-checked="true"] { background: #ff4b1f; } .nc .ncp-toggle[aria-checked="true"]::after { left: 13px; }
+.nc .ncp-browser { background: #0d0d10; border: 1.5px solid #34353b; border-radius: 14px; overflow: hidden; flex: none; }
+.nc .ncp-browserbar { display: flex; gap: 5px; align-items: center; background: #17181c; padding: 6px 9px; border-bottom: 1px solid #26272c; }
+.nc .ncp-browserbar i { width: 8px; height: 8px; border-radius: 50%; background: #34353b; display: block; }
+.nc .ncp-skel { background: #232428; border-radius: 4px; height: 7px; }

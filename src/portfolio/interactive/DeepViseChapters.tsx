@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import "./tokenta-slides.css";
+import { DeepViseBlueprint, DeepViseChallenge, DeepViseConcepts, DeepViseDashboardHero } from "./DeepViseRebuilds";
 
 /**
  * Bespoke rebuilds of DeepVise files 02–12, 14, 16–23, 25–32, each
@@ -87,9 +88,17 @@ const FLOW02 = [
 ];
 export function DeepViseProductFlow() {
   const [p, setP] = useState(1);
+  const icons = ["🛰", "🔍", "🧠", "📋"];
   return <Dv n="02" title="Four connected panels — one product flow" sub="Fleet overview → asset diagnosis → federated learning → portfolio review, linked left to right on the printed slide." label="DeepVise product flow — interactive rebuild of DeepVise_02" dark>
-    <Chips items={FLOW02.map((x) => x.name)} value={p} onPick={setP} />
-    <div className="tks-detail" aria-live="polite"><b>{FLOW02[p].foot}</b><p style={{ margin: "5px 0 0" }}>{FLOW02[p].body}</p></div>
+    <div aria-hidden="true" style={{ display: "flex", alignItems: "center", margin: "0 30px 8px" }}><span style={{ flex: 1, height: 2, background: "#12C7D4" }} />{FLOW02.map((x, i) => <span key={x.name} style={{ display: "contents" }}><span style={{ width: 9, height: 9, borderRadius: "50%", background: "#12C7D4", flex: "none", boxShadow: "0 0 0 3px rgba(18,199,212,0.25)" }} />{i < 3 ? <span style={{ flex: 1, height: 2, background: "#12C7D4" }} /> : null}</span>)}</div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 9, alignItems: "start" }}>
+      {FLOW02.map((x, i) => <button key={x.name} type="button" onClick={() => setP(i)} aria-pressed={i === p} style={{ textAlign: "left", background: "#0e1c2e", border: `1.5px solid ${i === p ? "#12C7D4" : "#22344d"}`, borderRadius: 11, padding: "9px 10px", cursor: "pointer", font: "inherit", color: "#dbe5f0" }}>
+        <b style={{ fontSize: 12, color: "#fff" }}>{x.name}</b>
+        <span style={{ display: "block", fontSize: 10, lineHeight: 1.55, color: "#a9bccd", marginTop: 5 }}>{x.body}</span>
+        <span style={{ display: "block", borderTop: "1px solid #22344d", marginTop: 7, paddingTop: 5, fontSize: 10, color: "#12C7D4" }}>{icons[i]} {x.foot}</span>
+      </button>)}
+    </div>
+    <p aria-live="polite" style={{ margin: "8px 0 0", fontSize: 11, color: "#8fa5bd" }}>Panel in focus: <b style={{ color: "#fff" }}>{FLOW02[p].name}</b> — all four panels shown together, as printed.</p>
   </Dv>;
 }
 
@@ -103,13 +112,27 @@ const STAGES03: Array<[string, string, string, string]> = [
 ];
 export function DeepViseProcessBoard() {
   const [s, setS] = useState(0);
-  const [scope, setScope] = useState(false);
   return <Dv n="03" title="DeepVise — Federated Enterprise Health Intelligence" sub="Solo Product Designer and Developer. Product strategy | UX and UI | front-end prototype | simulation and model workflow | technical storytelling. An end-to-end proof-of-concept that helps lenders assess enterprise health without accessing raw data." label="DeepVise process board — interactive rebuild of DeepVise_03">
-    <div className="tks-flow" role="group">{STAGES03.map(([t], i) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={i === s} onClick={() => setS(i)}><b>{t}</b><br /><span style={{ color: "#555" }}>{STAGES03[i][1]}</span></button></span>)}</div>
-    <div className="tks-detail" aria-live="polite"><p style={{ margin: 0 }}>{STAGES03[s][2]}</p><p className="tks-kicker" style={{ margin: "8px 0 0" }}>Deliverables — {STAGES03[s][3]}</p></div>
-    <p style={{ margin: "10px 0 0" }}><button type="button" className="tks-btn tks-btn--ghost" aria-expanded={scope} onClick={() => setScope((v) => !v)}>{scope ? "Hide" : "Show"} Scope & Verified Outcome</button></p>
-    {scope && <div className="tks-card" style={{ marginTop: 8 }}><b>✓ Verified Outcome</b> — A fully functional front-end prototype with model workflow evidence and publication audit. <b>Scope Boundary:</b> This project is a competition submission. It is a proof-of-concept and not a production system. <b>Out of Scope:</b> No access to real lender systems · No production deployment · No claims of autonomous lending.
-      <p className="tks-kicker" style={{ margin: "8px 0 0" }}>Context: WeBank FinTech Competition · Role: Solo Product Designer and Developer · Date: 2024 · Competition: WeBank FinTech Competition (Competition Entry) · Evidence status: All claims are supported by original deck pages 1–36 or reconstructed artifacts from the prototype, ANSYS and workflow evidence.</p></div>}
+    <div style={{ height: 8, borderRadius: 4, background: "linear-gradient(90deg,#12C7D4,#2F80ED,#6C5CE7)", marginBottom: 10 }} aria-hidden="true" />
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 218px", gap: 12, alignItems: "start" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 7 }}>
+        {STAGES03.map(([t, brief, detail, deliv], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? "#2F80ED" : "#dde4ec"}`, borderRadius: 10, padding: "8px 9px", cursor: "pointer", font: "inherit" }}>
+          <b style={{ fontSize: 11.8, color: "#0B1726" }}>{t}</b>
+          <span style={{ display: "block", color: "#55606e", fontSize: 9.8, lineHeight: 1.45, margin: "3px 0 6px" }}>{brief}</span>
+          <span style={{ display: "block", fontSize: 9.3, lineHeight: 1.5, color: "#33465e" }}>{detail}</span>
+          <span style={{ display: "block", borderTop: "1px solid #e6ecf2", marginTop: 6, paddingTop: 4, fontSize: 8.8, color: "#2F80ED", fontWeight: 700 }}>Deliverables + Evidence — {deliv}</span>
+        </button>)}
+      </div>
+      <div style={{ background: "#102A43", color: "#dbe5f0", borderRadius: 11, padding: "11px 13px" }}>
+        <p style={{ margin: 0, fontSize: 10.5, fontWeight: 800, letterSpacing: "0.1em", color: "#12C7D4" }}>🛡 SCOPE &amp; VERIFIED OUTCOME</p>
+        <p style={{ fontSize: 11, lineHeight: 1.55, margin: "7px 0 0" }}><b style={{ color: "#fff" }}>✓ Verified Outcome</b> — A fully functional front-end prototype with model workflow evidence and publication audit.</p>
+        <p style={{ fontSize: 11, lineHeight: 1.55, margin: "6px 0 0" }}><b style={{ color: "#fff" }}>Scope Boundary:</b> This project is a competition submission. It is a proof-of-concept and not a production system.</p>
+        <p style={{ fontSize: 11, lineHeight: 1.55, margin: "6px 0 0" }}><b style={{ color: "#fff" }}>Out of Scope:</b> No access to real lender systems · No production deployment · No claims of autonomous lending.</p>
+      </div>
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 8, marginTop: 11, background: "#0B1726", color: "#c6d2e0", borderRadius: 10, padding: "8px 13px", fontSize: 9.8 }}>
+      {[["Context", "WeBank FinTech Competition"], ["Role", "Solo Product Designer and Developer"], ["Date", "2024"], ["Competition", "WeBank FinTech Competition (Competition Entry)"], ["Evidence status", "All claims supported by original deck pages 1–36 or reconstructed artifacts"]].map(([k, v]) => <span key={k}><b style={{ color: "#fff", display: "block", fontSize: 10.5 }}>{k}</b>{v}</span>)}
+    </div>
   </Dv>;
 }
 
@@ -124,12 +147,33 @@ const TRUST04: Array<[string, string, string]> = [
 export function DeepViseTrustSignal() {
   const [s, setS] = useState(1);
   const [decision, setDecision] = useState<string | null>(null);
+  const icons = ["🏭", "🔒", "🧠", "📤", "👤"];
   return <Dv n="04" title="Machine health becomes a trust signal." sub="Raw telemetry stays inside the factory. Protected model updates improve a shared health model. Only permissioned, minimal evidence reaches credit review." label="DeepVise trust signal — interactive rebuild of DeepVise_04">
-    <div className="tks-flow" role="group">{TRUST04.map(([t], i) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={i === s} onClick={() => setS(i)}><b>{t}</b><br /><span style={{ color: "#555" }}>{TRUST04[i][1]}</span></button></span>)}</div>
-    <div className="tks-detail" aria-live="polite">{TRUST04[s][2]}
-      {s === 4 && <p style={{ margin: "8px 0 0", display: "flex", gap: 5, flexWrap: "wrap" }}>{["approve", "modify", "reject"].map((d) => <button key={d} type="button" className="tks-chip" aria-pressed={decision === d} onClick={() => setDecision(d)}>{d}</button>)}<span>{decision ? `Logged: Policy recommendation ${decision === "approve" ? "approved" : decision === "modify" ? "modified" : "rejected"} — 2025-05-08 11:42 · Reviewer ID: CR-1027.` : ""}</span></p>}
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 8, alignItems: "stretch" }}>
+      {TRUST04.map(([t, sub, body], i) => <div key={t} style={i === 1 ? { border: "2px dashed #0e7c86", borderRadius: 13, padding: 5, background: "rgba(14,124,134,0.05)" } : { padding: 5 }}>
+        <button type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ width: "100%", height: "100%", textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? "#2F80ED" : "#dde4ec"}`, borderRadius: 11, padding: "9px 10px", cursor: "pointer", font: "inherit" }}>
+          <span style={{ fontSize: 17 }}>{icons[i]}</span>
+          <b style={{ display: "block", fontSize: 12, margin: "4px 0 2px", color: "#0B1726" }}>{t}</b>
+          <span style={{ display: "block", color: "#0e7c86", fontWeight: 700, fontSize: 10.5 }}>{sub}</span>
+          <span style={{ display: "block", color: "#44536a", fontSize: 10.3, lineHeight: 1.5, marginTop: 4 }}>{body}</span>
+          {i === 1 ? <span style={{ display: "block", marginTop: 5, fontSize: 9.5, fontWeight: 800, color: "#0e7c86" }}>LOCAL BOUNDARY — raw data stays inside</span> : null}
+          {i === 3 ? <span style={{ display: "inline-block", marginTop: 5, background: "#efeaff", color: "#6C5CE7", borderRadius: 5, padding: "0 7px", fontWeight: 800, fontSize: 9.5 }}>PROPOSED</span> : null}
+          {i < 4 ? <span aria-hidden="true" style={{ float: "right", color: "#7c93ad" }}>{i === 1 || i === 2 ? "🔒 →" : "→"}</span> : null}
+        </button>
+      </div>)}
     </div>
-    <p style={{ color: "#555", margin: "10px 0 0" }}>Legend: teal — Local operational outputs, stay inside boundary · dashed blue — Protected model updates, encrypted and aggregated · purple — Permissioned derived signal, minimal evidence with consent · dotted — Decision &amp; feedback log, governance record. Source and evidence boundary: Original deck pages 11 and 32–34 support the two-sided loop and privacy claim. Official FATE documentation supports protected multi-party training concepts; the finance signal layer is a product reconstruction and <b>partly proposed</b>. This diagram shows a conceptual architecture for illustration. No autonomous credit decisions or rate adjustments are made by any model.</p>
+    <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center", marginTop: 10 }} aria-live="polite">
+      <span style={{ fontSize: 11.5, color: "#55606e" }}>Human review decision (panel 5):</span>
+      {["approve", "modify", "reject"].map((d) => <button key={d} type="button" className="tks-chip" aria-pressed={decision === d} onClick={() => setDecision(d)}>{d}</button>)}
+      <span style={{ fontSize: 11.5 }}>{decision ? `Logged: Policy recommendation ${decision === "approve" ? "approved" : decision === "modify" ? "modified" : "rejected"} — 2025-05-08 11:42 · Reviewer ID: CR-1027.` : "Dashed return arrow along the bottom of the original returns the decision & feedback log to the machine."}</span>
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 10 }}>
+      <p style={{ color: "#555", margin: 0, fontSize: 11.3, lineHeight: 1.55 }}><b>Source and evidence boundary:</b> Original deck pages 11 and 32–34 support the two-sided loop and privacy claim. Official FATE documentation supports protected multi-party training concepts; the finance signal layer is a product reconstruction and <b>partly proposed</b>.</p>
+      <div style={{ border: "1px solid #dde4ec", borderRadius: 10, padding: "8px 11px", fontSize: 11, background: "#fff" }}>
+        <b>Legend</b> — <span style={{ color: "#0e7c86", fontWeight: 700 }}>teal</span> Local operational outputs, stay inside boundary · <span style={{ color: "#2F80ED", fontWeight: 700 }}>dashed blue</span> Protected model updates, encrypted and aggregated · <span style={{ color: "#6C5CE7", fontWeight: 700 }}>purple</span> Permissioned derived signal, minimal evidence with consent · <span style={{ fontWeight: 700 }}>dotted</span> Decision &amp; feedback log, governance record.
+        <p style={{ margin: "5px 0 0", color: "#7c8798" }}>This diagram shows a conceptual architecture for illustration. No autonomous credit decisions or rate adjustments are made by any model.</p>
+      </div>
+    </div>
   </Dv>;
 }
 
@@ -144,11 +188,33 @@ export function DeepViseDemoVideo() {
   const [sec, setSec] = useState(0);
   const idx = sec < 18 ? 0 : sec < 36 ? 1 : sec < 53 ? 2 : 3;
   const fmt = (v: number) => `0:${String(v).padStart(2, "0")}`;
-  return <Dv n="05" title="Watch the 75-second prototype walkthrough" sub="DeepVise | Demo prototype — Evidence: Competition prototype with reconstructed portfolio UI; demo data. Duration: 01:15. Signed in as Plant Manager, Riverton Plant (Factory Command Center)." label="DeepVise demo prototype walkthrough — interactive rebuild of DeepVise_05" dark>
-    <label style={{ display: "block" }}>Playhead {fmt(sec)} / 1:15 — scrub to a chapter
-      <input type="range" min={0} max={75} value={sec} onChange={(e) => setSec(Number(e.target.value))} aria-label="Demo video playhead in seconds" style={{ width: "100%" }} /></label>
-    <Chips items={CHAPTERS05.map(([t, r]) => `${t} · ${r}`)} value={idx} onPick={(i) => setSec([0, 18, 36, 53][i])} />
-    <div className="tks-detail" aria-live="polite"><b>{CHAPTERS05[idx][0]} {CHAPTERS05[idx][1]}</b><p style={{ margin: "5px 0 0" }}>{CHAPTERS05[idx][2]}</p></div>
+  const chIcons = ["🖥", "🧠", "🔍", "📋"];
+  return <Dv n="05" title="Watch the 75-second prototype walkthrough" sub="DeepVise | Demo prototype — Evidence: Competition prototype with reconstructed portfolio UI; demo data. Duration: 01:15." label="DeepVise demo prototype walkthrough — interactive rebuild of DeepVise_05" dark>
+    <div style={{ border: "1px solid #22344d", borderRadius: 13, overflow: "hidden", background: "#0e1c2e" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", padding: "7px 13px", borderBottom: "1px solid #22344d", fontSize: 11, color: "#c6d2e0" }}><span><b style={{ color: "#fff" }}>DeepVise</b> | Demo prototype</span><span style={{ color: "#8fa5bd" }}>Duration 01:15</span></div>
+      <div style={{ display: "grid", gridTemplateColumns: "128px 1fr", minHeight: 168 }}>
+        <div style={{ borderRight: "1px solid #22344d", padding: "9px 10px", fontSize: 10.5, color: "#9fb2c8", display: "grid", gap: 5, alignContent: "start" }}>
+          <b style={{ color: "#fff", fontSize: 11 }}>Factory Command Center</b>
+          {["Overview", "Assets", "Monitoring", "Alerts", "Diagnostics", "Forecasting", "Workflows", "Reports", "Settings"].map((x, i) => <span key={x} style={i === 0 ? { color: "#12C7D4", fontWeight: 700 } : undefined}>{x}</span>)}
+          <span style={{ borderTop: "1px solid #22344d", paddingTop: 6, marginTop: 2 }}>Signed in<br /><b style={{ color: "#e8eef5" }}>Plant Manager</b><br />Riverton Plant</span>
+        </div>
+        <div style={{ padding: "10px 13px", position: "relative" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 6 }}>
+            {[["Equipment online", "92.4%", "Target ≥ 90%"], ["Federated jobs", "2 running", "of 8 total"], ["Anomalies", "1 active", "of 7 total"], ["Lender reviews", "3 pending", "1 overdue"], ["Model accuracy", "94.6%", "Target ≥ 90%"]].map(([k, v, s2]) => <div key={k} style={{ border: "1px solid #22344d", borderRadius: 8, padding: "5px 7px" }}><span style={{ color: "#8fa5bd", fontSize: 9.3 }}>{k}</span><br /><b style={{ color: "#fff", fontSize: 13 }}>{v}</b><br /><span style={{ color: "#8fa5bd", fontSize: 9.3 }}>{s2}</span></div>)}
+          </div>
+          <p aria-live="polite" style={{ margin: "9px 0 0", fontSize: 11.3, lineHeight: 1.55, color: "#dbe5f0" }}><b style={{ color: "#12C7D4" }}>{CHAPTERS05[idx][0]} {CHAPTERS05[idx][1]}</b> — {CHAPTERS05[idx][2]}</p>
+          <span aria-hidden="true" style={{ position: "absolute", right: 14, bottom: 10, width: 42, height: 42, borderRadius: "50%", background: "rgba(18,199,212,0.16)", border: "1.5px solid #12C7D4", color: "#12C7D4", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 15 }}>▶</span>
+          <span style={{ position: "absolute", right: 62, bottom: 18, background: "#102A43", border: "1px solid #2c4258", borderRadius: 5, padding: "1px 7px", fontSize: 10, color: "#e8eef5" }}>{fmt(sec)} / 01:15</span>
+        </div>
+      </div>
+      <div style={{ borderTop: "1px solid #22344d", padding: "8px 13px" }}>
+        <label style={{ display: "block", fontSize: 11, color: "#9fb2c8" }}>Playhead {fmt(sec)} / 1:15 — scrub to a chapter
+          <input type="range" min={0} max={75} value={sec} onChange={(e) => setSec(Number(e.target.value))} aria-label="Demo video playhead in seconds" style={{ width: "100%" }} /></label>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 7, marginTop: 6 }}>
+          {CHAPTERS05.map(([t, r], i) => <button key={t} type="button" onClick={() => setSec([0, 18, 36, 53][i])} aria-pressed={i === idx} style={{ textAlign: "left", background: i === idx ? "#132a42" : "transparent", border: `1px solid ${i === idx ? "#12C7D4" : "#22344d"}`, borderRadius: 8, padding: "6px 9px", cursor: "pointer", font: "inherit", color: "#dbe5f0" }}><b style={{ fontSize: 11.5 }}>{chIcons[i]} {t}</b><br /><span style={{ color: "#8fa5bd", fontSize: 10 }}>{r}</span></button>)}
+        </div>
+      </div>
+    </div>
   </Dv>;
 }
 
@@ -169,14 +235,17 @@ const CHAIN06: Array<[string, string, string]> = [
 ];
 export function DeepVisePressFailure() {
   const [pt, setPt] = useState(1);
-  const [c, setC] = useState(0);
   return <Dv n="06" title="A press does not fail as a dashboard event." sub="It fails inside a production system with people, schedules and physical consequences. Sensors on this press: Vibration or acceleration · Motor temperature · Bearing temperature · Load or pressure · Cycle count · Frequency-domain features. Operational actors: Line operator · Maintenance engineer · Local edge node." label="DeepVise press failure — interactive rebuild of DeepVise_06">
-    <p className="tks-kicker">Sensor points on the press photograph (represented structurally) — select one</p>
-    <Chips items={PRESS06.map(([t]) => t)} value={pt} onPick={setPt} />
-    <div className="tks-detail" aria-live="polite"><b>{PRESS06[pt][0]}</b> — {PRESS06[pt][1]}. All points feed the <b>Local edge node</b>: Collects and processes signals on-site. Data path stops here.</div>
-    <p className="tks-kicker" style={{ marginTop: 12 }}>Consequence chain</p>
-    <div className="tks-flow" role="group">{CHAIN06.map(([t], i) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={i === c} onClick={() => setC(i)}><b>{t}</b></button></span>)}</div>
-    <div className="tks-detail" aria-live="polite">{CHAIN06[c][1]} <span className="tks-kicker">{CHAIN06[c][2]}</span></div>
+    <p className="tks-kicker" style={{ marginTop: 0 }}>One industrial press, six sensor callouts (the photograph itself is represented structurally)</p>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>
+      {PRESS06.map(([t, signals], i) => <button key={t} type="button" onClick={() => setPt(i)} aria-pressed={i === pt} style={{ textAlign: "left", background: "#fff7f0", border: `1.5px solid ${i === pt ? "#D99A2B" : "#e8d9c4"}`, borderRadius: 10, padding: "8px 11px", cursor: "pointer", font: "inherit" }}>
+        <b style={{ fontSize: 12, color: "#0B1726" }}>⌖ {t}</b>
+        <span style={{ display: "block", fontSize: 11, color: "#44536a", marginTop: 2 }}>{signals}</span>
+      </button>)}
+    </div>
+    <p style={{ background: "#0B1726", color: "#dbe5f0", borderRadius: 9, padding: "7px 12px", margin: "8px 0 0", fontSize: 11.5 }} aria-live="polite"><b style={{ color: "#fff" }}>Local edge node</b> — Collects and processes signals on-site. Data path stops here. <span style={{ color: "#8fa5bd" }}>All six points feed the edge node on the press bed.</span></p>
+    <p className="tks-kicker" style={{ marginTop: 12 }}>What happened next — consequence chain</p>
+    <div style={{ display: "flex", gap: 7, flexWrap: "nowrap", alignItems: "stretch" }}>{CHAIN06.map(([t, b, e], i) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow" style={{ alignSelf: "center" }}>→</span>}<div className="tks-card" style={{ flex: "1 1 0" }}><b style={{ fontSize: 12.5 }}>{t}</b><p style={{ color: "#555", margin: "4px 0 0", fontSize: 11.5, lineHeight: 1.5 }}>{b}</p><p className="tks-kicker" style={{ margin: "6px 0 0" }}>{e}</p></div></span>)}</div>
     <p style={{ color: "#555", margin: "10px 0 0" }}>Source and evidence boundary: Challenge-direction text explicitly supports temperature, acceleration, velocity and frequency-domain signals. Original deck pages 19, 28–30 support the equipment, edge-node and maintenance context.</p>
   </Dv>;
 }
@@ -197,14 +266,26 @@ const IMPL07: Array<[string, string]> = [
 ];
 export function DeepViseFailureLoop() {
   const [s, setS] = useState(0);
-  const [im, setIm] = useState(0);
   return <Dv n="07" title="07. Factory Pain System — The failure loop" sub="When evidence stays fragmented, warnings arrive late and every incident teaches only one factory. Centre of the loop: Reactive maintenance, ringed by Operational loss and Learning loss." label="DeepVise failure loop — interactive rebuild of DeepVise_07">
-    <div className="tks-flow" role="group">{LOOP07.map(([t], i) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={i === s} onClick={() => setS(i)}><b>{t}</b></button></span>)}</div>
-    <div className="tks-detail" aria-live="polite"><b>{LOOP07[s][0]}</b> — {LOOP07[s][1]}{LOOP07[s][2] ? <> · ⚠ {LOOP07[s][2]}</> : null}. After node 6 the loop returns to Siloed data.
-      <p style={{ margin: "8px 0 0" }}><button type="button" className="tks-btn tks-btn--ghost" onClick={() => setS((v) => (v + 1) % 6)}>Advance the loop →</button></p></div>
-    <p className="tks-kicker" style={{ marginTop: 12 }}>Design implications</p>
-    <Chips items={IMPL07.map(([t]) => t)} value={im} onPick={setIm} />
-    <div className="tks-detail" aria-live="polite">{IMPL07[im][1]}</div>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 258px", gap: 11, alignItems: "start" }}>
+      <div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, alignItems: "stretch" }}>
+          {LOOP07.map(([t, body, tag], j) => <button key={t} type="button" onClick={() => setS(j)} aria-pressed={j === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${j === s ? "#D95C5C" : "#dde4ec"}`, borderRadius: 11, padding: "8px 10px", cursor: "pointer", font: "inherit" }}>
+            <span style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 4 }}><b style={{ fontSize: 11.8, color: "#0B1726" }}>{t}</b><span aria-hidden="true" style={{ color: "#D95C5C" }}>↻</span></span>
+            <span style={{ display: "block", fontSize: 10.5, lineHeight: 1.5, color: "#44536a", marginTop: 3 }}>{body}</span>
+            {tag ? <span style={{ display: "block", marginTop: 5, fontSize: 9.5, fontWeight: 800, color: "#b03a3a" }}>⚠ {tag}</span> : null}
+          </button>)}
+        </div>
+        <div style={{ textAlign: "center", marginTop: 9 }}>
+          <span style={{ display: "inline-block", background: "#0B1726", color: "#fff", borderRadius: 999, padding: "6px 16px", fontSize: 12 }}><b>Reactive maintenance</b> <span style={{ color: "#f0a3a3" }}>· Operational loss + Learning loss</span></span>
+          <p style={{ margin: "7px 0 0" }}><button type="button" className="tks-btn tks-btn--ghost" onClick={() => setS((v) => (v + 1) % 6)}>Advance the loop → (after node 6 it returns to Siloed data)</button></p>
+        </div>
+      </div>
+      <div>
+        <p className="tks-kicker" style={{ marginTop: 0 }}>Implications for design</p>
+        <div style={{ display: "grid", gap: 7 }}>{IMPL07.map(([t, b]) => <div key={t} className="tks-card"><b style={{ fontSize: 12 }}>{t}</b><p style={{ color: "#555", margin: "4px 0 0", fontSize: 11, lineHeight: 1.5 }}>{b}</p></div>)}</div>
+      </div>
+    </div>
     <p style={{ color: "#555", margin: "10px 0 0" }}>Source: Original deck pages 7–8. Evidence boundary: This pain system reflects qualitative insights from the original deck. No quantitative claims are made. What this means: Reactive maintenance is a system problem. Solving it requires connected data, better evidence, and continuous learning.</p>
   </Dv>;
 }
@@ -225,14 +306,26 @@ const CONTINUOUS08: Array<[string, string, string]> = [
 export function DeepViseVisibilityGap() {
   const [lane, setLane] = useState(1);
   const [ev, setEv] = useState(1);
-  const rows = lane === 0 ? PERIODIC08 : CONTINUOUS08;
-  return <Dv n="08" title="08. Lender Visibility Gap — Financial reviews are periodic. Productive assets change continuously." sub="DeepVise proposes a fresher evidence layer, not a substitute for underwriting." label="DeepVise lender visibility gap — interactive rebuild of DeepVise_08">
-    <Chips items={["Top: Financial reporting & credit reviews (periodic)", "Bottom: Machine condition & maintenance events (continuous)"]} value={lane} onPick={(i) => { setLane(i); setEv(0); }} />
-    <div className="tks-flow" role="group" style={{ marginTop: 8 }}>{rows.map(([d], i) => <span key={d} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={i === ev} onClick={() => setEv(i)}><b>{rows[i][1]}</b><br /><span style={{ color: "#555" }}>{d}</span></button></span>)}</div>
-    <div className="tks-detail" aria-live="polite"><b>{rows[ev][1]}</b> — {rows[ev][2]}.
-      {lane === 0 && <p style={{ margin: "6px 0 0" }}><b>Blind interval</b> — between the Q3 covenant review and the Dec 31 credit committee, events between reviews may not be visible in time.</p>}
-      {lane === 1 && <p style={{ margin: "6px 0 0" }}><b>Bridge signal: Permissioned summary</b> — Timestamp (UTC) 2024-10-22 14:32 · Confidence 0.76 · Trend Improving ↗ · Reason Codes IMBALANCE, WEAR.</p>}
+  const laneCard = (rows: Array<[string, string, string]>, L: number) => (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 7 }}>
+      {rows.map(([d, t, detail], i) => <button key={d} type="button" onClick={() => { setLane(L); setEv(i); }} aria-pressed={lane === L && i === ev} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${lane === L && i === ev ? "#2F80ED" : "#dde4ec"}`, borderRadius: 10, padding: "8px 10px", cursor: "pointer", font: "inherit" }}>
+        <b style={{ fontSize: 12, color: "#0B1726" }}>{t}</b>
+        <span style={{ display: "block", color: "#7c8798", fontSize: 9.8, margin: "2px 0" }}>{d}</span>
+        <span style={{ display: "block", fontSize: 10.8, lineHeight: 1.45, color: "#44536a" }}>{detail}</span>
+      </button>)}
     </div>
+  );
+  return <Dv n="08" title="08. Lender Visibility Gap — Financial reviews are periodic. Productive assets change continuously." sub="DeepVise proposes a fresher evidence layer, not a substitute for underwriting." label="DeepVise lender visibility gap — interactive rebuild of DeepVise_08">
+    <p className="tks-kicker" style={{ marginTop: 0 }}>Top: Financial reporting &amp; credit reviews (periodic)</p>
+    {laneCard(PERIODIC08, 0)}
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1.3fr 1fr", gap: 7, marginTop: 6 }}>
+      <span /><span />
+      <span style={{ background: "repeating-linear-gradient(45deg,#fdf3e3,#fdf3e3 9px,#fbeed2 9px,#fbeed2 18px)", border: "1.5px dashed #D99A2B", borderRadius: 8, padding: "5px 9px", fontSize: 10.3, color: "#7a5410" }}><b>Blind interval</b> — between the Q3 covenant review and the Dec 31 credit committee, events between reviews may not be visible in time.</span>
+      <span />
+    </div>
+    <p className="tks-kicker" style={{ marginTop: 10 }}>Bottom: Machine condition &amp; maintenance events (continuous)</p>
+    {laneCard(CONTINUOUS08, 1)}
+    <p style={{ background: "#eef6ff", border: "1px solid #b9d4f2", borderRadius: 10, padding: "8px 12px", margin: "9px 0 0", fontSize: 12 }} aria-live="polite"><b>Bridge signal: Permissioned summary</b> — Timestamp (UTC) 2024-10-22 14:32 · Confidence 0.76 · Trend Improving ↗ · Reason Codes IMBALANCE, WEAR. <span style={{ color: "#55606e" }}>Selected: {lane === 0 ? PERIODIC08[ev][1] : CONTINUOUS08[ev][1]} — {lane === 0 ? PERIODIC08[ev][2] : CONTINUOUS08[ev][2]}.</span></p>
     <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0 }}>Policy note</p><b>Asset health is one input, not a credit decision.</b>
       <p style={{ margin: "5px 0 0" }}>Credit decisions require full underwriting, including financials, cash flow, collateral, management, and industry context. Operational signals provide timelier insight to inform monitoring, dialogue, and risk assessment. Permissioned summaries share only what is authorized, when authorized.</p></div>
     <p style={{ color: "#555", margin: "10px 0 0" }}>Source &amp; evidence boundary: Original deck pages 4, 7, 9 and 32–34 support the manufacturing-credit visibility problem. The exact timeline is an explanatory reconstruction; it is not a measured borrower history. All dates are illustrative (not borrower specific).</p>
@@ -247,17 +340,39 @@ const STEPS09: Array<[string, string, string]> = [
   ["4 · Access is logged.", "All federation actions are authenticated and logged with verifiable records.", "Evidence: Audit trails support accountability."],
 ];
 export function DeepVisePrivacyBarrier() {
-  const [mode, setMode] = useState(1);
   const [s, setS] = useState(0);
-  return <Dv n="09" title="09. The Privacy Barrier" sub="The product could not depend on a new central data lake. Evidence (top-right, as printed): Original deck pages 25–29 explain local training and aggregation. Official FATE documentation supports multi-party training without sharing actual data." label="DeepVise privacy barrier — interactive rebuild of DeepVise_09">
-    <Chips items={["✕ Invalid approach: Centralized Data Lake", "✓ Proposed approach: Privacy-Preserving Federation"]} value={mode} onPick={setMode} />
-    <div className="tks-detail" aria-live="polite">
-      {mode === 0 ? <><b style={{ color: "#b3352c" }}>This path was rejected. Raw data cannot leave each factory.</b><p style={{ margin: "5px 0 0" }}>Factory A, Factory B and Factory C — each with an identical feature schema (f1 f2 f3 … fn) and a local feature store (A-001 A-002 … A-N / B-001 B-002 … B-N / C-001 C-002 … C-N) — would all feed one Central Data Lake of raw machine telemetry. <b>Not allowed.</b></p></> :
-      <><b style={{ color: TEAL }}>Only protected updates travel. No raw data leaves any factory.</b><p style={{ margin: "5px 0 0" }}>Factory A / B / C each run Local training (on local data) → Protected update (no raw data) → Aggregation Service (Secure aggregation of updates) → Global Model (Returned to all factories), with Model return (no raw data) on both flanks.</p></>}
+  const factoryCol = (name: string, codes: string) => (
+    <div style={{ background: "#fff", border: "1px solid #b9d4f2", borderRadius: 9, padding: "6px 9px", fontSize: 10.5 }}>
+      <b>{name}</b><br />
+      <span style={{ color: "#7c8798" }}>feature schema f1 f2 f3 … fn</span><br />
+      🛢 Local feature store<br /><span style={{ color: "#7c8798" }}>{codes}</span><br />
+      ⚙ Local training → 🔒 Protected update
     </div>
-    {mode === 1 && <><p className="tks-kicker" style={{ marginTop: 12 }}>How it works</p>
-      <div className="tks-flow" role="group">{STEPS09.map(([t], i) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={i === s} onClick={() => setS(i)}><b>{t}</b></button></span>)}</div>
-      <div className="tks-detail" aria-live="polite">{STEPS09[s][1]} <span className="tks-kicker">{STEPS09[s][2]}</span></div></>}
+  );
+  return <Dv n="09" title="09. The Privacy Barrier" sub="The product could not depend on a new central data lake. Evidence (top-right, as printed): Original deck pages 25–29 explain local training and aggregation. Official FATE documentation supports multi-party training without sharing actual data." label="DeepVise privacy barrier — interactive rebuild of DeepVise_09">
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1.35fr", gap: 11, alignItems: "stretch" }}>
+      <div style={{ background: "#fdf1f1", border: "1.5px solid #e3b3b3", borderRadius: 12, padding: "11px 13px" }}>
+        <p style={{ margin: 0, fontWeight: 800, fontSize: 12.5, color: "#b3352c" }}>✕ Invalid approach: Centralized Data Lake</p>
+        <p style={{ margin: "6px 0 0", fontSize: 11.3, lineHeight: 1.55, color: "#5a4a4a" }}><b>This path was rejected. Raw data cannot leave each factory.</b> Factory A, Factory B and Factory C — each with an identical feature schema (f1 f2 f3 … fn) and a local feature store (A-001… / B-001… / C-001…) — would all feed one Central Data Lake of raw machine telemetry. <b>Not allowed</b> — a red lock marks raw data wherever it appears.</p>
+      </div>
+      <div style={{ background: "#eef6ff", border: "1.5px solid #b9d4f2", borderRadius: 12, padding: "11px 13px" }}>
+        <p style={{ margin: 0, fontWeight: 800, fontSize: 12.5, color: TEAL }}>✓ Proposed approach: Privacy-Preserving Federation — only protected updates travel</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 7, margin: "8px 0" }}>
+          {factoryCol("Factory A", "A-001 A-002 … A-N")}
+          {factoryCol("Factory B", "B-001 B-002 … B-N")}
+          {factoryCol("Factory C", "C-001 C-002 … C-N")}
+        </div>
+        <p style={{ margin: 0, fontSize: 11.3, lineHeight: 1.55, color: "#44536a" }}>Protected updates (no raw data) → <b>Aggregation Service</b> (secure aggregation of updates) → <b>Global Model</b>, returned to all factories — model return carries no raw data on either flank.</p>
+      </div>
+    </div>
+    <p className="tks-kicker" style={{ marginTop: 12 }}>How it works</p>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 8 }}>
+      {STEPS09.map(([t, body, ev2], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? "#2F80ED" : "#dde4ec"}`, borderRadius: 10, padding: "8px 10px", cursor: "pointer", font: "inherit" }}>
+        <b style={{ fontSize: 11.8 }}>{t}</b>
+        <span style={{ display: "block", fontSize: 10.5, lineHeight: 1.5, color: "#44536a", marginTop: 3 }}>{body}</span>
+        <span style={{ display: "block", marginTop: 5, fontSize: 9.5, fontWeight: 700, color: "#0e7c86" }}>{ev2}</span>
+      </button>)}
+    </div>
     <p style={{ color: "#555", margin: "10px 0 0" }}>Legend (does not rely on color alone): dashed = Boundary · cylinder = Local feature store · gear = Local training · lock = Protected content (encrypted/secured) · red lock = Raw data (not allowed to leave) · teal dashed = Protected update flow (to aggregation) · blue dashed = Model return flow (to factories).</p>
   </Dv>;
 }
@@ -279,15 +394,24 @@ const SUCCESS10: Array<[string, string]> = [
 ];
 export function DeepViseStakeholders() {
   const [r, setR] = useState(2);
-  const cur = ROLES10[r];
-  return <Dv n="10" title="10. Stakeholder Ecosystem — One system, two operating realities, five accountable roles." sub="DeepVise turns trusted industrial data into governed derived signals used by operations and finance inside the factory and by lenders under policy. Centre: DeepVise — Governed derived signals and context (Ingest & Normalize · Derive & Validate · Govern & Audit). Operating realities: Factory (internal) — Run operations and maintain assets · Lender (external) — Assess risk and set terms under policy." label="DeepVise stakeholder ecosystem — interactive rebuild of DeepVise_10">
-    <Chips items={ROLES10.map(([t]) => t)} value={r} onPick={setR} />
-    <div className="tks-detail" aria-live="polite"><b>{cur[0]}</b> — {cur[1]}
-      <table className="tks-table" style={{ marginTop: 8 }}><tbody>
-        <tr><td style={{ width: "32%" }}><span className="tks-kicker">Evidence in (what the role needs or receives)</span></td><td>{cur[2]}</td></tr>
-        <tr><td><span className="tks-kicker">Decision out (what the role decides or does)</span></td><td>{cur[3]}</td></tr>
-        <tr><td><span className="tks-kicker">Privacy concerns — what this role must protect</span></td><td>{cur[4]}</td></tr>
-      </tbody></table></div>
+  return <Dv n="10" title="10. Stakeholder Ecosystem — One system, two operating realities, five accountable roles." sub="DeepVise turns trusted industrial data into governed derived signals used by operations and finance inside the factory and by lenders under policy. Operating realities: Factory (internal) — Run operations and maintain assets · Lender (external) — Assess risk and set terms under policy." label="DeepVise stakeholder ecosystem — interactive rebuild of DeepVise_10">
+    <div style={{ background: "#0B1726", color: "#dbe5f0", borderRadius: 11, padding: "9px 14px", textAlign: "center", marginBottom: 10 }}>
+      <b style={{ color: "#fff", fontSize: 13.5 }}>DeepVise</b> <span style={{ color: "#12C7D4", fontWeight: 700 }}>— Governed derived signals and context</span>
+      <span style={{ display: "block", fontSize: 11, color: "#9fb2c8", marginTop: 2 }}>Ingest &amp; Normalize · Derive &amp; Validate · Govern &amp; Audit — every role below connects to this hub.</span>
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>
+      {ROLES10.map(([t, flow, evIn, dec, priv], i) => <button key={t} type="button" onClick={() => setR(i)} aria-pressed={i === r} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === r ? "#2F80ED" : "#dde4ec"}`, borderRadius: 11, padding: "9px 11px", cursor: "pointer", font: "inherit" }}>
+        <b style={{ fontSize: 12.3, color: "#0B1726" }}>{t}</b>
+        <span style={{ display: "block", fontSize: 10.8, color: "#0e7c86", fontWeight: 700, margin: "2px 0 5px" }}>{flow}</span>
+        <span style={{ display: "block", fontSize: 10.3, lineHeight: 1.5, color: "#44536a" }}><b>Evidence in:</b> {evIn}</span>
+        <span style={{ display: "block", fontSize: 10.3, lineHeight: 1.5, color: "#44536a", marginTop: 3 }}><b>Decision out:</b> {dec}</span>
+        <span style={{ display: "block", fontSize: 10.3, lineHeight: 1.5, color: "#7a4a12", marginTop: 3 }}><b>Privacy:</b> {priv}</span>
+      </button>)}
+      <div style={{ background: "#eef6ff", border: "1px solid #b9d4f2", borderRadius: 11, padding: "9px 11px" }}>
+        <b style={{ fontSize: 12.3 }}>How to read this</b>
+        <p style={{ margin: "4px 0 0", fontSize: 10.8, lineHeight: 1.55, color: "#44536a" }}>One system serves two operating realities — the factory (internal) and the lender (external) — through five accountable roles, each with defined evidence in, a unique decision out, and privacy duties. The privacy strip under each card is that role's protection row from the original.</p>
+      </div>
+    </div>
     <p className="tks-kicker" style={{ marginTop: 12 }}>Success criteria</p>
     <div className="tks-grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))" }}>{SUCCESS10.map(([t, b]) => <div key={t} className="tks-card"><b>✓ {t}</b><p style={{ margin: "4px 0 0", color: "#555" }}>{b}</p></div>)}</div>
     <p style={{ color: "#555", margin: "10px 0 0" }}>Source &amp; evidence boundary: Original deck pages 11–12 and 32 support the factory/lender split. The role decomposition is a portfolio reconstruction. Production method: Role decomposition based on portfolio experience across industrial operations and financial risk workflows. Last updated May 12, 2024.</p>
@@ -303,15 +427,16 @@ const PROFILES11: Array<{ name: string; color: string; panel: string; trigger: s
 ];
 export function DeepViseProfiles() {
   const [p, setP] = useState(1);
-  const cur = PROFILES11[p];
   return <Dv n="11" title="11. Decision-Focused User Profiles — The right evidence for the decision at hand" sub="Four decision contexts across operations, maintenance, finance and risk. Each tied to a specific trigger, decision question, required evidence and the cost of getting it wrong." label="DeepVise decision profiles — interactive rebuild of DeepVise_11">
-    <Chips items={PROFILES11.map((x) => x.name)} value={p} onPick={setP} />
-    <div className="tks-detail" aria-live="polite" style={{ borderTop: `3px solid ${cur.color}` }}>
-      <p className="tks-kicker" style={{ marginTop: 0 }}>Panel as printed</p><p style={{ margin: 0 }}>{cur.panel}</p>
-      <p className="tks-kicker" style={{ margin: "10px 0 2px" }}>Trigger</p><p style={{ margin: 0 }}>{cur.trigger}</p>
-      <p className="tks-kicker" style={{ margin: "10px 0 2px" }}>Decision question</p><p style={{ margin: 0, fontSize: 16, fontWeight: 700 }}>{cur.q}</p>
-      <p className="tks-kicker" style={{ margin: "10px 0 2px" }}>Required evidence</p><p style={{ margin: 0 }}>{cur.evidence} <span className="tks-ver">Evidence status: {cur.estatus}</span></p>
-      <p className="tks-kicker" style={{ margin: "10px 0 2px" }}>⚠ Cost of a wrong decision</p><p style={{ margin: 0 }}>{cur.cost} <span style={{ color: "#b3352c", fontWeight: 700 }}>Evidence status: High</span></p>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 8, alignItems: "start" }}>
+      {PROFILES11.map((x, i) => <button key={x.name} type="button" onClick={() => setP(i)} aria-pressed={i === p} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === p ? x.color : "#dde4ec"}`, borderTop: `5px solid ${x.color}`, borderBottom: `5px solid ${x.color}`, borderRadius: 11, padding: "9px 10px", cursor: "pointer", font: "inherit" }}>
+        <b style={{ fontSize: 12.5, color: "#0B1726" }}>{x.name}</b>
+        <span style={{ display: "block", fontSize: 10, lineHeight: 1.5, color: "#44536a", background: "#F6F8FB", border: "1px solid #e6ecf2", borderRadius: 7, padding: "5px 7px", margin: "6px 0" }}>{x.panel}</span>
+        <span style={{ display: "block", fontSize: 10.3, color: "#55606e" }}><b>Trigger:</b> {x.trigger}</span>
+        <span style={{ display: "block", fontSize: 12.5, fontWeight: 800, lineHeight: 1.35, color: "#0B1726", margin: "6px 0" }}>{x.q}</span>
+        <span style={{ display: "block", fontSize: 10.3, lineHeight: 1.5, color: "#44536a" }}><b>Required evidence:</b> {x.evidence} <span style={{ color: "#0e7c86", fontWeight: 700 }}>Evidence status: {x.estatus}</span></span>
+        <span style={{ display: "block", fontSize: 10.3, lineHeight: 1.5, color: "#7a3a12", marginTop: 5 }}><b>⚠ Cost of a wrong decision:</b> {x.cost} <span style={{ color: "#b3352c", fontWeight: 700 }}>Evidence status: High</span></span>
+      </button>)}
     </div>
   </Dv>;
 }
@@ -330,9 +455,16 @@ export function DeepViseSynthesis() {
   const cur = SYNTH12[r];
   return <Dv n="12" title="12. Research and Evidence Synthesis" sub="From challenge direction, deck research, technical study and prototype constraints to product requirements. Source fact -> inferred user need -> product requirement. Source and evidence boundary: Original deck pages 3–12 and 19–34, challenge-direction text and official FATE documentation." label="DeepVise research synthesis — interactive rebuild of DeepVise_12">
     <div style={{ overflowX: "auto" }}><table className="tks-table"><thead><tr><th></th><th>Source fact (what we found) · 28%</th><th>Inferred user need (what this means) · 30%</th><th>Design implication (what we will build) · 42%</th></tr></thead>
-      <tbody>{SYNTH12.map((row, i) => <tr key={row[0]} onClick={() => setR(i)} style={{ cursor: "pointer", background: i === r ? "#e8f4f6" : undefined }}><td><b>{row[0]}</b></td><td>{row[1]}</td><td>{row[3]}</td><td><b>{row[4]}</b></td></tr>)}</tbody></table></div>
-    <div className="tks-detail" aria-live="polite"><b>{cur[0]}</b> — source: {cur[2]}. <p style={{ margin: "5px 0 0" }}>{cur[5]}</p>
-      <p className="tks-kicker" style={{ margin: "8px 0 0" }}>Source legend — Challenge direction: Problem framing and requirements from challenge-direction text · Original deck: Requirements and insights from deck pages 3–12 and 19–34 · Official FATE documentation: Capabilities and specifications from official FATE documentation (v1.11) · Retrospective inference: Inferred from context, prototype constraints or implementation experience · Evidence labeling: All design implications above are traceable to a source fact or are explicitly labeled as an inference [Reconstructed]</p></div>
+      <tbody>{SYNTH12.map((row, i) => <tr key={row[0]} onClick={() => setR(i)} style={{ cursor: "pointer", background: i === r ? "#eef1f6" : undefined }}><td style={{ borderLeft: "4px solid #102A43" }}><b>{row[0]}</b></td><td>{row[1]}</td><td>{row[3]}</td><td><b>{row[4]}</b></td></tr>)}</tbody></table></div>
+    <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 10, marginTop: 10 }}>
+      <div className="tks-detail" aria-live="polite" style={{ margin: 0 }}><b>{cur[0]}</b> — source: {cur[2]}. <p style={{ margin: "5px 0 0" }}>{cur[5]}</p></div>
+      <div style={{ border: "1px solid #dde4ec", borderRadius: 10, padding: "8px 11px", fontSize: 11, background: "#fff" }}>
+        <b>Source legend</b>
+        <p style={{ margin: "4px 0 0" }}><b>Challenge direction:</b> Problem framing and requirements from challenge-direction text · <b>Original deck:</b> Requirements and insights from deck pages 3–12 and 19–34</p>
+        <p style={{ margin: "4px 0 0" }}><b>Official FATE documentation:</b> Capabilities and specifications from official FATE documentation (v1.11) · <b>Retrospective inference:</b> Inferred from context, prototype constraints or implementation experience</p>
+        <p style={{ margin: "4px 0 0" }}><b>Evidence labeling:</b> All design implications above are traceable to a source fact or are explicitly labeled as an inference [Reconstructed]</p>
+      </div>
+    </div>
   </Dv>;
 }
 
@@ -351,14 +483,23 @@ const PRINCIPLES14: Array<[string, string, string]> = [
 ];
 export function DeepViseNorthStar() {
   const [s, setS] = useState(1);
-  const [pr, setPr] = useState(0);
   return <Dv n="14" title="Product North Star — reduce uncertainty at the moment of action without taking control away from the people accountable for the outcome." sub="Centre of the printed loop: Product North Star — Reduce uncertainty at the moment of action while keeping humans accountable." label="DeepVise product north star — interactive rebuild of DeepVise_14">
-    <div className="tks-flow" role="group">{NORTH14.map(([t], i) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={i === s} onClick={() => setS(i)}><b>{t}</b><br /><span style={{ color: "#555" }}>{NORTH14[i][1]}</span></button></span>)}</div>
-    <div className="tks-detail" aria-live="polite">{NORTH14[s][2]}
-      <p style={{ margin: "8px 0 0" }}><button type="button" className="tks-btn tks-btn--ghost" onClick={() => setS((v) => (v + 1) % 5)}>Next stage →</button></p></div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 8, alignItems: "stretch" }}>
+      {NORTH14.map(([t, brief, detail], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? "#2F80ED" : "#dde4ec"}`, borderRadius: 11, padding: "9px 10px", cursor: "pointer", font: "inherit" }}>
+        <b style={{ fontSize: 12.3, color: "#0B1726" }}>{t} {i < 4 ? <span aria-hidden="true" style={{ color: "#2F80ED", float: "right" }}>→</span> : <span aria-hidden="true" style={{ color: "#2F80ED", float: "right" }}>↻</span>}</b>
+        <span style={{ display: "block", fontSize: 10.5, lineHeight: 1.5, color: "#44536a", marginTop: 3 }}>{brief}</span>
+        <span style={{ display: "block", fontSize: 10, lineHeight: 1.5, color: "#0e7c86", borderTop: "1px solid #e6ecf2", marginTop: 6, paddingTop: 5 }}>{detail}</span>
+      </button>)}
+    </div>
+    <p style={{ textAlign: "center", margin: "8px 0 0" }}><button type="button" className="tks-btn tks-btn--ghost" onClick={() => setS((v) => (v + 1) % 5)}>Next stage → (the loop returns from Review to Detect)</button></p>
     <p className="tks-kicker" style={{ marginTop: 12 }}>Three principles</p>
-    <Chips items={PRINCIPLES14.map(([t]) => t)} value={pr} onPick={setPr} />
-    <div className="tks-detail" aria-live="polite">{PRINCIPLES14[pr][1]}<p className="tks-kicker" style={{ margin: "6px 0 0" }}>{PRINCIPLES14[pr][2]}</p></div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>
+      {PRINCIPLES14.map(([t, body, impact]) => <div key={t} className="tks-card">
+        <b style={{ fontSize: 12.5 }}>{t}</b>
+        <p style={{ margin: "4px 0 0", fontSize: 11, lineHeight: 1.55, color: "#44536a" }}>{body}</p>
+        <p style={{ margin: "6px 0 0", fontSize: 10, fontWeight: 700, color: "#2F80ED" }}>{impact}</p>
+      </div>)}
+    </div>
     <p style={{ color: "#555", margin: "10px 0 0" }}>Source and evidence boundary: The loop synthesizes original deck pages 11, 30 and 32–34. It is a retrospective product model, not an original deck artifact.</p>
   </Dv>;
 }
@@ -375,11 +516,17 @@ export function DeepViseIA() {
   const [badge, setBadge] = useState(0);
   const [sel, setSel] = useState("Sensor Diagnostics");
   const badges = ["All badges", "All Roles", "Factory", "Lender", "Admin"];
-  return <Dv n="16" title="16 Information Architecture — One platform shell; role-specific decisions; shared evidence and governance." sub="Global Navigation (Platform Shell): Home · Notifications · Search · Model Freshness [2h ago] · Data Freshness [15m ago] · Organization: Acme Manufacturing · Alex Doe, Platform Admin. Motion and responsive behavior (as printed): Role badges may filter the map in the website lightbox — try it here." label="DeepVise information architecture — interactive rebuild of DeepVise_16">
-    <Chips items={badges} value={badge} onPick={setBadge} />
+  const colColors = ["#637083", "#2F80ED", "#6C5CE7", "#0B1726"];
+  return <Dv n="16" title="16 Information Architecture — One platform shell; role-specific decisions; shared evidence and governance." sub="Global Navigation (Platform Shell) is drawn as the dark bar below. Motion and responsive behavior (as printed): Role badges may filter the map in the website lightbox — try it here." label="DeepVise information architecture — interactive rebuild of DeepVise_16">
+    <div style={{ background: "#0B1726", color: "#dbe5f0", borderRadius: 10, padding: "8px 13px", display: "flex", gap: 13, flexWrap: "wrap", alignItems: "center", fontSize: 11.5 }}>
+      <b style={{ color: "#fff" }}>DeepVise</b><span>Home</span><span>Notifications</span><span>Search</span>
+      <span style={{ color: "#12C7D4" }}>Model Freshness [2h ago]</span><span style={{ color: "#12C7D4" }}>Data Freshness [15m ago]</span>
+      <span style={{ marginLeft: "auto", color: "#9fb2c8" }}>Organization: Acme Manufacturing · Alex Doe, Platform Admin</span>
+    </div>
+    <div style={{ marginTop: 10 }}><Chips items={badges} value={badge} onPick={setBadge} /></div>
     <div className="tks-grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))", marginTop: 10 }}>
       <div className="tks-card" style={{ borderStyle: "dashed" }}><p className="tks-kicker" style={{ marginTop: 0 }}>Version 1 — Original prototype navigation</p>{V1_16.map((x) => <p key={x} style={{ margin: "4px 0" }}>{x}</p>)}<p className="tks-kicker" style={{ margin: "8px 0 0" }}>Source: Prototype deck pages 13–17. Shown for reference only.</p></div>
-      {IA16.map((g) => { const dim = badge !== 0 && badges[badge] !== g.badge; return <div key={g.area} className="tks-card" style={{ opacity: dim ? 0.35 : 1 }}><p style={{ marginTop: 0 }}><b>{g.area}</b> <span className="tks-tag">{g.badge}</span></p>
+      {IA16.map((g, gi) => { const dim = badge !== 0 && badges[badge] !== g.badge; return <div key={g.area} className="tks-card" style={{ opacity: dim ? 0.35 : 1, borderTop: `4px solid ${colColors[gi]}` }}><p style={{ marginTop: 0 }}><b>{g.area}</b> <span className="tks-tag">{g.badge}</span></p>
         {g.items.map((x) => <p key={x} style={{ margin: "4px 0" }}><button type="button" className="tks-chip" aria-pressed={sel === x} onClick={() => setSel(x)}>{x}</button></p>)}</div>; })}
     </div>
     <div className="tks-detail" aria-live="polite">Selected page: <b>{sel}</b>. Role Access Legend — All Roles: Shared by all platform users · Factory: Factory and operations team members · Lender: Lending and credit team members · Admin: Platform administrators and governance team. Role badges indicate required access to each page. Access is enforced through permissions and governance.
@@ -400,18 +547,29 @@ const FLOW17: Array<[string, string]> = [
 ];
 export function DeepViseFactoryFlow() {
   const [s, setS] = useState(2);
-  const [exc, setExc] = useState<string | null>(null);
   const [win, setWin] = useState(0);
   return <Dv n="17" title="17. Factory Critical Task Flow — From signal to scheduled work" sub="The system explains why attention is needed, proposes a safe action and records whether the action resolved the condition. Context carried across all screens: Machine ID MX-2471 · Model CNC Machining Center · Alert since May 12, 08:41 · Owner Alex Chen. Evidence status: Partially from source (p.30), partially reconstructed." label="DeepVise factory task flow — interactive rebuild of DeepVise_17">
-    <div className="tks-flow" role="group">{FLOW17.map(([t], i) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={i === s} onClick={() => setS(i)}><b>{t}</b></button></span>)}</div>
-    <div className="tks-detail" aria-live="polite">{FLOW17[s][1]}
-      {s === 2 && <p style={{ margin: "8px 0 0", display: "flex", gap: 5, flexWrap: "wrap" }}><button type="button" className="tks-btn" onClick={() => setS(3)}>Yes, continue →</button>
-        <button type="button" className="tks-btn tks-btn--ghost" aria-pressed={exc === "low"} onClick={() => setExc("low")}>No – Low confidence (3a)</button>
-        <button type="button" className="tks-btn tks-btn--ghost" aria-pressed={exc === "gap"} onClick={() => setExc("gap")}>No – Missing data (3b)</button></p>}
-      {s === 2 && exc === "low" && <p style={{ margin: "8px 0 0" }}><b>3a Low confidence (exception)</b> — Confidence below threshold (0.40). Why: Evidence is insufficient to determine a cause · Multiple causes remain plausible · Additional inspection recommended. What you can do: Collect more data (run diagnostic capture) · Inspect on-site (add inspection findings) · Consult expert (request engineering review). [Return to sensor evidence]</p>}
-      {s === 2 && exc === "gap" && <p style={{ margin: "8px 0 0" }}><b>3b Missing sensor data (exception)</b> — Data gap detected: 1 of 5 key signals missing. Missing: Coolant flow (L/min). Impact: Reduced confidence in diagnosis. What you can do: Check sensor (verify connection) · Impute temporarily (use model estimate) · Proceed cautiously (lower confidence). [Return to sensor evidence]</p>}
-      {s === 4 && <><p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Choose a window</p><Chips items={["May 12, 15:00 – 17:30 · Best", "May 13, 07:00 – 09:30 · Good", "May 13, 15:00 – 17:30 · Fair"]} value={win} onPick={setWin} />
-        <p style={{ margin: "8px 0 0", display: "flex", gap: 5, flexWrap: "wrap" }}><button type="button" className="tks-btn" onClick={() => setS(5)}>Schedule work →</button><span className="tks-chip">Defer → 5a Deferred work: Deferred to May 13, 07:00 – 09:30 · Reason: Production commitment</span><span className="tks-chip">False positive → 5b: Marked as false positive · Reason: Vibration caused by heavy roughing cut · “Thank you. This feedback improves accuracy.”</span></p></>}
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 8, alignItems: "start" }}>
+      {FLOW17.map(([t, body], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? "#2F80ED" : "#dde4ec"}`, borderRadius: 11, padding: "8px 10px", cursor: "pointer", font: "inherit" }}>
+        <b style={{ fontSize: 11.8, color: "#0B1726" }}>{t}{i < 7 ? <span aria-hidden="true" style={{ color: "#2F80ED", float: "right" }}>→</span> : null}</b>
+        <span style={{ display: "block", fontSize: 9.6, lineHeight: 1.5, color: "#44536a", marginTop: 3 }}>{body}</span>
+        {i === 4 ? <span style={{ display: "block", marginTop: 5 }} onClick={(e) => e.stopPropagation()}><Chips items={["May 12 · Best", "May 13 AM · Good", "May 13 PM · Fair"]} value={win} onPick={setWin} /></span> : null}
+      </button>)}
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 9 }}>
+      <div style={{ border: "1.5px dashed #D95C5C", borderRadius: 11, padding: "8px 11px", background: "#fdf6f6" }}>
+        <b style={{ fontSize: 11.8 }}>3a Low confidence (exception, from screen 3)</b>
+        <p style={{ margin: "3px 0 0", fontSize: 10.5, lineHeight: 1.55, color: "#44536a" }}>Confidence below threshold (0.40). Why: Evidence is insufficient to determine a cause · Multiple causes remain plausible · Additional inspection recommended. What you can do: Collect more data (run diagnostic capture) · Inspect on-site (add inspection findings) · Consult expert (request engineering review). [Return to sensor evidence]</p>
+        <b style={{ fontSize: 11.8 }}>3b Missing sensor data (exception)</b>
+        <p style={{ margin: "3px 0 0", fontSize: 10.5, lineHeight: 1.55, color: "#44536a" }}>Data gap detected: 1 of 5 key signals missing. Missing: Coolant flow (L/min). Impact: Reduced confidence in diagnosis. What you can do: Check sensor (verify connection) · Impute temporarily (use model estimate) · Proceed cautiously (lower confidence). [Return to sensor evidence]</p>
+      </div>
+      <div style={{ border: "1.5px dashed #6C5CE7", borderRadius: 11, padding: "8px 11px", background: "#f7f5ff" }}>
+        <b style={{ fontSize: 11.8 }}>5a Deferred work (from screen 5)</b>
+        <p style={{ margin: "3px 0 0", fontSize: 10.5, lineHeight: 1.55, color: "#44536a" }}>Deferred to May 13, 07:00 – 09:30 · Reason: Production commitment.</p>
+        <b style={{ fontSize: 11.8 }}>5b False positive (feedback path)</b>
+        <p style={{ margin: "3px 0 0", fontSize: 10.5, lineHeight: 1.55, color: "#44536a" }}>Marked as false positive · Reason: Vibration caused by heavy roughing cut · “Thank you. This feedback improves accuracy.”</p>
+        <p style={{ margin: "5px 0 0", fontSize: 10.5, color: "#44536a" }} aria-live="polite">Screen in focus: <b>{FLOW17[s][0]}</b>{s === 4 ? ` — window selected: ${["May 12, 15:00 – 17:30 · Best", "May 13, 07:00 – 09:30 · Good", "May 13, 15:00 – 17:30 · Fair"][win]}` : ""}</p>
+      </div>
     </div>
     <p style={{ color: "#555", margin: "10px 0 0" }}>Legend: solid — Primary path · red dashed — Exception: Low confidence · orange dashed — Exception: Missing data · purple dashed — Deferred path · blue dashed — Feedback path. Source and evidence boundary: Original deck page 30 supports diagnosis, warning and maintenance advice. The complete eight-state interaction is reconstructed.</p>
   </Dv>;
@@ -434,12 +592,23 @@ export function DeepViseLenderFlow() {
   const [decision, setDecision] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const SCEN = ["Current terms (No change)", "Proposed terms (Modify)", "Tighter terms (Alternative)"];
-  return <Dv n="18" title="Lender Critical Task Flow — Review a changing asset signal without surrendering judgment to the model." sub="Portfolio overview (Demo data): Total exposure CNY 85M · Average rate 4.85% · Borrowers 12. Evidence rail (persistent across all steps): Data as of May 12, 2025, updated May 13, 2025 09:12 · Overall confidence Medium (68%) · Permission: Data usage Permitted, Purpose Credit risk management · Model version: Risk model RMX Credit v2.1.3, deployed May 01, 2025 · Session: Reviewer Jane Liu, Session ID SES-2025-0513-08." label="DeepVise lender task flow — interactive rebuild of DeepVise_18">
-    <div className="tks-flow" role="group">{FLOW18.map(([t], i) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={i === s} onClick={() => setS(i)}><b>{t}</b></button></span>)}</div>
-    <div className="tks-detail" aria-live="polite">{FLOW18[s][1]}
-      {s === 4 && <><p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Compare a scenario</p><Chips items={SCEN} value={scenario} onPick={setScenario} /></>}
-      {s === 6 && <><p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Decision</p><Chips items={["Approve (No change)", "Modify (Apply proposed terms)", "Reject (Return or decline)"]} value={decision} onPick={setDecision} />
-        <p style={{ margin: "8px 0 0" }}><button type="button" className="tks-btn" onClick={() => { setSubmitted(true); setS(7); }}>Submit decision</button> {submitted ? "Submitted — see Audit confirmation." : ""}</p></>}
+  return <Dv n="18" title="Lender Critical Task Flow — Review a changing asset signal without surrendering judgment to the model." sub="Portfolio overview (Demo data) and the persistent evidence rail are the strips below the title, as printed." label="DeepVise lender task flow — interactive rebuild of DeepVise_18">
+    <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginBottom: 7 }}>
+      {[["Total exposure", "CNY 85M"], ["Average rate", "4.85%"], ["Borrowers", "12"]].map(([k, v]) => <span key={k} style={{ background: "#0B1726", color: "#dbe5f0", borderRadius: 9, padding: "6px 12px", fontSize: 11.5 }}><span style={{ color: "#9fb2c8" }}>{k} </span><b style={{ color: "#fff" }}>{v}</b></span>)}
+    </div>
+    <div style={{ background: "#eef6ff", border: "1px solid #b9d4f2", borderRadius: 9, padding: "6px 12px", fontSize: 11, color: "#33465e", marginBottom: 10 }}>Evidence rail (persistent across all steps): Data as of May 12, 2025, updated May 13, 2025 09:12 · Overall confidence Medium (68%) · Permission: Data usage Permitted, Purpose Credit risk management · Model version: Risk model RMX Credit v2.1.3, deployed May 01, 2025 · Session: Reviewer Jane Liu, Session ID SES-2025-0513-08.</div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 8, alignItems: "start" }}>
+      {FLOW18.map(([t, body], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? "#2F80ED" : "#dde4ec"}`, borderRadius: 11, padding: "8px 10px", cursor: "pointer", font: "inherit" }}>
+        <b style={{ fontSize: 11.8, color: "#0B1726" }}>{t}{i < 7 ? <span aria-hidden="true" style={{ color: "#2F80ED", float: "right" }}>→</span> : null}</b>
+        <span style={{ display: "block", fontSize: 9.6, lineHeight: 1.5, color: "#44536a", marginTop: 3 }}>{body}</span>
+      </button>)}
+    </div>
+    <div className="tks-detail" aria-live="polite" style={{ marginTop: 10 }}>
+      <b>{FLOW18[s][0]}</b> in focus.
+      {s === 4 && <><p className="tks-kicker" style={{ margin: "8px 0 4px" }}>Compare a scenario (screen 5)</p><Chips items={SCEN} value={scenario} onPick={setScenario} /></>}
+      {s === 6 && <><p className="tks-kicker" style={{ margin: "8px 0 4px" }}>Decision (screen 7)</p><Chips items={["Approve (No change)", "Modify (Apply proposed terms)", "Reject (Return or decline)"]} value={decision} onPick={setDecision} />
+        <p style={{ margin: "8px 0 0" }}><button type="button" className="tks-btn" onClick={() => { setSubmitted(true); setS(7); }}>Submit decision</button> {submitted ? "Submitted — see Audit confirmation (screen 8)." : ""}</p></>}
+      <p style={{ margin: "8px 0 0" }}><b>Outcome branches (from screen 8):</b> <span style={{ color: "#0e7c86", fontWeight: 700 }}>Approve (No change)</span> — Terms unchanged, outcome logged, audit trail complete · <span style={{ color: "#2F80ED", fontWeight: 700 }}>Modify (Apply proposed terms)</span> — New terms applied after second approval · <span style={{ color: "#b3352c", fontWeight: 700 }}>Reject (Return or decline)</span> — Request returned or declined.</p>
     </div>
     <p style={{ color: "#555", margin: "10px 0 0" }}>Production method: Built with real UI components and a fixed demo dataset. All financial values are Demo data. Motion &amp; responsive behavior (optional): Optional motion demonstrates opening a review, inspecting reason codes and choosing Modify. Never animate a rate changing automatically. Do not include: No claim of regulatory approval, deployed underwriting model or automatic adverse action · No automatic decisions.</p>
   </Dv>;
@@ -457,13 +626,21 @@ const LAYERS19: Array<[string, string, string, string]> = [
 export function DeepViseDataToCredit() {
   const [s, setS] = useState(3);
   const [choice, setChoice] = useState<string | null>(null);
-  const cur = LAYERS19[s];
   return <Dv n="19" title="19 Data-to-Credit Decision Flow" sub="Clarify which transformations are model outputs, which are product rules and which require accountable human judgment." label="DeepVise data-to-credit flow — interactive rebuild of DeepVise_19">
-    <div className="tks-flow" role="group">{LAYERS19.map(([t], i) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={i === s} onClick={() => setS(i)}><b>{t}</b><br /><span className="tks-tag">{LAYERS19[i][2]}</span></button></span>)}</div>
-    <div className="tks-detail" aria-live="polite"><p style={{ margin: 0 }}>{cur[1]}</p>
-      {cur[3] ? <p style={{ margin: "6px 0 0", fontWeight: 700 }}>{cur[3]}</p> : null}
-      <p className="tks-kicker" style={{ margin: "6px 0 0" }}>Evidence status: {cur[2]} — Built: Implemented and operational · Reconstructed: Derived for decision use · Proposed: Concept / not implemented</p>
-      {s === 5 && <p style={{ margin: "8px 0 0", display: "flex", gap: 5, flexWrap: "wrap" }}>{["Approve", "Modify", "Reject", "Request evidence", "Defer"].map((d) => <button key={d} type="button" className="tks-chip" aria-pressed={choice === d} onClick={() => setChoice(d)}>{d}</button>)}<span>{choice ? `Recorded: ${choice} — rationale required; every decision, data version and rationale must be auditable and retained.` : ""}</span></p>}
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 7, alignItems: "stretch" }}>
+      {LAYERS19.map(([t, body, status, note], i) => {
+        const head = ["#102A43", "#102A43", "#2F80ED", "#12C7D4", "#6C5CE7", "#0B1726"][i];
+        return <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? head : "#dde4ec"}`, borderRadius: 11, padding: 0, overflow: "hidden", cursor: "pointer", font: "inherit" }}>
+          <span style={{ display: "block", background: head, color: "#fff", padding: "6px 9px", fontSize: 11.3, fontWeight: 800 }}>{t}<br /><span style={{ fontWeight: 600, fontSize: 9.3, opacity: 0.85 }}>{status}</span></span>
+          <span style={{ display: "block", fontSize: 9.5, lineHeight: 1.5, color: "#44536a", padding: "7px 9px" }}>{body}</span>
+          {note ? <span style={{ display: "block", fontSize: 9.3, fontWeight: 700, color: "#0B1726", borderTop: "1px dashed #b9c6d4", padding: "5px 9px" }}>{note}</span> : null}
+        </button>;
+      })}
+    </div>
+    <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center", marginTop: 10 }} aria-live="polite">
+      <span style={{ fontSize: 11.5, color: "#55606e" }}>Human decision (layer 6) — evidence status key: Built = implemented and operational · Reconstructed = derived for decision use · Proposed = concept / not implemented.</span>
+      {["Approve", "Modify", "Reject", "Request evidence", "Defer"].map((d) => <button key={d} type="button" className="tks-chip" aria-pressed={choice === d} onClick={() => setChoice(d)}>{d}</button>)}
+      <span style={{ fontSize: 11.5 }}>{choice ? `Recorded: ${choice} — rationale required; every decision, data version and rationale must be auditable and retained.` : ""}</span>
     </div>
     <div className="tks-grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(170px,1fr))", marginTop: 10 }}>
       <div className="tks-card"><b>Model output is evidence.</b><p style={{ margin: "4px 0 0", color: "#555" }}>The model measures machine health and produces evidence.</p></div>
@@ -491,17 +668,36 @@ const DELIV20: Array<[string, string, string[]]> = [
 ];
 export function DeepViseScopeTimeline() {
   const [s, setS] = useState(2);
-  const [tier, setTier] = useState(0);
   return <Dv n="20" title="20. Scope and Build Timeline — The competition prototype proved the product direction. The portfolio reconstruction makes the decisions, states and governance legible." label="DeepVise scope timeline — interactive rebuild of DeepVise_20">
-    <div className="tks-flow" role="group">{TIMELINE20.map(([t], i) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={i === s} onClick={() => setS(i)}><b>{t}</b></button></span>)}</div>
-    <div className="tks-detail" aria-live="polite"><p className="tks-kicker" style={{ marginTop: 0 }}>Decision</p><p style={{ margin: 0 }}>{TIMELINE20[s][1]}</p>
-      <p className="tks-kicker" style={{ margin: "8px 0 0" }}>Scope status — ✓ {TIMELINE20[s][2]}</p>
-      {s === 5 && <p style={{ margin: "6px 0 0" }}><b>Evidence gate</b> (between Build and Present, as printed): Evidence reviewed and accepted — Prototype meets competition requirements and proceeds to submission. Gate status: ✓ Approved — Ready for presentation.</p>}
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr) 74px", gap: 7, alignItems: "stretch" }}>
+      {TIMELINE20.slice(0, 6).map(([t, dec, status], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? "#2F80ED" : "#dde4ec"}`, borderRadius: 11, padding: "8px 9px", cursor: "pointer", font: "inherit" }}>
+        <b style={{ fontSize: 11.8, color: "#0B1726" }}>{t}</b>
+        <span style={{ display: "block", fontSize: 10, lineHeight: 1.5, color: "#44536a", marginTop: 3 }}>{dec}</span>
+        <span style={{ display: "block", fontSize: 9.5, fontWeight: 700, color: "#0e7c86", marginTop: 4 }}>✓ {status}</span>
+      </button>)}
+      <div style={{ border: "1.5px dashed #D99A2B", borderRadius: 11, padding: "8px 7px", background: "#fffaf0", textAlign: "center" }}>
+        <b style={{ fontSize: 10.5, color: "#7a5410" }}>⬢ Evidence gate</b>
+        <p style={{ margin: "3px 0 0", fontSize: 9.3, lineHeight: 1.45, color: "#7a5410" }}>Evidence reviewed and accepted — prototype meets competition requirements. ✓ Approved — Ready for presentation.</p>
+      </div>
+      <button type="button" onClick={() => setS(6)} aria-pressed={s === 6} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${s === 6 ? "#2F80ED" : "#dde4ec"}`, borderRadius: 11, padding: "8px 9px", cursor: "pointer", font: "inherit" }}>
+        <b style={{ fontSize: 11.8, color: "#0B1726" }}>{TIMELINE20[6][0]}</b>
+        <span style={{ display: "block", fontSize: 10, lineHeight: 1.5, color: "#44536a", marginTop: 3 }}>{TIMELINE20[6][1]}</span>
+        <span style={{ display: "block", fontSize: 9.5, fontWeight: 700, color: "#0e7c86", marginTop: 4 }}>✓ {TIMELINE20[6][2]}</span>
+      </button>
     </div>
     <p className="tks-kicker" style={{ marginTop: 12 }}>Deliverables by scope</p>
-    <Chips items={DELIV20.map(([t]) => t)} value={tier} onPick={setTier} />
-    <div className="tks-detail" aria-live="polite">{DELIV20[tier][1]}<ul style={{ margin: "5px 0 0" }}>{DELIV20[tier][2].map((x) => <li key={x}>{x}</li>)}</ul></div>
-    <p style={{ color: "#555", margin: "10px 0 0" }}>Source and evidence boundary — Verified: Competition submission date (08 Dec 2024) and 36-page deck. Evidence: Artifacts shown above are from the 2024 competition prototype. Boundary: Any durations, team capacity or delivery schedule are omitted until supported. 2024 Competition Prototype: Purpose Prove product direction · Artifacts Prototype, demo, models, submission · Status Submitted on 08 Dec 2024. 2026 Portfolio Reconstruction: Purpose Make decisions, states and governance legible · Artifacts Reconstruction deliverables · Status In progress.</p>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>
+      {DELIV20.map(([t, intro, items]) => <div key={t} className="tks-card">
+        <b style={{ fontSize: 12.5 }}>{t}</b>
+        <p style={{ margin: "4px 0 0", fontSize: 11, lineHeight: 1.5, color: "#44536a" }}>{intro}</p>
+        <ul style={{ margin: "5px 0 0", paddingLeft: 16, fontSize: 11, lineHeight: 1.55 }}>{items.map((x) => <li key={x}>{x}</li>)}</ul>
+      </div>)}
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 9 }}>
+      <div style={{ background: "#0B1726", color: "#dbe5f0", borderRadius: 10, padding: "8px 12px", fontSize: 11 }}><b style={{ color: "#fff" }}>2024 Competition Prototype</b> — Purpose: Prove product direction · Artifacts: Prototype, demo, models, submission · Status: Submitted on 08 Dec 2024.</div>
+      <div style={{ background: "#102A43", color: "#dbe5f0", borderRadius: 10, padding: "8px 12px", fontSize: 11 }}><b style={{ color: "#fff" }}>2026 Portfolio Reconstruction</b> — Purpose: Make decisions, states and governance legible · Artifacts: Reconstruction deliverables · Status: In progress.</div>
+    </div>
+    <p style={{ color: "#555", margin: "10px 0 0" }}>Source and evidence boundary — Verified: Competition submission date (08 Dec 2024) and 36-page deck. Evidence: Artifacts shown above are from the 2024 competition prototype. Boundary: Any durations, team capacity or delivery schedule are omitted until supported.</p>
   </Dv>;
 }
 
@@ -518,8 +714,12 @@ export function DeepViseRiskRegister() {
   const [r, setR] = useState(5);
   const cur = RISKS21[r];
   return <Dv n="21" title="ACT IV · Assumptions, Risks and Guardrails — Risk register for federated credit intelligence" sub="A federated system reduces one class of privacy risk. It does not remove data quality, security, governance or fairness risk. Severity legend (as printed): Critical (high impact, urgent) · High (significant impact) · Medium (moderate impact) · Low (low impact)." label="DeepVise risk register — interactive rebuild of DeepVise_21">
-    <div style={{ overflowX: "auto" }}><table className="tks-table"><thead><tr><th>Group</th><th>Assumption</th><th>Failure mode</th><th>Product guardrail</th><th>Evidence or owner</th></tr></thead>
-      <tbody>{RISKS21.map((row, i) => <tr key={row.n} onClick={() => setR(i)} style={{ cursor: "pointer", background: i === r ? "#e8f4f6" : undefined }}><td>{row.group}</td><td><b>{row.n} · {row.assumption}</b></td><td>{row.failure}</td><td>✓ {row.guardrail}</td><td>{row.owner}</td></tr>)}</tbody></table></div>
+    <div style={{ display: "flex", gap: 12, flexWrap: "wrap", fontSize: 11, marginBottom: 7 }}>
+      <span><span style={{ color: "#D95C5C" }}>●</span> Critical (high impact, urgent)</span><span><span style={{ color: "#D99A2B" }}>●</span> High (significant impact)</span><span><span style={{ color: "#2F80ED" }}>●</span> Medium (moderate impact)</span><span><span style={{ color: "#637083" }}>●</span> Low (low impact)</span>
+      <span style={{ marginLeft: "auto", color: "#55606e" }}>Groups: <b style={{ color: "#2F80ED" }}>Data</b> · <b style={{ color: "#6C5CE7" }}>Model</b> · <b style={{ color: "#0e7c86" }}>Operations</b> · <b style={{ color: "#b03a3a" }}>Finance</b></span>
+    </div>
+    <div style={{ overflowX: "auto" }}><table className="tks-table"><thead><tr>{["Group", "Assumption", "Failure mode", "Product guardrail", "Evidence or owner"].map((h) => <th key={h} style={{ background: "#102A43", color: "#fff" }}>{h}</th>)}</tr></thead>
+      <tbody>{RISKS21.map((row, i) => <tr key={row.n} onClick={() => setR(i)} style={{ cursor: "pointer", background: i === r ? "#eef1f6" : undefined }}><td><span style={{ display: "inline-block", background: row.group === "Data" ? "#e3edfb" : row.group === "Model" ? "#efeaff" : row.group === "Operations" ? "#e2f2f0" : "#fbeaea", borderRadius: 6, padding: "1px 8px", fontWeight: 700 }}>{row.group}</span></td><td><b>{row.n} · {row.assumption}</b></td><td>{row.failure}</td><td>✓ {row.guardrail}<span style={{ display: "block", color: "#55606e", fontSize: 10.5, marginTop: 2 }}>{row.detail}</span></td><td>{row.owner}<span style={{ display: "block", color: "#0e7c86", fontWeight: 700, fontSize: 10.5, marginTop: 2 }}>Evidence: Available</span></td></tr>)}</tbody></table></div>
     <div className="tks-detail" aria-live="polite"><b>{cur.n} · {cur.assumption}</b> ({cur.group}){cur.sev ? <> — severity marker as printed: <b>{cur.sev}</b></> : null}
       <p style={{ margin: "5px 0 0" }}><span className="tks-kicker">Guardrail</span> {cur.guardrail} {cur.detail}</p>
       <p style={{ margin: "5px 0 0" }}><span className="tks-kicker">Evidence or owner</span> {cur.owner} — {cur.evidence} <span className="tks-ver">Evidence: Available</span></p></div>
@@ -547,17 +747,16 @@ export function DeepViseEarlySketches() {
   const [sel, setSel] = useState(2);
   const groups = ["All", "Factory", "Federation", "Finance", "Governance"];
   const shown = SKETCH22.filter((x) => g === 0 || x.group === groups[g]);
-  const cur = SKETCH22[sel];
   return <Dv n="22" title="22 Early Sketches and Decision Models" sub="Retrospective reconstruction. The early work focused on decisions and evidence: what changed, why it mattered, who could act and what had to remain private." label="DeepVise early sketches — interactive rebuild of DeepVise_22">
     <Chips items={groups} value={g} onPick={setG} />
-    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(170px,1fr))", marginTop: 10 }}>
-      {shown.map((x) => <button key={x.n} type="button" className={`tks-card${sel === x.n - 1 ? " is-on" : ""}`} aria-pressed={sel === x.n - 1} onClick={() => setSel(x.n - 1)}>
-        <span className="tks-kicker">{x.group}</span><p style={{ margin: "4px 0" }}><b>{x.n} · {x.title}</b></p>
-        <span className="tks-tag" style={x.status === "Rejected" ? { color: "#b3352c", borderColor: "#b3352c" } : undefined}>{x.status}</span></button>)}
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginTop: 10 }}>
+      {shown.map((x) => <button key={x.n} type="button" onClick={() => setSel(x.n - 1)} aria-pressed={sel === x.n - 1} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${sel === x.n - 1 ? "#2F80ED" : "#dde4ec"}`, borderRadius: 11, padding: "8px 10px", cursor: "pointer", font: "inherit" }}>
+        <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><span className="tks-kicker">{x.group}</span><span className="tks-tag" style={x.status === "Rejected" ? { color: "#b3352c", borderColor: "#b3352c" } : undefined}>{x.status}</span></span>
+        <b style={{ display: "block", fontSize: 12, margin: "3px 0", color: "#0B1726" }}>{x.n} · {x.title}</b>
+        <span style={{ display: "block", fontSize: 10.3, lineHeight: 1.5, color: "#55606e" }}><i>{x.q}</i></span>
+        <span style={{ display: "block", fontSize: 9.8, lineHeight: 1.5, color: "#44536a", marginTop: 4, background: "#F6F8FB", border: "1px solid #e6ecf2", borderRadius: 6, padding: "4px 6px" }}>{x.note}</span>
+      </button>)}
     </div>
-    <div className="tks-detail" aria-live="polite"><b>{cur.n} · {cur.title}</b> ({cur.group} · {cur.status})
-      <p style={{ margin: "5px 0 0" }}><span className="tks-kicker">What question was this testing?</span> {cur.q}</p>
-      <p style={{ margin: "5px 0 0" }}>{cur.note}</p></div>
     <p style={{ color: "#555", margin: "10px 0 0" }}>Source and evidence boundary: This board is a retrospective reconstruction of early decisions and models. Final UI in production reflects decisions validated through testing and stakeholder feedback. ✓ Decision carried forward to final UI: Evidence-first lender review, explicit consent, role-based access and auditability.</p>
   </Dv>;
 }
@@ -591,17 +790,26 @@ const WIREFRAMES23: Array<{ domain: string; blurb: string; screens: Array<[strin
 ];
 const STATES23 = ["Normal State", "Loading State", "Warning State", "Disconnected State", "Empty State", "Insufficient Evidence State", "Permission Denied State"];
 export function DeepViseWireframes() {
-  const [d, setD] = useState(0);
-  const [sc, setSc] = useState(2);
+  const [sel, setSel] = useState("0-2");
   const [stateFilter, setStateFilter] = useState<string | null>(null);
-  const dom = WIREFRAMES23[d];
   return <Dv n="23" title="23. Low-Fidelity Wireframe System" sub="Wireframes tested the information order and decision paths before color, photography or motion. Portfolio reconstruction: The original deck contains final prototype captures but not a complete wireframe set. Three framing questions, as printed: 1 — How does the system maintain persistent context? Global context (party, workspace, user, time) stays visible across all tasks and states. 2 — How is evidence organized and prioritized? Evidence is grouped by source and type, with status and recency clearly indicated. 3 — How can users recover from exceptions? Clear states, messages and next actions help users detect issues and recover quickly." label="DeepVise wireframe system — interactive rebuild of DeepVise_23">
-    <Chips items={WIREFRAMES23.map((x) => x.domain)} value={d} onPick={(i) => { setD(i); setSc(0); }} />
-    <p style={{ margin: "8px 0 0", color: "#555" }}>{dom.blurb}</p>
-    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))", marginTop: 8 }}>
-      {dom.screens.map(([t, st], i) => <button key={t} type="button" className={`tks-card${sc === i ? " is-on" : ""}`} aria-pressed={sc === i} onClick={() => setSc(i)} style={stateFilter && st !== stateFilter ? { opacity: 0.35 } : undefined}><b>{t}</b><br /><span className="tks-tag">{st}</span></button>)}
+    <div style={{ display: "grid", gap: 8 }}>
+      {WIREFRAMES23.map((dom2, di) => (
+        <div key={dom2.domain} style={{ display: "grid", gridTemplateColumns: "96px repeat(4,1fr)", gap: 7, alignItems: "stretch" }}>
+          <div style={{ background: "#102A43", color: "#dbe5f0", borderRadius: 10, padding: "8px 9px" }}>
+            <b style={{ color: "#fff", fontSize: 12 }}>{dom2.domain}</b>
+            <p style={{ margin: "3px 0 0", fontSize: 9.5, lineHeight: 1.45, color: "#9fb2c8" }}>{dom2.blurb}</p>
+          </div>
+          {dom2.screens.map(([t, st, body], si) => {
+            const key = `${di}-${si}`;
+            return <button key={t} type="button" onClick={() => setSel(key)} aria-pressed={sel === key} style={{ textAlign: "left", background: "#fbfcfe", border: `1.5px solid ${sel === key ? "#2F80ED" : "#cfd9e4"}`, borderRadius: 9, padding: "7px 9px", cursor: "pointer", font: "inherit", opacity: stateFilter && st !== stateFilter ? 0.35 : 1 }}>
+              <b style={{ fontSize: 11.3, color: "#0B1726" }}>{t}</b> <span className="tks-tag">{st}</span>
+              <span style={{ display: "block", fontSize: 9.3, lineHeight: 1.5, color: "#44536a", marginTop: 4 }}>{body}</span>
+            </button>;
+          })}
+        </div>
+      ))}
     </div>
-    <div className="tks-detail" aria-live="polite"><b>{dom.screens[sc][0]}</b> — {dom.screens[sc][2]}</div>
     <p className="tks-kicker" style={{ marginTop: 12 }}>State legend — select to highlight matching screens</p>
     <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>{STATES23.map((st) => <button key={st} type="button" className="tks-chip" aria-pressed={stateFilter === st} onClick={() => setStateFilter((v) => (v === st ? null : st))}>{st}</button>)}</div>
     <p style={{ color: "#555", margin: "10px 0 0" }}>Note: Labels describe visible states tested in wireframes.</p>
@@ -621,21 +829,60 @@ const EVID25: Array<[string, string, string, number]> = [
   ["Critical", "Evidence indicates critical risk.", "Immediate action required.", 1],
 ];
 export function DeepViseBrandSystem() {
-  const [after, setAfter] = useState(true);
   const [col, setCol] = useState(3);
-  const [ev, setEv] = useState(0);
-  return <Dv n="25" title="From purple concept to product credibility" sub="DeepVise — Industrial AI for Real-World Decisions. Evolving our identity to reflect trust, precision and evidence—built for engineers and risk teams. Mark construction: wireframe DV monogram → two-tone mark → app tile. Typography: Inter — Neutral. Clear. Technical. For UI, headings and body. IBM Plex Mono — For IDs, time, metrics and logs. Monospaced for alignment." label="DeepVise brand system — interactive rebuild of DeepVise_25">
-    <Chips items={["Before (Original Deck Inset)", "After (New System)"]} value={after ? 1 : 0} onPick={(i) => setAfter(i === 1)} />
-    <div className="tks-detail" aria-live="polite">
-      {after ? <><b>Compressor Train 7A</b> · ✓ Validated · Site A · UTC 2025-05-20 14:32:18. Health Index 92 /100 · Validated — Remaining Life 239 days · Review — Vibration (RMS) 2.18 mm/s · Validated — Temperature 71.4 °C · Review. Vibration (RMS) over time (May 13–20): RMS vs Baseline; tooltip 2025-05-20 14:00:00 — RMS 2.18 mm/s · Baseline 1.75 mm/s. Anomaly Score 0.18 /1.00 · Review. Spectral Density (Hz): Current vs Baseline, 10¹–10⁴ Hz. Remaining Life Forecast: Median with 80% Confidence band, May ’25 – May ’26, Maintenance threshold marked. Live Waveform (Time Domain): Acceleration (g) −1.0 to 1.0 over 0–1.0 s. Nav: Overview · Assets · Monitoring · Diagnostics · Forecasting · Workflows · Reports · Data Explorer · Settings.
-        <p className="tks-kicker" style={{ margin: "8px 0 4px" }}>Evidence status (text, not color alone)</p>
-        <Chips items={EVID25.map(([t, , , c]) => `${t} · ${c}`)} value={ev} onPick={setEv} />
-        <p style={{ margin: "6px 0 0" }}>{EVID25[ev][0]}: {EVID25[ev][1]} {EVID25[ev][2]} Count as printed: {EVID25[ev][3]}.</p></> :
-      <><b>Before</b> — Original deck cover as printed: “DeepVise · Industrial AI for Real-World Decisions · Predict. Monitor. Optimize.” over a high-saturation purple wave (page 01). Caption as printed: High-saturation purple, heavy effects, limited information hierarchy.</>}
+  return <Dv n="25" title="From purple concept to product credibility" sub="DeepVise — Industrial AI for Real-World Decisions. Evolving our identity to reflect trust, precision and evidence—built for engineers and risk teams." label="DeepVise brand system — interactive rebuild of DeepVise_25">
+    <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", gap: 11, alignItems: "start" }}>
+      <div style={{ display: "grid", gap: 9 }}>
+        <div className="tks-card">
+          <p className="tks-kicker" style={{ marginTop: 0 }}>Mark construction</p>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ border: "1.5px dashed #637083", borderRadius: 8, padding: "8px 10px", fontWeight: 800, color: "#637083", fontSize: 15 }}>DV</span><span aria-hidden="true">→</span>
+            <span style={{ border: "1.5px solid #102A43", borderRadius: 8, padding: "8px 10px", fontWeight: 800, fontSize: 15 }}><span style={{ color: "#102A43" }}>D</span><span style={{ color: "#12C7D4" }}>V</span></span><span aria-hidden="true">→</span>
+            <span style={{ background: "#102A43", borderRadius: 9, padding: "8px 11px", fontWeight: 800, fontSize: 15 }}><span style={{ color: "#fff" }}>D</span><span style={{ color: "#12C7D4" }}>V</span></span>
+          </div>
+          <p style={{ margin: "6px 0 0", fontSize: 10.5, color: "#55606e" }}>Wireframe DV monogram → two-tone mark → app tile.</p>
+        </div>
+        <div className="tks-card">
+          <p className="tks-kicker" style={{ marginTop: 0 }}>Typography</p>
+          <p style={{ margin: 0, fontSize: 26, fontWeight: 700, lineHeight: 1 }}>Aa <span style={{ fontSize: 13, fontWeight: 600 }}>Inter</span></p>
+          <p style={{ margin: "4px 0 0", fontSize: 11, color: "#44536a" }}>Neutral. Clear. Technical. For UI, headings and body. Numerals: 0 1 2 3 4 5 6 7 8 9</p>
+          <p style={{ margin: "5px 0 0", fontFamily: "ui-monospace, monospace", fontSize: 11 }}>IBM Plex Mono — ASSET ID CT-7A-00023 · 14:32:18</p>
+          <p style={{ margin: "3px 0 0", fontSize: 10.5, color: "#55606e" }}>For IDs, time, metrics and logs. Monospaced for alignment.</p>
+        </div>
+        <div style={{ border: "1px solid #dde4ec", borderRadius: 11, padding: "9px 11px", background: "#fff" }}>
+          <p className="tks-kicker" style={{ marginTop: 0 }}>Color system &amp; roles — select a token</p>
+          <div style={{ display: "grid", gap: 3 }}>
+            {COLORS25.map(([hex, role], i) => <button key={hex} type="button" onClick={() => setCol(i)} aria-pressed={i === col} style={{ display: "flex", alignItems: "center", gap: 8, textAlign: "left", background: i === col ? "#eef1f6" : "transparent", border: "1px solid transparent", borderRadius: 7, padding: "3px 6px", cursor: "pointer", font: "inherit", fontSize: 11 }}>
+              <span style={{ width: 16, height: 16, borderRadius: 4, background: hex, border: "1px solid #c3cedb", flex: "none" }} /><b>{hex}</b><span style={{ color: "#55606e" }}>{role}</span>
+            </button>)}
+          </div>
+        </div>
+        <div style={{ border: "1px solid #dde4ec", borderRadius: 11, padding: "9px 11px", background: "#fff" }}>
+          <p className="tks-kicker" style={{ marginTop: 0 }}>Evidence status (text, not color alone)</p>
+          <table className="tks-table"><tbody>{EVID25.map(([t, d1, d2, c]) => <tr key={t}><td><b>{t}</b></td><td style={{ fontSize: 10.5 }}>{d1} {d2}</td><td><b>{c}</b></td></tr>)}</tbody></table>
+        </div>
+      </div>
+      <div style={{ display: "grid", gap: 9 }}>
+        <div style={{ background: "linear-gradient(120deg,#3b2a7a,#6C5CE7)", color: "#e6e1ff", borderRadius: 11, padding: "9px 13px", fontSize: 11.5 }}>
+          <b style={{ color: "#fff" }}>Before</b> — Original deck cover as printed: “DeepVise · Industrial AI for Real-World Decisions · Predict. Monitor. Optimize.” over a high-saturation purple wave (page 01). Caption: High-saturation purple, heavy effects, limited information hierarchy.
+        </div>
+        <div style={{ background: "#0B1726", color: "#dbe5f0", borderRadius: 12, padding: "11px 14px" }}>
+          <p style={{ margin: 0, fontSize: 11, color: "#9fb2c8" }}>Overview · Assets · Monitoring · Diagnostics · Forecasting · Workflows · Reports · Data Explorer · Settings</p>
+          <p style={{ margin: "7px 0 0", fontSize: 14 }}><b style={{ color: "#fff" }}>Compressor Train 7A</b> · ✓ Validated · Site A · <span style={{ fontFamily: "ui-monospace, monospace" }}>UTC 2025-05-20 14:32:18</span></p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 7, marginTop: 8 }}>
+            {[["Health Index", "92 /100 · Validated"], ["Remaining Life", "239 days · Review"], ["Vibration (RMS)", "2.18 mm/s · Validated"], ["Temperature", "71.4 °C · Review"], ["Anomaly Score", "0.18 /1.00 · Review"], ["Spectral Density", "10¹–10⁴ Hz · Current vs Baseline"]].map(([k, v]) => <div key={k} style={{ border: "1px solid #22344d", borderRadius: 8, padding: "6px 8px" }}><span style={{ color: "#8fa5bd", fontSize: 9.5 }}>{k}</span><br /><b style={{ color: "#fff", fontSize: 12 }}>{v}</b></div>)}
+          </div>
+          <svg viewBox="0 0 300 74" width="100%" height="74" role="img" aria-label="Vibration RMS over time, May 13 to 20, against baseline" style={{ marginTop: 8 }}>
+            <line x1="0" y1="46" x2="300" y2="46" stroke="#3d5878" strokeDasharray="4 3" />
+            <polyline points="0,44 40,42 80,43 120,40 160,38 200,34 240,30 280,26 300,24" fill="none" stroke="#12C7D4" strokeWidth="2" />
+            <circle cx="272" cy="27" r="3.5" fill="#12C7D4" />
+            <text x="196" y="16" fill="#dbe5f0" fontSize="8.5">2025-05-20 14:00 — RMS 2.18 · Baseline 1.75 mm/s</text>
+            <text x="0" y="70" fill="#8fa5bd" fontSize="8.5">Vibration (RMS) over time · May 13–20</text>
+          </svg>
+          <p style={{ margin: "4px 0 0", fontSize: 10.5, color: "#9fb2c8" }}>Remaining Life Forecast: Median with 80% Confidence band, May ’25 – May ’26, Maintenance threshold marked. Live Waveform (Time Domain): Acceleration (g) −1.0 to 1.0 over 0–1.0 s.</p>
+        </div>
+      </div>
     </div>
-    <p className="tks-kicker" style={{ marginTop: 12 }}>Color system &amp; roles — select a token</p>
-    <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>{COLORS25.map(([hex, role], i) => <button key={hex} type="button" className="tks-chip" aria-pressed={i === col} onClick={() => setCol(i)}><span style={{ display: "inline-block", width: 12, height: 12, borderRadius: 3, background: hex, border: "1px solid #bbb" }} /> {hex}</button>)}</div>
-    <div className="tks-detail" aria-live="polite"><b>{COLORS25[col][0]}</b> — {COLORS25[col][1]}</div>
     <div className="tks-grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(170px,1fr))", marginTop: 10 }}>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Color usage</p><b>DO</b> Use color with semantic meaning and text labels.<br /><b style={{ color: "#b3352c" }}>DON’T</b> Rely on color alone without context.</div>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Data visualization</p><b>DO</b> Show context: units, baselines and confidence.<br /><b style={{ color: "#b3352c" }}>DON’T</b> Show charts without scales or context.</div>
@@ -654,26 +901,24 @@ const TYPE26: Array<[string, string, string]> = [
   ["Display 1", "32/40", "Semibold"], ["Heading 1", "24/32", "Semibold"], ["Heading 2", "20/28", "Semibold"],
   ["Body 1", "16/24", "Regular"], ["Body 2", "14/20", "Regular"], ["Caption", "12/16", "Regular"], ["Overline", "10/12", "Medium"],
 ];
-const DS_SECTIONS = ["1 · Foundations", "2 · Navigation & Actions", "3 · Data Display", "4 · Decision Components", "5 · States & Accessibility"];
 export function DeepViseDesignSystem() {
-  const [sec, setSec] = useState(3);
   const [tok, setTok] = useState(4);
   const [rev, setRev] = useState(-5);
   const [cost, setCost] = useState(3);
   const [perm, setPerm] = useState(0);
   const PERMS = [["Full access", "Can view, edit and share."], ["View only", "Can view and export."], ["Restricted", "Limited data due to policy."], ["No access", "Insufficient permissions."]];
   return <Dv n="26" title="DeepVise Design System" sub="Five printed sections: Foundations (Evidence: Prototype pages 13–14) · Navigation & Actions (13–15) · Data Display (13–16) · Decision Components (15–16) · States & Accessibility (16–17)." label="DeepVise design system — interactive rebuild of DeepVise_26">
-    <Chips items={DS_SECTIONS} value={sec} onPick={setSec} />
-    {sec === 0 && <div className="tks-detail" aria-live="polite"><p className="tks-kicker" style={{ marginTop: 0 }}>The visual and structural building blocks of the DeepVise system · Color tokens</p>
+    <p style={{ margin: "0 0 2px", color: "#555" }}>All five printed sections are shown stacked, as on the board — the dark rail at left of the original carries the DeepVise wordmark and the section list.</p>
+    <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>1 · Foundations</p><p className="tks-kicker" style={{ marginTop: 0 }}>The visual and structural building blocks of the DeepVise system · Color tokens</p>
       <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>{TOKENS26.map(([t], i) => <button key={t} type="button" className="tks-chip" aria-pressed={i === tok} onClick={() => setTok(i)}>{t}</button>)}</div>
       <p style={{ margin: "8px 0 0" }}>Selected: <b>{TOKENS26[tok][0]}</b> ({TOKENS26[tok][1]}).</p>
       <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Type scale (Inter)</p>
       <table className="tks-table"><tbody>{TYPE26.map(([t, s, w]) => <tr key={t}><td>{t}</td><td>{s}</td><td>{w}</td></tr>)}</tbody></table>
-      <p style={{ margin: "8px 0 0" }}>Spacing scale (4px): xs · sm · md · lg · xl · 2xl · 3xl · 4xl (growing bars as printed). Radius: radius-xs 2px · radius-sm 4px · radius-md 8px · radius-lg 12px · radius-xl 16px · radius-2xl 20px. Border: border-default 1px · border-strong 1px #CBD5E1 · border-focus 2px #2F80ED. Elevation (light theme): elevation-0 none · elevation-1 0 1px 2px rgba(11,23,38,.06) · elevation-2 0 4px 8px rgba(11,23,38,.08) · elevation-3 0 12px 24px rgba(11,23,38,.12). Grid series: Series 1 #2F80ED · Series 2 #12C7D4 · Series 3 #6C5CE7 · Series 4 #D99A2B · Series 5 #637083 · Baseline #102A43 · Threshold + #D95C5C · Threshold − #D95C5C.</p></div>}
-    {sec === 1 && <div className="tks-detail" aria-live="polite"><p className="tks-kicker" style={{ marginTop: 0 }}>Consistent navigation, primary actions and utility controls</p>
+      <p style={{ margin: "8px 0 0" }}>Spacing scale (4px): xs · sm · md · lg · xl · 2xl · 3xl · 4xl (growing bars as printed). Radius: radius-xs 2px · radius-sm 4px · radius-md 8px · radius-lg 12px · radius-xl 16px · radius-2xl 20px. Border: border-default 1px · border-strong 1px #CBD5E1 · border-focus 2px #2F80ED. Elevation (light theme): elevation-0 none · elevation-1 0 1px 2px rgba(11,23,38,.06) · elevation-2 0 4px 8px rgba(11,23,38,.08) · elevation-3 0 12px 24px rgba(11,23,38,.12). Grid series: Series 1 #2F80ED · Series 2 #12C7D4 · Series 3 #6C5CE7 · Series 4 #D99A2B · Series 5 #637083 · Baseline #102A43 · Threshold + #D95C5C · Threshold − #D95C5C.</p></div>
+    <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>2 · Navigation & Actions</p><p className="tks-kicker" style={{ marginTop: 0 }}>Consistent navigation, primary actions and utility controls</p>
       <p style={{ margin: 0 }}>App shell as printed: DeepVise — Home · Monitor · Finance (active) · Risk · Reports · Admin · Search entities, accounts, reports… · 🔔 3 · ? · AL. Sub-nav: Overview · Cash &amp; Liquidity · Profitability · Forecasts · Commitments · Covenants.</p>
-      <p style={{ margin: "8px 0 0" }}>Actions — Primary: [+ Create report ▾] · Secondary: [Export ▾] · Tertiary: [Share ▾] [⋮] · Destructive: [Delete ▾].</p></div>}
-    {sec === 2 && <div className="tks-detail" aria-live="polite"><p className="tks-kicker" style={{ marginTop: 0 }}>Present information clearly with scannable patterns and meaningful context</p>
+      <p style={{ margin: "8px 0 0" }}>Actions — Primary: [+ Create report ▾] · Secondary: [Export ▾] · Tertiary: [Share ▾] [⋮] · Destructive: [Delete ▾].</p></div>
+    <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>3 · Data Display</p><p className="tks-kicker" style={{ marginTop: 0 }}>Present information clearly with scannable patterns and meaningful context</p>
       <p style={{ margin: 0 }}>Filters: Date range Apr 1 – May 31, 2024 · Entity: All entities · Currency: USD · More filters ⌄. Metric cards — Cash Balance USD 128.4M ↑ 8.7% vs Apr 1 – Mar 31 · Evidence: Bank stmt. — EBITDA USD 42.7M ↓ −4.3% vs Apr 1 – Mar 31 · Evidence: GL — Covenant Headroom Total Leverage 1.35x ↑ 0.12x vs Apr 1 – Mar 31 · Evidence: Covenant calc.</p>
       <table className="tks-table" style={{ marginTop: 8 }}><thead><tr><th>Entity</th><th>Cash Balance (USD)</th><th>Change (%)</th><th>As of</th><th>Evidence</th><th>Updated</th></tr></thead><tbody>
         <tr><td>Northwind Ltd.</td><td>128,400,000</td><td>+8.7%</td><td>May 31, 2024</td><td>Bank stmt.</td><td>2h ago ●</td></tr>
@@ -683,19 +928,19 @@ export function DeepViseDesignSystem() {
       <p style={{ margin: "8px 0 0" }}>1–4 of 4 · page 1 · 20 / page. Tabs: Overview · Trends · Breakdown · Benchmarks (EBITDA (USD) Jan–May line as printed). Side panel — Entity details: Northwind Ltd. · Entity ID NW-1001 · Industry Manufacturing · Region North America · Relationship Borrower · [View full profile]. Dialog (Confirm): ⚠ Delete forecast? This action cannot be undone. [Cancel] [Delete]. Form (Edit): Report name* Monthly Liquidity Report · Frequency* Monthly · Owner* Alex Lee · [Save changes] [Cancel]. Alert banners: ℹ Data import completed successfully · ⚠ 3 accounts need attention due to unusual activity · ⚠ Covenant breach detected for 2 entities. Evidence chips: Bank stmt. May 31, 2024 ✓ Verified · GL May 31, 2024 ✓ Verified · Covenant calc. May 31, 2024 Calculated · Manual input May 31, 2024 Unverified.</p>
       <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Permission badges — select</p>
       <Chips items={PERMS.map(([t]) => t)} value={perm} onPick={setPerm} />
-      <p style={{ margin: "6px 0 0" }} aria-live="polite">{PERMS[perm][0]}: {PERMS[perm][1]}</p></div>}
-    {sec === 3 && <div className="tks-detail" aria-live="polite"><p className="tks-kicker" style={{ marginTop: 0 }}>Guide decisions with clear comparisons, thresholds and context</p>
+      <p style={{ margin: "6px 0 0" }} aria-live="polite">{PERMS[perm][0]}: {PERMS[perm][1]}</p></div>
+    <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>4 · Decision Components</p><p className="tks-kicker" style={{ marginTop: 0 }}>Guide decisions with clear comparisons, thresholds and context</p>
       <p style={{ margin: 0 }}>KPI with threshold — Total Leverage <b>3.25x</b> · Threshold ≤ 3.50x · scale 2.0x – 4.0x · ✓ Within limit. Variance table: Revenue Actual 142.3M · Plan 135.0M · Variance +7.3M · +5.4% — EBITDA 42.7M · 45.0M · −2.3M · −5.1% — Op. Cash Flow 31.6M · 28.0M · +3.6M · +12.9%. Forecast range chart: Cash Balance (USD) Actual vs Forecast (P50), Jan–Jul. Risk heatmap (inherent): Impact High/Medium/Low × Likelihood Low/Medium/High, highest cell top-right. Decision list: ☐ Review covenant headroom · ☑ Approve cash sweep · ☐ Adjust forecast assumptions · ☐ Escalate to credit committee.</p>
       <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>What-if input (as printed: Revenue −5%, Cost +3%)</p>
       <label style={{ display: "block" }}>Revenue change {rev}%
         <input type="range" min={-20} max={20} value={rev} onChange={(e) => setRev(Number(e.target.value))} aria-label="What-if revenue change percent" style={{ width: "100%" }} /></label>
       <label style={{ display: "block" }}>Cost change {cost}%
         <input type="range" min={-20} max={20} value={cost} onChange={(e) => setCost(Number(e.target.value))} aria-label="What-if cost change percent" style={{ width: "100%" }} /></label>
-      <p style={{ margin: "6px 0 0" }} aria-live="polite">Inputs set to Revenue {rev}% · Cost {cost}% — [Recalculate impact]. (The printed board shows the inputs only; no recalculated result is printed, so none is invented here.)</p></div>}
-    {sec === 4 && <div className="tks-detail" aria-live="polite"><p className="tks-kicker" style={{ marginTop: 0 }}>Every interaction state is designed for clarity, recovery and access</p>
+      <p style={{ margin: "6px 0 0" }} aria-live="polite">Inputs set to Revenue {rev}% · Cost {cost}% — [Recalculate impact]. (The printed board shows the inputs only; no recalculated result is printed, so none is invented here.)</p></div>
+    <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>5 · States & Accessibility</p><p className="tks-kicker" style={{ marginTop: 0 }}>Every interaction state is designed for clarity, recovery and access</p>
       <p style={{ margin: 0 }}>Button states: Normal · Hover · Focus · Selected/Active ✓ Primary · Disabled · Loading (spinner) Primary. Table row states: Normal · Hover · Selected (☑ Northwind Ltd. 128,400,000) · Disabled. Data and content states: Loading (skeleton) · Empty: No data found — Adjust filters or check permissions · Stale Data: Data is 2 days old, May 29, 2024 2d old, Refresh data · Missing Data: Data not available, Reason: Not reported · Confidence Interval: Actual vs out-of-range band.</p>
       <p style={{ margin: "8px 0 0" }}>Alert states: ⚠ Warning — Coverage below 95%, 6 items affected · ⚠ Critical — Covenant breach, 2 entities affected. Permission and connection states: Disconnected — You’re offline, Reconnecting…, Retry now · Permission Denied — Access denied, You don’t have permission to view this data · Restricted View — Some data hidden due to your role.</p>
-      <p style={{ margin: "8px 0 0" }}>Accessibility indicators and examples: Focus Visible — Example, Meets 3:1 focus indicator contrast · Color Contrast — Aa Contrast ratio 7.31 AA · Non-Color Markers (Chart) — Series A / Series B, Pattern + marker · Crosshair (Chart) — Crosshair shows values on hover or focus, Apr · Screen Reader Label — &lt;button aria-label=”Export report as CSV”&gt;Export&lt;/button&gt;, Labels provide context for assistive tech · Keyboard Support — Tab, All interactions reachable via keyboard · Text Resize — 100% 150% 200%, UI remains usable at 200% zoom.</p></div>}
+      <p style={{ margin: "8px 0 0" }}>Accessibility indicators and examples: Focus Visible — Example, Meets 3:1 focus indicator contrast · Color Contrast — Aa Contrast ratio 7.31 AA · Non-Color Markers (Chart) — Series A / Series B, Pattern + marker · Crosshair (Chart) — Crosshair shows values on hover or focus, Apr · Screen Reader Label — &lt;button aria-label=”Export report as CSV”&gt;Export&lt;/button&gt;, Labels provide context for assistive tech · Keyboard Support — Tab, All interactions reachable via keyboard · Text Resize — 100% 150% 200%, UI remains usable at 200% zoom.</p></div>
   </Dv>;
 }
 
@@ -706,17 +951,51 @@ const FACTORS27: Array<[string, number]> = [
 ];
 export function DeepViseHeroEntry() {
   const [ws, setWs] = useState(0);
-  return <Dv n="27" title="Private machine intelligence for earlier maintenance and more explainable risk review." sub="Monitor industrial assets. Improve a shared health model without pooling raw telemetry. Release only permissioned evidence. Site nav as printed: Product · How it works · Security & privacy · Resources · About · [Role selection]." label="DeepVise dual entry hero — interactive rebuild of DeepVise_27">
+  return <Dv n="27" title="Private machine intelligence for earlier maintenance and more explainable risk review." sub="Monitor industrial assets. Improve a shared health model without pooling raw telemetry. Release only permissioned evidence." label="DeepVise dual entry hero — interactive rebuild of DeepVise_27">
+    <div style={{ display: "flex", gap: 13, flexWrap: "wrap", alignItems: "center", background: "#0B1726", color: "#dbe5f0", borderRadius: 10, padding: "8px 13px", fontSize: 11.5, marginBottom: 10 }}>
+      <b style={{ color: "#fff" }}>DeepVise</b><span>Product</span><span>How it works</span><span>Security &amp; privacy</span><span>Resources</span><span>About</span>
+      <span style={{ marginLeft: "auto", border: "1px solid #12C7D4", color: "#12C7D4", borderRadius: 7, padding: "2px 9px", fontWeight: 700 }}>Role selection</span>
+    </div>
     <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }} role="group" aria-label="Workspace entry">
       <button type="button" className="tks-btn" aria-pressed={ws === 0} onClick={() => setWs(0)}>🏭 Enter Factory Workspace →</button>
       <button type="button" className="tks-btn tks-btn--ghost" aria-pressed={ws === 1} onClick={() => setWs(1)}>🏛 Enter Lender Workspace →</button>
     </div>
-    <div className="tks-detail" aria-live="polite">
-      {ws === 0 ? <><b>Overview — Factory A · Press Line 1</b> (dashboard over a factory photograph, represented structurally). Asset health, Press Line 1: <b>87 of 100 · Good</b> · Health score. Anomaly trend, Last 7 days: rising line May 7 – May 13, Low → High. Next maintenance window, Press Line 1: <b>May 20 – May 24</b> · In 7 days · View recommendations →. Top contributing factors, Press Line 1 · Last 7 days:
-        <ul style={{ margin: "5px 0 0" }}>{FACTORS27.map(([t, v]) => <li key={t}>{t} — {v}%</li>)}</ul>
-        Evidence status, All connections: Verified 328 · Pending 54 · Needs review 12 · View evidence log →. Left nav: Overview · Assets · Health · Evidence · Insights · Connections · Workspaces · Audit log · Settings. Signed in: Alex Morgan, Factory admin.
-        <p style={{ margin: "8px 0 0" }}>🛡 Raw telemetry remains inside participating factory environments. Data stays local. Evidence is permissioned. You stay in control.</p></> :
-      <><b>Lender Workspace entry</b> — as printed on this slide, the lender path releases only permissioned evidence: Evidence status — Verified, pending, or needs review—always traceable and auditable (the same ledger counts as the factory panel: Verified 328 · Pending 54 · Needs review 12). No lender dashboard is pictured on this slide, so none is reconstructed here.</>}
+    <div style={{ marginTop: 10 }} aria-live="polite">
+      {ws === 0 ? <div style={{ background: "#0B1726", color: "#dbe5f0", borderRadius: 12, overflow: "hidden" }}>
+        <div style={{ padding: "7px 13px", borderBottom: "1px solid #22344d", fontSize: 11, color: "#9fb2c8" }}>Overview — Factory A · Press Line 1 <span style={{ float: "right" }}>Signed in: Alex Morgan, Factory admin</span></div>
+        <div style={{ display: "grid", gridTemplateColumns: "118px 1fr", minHeight: 150 }}>
+          <div style={{ borderRight: "1px solid #22344d", padding: "9px 10px", fontSize: 10.5, color: "#9fb2c8", display: "grid", gap: 5, alignContent: "start" }}>
+            {["Overview", "Assets", "Health", "Evidence", "Insights", "Connections", "Workspaces", "Audit log", "Settings"].map((x, i) => <span key={x} style={i === 0 ? { color: "#12C7D4", fontWeight: 700 } : undefined}>{x}</span>)}
+          </div>
+          <div style={{ padding: "10px 13px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "120px 1fr 1fr", gap: 10, alignItems: "start" }}>
+              <div style={{ textAlign: "center" }}>
+                <span style={{ display: "inline-flex", width: 86, height: 86, borderRadius: "50%", background: "conic-gradient(#12C7D4 0deg 313deg, #22344d 313deg 360deg)", alignItems: "center", justifyContent: "center" }}>
+                  <span style={{ width: 64, height: 64, borderRadius: "50%", background: "#0B1726", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}><b style={{ color: "#fff", fontSize: 19, lineHeight: 1 }}>87</b><span style={{ fontSize: 8.5, color: "#9fb2c8" }}>of 100 · Good</span></span>
+                </span>
+                <p style={{ margin: "4px 0 0", fontSize: 10, color: "#9fb2c8" }}>Asset health — Press Line 1</p>
+              </div>
+              <div>
+                <p style={{ margin: 0, fontSize: 10.5, color: "#9fb2c8" }}>Anomaly trend · Last 7 days</p>
+                <svg viewBox="0 0 150 52" width="100%" height="52" role="img" aria-label="Anomaly trend rising from low to high, May 7 to May 13">
+                  <polyline points="4,42 28,38 52,36 76,28 100,24 124,14 146,8" fill="none" stroke="#D99A2B" strokeWidth="2" />
+                  <text x="4" y="51" fill="#8fa5bd" fontSize="7.5">May 7 · Low</text><text x="112" y="51" fill="#8fa5bd" fontSize="7.5">May 13 · High</text>
+                </svg>
+                <p style={{ margin: "2px 0 0", fontSize: 11 }}>Next maintenance window: <b style={{ color: "#fff" }}>May 20 – May 24</b> · In 7 days · View recommendations →</p>
+              </div>
+              <div>
+                <p style={{ margin: 0, fontSize: 10.5, color: "#9fb2c8" }}>Top contributing factors · Last 7 days</p>
+                {FACTORS27.map(([t, v]) => <div key={t} style={{ marginTop: 4 }}>
+                  <span style={{ fontSize: 10, color: "#dbe5f0" }}>{t} — {v}%</span>
+                  <span style={{ display: "block", height: 5, borderRadius: 3, background: "#22344d", marginTop: 2 }}><span style={{ display: "block", height: 5, borderRadius: 3, background: "#2F80ED", width: `${v * 2.4}%` }} /></span>
+                </div>)}
+              </div>
+            </div>
+            <p style={{ margin: "9px 0 0", fontSize: 11, borderTop: "1px solid #22344d", paddingTop: 7 }}>Evidence status, All connections: <b style={{ color: "#fff" }}>Verified 328 · Pending 54 · Needs review 12</b> · View evidence log →<br />🛡 Raw telemetry remains inside participating factory environments. Data stays local. Evidence is permissioned. You stay in control. <span style={{ color: "#8fa5bd" }}>(The dashboard sits over a factory photograph on the original — represented structurally.)</span></p>
+          </div>
+        </div>
+      </div> :
+      <div className="tks-detail"><b>Lender Workspace entry</b> — as printed on this slide, the lender path releases only permissioned evidence: Evidence status — Verified, pending, or needs review—always traceable and auditable (the same ledger counts as the factory panel: Verified 328 · Pending 54 · Needs review 12). No lender dashboard is pictured on this slide, so none is reconstructed here.</div>}
     </div>
     <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0 }}>01 · Capability</p><b>Monitor industrial assets.</b>
       <p style={{ margin: "4px 0 0", color: "#555" }}>Continuously track equipment health with local models and real-time anomaly detection—no raw data leaves your environment. Evidence status: Verified, pending, or needs review—always traceable and auditable. Explore capability →</p></div>
@@ -735,7 +1014,18 @@ export function DeepViseRoleSelection() {
   const [perm, setPerm] = useState(false);
   const [st, setSt] = useState(0);
   const cur = ROLE28[role];
-  return <Dv n="28" title="28. Role and Permission Selection — Choose a workspace" sub="Your role changes the decisions you can make and the evidence you are permitted to see. Header as printed: Organization Acme Manufacturing Ltd. ✓ Verified · Authentication SSO (SAML 2.0), Not signed in · Region North America, Data residency: US · Need help? View access guide. Left rail — Narrative: Clarify the product's dual-sided entry and communicate access scope before authentication or workspace loading. Solution: The role selection screen makes data boundaries explicit so users choose the workspace that matches their responsibilities—and only see what they're permitted to access. Outcome: Reduces onboarding confusion · Sets accurate expectations up front · Prevents access to out-of-scope data · Establishes trust through transparency." label="DeepVise role selection — interactive rebuild of DeepVise_28">
+  return <Dv n="28" title="28. Role and Permission Selection — Choose a workspace" sub="Your role changes the decisions you can make and the evidence you are permitted to see." label="DeepVise role selection — interactive rebuild of DeepVise_28">
+    <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginBottom: 10 }}>
+      {[["Organization", "Acme Manufacturing Ltd. ✓ Verified"], ["Authentication", "SSO (SAML 2.0) · Not signed in"], ["Region", "North America · Data residency: US"], ["Need help?", "View access guide"]].map(([k, v]) => <span key={k} style={{ background: "#102A43", color: "#dbe5f0", borderRadius: 9, padding: "6px 12px", fontSize: 11.5 }}><span style={{ color: "#9fb2c8" }}>{k} </span><b style={{ color: "#fff" }}>{v}</b></span>)}
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "196px 1fr", gap: 11, alignItems: "start" }}>
+      <div style={{ background: "#F6F8FB", border: "1px solid #dde4ec", borderRadius: 11, padding: "10px 12px" }}>
+        <p className="tks-kicker" style={{ marginTop: 0 }}>Case study — left rail</p>
+        <p style={{ margin: 0, fontSize: 11, lineHeight: 1.55 }}><b>Narrative:</b> Clarify the product's dual-sided entry and communicate access scope before authentication or workspace loading.</p>
+        <p style={{ margin: "6px 0 0", fontSize: 11, lineHeight: 1.55 }}><b>Solution:</b> The role selection screen makes data boundaries explicit so users choose the workspace that matches their responsibilities—and only see what they're permitted to access.</p>
+        <p style={{ margin: "6px 0 0", fontSize: 11, lineHeight: 1.55 }}><b>Outcome:</b> Reduces onboarding confusion · Sets accurate expectations up front · Prevents access to out-of-scope data · Establishes trust through transparency.</p>
+      </div>
+      <div>
     <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1fr" }}>
       {ROLE28.map((r, i) => <button key={r.name} type="button" className={`tks-card${i === role ? " is-on" : ""}`} aria-pressed={i === role} onClick={() => setRole(i)}>
         <b style={{ fontSize: 14 }}>{r.name}</b><p style={{ color: "#555", margin: "4px 0" }}>{r.tagline}</p>
@@ -751,6 +1041,8 @@ export function DeepViseRoleSelection() {
     <Chips items={STATES28} value={st} onPick={setSt} />
     <div className="tks-detail" aria-live="polite">{st === 3 ? "Organization unavailable — ⚠ Please contact your system administrator. Both workspace cards and Continue buttons are disabled." : st === 4 ? "Permission denied — ✕ Access denied: You do not have permission to access any workspace. Both workspace cards are disabled." : `${STATES28[st]} — the two workspace cards are shown in this state; Version 1 (left rail): Early concept with minimal detail and less explicit data boundaries.`}</div>
     <p style={{ color: "#555", margin: "10px 0 0" }}>♿ Keyboard order: Factory, Lender, Administrator, Permission details. Screen-reader labels are descriptive for each control.</p>
+      </div>
+    </div>
   </Dv>;
 }
 
@@ -770,29 +1062,49 @@ const WORK29: Array<[string, string, string, string, string, string, string]> = 
   ["W-5624", "P-02-006", "Replace output bearing", "Medium", "Morgan Patel", "Scheduled", "May 16, 16:00"],
   ["W-5602", "P-01-058", "Clean motor cooling vents", "Medium", "Taylor Brooks", "Scheduled", "May 16, 17:00"],
 ];
+const PANEL29: React.CSSProperties = { background: "#0e1c2e", border: "1px solid #22344d", borderRadius: 11, padding: "10px 12px" };
 export function DeepViseCommandCenter() {
   const [row, setRow] = useState(0);
   const cur = CRITICAL29[row];
-  return <Dv n="29" title="Factory Command Center — 3 assets need attention before the next production window." sub="All times shown in local time (UTC-05:00) · Demo data. Filters (persistent, 5 active): Organization DeepVise Industries · Plant P-01 North Plant · Line All Lines · Shift Day Shift (06:00 – 14:00) · Time window May 10 – May 16, 2025 · Reset filters. Header: 10:24 AM · May 16, 2025 · OM. Left nav: Overview · Assets · Work Orders · Alerts (3) · Analytics · Reports · Models · Data · Settings." label="DeepVise factory command center — interactive rebuild of DeepVise_29" dark>
-    <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1fr" }}>
-      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Fleet health trend · May 10 – May 16, 2025 · 1 hr granularity · Drill down →</p>
-        <p style={{ margin: 0 }}>Average health score (0–100) declines from ~80 (May 10) to ~58 (May 16); the May 16 segment is hatched <b>Incomplete</b> (excluded from trend). Fleet distribution (by asset count): Healthy (80–100) 42 · 56% · Watch (60–79) 18 · 24% · Warning (40–59) 9 · 12% · Critical (0–39) 3 · 4% · No data 3 · 4% · <b>Total assets 75</b>.</p></div>
-      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Predicted downtime exposure (next 72h) · Drill down →</p>
-        <p style={{ margin: 0, fontSize: 20 }}><b>15.7 h</b> <span style={{ fontSize: 12 }}>Total predicted downtime across 3 assets</span></p>
-        <p style={{ margin: "4px 0 0" }}>Critical 10.7 h (68%) · Warning 3.1 h (20%) · Watch 1.3 h (8%) · No data 0.6 h (4%). Cumulative curve rises to 15.7 h at 72h. Definition: Predicted downtime is the sum of expected asset downtime that may impact production in the next 72 hours.</p></div>
+  return <Dv n="29" title="Factory Command Center — 3 assets need attention before the next production window." sub="All times shown in local time (UTC-05:00) · Demo data. Filters (persistent, 5 active): Organization DeepVise Industries · Plant P-01 North Plant · Line All Lines · Shift Day Shift (06:00 – 14:00) · Time window May 10 – May 16, 2025 · Reset filters. Header: 10:24 AM · May 16, 2025 · OM. Left nav: Overview · Assets · Work Orders · Alerts (3) · Analytics · Reports · Models · Data · Settings." label="DeepVise factory command center — interactive rebuild of DeepVise_29">
+    <div style={{ background: "#0B1726", borderRadius: 13, padding: "13px 15px", color: "#dbe5f0" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+      <div style={PANEL29}><p className="tks-kicker" style={{ marginTop: 0 }}>Fleet health trend · May 10 – May 16, 2025 · 1 hr granularity · Drill down →</p>
+        <svg viewBox="0 0 300 92" width="100%" height="92" role="img" aria-label="Average health score declining from about 80 on May 10 to about 58 on May 16; the May 16 segment is incomplete">
+          <defs><pattern id="dv29hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="transparent" /><line x1="0" y1="0" x2="0" y2="6" stroke="#D99A2B" strokeWidth="1.6" /></pattern></defs>
+          <line x1="0" y1="18" x2="300" y2="18" stroke="#22344d" /><line x1="0" y1="48" x2="300" y2="48" stroke="#22344d" /><line x1="0" y1="76" x2="300" y2="76" stroke="#22344d" />
+          <polyline points="4,20 44,24 84,28 124,36 164,44 204,52 244,60" fill="none" stroke="#12C7D4" strokeWidth="2" />
+          <rect x="244" y="8" width="54" height="66" fill="url(#dv29hatch)" opacity="0.5" />
+          <polyline points="244,60 268,64 296,68" fill="none" stroke="#D99A2B" strokeWidth="2" strokeDasharray="4 3" />
+          <text x="4" y="90" fill="#8fa5bd" fontSize="8">May 10 · ~80</text><text x="238" y="90" fill="#D99A2B" fontSize="8">May 16 · ~58 · Incomplete</text>
+        </svg>
+        <p style={{ margin: "4px 0 0", fontSize: 11, lineHeight: 1.55 }}>Fleet distribution (by asset count): Healthy (80–100) 42 · 56% · Watch (60–79) 18 · 24% · Warning (40–59) 9 · 12% · Critical (0–39) 3 · 4% · No data 3 · 4% · <b style={{ color: "#fff" }}>Total assets 75</b>. The hatched May 16 segment is excluded from trend.</p></div>
+      <div style={PANEL29}><p className="tks-kicker" style={{ marginTop: 0 }}>Predicted downtime exposure (next 72h) · Drill down →</p>
+        <p style={{ margin: 0, fontSize: 20 }}><b style={{ color: "#fff" }}>15.7 h</b> <span style={{ fontSize: 12 }}>Total predicted downtime across 3 assets</span></p>
+        <div style={{ display: "grid", gap: 5, marginTop: 7 }}>
+          {[["Critical", 10.7, 68, "#D95C5C"], ["Warning", 3.1, 20, "#D99A2B"], ["Watch", 1.3, 8, "#2F80ED"], ["No data", 0.6, 4, "#637083"]].map(([k, h, pc, c]) => <div key={k as string} style={{ display: "grid", gridTemplateColumns: "58px 1fr 74px", gap: 8, alignItems: "center", fontSize: 11 }}>
+            <span>{k}</span><span style={{ height: 8, borderRadius: 4, background: "#22344d" }}><span style={{ display: "block", height: 8, borderRadius: 4, background: c as string, width: `${pc as number}%` }} /></span><span>{h} h ({pc}%)</span>
+          </div>)}
+        </div>
+        <p style={{ margin: "6px 0 0", fontSize: 11, lineHeight: 1.55, color: "#9fb2c8" }}>Cumulative curve rises to 15.7 h at 72h. Definition: Predicted downtime is the sum of expected asset downtime that may impact production in the next 72 hours.</p></div>
+    </div>
+    <p className="tks-kicker" style={{ marginTop: 12 }}>Attention required (3) — assets at critical risk of impacting production</p>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>
+      {[["P-01-042", "Hydraulic Press #2 · Line 2 · Est. downtime 6.2 h · Impact High · Owner: Alex Rivera · Open work order W-5621 →"], ["P-01-017", "CNC Mill #3 · Line 1 · Est. downtime 4.5 h · Impact High · Owner: Jamie Lee · Open work order W-5617 →"], ["P-02-006", "Conveyor Drive #1 · Line 3 · Est. downtime 2.1 h · Impact Medium · Owner: Morgan Patel · Open work order W-5624 →"]].map(([id, body]) => <div key={id} style={PANEL29}><b style={{ color: "#fff" }}>{id}</b><p style={{ margin: "3px 0 0", fontSize: 11, lineHeight: 1.5 }}>{body}</p></div>)}
     </div>
     <p className="tks-kicker" style={{ marginTop: 12 }}>Critical assets — Showing 7 of 7 · Drill down → (select a row)</p>
-    <div style={{ overflowX: "auto" }}><table className="tks-table"><thead><tr><th>Machine ID</th><th>Health score (0–100)</th><th>Change vs 24h ago</th><th>Likely issue</th><th>Confidence</th><th>Production impact (next 72h)</th><th>Owner</th><th>Next action</th></tr></thead>
-      <tbody>{CRITICAL29.map((r, i) => <tr key={r[0]} onClick={() => setRow(i)} style={{ cursor: "pointer", background: i === row ? "#1d2f47" : undefined }}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2] === 0 ? "—" : `↓ ${Math.abs(r[2])}`}</td><td>{r[3]}</td><td>{r[4].toFixed(2)} · {r[5]}</td><td>{r[6]}</td><td>{r[7]}</td><td>{r[8]}</td></tr>)}</tbody></table></div>
-    <div className="tks-detail" aria-live="polite"><b>Attention required (3)</b> — Assets at critical risk of impacting production. Selected {cur[0]}: {cur[0] === "P-01-042" ? "Hydraulic Press #2 · Line 2 · Est. downtime 6.2 h · Impact High · Owner: Alex Rivera · Open work order W-5621 →" : cur[0] === "P-01-017" ? "CNC Mill #3 · Line 1 · Est. downtime 4.5 h · Impact High · Owner: Jamie Lee · Open work order W-5617 →" : cur[0] === "P-02-006" ? "Conveyor Drive #1 · Line 3 · Est. downtime 2.1 h · Impact Medium · Owner: Morgan Patel · Open work order W-5624 →" : `${cur[3]} · Production impact ${cur[6]} · Owner: ${cur[7]} · Next action: ${cur[8]}.`} View all alerts (3) →</div>
-    <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1fr", marginTop: 10 }}>
-      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Active maintenance work — Showing 4 of 4 · View all work orders →</p>
-        {WORK29.map((w) => <p key={w[0]} style={{ margin: "4px 0" }}><b>{w[0]}</b> · {w[1]} · {w[2]} · {w[3]} · {w[4]} · {w[5]} · ETA {w[6]}</p>)}
+    <div style={{ overflowX: "auto", borderRadius: 10 }}><table className="tks-table" style={{ color: "#22303f" }}><thead><tr><th>Machine ID</th><th>Health score (0–100)</th><th>Change vs 24h ago</th><th>Likely issue</th><th>Confidence</th><th>Production impact (next 72h)</th><th>Owner</th><th>Next action</th></tr></thead>
+      <tbody>{CRITICAL29.map((r, i) => <tr key={r[0]} onClick={() => setRow(i)} style={{ cursor: "pointer", background: i === row ? "#1d2f47" : undefined, color: i === row ? "#e8eef5" : undefined }}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2] === 0 ? "—" : `↓ ${Math.abs(r[2])}`}</td><td>{r[3]}</td><td>{r[4].toFixed(2)} · {r[5]}</td><td>{r[6]}</td><td>{r[7]}</td><td>{r[8]}</td></tr>)}</tbody></table></div>
+    <p style={{ margin: "8px 0 0", fontSize: 11.5 }} aria-live="polite">Selected row: <b style={{ color: "#fff" }}>{cur[0]}</b> — {cur[3]} · Production impact {cur[6]} · Owner: {cur[7]} · Next action: {cur[8]}. View all alerts (3) →</p>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 10 }}>
+      <div style={PANEL29}><p className="tks-kicker" style={{ marginTop: 0 }}>Active maintenance work — Showing 4 of 4 · View all work orders →</p>
+        {WORK29.map((w) => <p key={w[0]} style={{ margin: "4px 0", fontSize: 11.5 }}><b style={{ color: "#fff" }}>{w[0]}</b> · {w[1]} · {w[2]} · {w[3]} · {w[4]} · {w[5]} · ETA {w[6]}</p>)}
         <p className="tks-kicker" style={{ margin: "6px 0 0" }}>Active maintenance work excludes completed and cancelled orders. Demo data.</p></div>
-      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>System context · View data quality →</p>
-        <p style={{ margin: 0 }}>Last sensor update <b>10:23 AM</b> · May 16, 2025 (most recent time any asset reported sensor data) · Data completeness <b>96.2%</b> past 24 hours (percent of expected sensor data received) · Model <b>DV-HM-0.9.3</b>, deployed May 15, 2025, 09:00 (current health model version in production) · Active maintenance work <b>4</b> work orders in progress.</p></div>
+      <div style={PANEL29}><p className="tks-kicker" style={{ marginTop: 0 }}>System context · View data quality →</p>
+        <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.55 }}>Last sensor update <b style={{ color: "#fff" }}>10:23 AM</b> · May 16, 2025 (most recent time any asset reported sensor data) · Data completeness <b style={{ color: "#fff" }}>96.2%</b> past 24 hours (percent of expected sensor data received) · Model <b style={{ color: "#fff" }}>DV-HM-0.9.3</b>, deployed May 15, 2025, 09:00 (current health model version in production) · Active maintenance work <b style={{ color: "#fff" }}>4</b> work orders in progress.</p></div>
     </div>
-    <p style={{ color: "#9fb2c8", margin: "10px 0 0" }}>Definitions: Health score, Change, Confidence, Production impact. 7 rows · Demo data. Source and evidence boundary: Original deck pages 11–12 support monitoring, prediction and risk-warning capabilities. This screen is reconstructed. Production method: Chart data generated deterministically. Figma: Units: hours (h). Missing-data treatment: Incomplete data excluded from trend and completeness calculation.</p>
+    </div>
+    <p style={{ color: "#555", margin: "10px 0 0" }}>Definitions: Health score, Change, Confidence, Production impact. 7 rows · Demo data. Source and evidence boundary: Original deck pages 11–12 support monitoring, prediction and risk-warning capabilities. This screen is reconstructed. Production method: Chart data generated deterministically. Figma: Units: hours (h). Missing-data treatment: Incomplete data excluded from trend and completeness calculation.</p>
   </Dv>;
 }
 
@@ -806,22 +1118,42 @@ const FACTORIES30: Array<{ name: string; status: string; detail: string; health:
 ];
 export function DeepViseMultiFactory() {
   const [f, setF] = useState(0);
-  const [fieldNote, setFieldNote] = useState(false);
-  const cur = FACTORIES30[f];
-  return <Dv n="30" title="Multi-Factory Asset Overview — Federation participation summary" sub="Same feature schema, different machine samples. Demo data — synthetic and aggregated. Summary as printed: 3 Active parties (All contributing) · 1 Feature schema v2.1 (shared) · 3 Participating datasets (Different machine samples) · < 24h Average data freshness (Across all parties). Organization list (5): selecting a factory filters the comparison." label="DeepVise multi-factory overview — interactive rebuild of DeepVise_30">
-    <Chips items={FACTORIES30.map((x) => `${x.name} · ${x.status}`)} value={f} onPick={setF} />
-    <div className="tks-detail" aria-live="polite"><b>{cur.name}</b> — {cur.status} · {cur.detail}
-      <table className="tks-table" style={{ marginTop: 8 }}><tbody>
-        <tr><td style={{ width: "34%" }}>Normalized health distribution — Share of assets in each condition band</td><td>{cur.health}</td></tr>
-        <tr><td>Fault-class mix (top 4) — Share of recent detections by fault class</td><td>{cur.faults}</td></tr>
-        <tr><td>Update recency — Time since last model or data update</td><td>{cur.recency}</td></tr>
-        <tr><td>Evaluation status — Model performance on local holdout (aggregated)</td><td>{cur.evaluation}</td></tr>
-        <tr><td>Current model version — Deployed model for inference</td><td>{cur.model}</td></tr>
-        <tr><td>Participation status — Contribution to federation</td><td>{cur.status === "Active" ? "✓ Contributing — Actively training and sharing model updates" : cur.status}</td></tr>
-      </tbody></table>
-      <p style={{ margin: "8px 0 0" }}>Cross-factory comparison (normalized): Compare participation and model coverage without exposing local telemetry. Normalized bands — Not raw counts · Privacy by design — No raw telemetry shared.</p>
-      <p style={{ margin: "8px 0 0" }}><button type="button" className="tks-btn tks-btn--ghost" aria-expanded={fieldNote} onClick={() => setFieldNote((v) => !v)}>🔒 Why is raw telemetry unavailable?</button></p>
-      {fieldNote && <p style={{ margin: "6px 0 0" }}><b>Field not available</b> — Raw telemetry, exact counts and identifiers are not available by design. This protects partner privacy and complies with data agreements.</p>}
+  const segBar = (health: string) => {
+    const parts = health.split("·").map((x) => x.trim());
+    const cols: Record<string, string> = { Good: "#12C7D4", Fair: "#2F80ED", Poor: "#D99A2B", Critical: "#D95C5C" };
+    return <span style={{ display: "flex", height: 9, borderRadius: 5, overflow: "hidden", gap: 1 }}>{parts.map((pt) => {
+      const m = pt.match(/(\d+)%\s*(\w+)/);
+      if (!m) return null;
+      return <span key={pt} style={{ width: `${m[1]}%`, background: cols[m[2]] ?? "#637083" }} title={pt} />;
+    })}</span>;
+  };
+  const rows: Array<[string, (x: (typeof FACTORIES30)[number]) => ReactNode]> = [
+    ["Normalized health distribution — Share of assets in each condition band", (x) => <>{segBar(x.health)}<span style={{ display: "block", marginTop: 3 }}>{x.health}</span></>],
+    ["Fault-class mix (top 4) — Share of recent detections by fault class", (x) => x.faults],
+    ["Update recency — Time since last model or data update", (x) => x.recency],
+    ["Evaluation status — Model performance on local holdout (aggregated)", (x) => x.evaluation],
+    ["Current model version — Deployed model for inference", (x) => x.model],
+    ["Participation status — Contribution to federation", (x) => x.status === "Active" ? "✓ Contributing — Actively training and sharing model updates" : x.status],
+  ];
+  return <Dv n="30" title="Multi-Factory Asset Overview — Federation participation summary" sub="Same feature schema, different machine samples. Demo data — synthetic and aggregated." label="DeepVise multi-factory overview — interactive rebuild of DeepVise_30">
+    <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginBottom: 10 }}>
+      {[["3", "Active parties (All contributing)"], ["1", "Feature schema v2.1 (shared)"], ["3", "Participating datasets (Different machine samples)"], ["< 24h", "Average data freshness (Across all parties)"]].map(([v, k]) => <span key={k} style={{ background: "#0B1726", color: "#dbe5f0", borderRadius: 9, padding: "6px 12px", fontSize: 11.5 }}><b style={{ color: "#fff", fontSize: 14 }}>{v}</b> {k}</span>)}
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "172px 1fr", gap: 11, alignItems: "start" }}>
+      <div style={{ display: "grid", gap: 6 }}>
+        {FACTORIES30.map((x, i) => <button key={x.name} type="button" onClick={() => setF(i)} aria-pressed={i === f} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === f ? "#2F80ED" : "#dde4ec"}`, borderRadius: 10, padding: "7px 10px", cursor: "pointer", font: "inherit" }}>
+          <b style={{ fontSize: 12 }}>{x.name}</b> <span className="tks-tag">{x.status}</span>
+          <span style={{ display: "block", fontSize: 10, color: "#55606e", marginTop: 2 }}>{x.detail}</span>
+        </button>)}
+      </div>
+      <div>
+        <div style={{ overflowX: "auto" }}><table className="tks-table"><thead><tr><th style={{ width: "30%" }}>Cross-factory comparison (normalized)</th>{FACTORIES30.slice(0, 3).map((x) => <th key={x.name}>{x.name}</th>)}</tr></thead>
+          <tbody>{rows.map(([label, get]) => <tr key={label}><td style={{ fontSize: 10.8 }}>{label}</td>{FACTORIES30.slice(0, 3).map((x) => <td key={x.name} style={{ fontSize: 11 }}>{get(x)}</td>)}</tr>)}</tbody></table></div>
+        <div style={{ display: "flex", gap: 8, alignItems: "stretch", marginTop: 8 }}>
+          <p style={{ margin: 0, flex: 1, fontSize: 11, color: "#44536a" }}>Compare participation and model coverage without exposing local telemetry. Normalized bands — Not raw counts · Privacy by design — No raw telemetry shared. Selected: <b>{FACTORIES30[f].name}</b> ({FACTORIES30[f].status}).</p>
+          <div style={{ border: "1.5px dashed #637083", borderRadius: 10, padding: "7px 11px", fontSize: 11, maxWidth: 300, background: "#F6F8FB" }}>🔒 <b>Field not available</b> — Raw telemetry, exact counts and identifiers are not available by design. This protects partner privacy and complies with data agreements.</div>
+        </div>
+      </div>
     </div>
     <p style={{ color: "#555", margin: "10px 0 0" }}>🔒 Aggregated condition only; raw telemetry remains local. No raw machine data or telemetry is shared across parties. [Learn more]</p>
   </Dv>;
@@ -850,13 +1182,27 @@ export function DeepViseMachineHealth() {
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Score Definition</p><p style={{ margin: 0 }}>Health Score is a weighted index (0–100) across 5 subsystems: vibration, temperature, lubrication, electrical, pressure. Higher score = better condition. Learn more ↗</p></div>
     </div>
     <p className="tks-kicker" style={{ marginTop: 12 }}>Health chart, May 2 – May 9 — Health Score (0–100) · 7-Day Moving Average · Baseline (Apr 4 – May 1, 2025) · Thresholds (source: DV standard v2.1): Good (80–100) · Warning (60–80) · Critical (0–60). Select an event</p>
-    <Chips items={EVENTS31.map(([t]) => t)} value={ev} onPick={setEv} />
-    <div className="tks-detail" aria-live="polite"><b>{EVENTS31[ev][0]}</b> — {EVENTS31[ev][1]}</div>
+    <div style={{ border: "1px solid #dde4ec", borderRadius: 11, padding: "8px 10px 2px", background: "#fff" }}>
+      <svg viewBox="0 0 640 168" width="100%" height="168" role="img" aria-label="Health score chart May 2 to May 9 with threshold bands and event markers">
+        <rect x="40" y="8" width="592" height="44" fill="#e7f6ee" /><rect x="40" y="52" width="592" height="44" fill="#fdf3e0" /><rect x="40" y="96" width="592" height="64" fill="#fbeaea" />
+        <text x="4" y="34" fontSize="9" fill="#0e7c4a">Good 80–100</text><text x="4" y="78" fontSize="9" fill="#9a6b12">Warning 60–80</text><text x="4" y="124" fontSize="9" fill="#b03a3a">Critical 0–60</text>
+        <line x1="40" y1="52" x2="632" y2="52" stroke="#b9c6d4" strokeDasharray="4 3" /><line x1="40" y1="96" x2="632" y2="96" stroke="#b9c6d4" strokeDasharray="4 3" />
+        <polyline points="40,40 124,42 209,44 293,46 378,47 462,48 547,49 632,50" fill="none" stroke="#637083" strokeWidth="1.4" strokeDasharray="5 3" />
+        <polyline points="40,34 124,36 209,52 293,63 378,72 462,80 547,84 632,86" fill="none" stroke="#2F80ED" strokeWidth="2.2" />
+        {[[124, "May 3"], [293, "May 5"], [462, "May 7"], [547, "May 8"]].map(([x, d], i) => <g key={d as string} onClick={() => setEv(i)} style={{ cursor: "pointer" }}>
+          <circle cx={x as number} cy={[36, 63, 80, 84][i]} r={ev === i ? 6 : 4.5} fill={ev === i ? "#D99A2B" : "#fff"} stroke="#2F80ED" strokeWidth="2" />
+          <text x={(x as number) - 14} y="166" fontSize="9" fill="#55606e">{d}</text>
+        </g>)}
+        <text x="40" y="166" fontSize="9" fill="#55606e">May 2</text><text x="606" y="166" fontSize="9" fill="#55606e">May 9</text>
+      </svg>
+      <p style={{ margin: "0 0 6px", fontSize: 11 }} aria-live="polite"><b>{EVENTS31[ev][0]}</b> — {EVENTS31[ev][1]}{ev === 2 ? " (chart tooltip, as printed)" : ""}</p>
+    </div>
     <p className="tks-kicker" style={{ marginTop: 12 }}>Subsystem status — select a row</p>
     <div style={{ overflowX: "auto" }}><table className="tks-table"><thead><tr><th>Subsystem</th><th>Status</th><th>Score /100</th><th>Trend (7 days)</th></tr></thead>
-      <tbody>{SUBSYS31.map((r, i) => <tr key={r[0]} onClick={() => setSub(i)} style={{ cursor: "pointer", background: i === sub ? "#e8f4f6" : undefined }}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}</td><td>{r[3]}</td></tr>)}</tbody></table></div>
+      <tbody>{SUBSYS31.map((r, i) => <tr key={r[0]} onClick={() => setSub(i)} style={{ cursor: "pointer", background: i === sub ? "#eef1f6" : undefined }}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}</td><td>{r[3]}</td></tr>)}</tbody></table></div>
     <div className="tks-grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(170px,1fr))", marginTop: 10 }}>
-      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Sensor Coverage</p><p style={{ margin: 0 }}><b>96% Complete</b> — 48 / 50 sensors reporting: 48 Complete · 2 Missing · 0 Stale. View sensor map.</p>
+      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Sensor Coverage</p>
+        <p style={{ margin: 0, display: "flex", alignItems: "center", gap: 10 }}><span style={{ display: "inline-flex", width: 54, height: 54, borderRadius: "50%", background: "conic-gradient(#0e7c86 0deg 346deg, #e3e9f0 346deg 360deg)", alignItems: "center", justifyContent: "center", flex: "none" }}><span style={{ width: 38, height: 38, borderRadius: "50%", background: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 12 }}>96%</span></span><span><b>96% Complete</b> — 48 / 50 sensors reporting: 48 Complete · 2 Missing · 0 Stale. View sensor map.</span></p>
         <p className="tks-kicker" style={{ margin: "8px 0 2px" }}>Signal Freshness</p><p style={{ margin: 0 }}>Vibration 1 min ago ✓ · Temperature 1 min ago ✓ · Lubrication 2 min ago ✓ · Electrical 1 min ago ✓ · Pressure 1 min ago ✓</p></div>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Likely Fault</p><p style={{ margin: 0 }}><b>Bearing-related impulse pattern</b> — Impacting drive-end bearing (DE).</p>
         <label style={{ display: "block", marginTop: 8 }}>Confidence {conf.toFixed(2)} — drag across the printed 0.80 RUL threshold
@@ -897,9 +1243,32 @@ export function DeepViseSensorDiagnostics() {
     <label style={{ display: "block", marginTop: 10 }}>Cursor {timeLabel} / 09:40:00 — playback cursor over the 09:10–09:40 window (printed cursor at 09:26:00)
       <input type="range" min={0} max={30} value={cursor} onChange={(e) => setCursor(Number(e.target.value))} aria-label="Diagnostics cursor position in minutes after 09:10" style={{ width: "100%" }} /></label>
     <p style={{ margin: "4px 0 0" }} aria-live="polite">Cursor at {timeLabel}{cursor >= 14 && cursor <= 18 ? " — inside the selected anomaly window (09:24:30 – 09:27:30)." : "."} Transport as printed: ▶ ⏮ ⏭ · 1× · Cursor toggle on · Reset.</p>
-    <p className="tks-kicker" style={{ marginTop: 12 }}>Signal tracks ({views[view]} view) — select a track</p>
-    <Chips items={TRACKS32.map(([t]) => t)} value={track} onPick={setTrack} />
-    <div className="tks-detail" aria-live="polite"><b>{TRACKS32[track][0]}</b> — {TRACKS32[track][1]}. {TRACKS32[track][2]}</div>
+    <p className="tks-kicker" style={{ marginTop: 12 }}>Signal tracks ({views[view]} view) — shared axis 09:10–09:40, shaded band = selected anomaly window 09:24:30–09:27:30, line = cursor</p>
+    <div style={{ display: "grid", gap: 6 }}>
+      {TRACKS32.map(([t, unit, desc], i) => {
+        const cx = (cursor / 30) * 300;
+        const paths = [
+          "M0,19 L108,19 L146,19 L150,6 L154,30 L158,4 L162,28 L166,8 L170,24 L174,18 L196,17 L228,17 M236,17 L262,17",
+          "M0,18 L60,17.5 L120,18.5 L180,18 L240,18.5 L300,18",
+          "M0,18 L140,18 L152,13 L164,11 L176,18 L300,18",
+          "M0,18 L142,18 L150,15 L158,21 L166,15 L174,19 L300,18",
+          "",
+        ];
+        return <button key={t} type="button" onClick={() => setTrack(i)} aria-pressed={i === track} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === track ? "#2F80ED" : "#dde4ec"}`, borderRadius: 10, padding: "6px 10px", cursor: "pointer", font: "inherit" }}>
+          <span style={{ display: "flex", justifyContent: "space-between", fontSize: 11 }}><b>{t}</b><span style={{ color: "#7c8798" }}>{unit}</span></span>
+          {i < 4 ? <svg viewBox="0 0 300 36" width="100%" height="36" role="img" aria-label={desc} style={{ display: "block", marginTop: 3 }}>
+            <rect x="145" y="0" width="30" height="36" fill="#D99A2B" opacity="0.16" />
+            <path d={paths[i]} fill="none" stroke={i === 0 ? "#D95C5C" : "#2F80ED"} strokeWidth="1.6" />
+            <line x1={cx} y1="0" x2={cx} y2="36" stroke="#0B1726" strokeWidth="1" strokeDasharray="3 2" />
+          </svg> : <span style={{ display: "block", height: 36, borderRadius: 5, marginTop: 3, position: "relative", background: "linear-gradient(180deg,#274b8f,#3a6bc2 45%,#274b8f)", overflow: "hidden" }}>
+            <span style={{ position: "absolute", left: "48%", top: 7, width: "10%", height: 22, borderRadius: "50%", background: "radial-gradient(closest-side,#f6d743,#e2543a 70%,transparent)", opacity: 0.95 }} />
+            <span style={{ position: "absolute", left: `${(cursor / 30) * 100}%`, top: 0, bottom: 0, width: 1, background: "#0B1726" }} />
+            <span style={{ position: "absolute", right: 4, top: 2, fontSize: 8.5, color: "#cfe0ff" }}>dB −40 … 10 · 100–5k Hz</span>
+          </span>}
+          <span style={{ display: "block", fontSize: 10, lineHeight: 1.45, color: "#55606e", marginTop: 3 }}>{desc}</span>
+        </button>;
+      })}
+    </div>
     <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1fr", marginTop: 10 }}>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Selected Event — Probable Bearing Issue</p>
         <p style={{ margin: 0 }}>Time (local) 2025-05-15 09:24:30 – 09:27:30 (3.0 min) · Alert ID ALT-2025-05-15-0924.</p>
@@ -919,7 +1288,11 @@ export function DeepViseSensorDiagnostics() {
 
 /* ---------------- Dispatcher ---------------- */
 export function deepViseChapterFor(file: string): ReactNode | null {
+  if (file.startsWith("DeepVise_01")) return <DeepViseDashboardHero />;
   if (file.startsWith("DeepVise_02")) return <DeepViseProductFlow />;
+  if (file.startsWith("DeepVise_13")) return <DeepViseChallenge />;
+  if (file.startsWith("DeepVise_15")) return <DeepViseBlueprint />;
+  if (file.startsWith("DeepVise_24")) return <DeepViseConcepts />;
   if (file.startsWith("DeepVise_03")) return <DeepViseProcessBoard />;
   if (file.startsWith("DeepVise_04")) return <DeepViseTrustSignal />;
   if (file.startsWith("DeepVise_05")) return <DeepViseDemoVideo />;
