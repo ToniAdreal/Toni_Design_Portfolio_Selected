@@ -168,10 +168,10 @@ export const cyberorigin: Project = {
         },
         {
           file: 'CyberOrigin_15.png',
-          title: 'State Machine: Task Lifecycle',
-          caption: 'Technical diagram representing the state transitions of a task from creation to completion, including edge cases like abandonment, expiration, and dispute resolution.',
-          rationale: 'Aligns design states with engineering architecture, ensuring robust handling of all possible user scenarios.',
-          tags: ['State Machine', 'Logic']
+          title: 'Marketplace (V0)',
+          caption: 'The V0 marketplace window as printed: six capture categories with per-task price ranges — Street Scenes $0.20–$2.50, Nature $0.25–$2.00, Industrial Operations $0.30–$3.00, Medical Imagery $0.40–$3.50, Sports $0.20–$1.80, Agriculture $0.20–$1.50.',
+          rationale: 'The historical V0 surface where contributors first browsed paid capture work.',
+          tags: ['Marketplace', 'V0']
         }
       ]
     },
@@ -182,10 +182,10 @@ export const cyberorigin: Project = {
       images: [
         {
           file: 'CyberOrigin_16.png',
-          title: 'Dashboard & Task Feed',
-          caption: 'The primary entry point for mobile contributors, featuring personalized task recommendations, progress towards daily goals, and quick access to active captures. The UI uses card-based layouts for easy scanning.',
-          rationale: 'Maximizes engagement by presenting actionable opportunities immediately upon app launch.',
-          tags: ['Dashboard', 'Mobile UI']
+          title: 'Urban Street Scene — Task Detail (V0)',
+          caption: 'The V0 task-detail window as printed: an Urban Street Scene brief (storefronts, pedestrian activity, vehicles) with a five-item requirements checklist, photo upload, a leaderboard (Sarah J. at $245.60; "You" fifth at $87.40), and recent submissions.',
+          rationale: 'One bounded task, fully specified: requirements, proof, and social proof on a single screen.',
+          tags: ['Task Detail', 'V0']
         },
         {
           file: 'CyberOrigin_17.png',
@@ -266,10 +266,10 @@ export const cyberorigin: Project = {
       images: [
         {
           file: 'CyberOrigin_26.png',
-          title: 'Reviewer Workspace Overview',
-          caption: 'The high-density web dashboard designed for QA specialists. Features a split-pane layout with the submitted media on one side and a robust rubric, annotation tools, and metadata on the other.',
-          rationale: 'Optimizes for speed and accuracy, allowing reviewers to process high volumes of submissions with minimal cognitive fatigue.',
-          tags: ['Dashboard', 'Enterprise']
+          title: 'Submission State Machine',
+          caption: 'The submission state machine as printed: twelve states in a snake layout, each with an owner, a message, a next action, and a reward consequence — with dashed rework and appeal paths and an owner legend.',
+          rationale: 'Every visible state has an owner and a next action — the lifecycle drawn for submissions, not tasks.',
+          tags: ['State Machine', 'Logic']
         },
         {
           file: 'CyberOrigin_27.png',

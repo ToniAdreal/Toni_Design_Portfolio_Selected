@@ -91,7 +91,7 @@ export const deepvise: Project = {
       number: '04',
       title: 'Dual-Port Product UI',
       images: [
-        { file: 'DeepVise_13.png', title: 'Dual Financial Port Selector', caption: 'deepvise.online: "Enterprise — Need Loan" vs. "Institution — Manage Assets".', rationale: 'Dual-audience entry UX.', tags: ['UI'] },
+        { file: 'DeepVise_13.png', title: 'Challenge Statement and Success Criteria', caption: 'Act III as printed: the challenge statement — "How might one privacy-preserving system help factories act on machine risk earlier and help lenders review productive-asset risk with fresher evidence?" — with five success criteria and their evidence statuses; the finance criterion is labelled on the slide as a product layer added by the team, outside the core challenge text.', rationale: 'A broad competition direction turned into a focused, auditable product mandate.', tags: ['Strategy'] },
         { file: 'DeepVise_14.png', title: 'Product North Star Loop', caption: 'The North Star loop: Detect / Understand / Act / Learn / Review. (The role-selection screen itself is slide 28.)', rationale: 'A loop as the product’s north star, not a funnel.', tags: ['Security'] },
         { file: 'DeepVise_15.png', title: 'Lending Institution Overview', caption: 'Portfolio ¥85M, avg rate 4.85%, 12 active enterprises, risk breakdown.', rationale: 'Multi-company portfolio monitoring.', tags: ['UI'] },
         { file: 'DeepVise_16.png', title: 'Information Architecture', caption: 'The DeepVise information architecture sitemap (slide 16).', rationale: 'The sitemap is where the dual-port structure becomes concrete.', tags: ['Product'] },

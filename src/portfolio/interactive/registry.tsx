@@ -16,10 +16,8 @@ import { NextCardWireframeWallShowcase } from "./NextCardPhones";
 import { nextCardChapterFor } from "./NextCardChapters";
 import { AurionXTVDesignSystem, AurionXVisualIdentity } from "./AurionXDesignSystem";
 import {
-  Allweb3FeeCalculator, Allweb3Milestones, Allweb3Reputation, Allweb3Settlement,
   AurionXGlobalVoice, AurionXHighlightConfig, AurionXSceneRecall,
   BrewOpsControlTower, BrewOpsCopilot, BrewOpsScenario,
-  DataQuestLifecycle, DataQuestReviewer, DataQuestTaskFeed,
   DeepViseDashboard, DeepVisePortSelector,
   MengniuAlertCenter, MengniuBarnTwin, MengniuCommandCenter,
   NextCardApplicationFlow, NextCardRewardEngine, NextCardValueEngines, NextCardValueTriangle,
@@ -71,20 +69,22 @@ function bespoke(slug: string, chapter: ChapterLike, image: GalleryImage): React
     if (file.startsWith("AurionX_32_")) return <AurionXGlobalVoice />;
   }
   if (slug === "deepvise") {
+    // File-keyed chapter dispatcher first — it covers every file in the
+    // deck, including file 13 (Challenge Statement), whose data title was
+    // rewritten from the actual slide; no title-keyed route may shadow it.
     const dv = deepViseChapterFor(file);
     if (dv) return dv;
     if (title === "Executive Platform Dashboard") return <DeepViseDashboard />;
-    if (title === "Dual Financial Port Selector") return <DeepVisePortSelector />;
     if (title === "Lending Institution Overview") return <DeepVisePortSelector />;
     if (title === "Fault Diagnostics & Alert Engine") return <DeepViseDashboard />;
   }
   if (slug === "allweb3") {
+    // File-keyed chapter dispatcher covers all 19 files, including
+    // 5/7/8/13 (rebuilt from the actual slides in Allweb3Rebuilds); their
+    // data titles were rewritten from those slides, so the former
+    // title-keyed ProjectScreens routes for them are removed.
     const aw = allweb3ChapterFor(file);
     if (aw) return aw;
-    if (title === "Deterministic Fee Calculator & Escrow Preview") return <Allweb3FeeCalculator />;
-    if (title === "Creator Profile & Reputation Scorecard") return <Allweb3Reputation />;
-    if (title === "Automated Escrow Release & Settlement") return <Allweb3Settlement />;
-    if (title === "Task Workspace & Milestone Tracker") return <Allweb3Milestones />;
   }
   if (slug === "budweiser") {
     const bo = brewOpsChapterFor(file);
@@ -94,11 +94,12 @@ function bespoke(slug: string, chapter: ChapterLike, image: GalleryImage): React
     if (title === "BrewOps AI Copilot Interface") return <BrewOpsCopilot />;
   }
   if (slug === "cyberorigin") {
+    // File-keyed chapter dispatcher covers all 40 files, including
+    // 15/16/26 (rebuilt from the actual slides in DataQuestRebuilds);
+    // their data titles were rewritten from those slides, so the former
+    // title-keyed ProjectScreens routes for them are removed.
     const dq = dataQuestChapterFor(file);
     if (dq) return dq;
-    if (title === "State Machine: Task Lifecycle") return <DataQuestLifecycle />;
-    if (title === "Dashboard & Task Feed") return <DataQuestTaskFeed />;
-    if (title === "Reviewer Workspace Overview") return <DataQuestReviewer />;
   }
   if (slug === "mengniu") {
     const mn = mengniuChapterFor(file);
