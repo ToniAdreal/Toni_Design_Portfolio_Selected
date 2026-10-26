@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
+import { useLanguage } from "../../i18n/LanguageContext";
 import "./tokenta-slides.css";
 
 /**
@@ -815,8 +816,22 @@ export function MengniuResearchEvidence({ n = "15" }: { n?: string }) {
 
 /* ---------------- 16 — Opportunity Statement ---------------- */
 const OPP16 = "How might a farm operator understand the condition of an animal and the state of the barn without reading disconnected sensor systems?";
+/* Pass 9: in Chinese mode the statement renders as phrase segments (no
+   inter-word spaces in Chinese), with the same three key phrases
+   highlighted; word-by-word rendering made a natural Chinese sentence
+   impossible. English mode keeps the original word-split rendering. */
+const OPP16_ZH: Array<[string, boolean]> = [
+  ["农场经营者如何了解动物的", false],
+  ["健康状况", true],
+  ["与牛舍的", false],
+  ["状态", true],
+  ["，而不必读取彼此", false],
+  ["割裂", true],
+  ["的传感器系统？", false],
+];
 export function MengniuOpportunity({ n = "16" }: { n?: string }) {
   const [lit, setLit] = useState(false);
+  const { lang } = useLanguage();
   return <Mn n={n} title={<span style={{ fontSize: 15, letterSpacing: "0.14em", color: GREEN, fontWeight: 800 }}>OPPORTUNITY STATEMENT</span>} cream label="Mengniu opportunity statement — interactive rebuild">
     <div style={{ minHeight: 356, display: "flex", flexDirection: "column" }}>
       <div style={{ borderTop: "1px solid #d8d2bd", position: "relative", margin: "6px 0 0" }}>
@@ -828,7 +843,7 @@ export function MengniuOpportunity({ n = "16" }: { n?: string }) {
       </div>
       <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
         <button type="button" onClick={() => setLit(!lit)} aria-pressed={lit} style={{ display: "block", width: "100%", textAlign: "left", background: "transparent", border: "none", padding: 0, cursor: "pointer", font: "inherit" }}>
-          <span style={{ display: "block", fontSize: 39, lineHeight: 1.42, fontWeight: 650, color: "#12241a", maxWidth: 820 }}>{OPP16.split(" ").map((w, i) => <span key={i} style={{ background: lit && (w === "condition" || w === "state" || w === "disconnected") ? "#CDEEDB" : "transparent", borderRadius: 3 }}>{w} </span>)}</span>
+          <span style={{ display: "block", fontSize: 39, lineHeight: 1.42, fontWeight: 650, color: "#12241a", maxWidth: 820 }}>{lang === "zh" ? OPP16_ZH.map(([t, kw], i) => <span key={i} style={{ background: lit && kw ? "#CDEEDB" : "transparent", borderRadius: 3 }}>{t}</span>) : OPP16.split(" ").map((w, i) => <span key={i} style={{ background: lit && (w === "condition" || w === "state" || w === "disconnected") ? "#CDEEDB" : "transparent", borderRadius: 3 }}>{w} </span>)}</span>
         </button>
         <p style={{ margin: "26px 0 0", fontSize: 11, color: "#5b6470" }}>{lit ? "Key phrases highlighted — the printed slide carries the statement alone, in one uniform colour, on a cream page." : "Select the statement to highlight its three key phrases."}</p>
       </div>

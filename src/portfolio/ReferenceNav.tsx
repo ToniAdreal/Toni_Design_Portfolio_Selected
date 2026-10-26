@@ -5,7 +5,7 @@ import { useMotionSetting, type MotionMode } from "../motion/MotionContext";
 import { useMotionKernel } from "../motion/MotionKernel";
 import Magnetic from "../motion/Magnetic";
 import WritingModal from "./WritingModal";
-import { LanguageToggle } from "../i18n/LanguageContext";
+import { LanguageToggle, useLanguage } from "../i18n/LanguageContext";
 import "./reference-chrome.css";
 
 export function useReferenceClock() {
@@ -32,6 +32,7 @@ export default function ReferenceNav() {
   const { scrollY, scrollTo, lenisRef } = useMotionKernel();
   const location = useLocation();
   const time = useReferenceClock();
+  const { lang } = useLanguage();
   const [scrolled, setScrolled] = useState(() => window.scrollY > 90);
   const [open, setOpen] = useState(false);
   const [writingOpen, setWritingOpen] = useState(false);
@@ -148,7 +149,7 @@ export default function ReferenceNav() {
         <span className="ref-brand-name">Toni.</span>
       </Link>
       <span className="ref-nav-lang"><LanguageToggle /></span>
-      <span className="ref-nav-clock" aria-label={`Local time, UTC plus 8, ${time}`}>{time}<span className="ref-clock-dot" /></span>
+      <span className="ref-nav-clock" aria-label={lang === "zh" ? `本地时间，UTC+8，${time}` : `Local time, UTC plus 8, ${time}`}>{time}<span className="ref-clock-dot" /></span>
       <nav className="ref-nav-links" aria-label="Primary navigation" inert={scrolled || open}>
         {links.map((item) => <span key={item.label}>{renderLink(item)}</span>)}
       </nav>

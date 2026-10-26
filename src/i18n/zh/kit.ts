@@ -256,4 +256,7 @@ export const kitZh: Record<string, string> = {
   "Show all": "显示全部",
   "Hide": "隐藏",
   "Show": "显示",
+  // Pass 9: kit chrome gaps
+  "Delivery Status": "交付状态",
+  "Quick view": "快速查看",
 };

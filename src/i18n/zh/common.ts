@@ -134,4 +134,7 @@ export const commonZh: Record<string, string> = {
   "Hours": "小时",
   "Minute": "分钟",
   "Minutes": "分钟",
+  // Pass 9: generic vocabulary gaps
+  "Domain": "领域",
+  "Exploration": "探索",
 };
