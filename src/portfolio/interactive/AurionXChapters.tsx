@@ -62,6 +62,21 @@ const Img = ({ src, h, alt = "", children, darken }: { src: string; h: number; a
   {children ? <span style={{ position: "absolute", inset: 0, padding: "5px 7px", fontSize: 9.3, color: "#e8e8ea" }}>{children}</span> : null}
 </span>;
 const CROP = "/projects/crops/aurionx/";
+/**
+ * Pass 4 — photographic stage with live DOM overlays. The stage
+ * background is a crop of the original slide's room/scene photograph
+ * (which necessarily contains the photographed screen's baked UI);
+ * every baked-UI region is covered by an absolutely-positioned live
+ * DOM element (the TV screen, floating panels, title veil), so all
+ * text and controls the reader sees are real DOM. Positions are
+ * percentages of the original 1672×941 slide, measured on the print.
+ */
+const Stage = ({ bg, ratio = "1672 / 941", label, children }: { bg: string; ratio?: string; label: string; children?: ReactNode }) => <div role="img" aria-label={label} style={{ position: "relative", aspectRatio: ratio, borderRadius: 10, overflow: "hidden", border: "1px solid #26272c", background: "#000" }}>
+  <img src={bg} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+  {children}
+</div>;
+/** A live DOM television screen positioned over a photographed one. */
+const TvBox = ({ l, t, w, h, children, label }: { l: number; t: number; w: number; h: number; children?: ReactNode; label: string }) => <div role="region" aria-label={label} style={{ position: "absolute", left: `${l}%`, top: `${t}%`, width: `${w}%`, height: `${h}%`, background: "#04060a", borderRadius: 4, overflow: "hidden", boxShadow: "0 0 0 2px #0a0a0c, 0 6px 24px rgba(0,0,0,0.55)" }}>{children}</div>;
 /** Spectral voice wave (SVG polyline). */
 const Wave = ({ color = VI, w = 120, h = 22 }: { color?: string; w?: number; h?: number }) => <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden="true" style={{ display: "inline-block", verticalAlign: "middle" }}><polyline fill="none" stroke={color} strokeWidth="1.8" points={Array.from({ length: 30 }, (_, i) => `${(i * w) / 29},${h / 2 + Math.sin(i * 1.3) * (h / 2 - 3) * (0.4 + 0.6 * Math.abs(Math.sin(i * 0.55)))}`).join(" ")} /></svg>;
 
@@ -70,32 +85,35 @@ export function AurionXHero() {
   const [listening, setListening] = useState(true);
   const [pos, setPos] = useState(1457); // 24:17 of 58:21 (3501s)
   const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
-  // Pass 3: printed layout restored — title block left (~38%), the TV
-  // filling the right (~62%), side by side as printed. The TV visual is
-  // the original castle film still (crop, no UI text); the listening
-  // line, wave, episode label, scrubber and controls stay live DOM.
+  // Pass 4: overlay method — the stage is the original living-room
+  // photograph. The baked slide title (left) is covered by an opaque
+  // DOM title veil carrying the live title; the photographed TV is
+  // covered by a live DOM television (castle artwork + listening
+  // line, wave, scrubber, controls), so no baked UI text remains
+  // visible. Room, sofa, console and shelving stay photographic.
   return <Ax n="01" title="" label="AurionX cinematic hero — interactive rebuild of AurionX_01">
-    <div style={{ display: "grid", gridTemplateColumns: "0.92fr 1.5fr", gap: 22, alignItems: "center", marginTop: 10 }}>
-      <div>
-        <h3 style={{ fontSize: 76, margin: "0 0 12px", lineHeight: 1.02 }}>AurionX</h3>
-        <p style={{ fontSize: 19, lineHeight: 1.45, margin: "0 0 16px", color: "#e8e8ea" }}>An AI-Native Viewing Layer<br />for Global Entertainment</p>
-        <p style={{ margin: 0, color: "#c9c9ce", fontSize: 13.5, lineHeight: 1.6 }}>Solo Product Designer and Engineer<br />2024</p>
+    <Stage bg={`${CROP}room-hero.jpg`} label="Living room with a wall-mounted television playing the castle film still, as printed">
+      <div style={{ position: "absolute", left: 0, top: 0, width: "37%", height: "100%", background: "linear-gradient(90deg, rgba(5,5,7,0.97) 0%, rgba(5,5,7,0.97) 74%, rgba(5,5,7,0) 100%)", padding: "15% 4% 0 3.2%" }}>
+        <h3 style={{ fontSize: 56, margin: "0 0 10px", lineHeight: 1.02, fontWeight: 500 }}>AurionX</h3>
+        <p style={{ fontSize: 16.5, lineHeight: 1.45, margin: "0 0 14px", color: "#e8e8ea" }}>An AI-Native Viewing Layer<br />for Global Entertainment</p>
+        <p style={{ margin: 0, color: "#c9c9ce", fontSize: 12, lineHeight: 1.6 }}>Solo Product Designer and Engineer<br />2024</p>
       </div>
-      <div>
-        <Img src={`${CROP}hero-castle.jpg`} h={252} alt="Castle film still from Episode 3 — The Last Light, as printed on the television" darken>
-          <span style={{ position: "absolute", left: 10, right: 10, bottom: 8 }}>
-            <span style={{ display: "flex", alignItems: "center", gap: 8 }} aria-live="polite"><span style={{ color: listening ? ACC : "#9a9aa0", fontSize: 10.6, textShadow: "0 1px 4px #000" }}>● AurionX is {listening ? "listening" : "muted"}</span> <Wave color={CY} w={130} h={16} /> <Wave color={VI} w={130} h={16} /></span>
+      <TvBox l={40.1} t={11.6} w={50.1} h={58.9} label="Television — Episode 3, The Last Light, with the AurionX listening overlay">
+        <img src={`${CROP}hero-castle.jpg`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <span style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 52%, rgba(2,3,6,0.88) 82%)" }} aria-hidden="true" />
+        <span style={{ position: "absolute", left: "3.5%", right: "3.5%", bottom: "4%" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 7 }} aria-live="polite"><span style={{ color: listening ? ACC : "#9a9aa0", fontSize: 9.6, textShadow: "0 1px 4px #000" }}>● AurionX is {listening ? "listening" : "muted"}</span><Wave color={CY} w={110} h={13} /><Wave color={VI} w={110} h={13} /></span>
+          <span style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 5, fontSize: 9.6, color: "#e8e8ea" }}>
+            <span>Episode 3<br /><span style={{ color: "#9a9aa0" }}>The Last Light</span></span>
+            <span style={{ fontFamily: '"IBM Plex Mono",monospace' }}>{fmt(pos)}</span>
+            <input type="range" min={0} max={3501} value={pos} onChange={(e) => setPos(Number(e.target.value))} aria-label="Playback position, Episode 3 The Last Light" style={{ flex: 1, accentColor: AZ, height: 3 }} />
+            <span style={{ fontFamily: '"IBM Plex Mono",monospace' }}>58:21</span>
+            <button type="button" aria-pressed={listening} onClick={() => setListening((v) => !v)} style={{ background: "transparent", border: "1px solid #3a3b40", borderRadius: 5, color: "#e8e8ea", fontSize: 9.4, padding: "2px 7px", cursor: "pointer", font: "inherit" }}>{listening ? "🎙 Listening" : "🎙 Muted"}</button>
+            <span aria-hidden="true">CC&nbsp; 🔊&nbsp; ⋮</span>
           </span>
-        </Img>
-        <label style={{ display: "block", marginTop: 7, fontSize: 12 }}>Episode 3 — The Last Light · {fmt(pos)} / 58:21
-          <input type="range" min={0} max={3501} value={pos} onChange={(e) => setPos(Number(e.target.value))} aria-label="Playback position, Episode 3 The Last Light" style={{ width: "100%", accentColor: AZ, height: 3 }} />
-        </label>
-        <p style={{ margin: "4px 0 0", display: "flex", gap: 6 }}>
-          <button type="button" className="tks-btn" aria-pressed={listening} onClick={() => setListening((v) => !v)}>{listening ? "🎙 Listening — tap to mute" : "🎙 Muted — tap to listen"}</button>
-          <span className="tks-chip">CC</span><span className="tks-chip">🔊</span><span className="tks-chip">⋮</span>
-        </p>
-      </div>
-    </div>
+        </span>
+      </TvBox>
+    </Stage>
   </Ax>;
 }
 
@@ -243,22 +261,42 @@ const PROBLEM_PANELS = [
   { n: 3, label: "Paused, phone in hand", body: "TV paused (24:17 / 58:21); the viewer leaves the TV and searches on a phone instead." },
   { n: 4, label: "Browsing by title", body: "TV home: Continue Watching — Edge of Silence · The Method · Cobalt Horizon · Beyond the Ridge. Recommended For You — Nightfall · The Cartographer · Echoes · Falling Earth. Nav: Home · Search · Movies · TV Shows · My List · Settings." },
 ];
+const F06_TV: Array<[number, number, number, number]> = [
+  [43.7, 11.2, 46.7, 61], [44.2, 9.6, 46.7, 62], [43.7, 11.5, 46.7, 65.5], [41.4, 9.8, 49.9, 67.8],
+];
 export function AurionXTVProblem() {
   const [p, setP] = useState(0);
+  // Pass 4: overlay method per panel — each quadrant is the original
+  // room photograph (viewer, sofa, console); the photographed TV is
+  // covered by a live DOM screen (castle artwork + the panel's own
+  // playback UI; panel 4 a DOM browse UI), and the baked panel number
+  // is covered by the live number chip. Panel text lives in the
+  // readout under the grid, as the print carries no panel captions.
+  const tvInner = (i: number) => i === 0 ? <>
+      <img src={`${CROP}f06-castle.jpg`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+      <span style={{ position: "absolute", left: "4%", right: "4%", bottom: "5%", fontSize: 8.6, color: "#e8e8ea" }}><span style={{ display: "block", marginBottom: 3 }}>Episode 3 · The Last Light</span><Wave color={CY} w={150} h={10} /><span style={{ display: "flex", justifyContent: "space-between", fontFamily: '"IBM Plex Mono",monospace', marginTop: 2 }}><span>24:17</span><span>58:21&nbsp; CC&nbsp; 🔊&nbsp; ⋮</span></span></span>
+    </> : i === 1 ? <>
+      <img src={`${CROP}f06-castle.jpg`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+      <span style={{ position: "absolute", left: "4%", right: "4%", bottom: "5%" }}><span style={{ display: "flex", gap: 2, marginBottom: 3 }}>{[0, 1, 2, 3, 4, 5].map((k) => <span key={k} style={{ flex: 1, height: 14, borderRadius: 2, overflow: "hidden", border: k === 3 ? "1.5px solid #fff" : "1px solid #3a3b40" }}><img src={`${CROP}f06-castle.jpg`} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /></span>)}</span><span style={{ display: "block", height: 3, background: "linear-gradient(90deg,#2DD4BF,#2979FF,#7B61FF)", borderRadius: 2 }} /><span style={{ display: "flex", justifyContent: "space-between", fontFamily: '"IBM Plex Mono",monospace', fontSize: 8.6, color: "#e8e8ea", marginTop: 2 }}><span>24:17</span><span>34:06</span><span>58:21&nbsp; ⋮</span></span></span>
+    </> : i === 2 ? <>
+      <img src={`${CROP}f06-castle.jpg`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+      <span style={{ position: "absolute", left: "50%", top: "42%", transform: "translate(-50%,-50%)", border: "1.5px solid #e8e8ea", borderRadius: "50%", width: 25, height: 25, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: "#fff", background: "#00000055" }}>❚❚</span>
+      <span style={{ position: "absolute", left: "4%", right: "4%", bottom: "5%", fontFamily: '"IBM Plex Mono",monospace', fontSize: 8.6, color: "#e8e8ea" }}><span style={{ display: "block", height: 3, background: "#2DD4BF", borderRadius: 2, width: "42%", marginBottom: 3 }} /><span style={{ display: "flex", justifyContent: "space-between" }}><span>24:17</span><span>58:21&nbsp; ⋮</span></span></span>
+    </> : <span style={{ position: "absolute", inset: 0, display: "grid", gridTemplateColumns: "26% 1fr", gap: 5, padding: "5% 5%", background: "#0a0d14", fontSize: 8.2, color: "#c9c9ce" }}>
+      <span>{["⌂ Home", "⌕ Search", "▤ Movies", "▤ TV Shows", "+ My List", "⚙ Settings"].map((s) => <span key={s} style={{ display: "block", padding: "1.5px 0" }}>{s}</span>)}<span style={{ display: "block", marginTop: 4, color: "#77787e" }}>Continue Watching</span></span>
+      <span><span style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 3 }}>{["hero-castle.jpg", "f39-lighthouse.jpg", "f25-eclipse.jpg", "f25-ship.jpg"].map((s) => <img key={s} src={`${CROP}${s}`} alt="" style={{ width: "100%", height: 20, objectFit: "cover", borderRadius: 2, display: "block" }} />)}</span><span style={{ display: "block", margin: "2px 0 3px", fontSize: 7.6 }}>Edge of Silence · The Method · Cobalt Horizon · Beyond the Ridge</span><span style={{ color: "#77787e" }}>Recommended For You</span><span style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 3, marginTop: 2 }}>{["f19-face.jpg", "f19-kitchen.jpg", "f02-castle.jpg", "f30-still-a.jpg"].map((s) => <img key={s} src={`${CROP}${s}`} alt="" style={{ width: "100%", height: 20, objectFit: "cover", borderRadius: 2, display: "block" }} />)}</span><span style={{ display: "block", marginTop: 2, fontSize: 7.6 }}>Nightfall · The Cartographer · Echoes · Falling Earth</span></span>
+    </span>;
   return <Ax n="06" title="" label="AurionX television interaction problem — interactive rebuild of AurionX_06">
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-      {PROBLEM_PANELS.map((x, i) => <button key={x.n} type="button" onClick={() => setP(i)} aria-pressed={i === p} style={{ textAlign: "left", background: "#0d0f16", border: `1.5px solid ${i === p ? VI : "#23242a"}`, borderRadius: 10, padding: "8px 10px", cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
-        {/* Pass 3: panels 1–3 all play the same castle film still in the
-            original — shown as the real crop; panel 4 is a browse UI and
-            stays DOM. The living-room framing stays structural. */}
-        {i < 3 ? <Img src={`${CROP}f06-castle.jpg`} h={88} alt="Castle film still playing on the television"><span style={{ border: "1.5px solid #e8e8ea", borderRadius: 3, padding: "0 5px", fontWeight: 800, color: "#fff", background: "#00000066" }}>{x.n}</span></Img>
-          : <Still h={88} tone="#26262e"><span style={{ border: "1.5px solid #e8e8ea", borderRadius: 3, padding: "0 5px", fontWeight: 800, color: "#fff", background: "#00000066" }}>{x.n}</span></Still>}
-        <b style={{ display: "block", margin: "7px 0 2px", fontSize: 12.6 }}>{x.label}</b>
-        <span style={{ display: "block", fontSize: 10.6, lineHeight: 1.55, color: "#b9b9be" }}>{x.body}</span>
-        {i === 3 ? <span style={{ display: "block", fontSize: 9.6, color: "#77787e", marginTop: 3 }}>(Photographic living-room framing — represented structurally.)</span> : null}
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
+      {PROBLEM_PANELS.map((x, i) => <button key={x.n} type="button" onClick={() => setP(i)} aria-pressed={i === p} style={{ padding: 0, border: `1.5px solid ${i === p ? VI : "#23242a"}`, borderRadius: 9, overflow: "hidden", cursor: "pointer", font: "inherit", background: "#000", display: "block", width: "100%" }}>
+        <Stage bg={`${CROP}f06-room${i + 1}.jpg`} ratio="840 / 432" label={`Printed panel ${x.n}: viewer in the living room, ${x.label}`}>
+          <span style={{ position: "absolute", left: "1.6%", top: "3%", border: "1.5px solid #e8e8ea", borderRadius: 3, padding: "0 6px", fontWeight: 800, color: "#fff", background: "#000", fontSize: 12 }}>{x.n}</span>
+          <TvBox l={F06_TV[i][0]} t={F06_TV[i][1]} w={F06_TV[i][2]} h={F06_TV[i][3]} label={`Television in panel ${x.n}`}>{tvInner(i)}</TvBox>
+        </Stage>
       </button>)}
     </div>
-    <p style={{ textAlign: "center", fontSize: 16.5, margin: "14px 0 0" }}>Television content is searchable by title, but rarely by remembered meaning.</p>
+    <p aria-live="polite" style={{ margin: "10px 0 0", fontSize: 11.8, lineHeight: 1.6 }}><b>{p + 1} · {PROBLEM_PANELS[p].label}</b> — <span style={{ color: "#c9c9ce" }}>{PROBLEM_PANELS[p].body}</span></p>
+    <p style={{ textAlign: "center", fontSize: 16.5, margin: "10px 0 0" }}>Television content is searchable by title, but rarely by remembered meaning.</p>
   </Ax>;
 }
 
@@ -281,6 +319,11 @@ export function AurionXDiscoveryFriction() {
         <button type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ width: "100%", textAlign: "left", background: "#0d0f16", border: `1.5px solid ${i === s ? VI : "#23242a"}`, borderRadius: 9, padding: "8px 9px", cursor: "pointer", font: "inherit", color: "#e8e8ea", minHeight: 118 }}>
           <span style={{ fontSize: 19, color: "#c9a877", fontWeight: 700 }}>{i + 1}</span>
           <b style={{ display: "block", fontSize: 11.8, margin: "3px 0" }}>{t}</b>
+          {/* Pass 4: the printed card interiors that are pure film
+              stills / poster artwork now use the real crops (poster
+              titles are part of the artwork). The reviews card (4) is
+              a text UI and stays DOM. */}
+          {["f07-poster.jpg", "f07-details.jpg", "f07-trailer.jpg", "", "f07-decide.jpg", "f07-start.jpg"][i] ? <span style={{ display: "block", margin: "0 0 5px" }}><Img src={`${CROP}${["f07-poster.jpg", "f07-details.jpg", "f07-trailer.jpg", "", "f07-decide.jpg", "f07-start.jpg"][i]}`} h={36} alt={`Printed still for journey step ${i + 1}`} /></span> : null}
           <span style={{ display: "block", fontSize: 9.4, lineHeight: 1.5, color: "#b9b9be" }}>{body}</span>
         </button>
         {f ? <p style={{ margin: "5px 0 0", fontSize: 10, color: "#e8a33d", borderTop: "2px solid #3a3b40", paddingTop: 4, position: "relative" }}><span aria-hidden="true" style={{ position: "absolute", top: -5, left: 12, width: 7, height: 7, background: "#e8a33d", borderRadius: "50%" }} />{f}</p> : null}
@@ -290,7 +333,7 @@ export function AurionXDiscoveryFriction() {
     <p style={{ margin: "0 0 8px", fontSize: 11, letterSpacing: "0.14em", fontWeight: 800, background: GRAD, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>AURIONX JOURNEY</p>
     <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1.4fr 1fr" }}>
       <div className="tks-card"><b>1 · Describe preference</b><p style={{ color: "#c9c9ce" }}>“I want something thought-provoking, visually stunning, and emotionally resonant.”</p><Wave color={CY} w={130} /></div>
-      <div className="tks-card"><b>2 · Generate five-minute cut</b><p style={{ color: "#c9c9ce" }}>Your five-minute cut — a personal, spoiler-protected sample of the actual film.</p><div style={{ display: "flex", gap: 4 }}>{[0, 1, 2, 3, 4].map((k) => <Still key={k} h={30} tone="#233148" />)}</div><span aria-hidden="true" style={{ display: "block", height: 4, background: GRAD, borderRadius: 2, marginTop: 6 }} /></div>
+      <div className="tks-card"><b>2 · Generate five-minute cut</b><p style={{ color: "#c9c9ce" }}>Your five-minute cut — a personal, spoiler-protected sample of the actual film.</p>{/* Pass 4: printed desert still + thumbnail strip as real crops. */}<Img src={`${CROP}f07-cut.jpg`} h={44} alt="Desert film still heading the printed five-minute cut" /><div style={{ display: "flex", gap: 4, marginTop: 4 }}>{[1, 2, 3, 4, 5].map((k) => <span key={k} style={{ flex: 1 }}><Img src={`${CROP}f07-thumb${k}.jpg`} h={22} alt="" /></span>)}</div><span aria-hidden="true" style={{ display: "block", height: 4, background: GRAD, borderRadius: 2, marginTop: 6 }} /></div>
       <div className="tks-card"><b>3 · Decide</b><p style={{ display: "flex", gap: 5, marginTop: 6 }}><button type="button" className="tks-btn" style={{ background: GRAD, border: "none", color: "#fff" }} onClick={() => setDecided("start")}>Start movie</button><button type="button" className="tks-btn tks-btn--ghost" onClick={() => setDecided("no")}>Not for me</button></p>
         <p aria-live="polite" style={{ margin: "6px 0 0" }}>{decided === "start" ? "Decision made in 3 steps — no trailer detour." : decided === "no" ? "Rejected without a 2-hour commitment — describe a new preference." : ""}</p></div>
     </div>
@@ -318,7 +361,7 @@ export function AurionXLanguageProblem() {
         <p style={{ margin: "2px 0 6px", fontSize: 11.3, display: "flex", gap: 16, flexWrap: "wrap" }}><span><span aria-hidden="true" style={{ display: "inline-block", width: 11, height: 11, background: AZ, borderRadius: 2, marginRight: 5 }} />Available in original language</span><span><span aria-hidden="true" style={{ display: "inline-block", width: 11, height: 11, border: "1.5px solid #9a9aa0", borderRadius: 2, marginRight: 5 }} />Unavailable in selected language</span></p>
         <p style={{ margin: 0, fontSize: 12.6, lineHeight: 1.65, color: "#d8d8dc" }}>The viewer's language decides what can be watched at all — before quality is even a question.</p>
       </div>
-      <div aria-hidden="true" style={{ position: "relative", height: 128, background: "#0a0e18", border: "1px solid #23242a", borderRadius: 10, overflow: "hidden" }}>
+      <div aria-hidden="true" style={{ position: "relative", height: 102, background: "#0a0e18", border: "1px solid #23242a", borderRadius: 10, overflow: "hidden" }}>
         <span style={{ position: "absolute", left: "6%", top: "16%", width: "24%", height: "34%", background: AZ, opacity: 0.75, borderRadius: "46% 54% 60% 40%/50%" }} /><span style={{ position: "absolute", left: "13%", top: "52%", textAlign: "center", fontSize: 9.5, color: "#cfe6ff" }}>US</span>
         <span style={{ position: "absolute", left: "31%", top: "58%", width: "11%", height: "26%", background: AZ, opacity: 0.75, borderRadius: "50% 50% 46% 54%/60%" }} /><span style={{ position: "absolute", left: "32%", top: "86%", fontSize: 9.5, color: "#cfe6ff" }}>Brazil</span>
         <span style={{ position: "absolute", left: "47%", top: "14%", width: "13%", height: "20%", background: AZ, opacity: 0.75, borderRadius: "50%" }} /><span style={{ position: "absolute", left: "48%", top: "36%", fontSize: 9.5, color: "#cfe6ff" }}>Europe</span>
@@ -332,7 +375,7 @@ export function AurionXLanguageProblem() {
       {LANG_STAGES.map(([title, body], i) => <div key={title}>
         <p style={{ margin: "0 0 5px", fontSize: 11.6 }}><b>{title}</b>{i < 3 ? <span aria-hidden="true" style={{ float: "right", color: ACC }}>›</span> : null}</p>
         <button type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ width: "100%", textAlign: "left", background: "#0d0f16", border: `1.5px solid ${i === s ? VI : "#23242a"}`, borderRadius: 9, padding: "7px 9px", cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
-          <Still h={52} tone={["#233148", "#2a2438", "#183038", "#33241a"][i]}>{i === 1 ? "🔒" : i >= 2 ? <span style={{ background: "#111", padding: "1px 6px", fontSize: 8.8 }}>I kept the truth to protect you.</span> : null}</Still>
+          <Still h={42} tone={["#233148", "#2a2438", "#183038", "#33241a"][i]}>{i === 1 ? "🔒" : i >= 2 ? <span style={{ background: "#111", padding: "1px 6px", fontSize: 8.8 }}>I kept the truth to protect you.</span> : null}</Still>
           <span style={{ display: "block", fontSize: 9.5, lineHeight: 1.55, color: "#b9b9be", marginTop: 5 }}>{body}</span>
           <span aria-hidden="true" style={{ display: "block", marginTop: 5 }}><span style={{ fontSize: 9, color: "#9a9aa0" }}>00:18:42</span><span style={{ display: "block", height: 3, background: "#26272c", borderRadius: 2, marginTop: 2 }}><span style={{ display: "block", width: "38%", height: "100%", background: GRAD, borderRadius: 2 }} /></span></span>
         </button>
@@ -342,7 +385,7 @@ export function AurionXLanguageProblem() {
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 7 }}>
       {LANG_TIERS.map(([name, icon, bullets], i) => <button key={name} type="button" onClick={() => setT(i)} aria-pressed={i === t} style={{ textAlign: "left", background: "#0d0f16", border: `1.5px solid ${i === t ? VI : "#23242a"}`, borderRadius: 10, padding: "10px 12px", cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
         <span aria-hidden="true" style={{ fontSize: 19, color: ACC }}>{icon}</span> <b style={{ fontSize: 12.8 }}>{name}</b>
-        <Still h={30} tone="#1d2739" />
+        <Still h={22} tone="#1d2739" />
         <ul style={{ margin: "7px 0 0", paddingLeft: 15, fontSize: 10.8, lineHeight: 1.6 }}>{bullets.map((b) => <li key={b}>{b}</li>)}</ul>
       </button>)}
     </div>
@@ -359,11 +402,13 @@ export function AurionXResearchMethod() {
         <span style={{ color: "#8f9bff", fontWeight: 800 }}>{String(i + 1).padStart(2, "0")}</span> <b style={{ fontSize: 12.6 }}>{x}</b>
         {/* Pass 3: the two evidence boards whose printed visual is a pure
             photograph (interview room, feasibility hardware) use the real
-            crops; the document/screen collages on 01/02/04/05 carry text
-            and stay structural per the crop rule. */}
+            crops. Pass 4: boards 01/02/04/05 now use real collage crops
+            too — their documents carry only illegible scribble-texture
+            in the original itself (handwriting strokes, blurred micro-
+            print), verified visually; no readable content is baked. */}
         {i === 2 ? <Img src={`${CROP}f09-room.jpg`} h={52} alt="Interview room photograph from the printed evidence board" />
           : i === 5 ? <Img src={`${CROP}f09-hardware.jpg`} h={52} alt="Feasibility-experiment hardware photograph from the printed evidence board" />
-          : <Still h={52} tone="#1d2739"><span style={{ fontSize: 8.8 }}>(Evidence-board photograph — represented structurally.)</span></Still>}
+          : <Img src={`${CROP}f09-board${[1, 2, 0, 4, 5, 0][i]}.jpg`} h={52} alt="Evidence-board collage from the printed slide (documents and screens as photographic texture)" />}
         <span style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, marginTop: 8, fontSize: 10 }}>
           <span style={{ borderTop: "1px solid #2c2d33", paddingTop: 5 }}>Question investigated<br /><span style={{ color: "#8f9bff" }}>Evidence to insert</span></span>
           <span style={{ borderTop: "1px solid #2c2d33", paddingTop: 5 }}>Concrete output<br /><span style={{ color: "#8f9bff" }}>Evidence to insert</span></span>
@@ -563,14 +608,14 @@ export function AurionXIA() {
       <div>
         <p className="tks-kicker" style={{ marginTop: 0, textAlign: "center" }}>GLOBAL NAVIGATION</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 6 }}>
-          {NAV_NODES.map(([name, desc, icon]) => <button key={name} type="button" onClick={() => setSel(name)} aria-pressed={sel === name} style={{ textAlign: "center", background: "#0d0f16", border: sel === name ? "1.5px solid transparent" : "1.5px solid #23242a", backgroundImage: sel === name ? `linear-gradient(#0d0f16,#0d0f16), ${GRAD}` : undefined, backgroundOrigin: "border-box", backgroundClip: sel === name ? "padding-box, border-box" : undefined, borderRadius: 9, padding: "8px 6px", cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
-            <span aria-hidden="true" style={{ fontSize: 17, color: ACC }}>{icon}</span>
+          {NAV_NODES.map(([name, desc, icon]) => <button key={name} type="button" onClick={() => setSel(name)} aria-pressed={sel === name} style={{ textAlign: "center", background: "#0d0f16", border: sel === name ? "1.5px solid transparent" : "1.5px solid #23242a", backgroundImage: sel === name ? `linear-gradient(#0d0f16,#0d0f16), ${GRAD}` : undefined, backgroundOrigin: "border-box", backgroundClip: sel === name ? "padding-box, border-box" : undefined, borderRadius: 9, padding: "6px 5px", cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
+            <span aria-hidden="true" style={{ fontSize: 15, color: ACC }}>{icon}</span>
             <b style={{ display: "block", fontSize: 10.6, margin: "4px 0 2px" }}>{name}</b>
             <span style={{ display: "block", fontSize: 8.8, lineHeight: 1.45, color: "#9a9aa0" }}>{desc}</span>
           </button>)}
         </div>
         <p aria-hidden="true" style={{ textAlign: "center", color: ACC, margin: "4px 0", fontSize: 13 }}>↓&nbsp;&nbsp;↓&nbsp;&nbsp;↓</p>
-        <div style={{ maxWidth: 340, margin: "0 auto", textAlign: "center", border: "1.5px solid transparent", background: `linear-gradient(#10131f,#10131f) padding-box, ${GRAD} border-box`, borderRadius: 10, padding: "9px 13px" }}>
+        <div style={{ maxWidth: 340, margin: "0 auto", textAlign: "center", border: "1.5px solid transparent", background: `linear-gradient(#10131f,#10131f) padding-box, ${GRAD} border-box`, borderRadius: 10, padding: "7px 13px" }}>
           <b style={{ fontSize: 13.5 }}>AurionX overlay</b>
           <p style={{ margin: "2px 0 0", fontSize: 10.6, color: "#c9c9ce" }}>AI-powered insights and controls available during playback.</p>
         </div>
@@ -637,21 +682,35 @@ const SCENARIO = [
 ];
 export function AurionXScenario() {
   const [p, setP] = useState(2);
+  // Pass 4: overlay method — each row's right side is the original
+  // room photograph (viewer, lamp, console); the photographed TV is
+  // covered by a live DOM television whose artwork is the printed
+  // still and whose title/progress/overlay lines are DOM. Row 2 adds
+  // the transcription bubble as DOM over the room, as printed.
+  const tvArt = ["f19-face.jpg", "f19-face2.jpg", "f19-kitchen.jpg"];
   return <Ax n="19" title="" label="AurionX scene recall scenario — interactive rebuild of AurionX_19">
-    <div style={{ display: "grid", gap: 9 }}>
+    <div style={{ display: "grid", gap: 8 }}>
       {SCENARIO.map(([cap, tv], i) => <button key={cap} type="button" onClick={() => setP(i)} aria-pressed={i === p} style={{ display: "grid", gridTemplateColumns: "178px 1fr", textAlign: "left", background: "#000", border: `1.5px solid ${i === p ? VI : "#23242a"}`, borderRadius: 10, overflow: "hidden", cursor: "pointer", font: "inherit", color: "#e8e8ea", padding: 0 }}>
         <span style={{ padding: "12px 14px", background: "#000" }}>
           <span style={{ fontSize: 25, fontWeight: 800, color: ACC }}>{String(i + 1).padStart(2, "0")}</span>
           <span style={{ display: "block", textTransform: "uppercase", letterSpacing: "0.05em", fontSize: 10.6, lineHeight: 1.55, marginTop: 5 }}>{cap}</span>
           <span aria-hidden="true" style={{ display: "block", width: 42, height: 3, background: GRAD, borderRadius: 2, marginTop: 8 }} />
         </span>
-        {/* Pass 3: each row's television still is the real crop from the
-            original (actor close-ups / kitchen confrontation — no UI
-            text in the crops); the printed TV facts stay DOM over it.
-            The living-room framing around the TV stays structural. */}
-        <Img src={`${CROP}${["f19-face.jpg", "f19-face2.jpg", "f19-kitchen.jpg"][i]}`} h={104} alt="Television still from the printed scenario row" darken><span style={{ position: "absolute", left: 7, bottom: 5, fontSize: 10.2, lineHeight: 1.55, color: "#e8e8ea", textShadow: "0 1px 4px #000" }}>{tv}</span></Img>
+        <Stage bg={`${CROP}f19-room${i + 1}.jpg`} ratio="1432 / 313" label={`Printed scenario row ${i + 1}: viewer facing the television in the living room`}>
+          <TvBox l={43.2} t={3} w={32.6} h={90.5} label={`Television in scenario row ${i + 1}`}>
+            <img src={`${CROP}${tvArt[i]}`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+            <span style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(2,3,6,0.25), transparent 34%, transparent 68%, rgba(2,3,6,0.82))" }} aria-hidden="true" />
+            <span style={{ position: "absolute", left: "4%", top: "6%", fontSize: 9.2, letterSpacing: "0.14em", textShadow: "0 1px 4px #000" }}>ECHOES<br />OF BLOOD</span>
+            <span style={{ position: "absolute", left: "4%", top: "30%", fontSize: 8.2, color: "#c9c9ce" }}>S1 E6 · Reckonings</span>
+            <span style={{ position: "absolute", left: "4%", right: "4%", bottom: "5%", fontFamily: '"IBM Plex Mono",monospace', fontSize: 8.4 }}>{i === 2 ? "42:31" : "24:18"}<span style={{ display: "inline-block", verticalAlign: "middle", height: 3, background: "#e8e8ea", borderRadius: 2, width: "58%", margin: "0 6px" }} />54:27</span>
+            {i === 2 ? <span style={{ position: "absolute", left: "50%", bottom: "17%", transform: "translateX(-50%)", background: "#111d", borderRadius: 4, padding: "1px 8px", fontSize: 8.6, whiteSpace: "nowrap" }}>42:31 · Moved to requested scene ✓</span> : null}
+          </TvBox>
+          {i === 0 ? <span style={{ position: "absolute", right: "16%", bottom: "4%", background: "#111111ee", border: "1px solid #3a3b40", borderRadius: 6, padding: "2px 9px", fontSize: 8.8 }}>Listening…</span> : null}
+          {i === 1 ? <span style={{ position: "absolute", left: "19%", bottom: "5%", maxWidth: "36%", background: "#111111f2", border: "1px solid #3a3b40", borderRadius: 7, padding: "4px 9px", fontSize: 8.8, lineHeight: 1.45 }}>🎙 “Take me back to the scene where the hero confronts his brother in the kitchen.”</span> : null}
+        </Stage>
       </button>)}
     </div>
+    <p aria-live="polite" style={{ margin: "9px 0 0", fontSize: 11.4, color: "#c9c9ce" }}>{SCENARIO[p][1]}</p>
   </Ax>;
 }
 
@@ -841,28 +900,46 @@ export function AurionXCutScenario() {
   const [watch, setWatch] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [seg, setSeg] = useState(0);
+  // Pass 4: overlay method — both halves are the original room
+  // photographs (viewer watching each screen); the photographed TVs
+  // are covered by live DOM screens (movie page left, five-minute-cut
+  // UI right) and the printed thought bubbles are live DOM bubbles
+  // positioned over the photographed ones.
   return <Ax n="25" title="Five-Minute Cut Scenario" label="AurionX five-minute cut scenario — interactive rebuild of AurionX_25">
-    <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1.3fr" }}>
-      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Movie page as printed</p>
-        <p style={{ display: "flex", gap: 6, flexWrap: "wrap", margin: "0 0 8px" }}><span style={{ border: "1px solid #3a3b40", borderRadius: "12px 12px 12px 2px", padding: "3px 10px", fontSize: 10.6 }}>💭 “Two hours is a big commitment.”</span><span style={{ border: "1px solid #3a3b40", borderRadius: "12px 12px 2px 12px", padding: "3px 10px", fontSize: 10.6 }}>💭 “Will I like it?”</span></p>
-        {/* Pass 3: the printed key art + poster row as real crops. */}
-        <Img src={`${CROP}f25-eclipse.jpg`} h={86} alt="Eclipse Horizon key art — eclipse over a lone figure" />
-        <p style={{ fontSize: 16, fontWeight: 700, margin: "8px 0 0" }}>ECLIPSE HORIZON</p>
-        <p style={{ color: "#c9c9ce", margin: "3px 0" }}>Sci-Fi · Adventure · Drama · PG-13 · 2h 04m</p>
-        <p style={{ margin: "5px 0" }}>When a routine jump goes wrong, a crew finds themselves on the edge of the unknown — and a choice that could reset everything.</p>
-        <p style={{ display: "flex", gap: 5, margin: "8px 0 0" }}><span className="tks-btn">▶ Play</span><button type="button" className="tks-btn tks-btn--ghost" aria-pressed={watch} onClick={() => setWatch((v) => !v)}>{watch ? "✓ Watchlisted" : "+ Watchlist"}</button></p>
-        <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>You might also like</p>
-        <Img src={`${CROP}f25-posters.jpg`} h={30} alt="Poster row stills — Beyond Orbit, Errant Signal, The Long Awake, Silent Frontier" />
-        <p style={{ margin: "4px 0 0" }}>Beyond Orbit · Errant Signal · The Long Awake · Silent Frontier</p></div>
-      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>AurionX · Your Five-Minute Cut</p>
-        <Img src={`${CROP}f25-ship.jpg`} h={86} alt="Spaceship film still heading the printed five-minute-cut screen" />
-        <p style={{ margin: "8px 0 0" }}>A personal highlight reel crafted from key moments and themes to help you decide.</p>
-        <p style={{ margin: "8px 0" }}><button type="button" className="tks-btn" aria-pressed={playing} onClick={() => setPlaying((v) => !v)}>{playing ? "⏸ Playing cut…" : "▶ Play Cut"}</button> <span className="tks-chip">🛡 Spoilers are protected</span></p>
-        <Img src={`${CROP}f25-segments.jpg`} h={30} alt="The five printed segment stills with spoiler shields" />
-        <div className="tks-flow" role="group" aria-label="Cut segments">{CUT_SEGMENTS.map(([t, d], i) => <button key={t} type="button" className="tks-node" aria-pressed={i === seg} onClick={() => setSeg(i)}><b>{String(i + 1).padStart(2, "0")} {t}</b><br />{d} 🛡</button>)}</div>
-        <p style={{ margin: "8px 0 0" }} aria-live="polite">Total 05:00 — selected segment: {CUT_SEGMENTS[seg][0]} ({CUT_SEGMENTS[seg][1]}). Spoiler protection is on: story-critical endings and key twists are hidden.</p></div>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
+      <Stage bg={`${CROP}f25-roomL.jpg`} ratio="840 / 806" label="Viewer facing the Eclipse Horizon movie page on the television">
+        <span style={{ position: "absolute", left: "63%", top: "6.5%", width: "31%", background: "#101014", border: "1.5px solid #55565e", borderRadius: "50%", padding: "4.5% 3%", textAlign: "center", fontSize: 9.6, lineHeight: 1.4 }}>Two hours is a big commitment.</span>
+        <span style={{ position: "absolute", left: "72%", top: "21%", width: "22%", background: "#101014", border: "1.5px solid #55565e", borderRadius: "50%", padding: "3.5% 2%", textAlign: "center", fontSize: 9.6 }}>Will I like it?</span>
+        <TvBox l={6.5} t={11.8} w={58.6} h={49.8} label="Television — Eclipse Horizon movie page">
+          <span style={{ position: "absolute", inset: 0, padding: "4%", display: "block", background: "#07090f" }}>
+            <span style={{ display: "grid", gridTemplateColumns: "34% 1fr", gap: 7 }}>
+              <img src={`${CROP}f25-eclipse.jpg`} alt="" style={{ width: "100%", height: 62, objectFit: "cover", borderRadius: 3, display: "block" }} />
+              <span><b style={{ fontSize: 11.5, letterSpacing: "0.04em" }}>ECLIPSE HORIZON</b><span style={{ display: "block", fontSize: 8.4, color: "#c9c9ce", marginTop: 2 }}>Sci-Fi · Adventure · Drama<br />PG-13 · 2h 04m</span><span style={{ display: "block", fontSize: 8.4, lineHeight: 1.45, color: "#c9c9ce", marginTop: 3 }}>When a routine jump goes wrong, a crew finds themselves on the edge of the unknown — and a choice that could reset everything.</span>
+              <span style={{ display: "flex", gap: 4, marginTop: 5 }}><span className="tks-btn" style={{ fontSize: 8.8, padding: "2px 8px" }}>▶ Play</span><button type="button" className="tks-btn tks-btn--ghost" style={{ fontSize: 8.8, padding: "2px 8px" }} aria-pressed={watch} onClick={() => setWatch((v) => !v)}>{watch ? "✓ Watchlisted" : "+ Watchlist"}</button></span></span>
+            </span>
+            <span style={{ display: "block", fontSize: 8.4, color: "#9a9aa0", margin: "6px 0 3px" }}>You might also like</span>
+            <img src={`${CROP}f25-posters.jpg`} alt="" style={{ width: "100%", height: 26, objectFit: "cover", borderRadius: 3, display: "block" }} />
+            <span style={{ display: "block", fontSize: 7.8, color: "#c9c9ce", marginTop: 2 }}>Beyond Orbit · Errant Signal · The Long Awake · Silent Frontier</span>
+          </span>
+        </TvBox>
+      </Stage>
+      <Stage bg={`${CROP}f25-roomR.jpg`} ratio="840 / 806" label="Viewer facing the AurionX five-minute-cut screen on the television">
+        <TvBox l={6.8} t={11.8} w={62.3} h={64.2} label="Television — Your Five-Minute Cut">
+          <span style={{ position: "absolute", inset: 0, padding: "4%", display: "block", background: "#07090f" }}>
+            <span style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
+              <span><span style={{ fontWeight: 800, fontSize: 11, background: GRAD, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>AurionX</span><b style={{ display: "block", fontSize: 11.5, marginTop: 4 }}>Your Five-Minute Cut</b><span style={{ display: "block", fontSize: 8.4, lineHeight: 1.45, color: "#c9c9ce", marginTop: 2, maxWidth: 150 }}>A personal highlight reel crafted from key moments and themes to help you decide.</span>
+              <span style={{ display: "flex", gap: 4, marginTop: 5, alignItems: "center" }}><button type="button" className="tks-btn" style={{ fontSize: 8.8, padding: "2px 8px" }} aria-pressed={playing} onClick={() => setPlaying((v) => !v)}>{playing ? "⏸ Playing…" : "▶ Play Cut"}</button><span style={{ fontSize: 8.2, color: "#c9c9ce" }}>🛡 Spoilers are protected</span></span></span>
+              <img src={`${CROP}f25-ship.jpg`} alt="" style={{ width: "42%", height: 74, objectFit: "cover", borderRadius: 3, display: "block" }} />
+            </span>
+            <img src={`${CROP}f25-segments.jpg`} alt="" style={{ width: "100%", height: 30, objectFit: "cover", borderRadius: 3, display: "block", marginTop: 6 }} />
+            <span style={{ display: "flex", gap: 3, marginTop: 4 }} role="group" aria-label="Cut segments">{CUT_SEGMENTS.map(([t, d], i) => <button key={t} type="button" aria-pressed={i === seg} onClick={() => setSeg(i)} style={{ flex: 1, background: i === seg ? "#1b2030" : "transparent", border: `1px solid ${i === seg ? VI : "#2c2e35"}`, borderRadius: 4, color: "#e8e8ea", font: "inherit", fontSize: 7.8, padding: "2px 3px", cursor: "pointer", textAlign: "left" }}><b>{String(i + 1).padStart(2, "0")} {t}</b><br />{d} 🛡</button>)}</span>
+            <span style={{ display: "block", fontSize: 8.2, color: "#9a9aa0", marginTop: 4 }}>🛡 Spoiler protection is on. Story-critical endings and key twists are hidden.</span>
+          </span>
+        </TvBox>
+      </Stage>
     </div>
-    <p style={{ margin: "12px 0 0", background: "#0d0f16", border: "1px solid #23242a", borderRadius: 9, padding: "9px 14px", textAlign: "center", fontSize: 13.5 }}>A trailer sells the movie. A highlight cut helps the viewer decide.</p>
+    <p style={{ margin: "9px 0 0", fontSize: 11.4 }} aria-live="polite">Total 05:00 — selected segment: {CUT_SEGMENTS[seg][0]} ({CUT_SEGMENTS[seg][1]}).{watch ? " Eclipse Horizon is on the watchlist." : ""}</p>
+    <p style={{ margin: "10px 0 0", background: "#0d0f16", border: "1px solid #23242a", borderRadius: 9, padding: "9px 14px", textAlign: "center", fontSize: 13.5 }}>A trailer sells the movie. A highlight cut helps the viewer decide.</p>
   </Ax>;
 }
 
@@ -930,7 +1007,9 @@ export function AurionXOutputComparison() {
     <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 3 }}>
       {CHAPTERS.map((c, i) => <button key={c} type="button" onClick={() => setCh(i)} aria-pressed={i === ch} style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer", font: "inherit", color: "#e8e8ea", textAlign: "left" }}>
         <span style={{ display: "block", fontSize: 9.6, color: i === ch ? "#fff" : "#9a9aa0", marginBottom: 3 }}>Chapter {i + 1} · {c}</span>
-        <Still h={30} tone={i === ch ? "#233148" : "#171a24"} />
+        {/* Pass 4: chapter strips are the printed film stills (pure
+            imagery crops from the original's strip). */}
+        <Img src={`${CROP}f29-ch${i + 1}.jpg`} h={30} alt={`Printed still strip for chapter ${i + 1}`} />
       </button>)}
     </div>
     <div aria-hidden="true" style={{ display: "flex", gap: 1.5, marginTop: 4, height: 13 }}>{Array.from({ length: 72 }, (_, i) => <span key={i} style={{ flex: 1, background: (i * 7) % 5 < 2 ? "#3d4b66" : "#232a3a", height: `${4 + ((i * 13) % 9)}px`, alignSelf: "flex-end" }} />)}</div>
@@ -944,7 +1023,7 @@ export function AurionXOutputComparison() {
     <p style={{ margin: "0 0 5px", fontSize: 12 }}><b>Generated cut — 5 minutes</b> · AI-selected scenes, reordered for clarity and narrative impact</p>
     <div style={{ display: "flex", gap: 0, alignItems: "stretch" }}>
       {segNames.map((nm, i) => <span key={nm} style={{ display: "contents" }}>
-        <span style={{ flex: [1.2, 1, 1.1, 0.9, 1][i] }}><Still h={30} tone="#2a2438" /><span style={{ display: "block", fontSize: 9.2, marginTop: 2, color: "#c9c9ce" }}>{nm}</span></span>
+        <span style={{ flex: [1.2, 1, 1.1, 0.9, 1][i] }}><Img src={`${CROP}f29-seg${i + 1}.jpg`} h={30} alt={`Printed still for generated-cut segment ${nm}`} /><span style={{ display: "block", fontSize: 9.2, marginTop: 2, color: "#c9c9ce" }}>{nm}</span></span>
         {i < 4 ? <span aria-hidden="true" style={{ alignSelf: "center", color: VI, fontSize: 13, padding: "0 2px" }}>◆</span> : null}
       </span>)}
     </div>
@@ -1080,7 +1159,13 @@ export function AurionXLanguageSetup() {
     <div style={{ background: "linear-gradient(120deg,#1a2436,#241a33)", padding: "8px 11px 6px" }}>
       <p style={{ margin: 0, fontSize: 11.6 }}><b>{idx + 1} · {SETUP_TITLES[idx]}</b></p>
     </div>
-    <div style={{ padding: "9px 11px" }}>{children}</div>
+    {/* Pass 4: each printed TV panel carries the same drama still
+        on its right side, behind no text — the still is a real crop
+        and the option UI stays DOM on the left, as printed. */}
+    <div style={{ display: "flex", alignItems: "stretch" }}>
+      <div style={{ flex: 1, padding: "9px 11px" }}>{children}</div>
+      <img src={`${CROP}f32-still.jpg`} alt="" style={{ width: "34%", objectFit: "cover", display: "block" }} />
+    </div>
     <div style={{ borderTop: "1px solid #23242a", padding: "7px 11px", fontSize: 9.4, lineHeight: 1.6, color: "#9a9aa0" }}>
       <span style={{ color: ACC }}>{idx === 0 ? "Remote focus" : "Voice shortcuts"}</span> — {SETUP_SHORTCUTS[idx].join(" · ")}
       <span aria-hidden="true" style={{ display: "block", height: 22, marginTop: 5, borderRadius: 4, background: "linear-gradient(180deg,#1c1d22,#101114)", border: "1px solid #2c2d33" }} />
@@ -1294,7 +1379,7 @@ export function AurionXEvidence() {
   const [sel, setSel] = useState(6);
   const evCard = (i: number, hero?: boolean) => { const [t, proves, icon] = EVIDENCE[i]; return <button key={t} type="button" onClick={() => setSel(i)} aria-pressed={i === sel} style={{ textAlign: "left", width: "100%", background: "#0d0f16", border: `1.5px solid ${i === sel ? VI : "#23242a"}`, borderRadius: 10, padding: hero ? "13px 15px" : "9px 11px", cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
     <span style={{ color: "#8f9bff", fontWeight: 800 }}>{String(i + 1).padStart(2, "0")}</span> <b style={{ fontSize: hero ? 15 : 12.3 }}>{t}</b>
-    <span style={{ display: "block", border: "1px dashed #3a3b3f", borderRadius: 7, padding: hero ? "16px 10px" : "8px", textAlign: "center", color: "#9a9aa0", margin: "8px 0 5px", fontSize: hero ? 12 : 10.4 }}><span aria-hidden="true" style={{ display: "block", fontSize: hero ? 26 : 16, marginBottom: 4 }}>{icon}</span>INSERT VERIFIED CAPTURE</span>
+    <span style={{ display: "block", border: "1px dashed #3a3b3f", borderRadius: 7, padding: hero ? "10px 10px" : "6px", textAlign: "center", color: "#9a9aa0", margin: "8px 0 5px", fontSize: hero ? 12 : 10.4 }}><span aria-hidden="true" style={{ display: "block", fontSize: hero ? 20 : 14, marginBottom: 4 }}>{icon}</span>INSERT VERIFIED CAPTURE</span>
     <span style={{ display: "block", color: "#c9c9ce", fontSize: hero ? 11.6 : 10.4, margin: 0 }}>{proves}</span>
   </button>; };
   return <Ax n="36" title="" eyebrow="ENGINEERING" label="AurionX implementation evidence — interactive rebuild of AurionX_36">
@@ -1305,13 +1390,13 @@ export function AurionXEvidence() {
       </div>
       <p style={{ margin: 0, textAlign: "right", fontSize: 11 }}><b style={{ color: "#e8a33d" }}>EVIDENCE CAPTURE REQUIRED</b><br /><span style={{ border: "1.5px solid #e8a33d", color: "#e8a33d", borderRadius: 999, padding: "2px 10px", display: "inline-block", marginTop: 5 }}>⚠ INSERT VERIFIED CAPTURE</span></p>
     </div>
-    <div style={{ display: "grid", gridTemplateColumns: "172px 1fr 172px", gap: 9, marginTop: 12, alignItems: "start" }}>
-      <div style={{ display: "grid", gap: 8 }}>{evCard(0)}{evCard(4)}{evCard(5)}</div>
-      <div style={{ display: "grid", gap: 8 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "172px 1fr 172px", gap: 7, marginTop: 9, alignItems: "start" }}>
+      <div style={{ display: "grid", gap: 6 }}>{evCard(0)}{evCard(4)}{evCard(5)}</div>
+      <div style={{ display: "grid", gap: 6 }}>
         {evCard(6, true)}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>{evCard(1)}{evCard(2)}{evCard(3)}</div>
       </div>
-      <div style={{ display: "grid", gap: 8 }}>{evCard(7)}{evCard(8)}</div>
+      <div style={{ display: "grid", gap: 6 }}>{evCard(7)}{evCard(8)}</div>
     </div>
     <p style={{ margin: "11px 0 0", display: "flex", justifyContent: "space-between", alignItems: "center" }} aria-live="polite">
       <span>{hexNode("PRODUCT DECISION")}</span>
@@ -1412,34 +1497,69 @@ export function AurionXEcosystem() {
   const [balance, setBalance] = useState(55);
   const [scene, setScene] = useState(0);
   const SCENES = [["00:42:18", "Character on cliff"], ["00:22:10", "Waves crash on rocks"], ["01:03:55", "Storm clouds build"]];
+  // Pass 4: overlay method — the stage is the original ecosystem
+  // photograph (room, TV, floating glass panels, laptop, tablet).
+  // Every baked UI surface is covered by a live DOM counterpart at
+  // its printed position: title veil, Scene Recall panel, the TV,
+  // Five-Minute Cut and Global Voice glass panels, laptop and tablet
+  // screens. The devices sit at slight angles in the photograph;
+  // the DOM screens are axis-aligned (noted in §15).
+  const glass: React.CSSProperties = { position: "absolute", background: "rgba(9,11,17,0.965)", border: "1px solid #2e3038", borderRadius: 8, padding: "1.6% 1.8%", fontSize: 8.8, lineHeight: 1.5, color: "#e8e8ea", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" };
   return <Ax n="39" title="Final Product Ecosystem" sub="Outcome — AurionX: An AI-Native Viewing Layer for Global Entertainment." eyebrow="OUTCOME" label="AurionX final product ecosystem — interactive rebuild of AurionX_39">
-    <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1.6fr 1fr" }}>
-      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Scene Recall (panel)</p>
-        {SCENES.map(([tc, t], i) => <p key={tc} style={{ margin: "5px 0" }}><button type="button" className="tks-chip" aria-pressed={scene === i} onClick={() => setScene(i)}>{i + 1} · {tc} {t}{scene === i ? " · Selected scene" : ""}</button></p>)}
-        <p style={{ margin: "8px 0 0", display: "flex", gap: 5 }}><span className="tks-chip">↩ Back to playback</span><span className="tks-chip">Cancel</span></p>
-        <p className="tks-kicker" style={{ margin: "12px 0 3px" }}>Companion — Home</p><p style={{ margin: 0, color: "#c9c9ce" }}>Continue Watching · Recommended For You · Recently Added (poster rows as printed).</p></div>
-      <div className="tks-card" style={{ background: "linear-gradient(180deg,#131a26,#05070c)" }}><p style={{ marginTop: 0 }}>◯ <b style={{ color: ACC }}>Listening</b> <span style={{ float: "right" }}>00:42:18</span></p>
-        {/* Pass 3: centre TV visual is the original lighthouse still
-            (crop — tower/sea region, no overlay text baked in); the
-            Listening line, results and subtitle stay DOM over/below. */}
-        <Img src={`${CROP}f39-lighthouse.jpg`} h={118} alt="Lighthouse film still on the central television"><span style={{ position: "absolute", left: "50%", bottom: 6, transform: "translateX(-50%)", background: "#111d", padding: "2px 10px", borderRadius: 4, whiteSpace: "nowrap", fontSize: 10.4 }}>The wind never stops out here.</span></Img>
-        <p style={{ color: "#c9c9ce", margin: "8px 0 2px" }}>“I found three possible scenes”</p>
-        <p style={{ margin: 0 }}>{SCENES.map(([tc, t], i) => <span key={tc} style={{ display: "block", padding: "2px 0", color: i === scene ? "#fff" : "#9a9aa0" }}>{i + 1} · {tc} {t}</span>)}</p></div>
-      <div>
-        <div className="tks-card"><p style={{ marginTop: 0, display: "flex", justifyContent: "space-between" }}><b>Five-Minute Cut</b><span>5 MIN</span></p>
-          <label>Configuration — Balanced <input type="range" min={0} max={100} value={balance} onChange={(e) => setBalance(Number(e.target.value))} aria-label="Five-minute cut balance" style={{ width: "100%" }} /></label>
-          <p style={{ margin: "6px 0" }}><button type="button" className="tks-chip" aria-pressed={spoiler} onClick={() => setSpoiler((v) => !v)}>Spoiler protection {spoiler ? "ON" : "OFF"}</button></p>
-          <p className="tks-kicker">Generated timeline · 5:00</p>
-          <Img src={`${CROP}f39-lighthouse.jpg`} h={30} alt="Generated-cut timeline stills" />
-          <p style={{ margin: "6px 0 0", display: "flex", gap: 5 }}><span className="tks-chip">Export cut</span></p></div>
-        <div className="tks-card" style={{ marginTop: 10 }}><p style={{ marginTop: 0 }}>◯ <b style={{ color: ACC }}>Global Voice</b></p>
-          <p style={{ color: "#c9c9ce", margin: "3px 0" }}>“I found three possible scenes” ∿∿</p>
-          <p style={{ margin: "4px 0" }}>English ⌄ · Subtitles + dubbing ⌄</p>
-          <p style={{ margin: "4px 0" }}><button type="button" className="tks-chip" aria-pressed={aiAudio} onClick={() => setAiAudio((v) => !v)}>AI-generated audio {aiAudio ? "ON" : "OFF"}</button></p>
-          <p className="tks-kicker" style={{ margin: "0 0 4px" }}>00:42:18 · Tablet companion as printed: “Intelligent. Immersive. Yours.” + Featured row.</p>
-          <Img src={`${CROP}f39-tablet.jpg`} h={52} alt="Tablet companion artwork — lighthouse still" /></div>
+    <Stage bg={`${CROP}room-ecosystem.jpg`} label="The AurionX ecosystem in the living room: television, floating panels, laptop and tablet, as printed">
+      <div style={{ position: "absolute", left: 0, top: 0, width: "35%", height: "27.5%", background: "linear-gradient(100deg, rgba(5,5,7,0.97) 52%, rgba(5,5,7,0) 98%)", padding: "1.8% 0 0 1.8%" }}>
+        <p style={{ margin: 0, fontSize: 10.5 }}><span style={{ border: "1.5px solid #e8e8ea", borderRadius: 4, padding: "0 6px", fontWeight: 800 }}>39</span>&nbsp; <span style={{ color: ACC, letterSpacing: "0.14em", fontSize: 8.8, fontWeight: 700 }}>OUTCOME</span></p>
+        <p style={{ margin: "3px 0 2px", fontSize: 15.5, fontWeight: 600 }}>Final Product Ecosystem</p>
+        <p style={{ margin: 0, fontSize: 14, fontWeight: 800, background: GRAD, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>AurionX</p>
+        <p style={{ margin: "1px 0 0", fontSize: 8.6, color: "#c9c9ce", lineHeight: 1.45 }}>An AI-Native Viewing Layer<br />for Global Entertainment</p>
       </div>
-    </div>
+      <div style={{ ...glass, left: "3.6%", top: "25.8%", width: "17.2%", height: "29.5%" }} role="region" aria-label="Scene Recall panel">
+        <b style={{ fontSize: 9.6 }}>Scene Recall</b>
+        {SCENES.map(([tc, t], i) => <button key={tc} type="button" aria-pressed={scene === i} onClick={() => setScene(i)} style={{ display: "block", width: "100%", textAlign: "left", marginTop: 4, background: i === scene ? "#1b2030" : "#10131b", border: `1px solid ${i === scene ? ACC : "#2c2e35"}`, borderRadius: 5, color: "#e8e8ea", font: "inherit", fontSize: 8.4, padding: "3px 6px", cursor: "pointer" }}>{i + 1} · {tc} — {t}{i === scene ? " · Selected scene" : ""}</button>)}
+        <p style={{ margin: "5px 0 0", display: "flex", gap: 4 }}><span className="tks-chip" style={{ fontSize: 8.2, padding: "1px 7px" }}>↩ Back to playback</span><span className="tks-chip" style={{ fontSize: 8.2, padding: "1px 7px" }}>Cancel</span></p>
+      </div>
+      <TvBox l={25.2} t={18.4} w={44.4} h={53.5} label="Television — Scene Recall results over the lighthouse film">
+        <img src={`${CROP}f39-lighthouse.jpg`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+        <span style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(3,5,9,0.88) 0%, rgba(3,5,9,0.55) 34%, transparent 55%)" }} aria-hidden="true" />
+        <span style={{ position: "absolute", left: "3.5%", top: "5%", right: "3.5%", fontSize: 9.2 }}>
+          <span style={{ display: "flex", justifyContent: "space-between" }}><span>◯ <b style={{ color: ACC }}>Listening</b></span><span style={{ fontFamily: '"IBM Plex Mono",monospace' }}>00:42:18</span></span>
+          <Wave color={CY} w={120} h={12} />
+          <span style={{ display: "block", color: "#c9c9ce", marginTop: 2 }}>I found three possible scenes</span>
+          {SCENES.map(([tc, t], i) => <span key={tc} style={{ display: "block", marginTop: 3, background: i === scene ? "#10131bcc" : "#10131b88", border: i === scene ? `1px solid ${ACC}` : "1px solid transparent", borderRadius: 4, padding: "2px 6px", maxWidth: "46%" }}>{i + 1} · {tc} {t}</span>)}
+        </span>
+        <span style={{ position: "absolute", left: "50%", bottom: "9%", transform: "translateX(-50%)", background: "#111d", padding: "2px 10px", borderRadius: 4, whiteSpace: "nowrap", fontSize: 9.4 }}>The wind never stops out here.</span>
+        <span style={{ position: "absolute", left: "3%", right: "3%", bottom: "3.5%", height: 3, background: "#2c2e35", borderRadius: 2 }}><span style={{ display: "block", height: "100%", width: "38%", background: GRAD, borderRadius: 2 }} /></span>
+      </TvBox>
+      <div style={{ ...glass, left: "72.2%", top: "4.9%", width: "21.2%", height: "35%" }} role="region" aria-label="Five-Minute Cut panel">
+        <p style={{ margin: 0, display: "flex", justifyContent: "space-between" }}><b style={{ fontSize: 9.6 }}>Five-Minute Cut</b><span style={{ color: "#9a9aa0" }}>5 MIN</span></p>
+        <label style={{ display: "block", marginTop: 4 }}>Configuration — Balanced <input type="range" min={0} max={100} value={balance} onChange={(e) => setBalance(Number(e.target.value))} aria-label="Five-minute cut balance" style={{ width: "100%", height: 3, accentColor: AZ }} /></label>
+        <p style={{ margin: "3px 0" }}><button type="button" className="tks-chip" style={{ fontSize: 8.2, padding: "1px 7px" }} aria-pressed={spoiler} onClick={() => setSpoiler((v) => !v)}>Spoiler protection {spoiler ? "ON" : "OFF"}</button></p>
+        <p style={{ margin: "3px 0 2px", color: "#9a9aa0" }}>Generated timeline · 5:00</p>
+        <img src={`${CROP}f39-lighthouse.jpg`} alt="" style={{ width: "100%", height: 20, objectFit: "cover", borderRadius: 3, display: "block" }} />
+        <p style={{ margin: "4px 0 0" }}><span className="tks-chip" style={{ fontSize: 8.2, padding: "1px 7px" }}>Export cut</span></p>
+      </div>
+      <div style={{ ...glass, left: "75.1%", top: "39.2%", width: "19.6%", height: "31.6%" }} role="region" aria-label="Global Voice panel">
+        <p style={{ margin: 0 }}>◯ <b style={{ color: ACC, fontSize: 9.6 }}>Global Voice</b></p>
+        <Wave color={CY} w={110} h={11} />
+        <p style={{ margin: "2px 0", color: "#c9c9ce" }}>I found three possible scenes</p>
+        <p style={{ margin: "2px 0", background: "#10131b", borderRadius: 4, padding: "2px 6px" }}>English ⌄</p>
+        <p style={{ margin: "2px 0", background: "#10131b", borderRadius: 4, padding: "2px 6px" }}>Subtitles + dubbing ⌄</p>
+        <p style={{ margin: "3px 0 0" }}><button type="button" className="tks-chip" style={{ fontSize: 8.2, padding: "1px 7px" }} aria-pressed={aiAudio} onClick={() => setAiAudio((v) => !v)}>AI-generated audio {aiAudio ? "ON" : "OFF"}</button></p>
+        <p style={{ margin: "3px 0 0", fontFamily: '"IBM Plex Mono",monospace', color: "#9a9aa0" }}>00:42:18</p>
+      </div>
+      <div style={{ position: "absolute", left: "5%", top: "59.6%", width: "21.2%", height: "33.4%", background: "#07090f", border: "1px solid #2e3038", borderRadius: 6, padding: "1.4% 1.6%", fontSize: 8.2, color: "#e8e8ea", transform: "rotate(-1.2deg)", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }} role="region" aria-label="Laptop companion — Home">
+        <b>⌂ Home</b><span style={{ display: "block", color: "#9a9aa0", margin: "3px 0 2px" }}>Continue Watching</span>
+        <span style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 3 }}>{["f39-lighthouse.jpg", "hero-castle.jpg", "f25-eclipse.jpg", "f25-ship.jpg"].map((s) => <img key={s} src={`${CROP}${s}`} alt="" style={{ width: "100%", height: 17, objectFit: "cover", borderRadius: 2, display: "block" }} />)}</span>
+        <span style={{ display: "block", color: "#9a9aa0", margin: "4px 0 2px" }}>Recommended For You</span>
+        <span style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 3 }}>{["f02-castle.jpg", "f19-face.jpg", "f19-kitchen.jpg", "f30-still-b.jpg"].map((s) => <img key={s} src={`${CROP}${s}`} alt="" style={{ width: "100%", height: 17, objectFit: "cover", borderRadius: 2, display: "block" }} />)}</span>
+        <span style={{ display: "block", color: "#9a9aa0", marginTop: 4 }}>Recently Added</span>
+      </div>
+      <div style={{ position: "absolute", left: "68.9%", top: "65.4%", width: "24.8%", height: "31.8%", background: "#07090f", border: "1px solid #2e3038", borderRadius: 6, padding: "1.4% 1.6%", fontSize: 8.2, color: "#e8e8ea", transform: "rotate(1.5deg)", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }} role="region" aria-label="Tablet companion">
+        <span style={{ position: "relative", display: "block", height: "62%", borderRadius: 3, overflow: "hidden" }}><img src={`${CROP}f39-tablet.jpg`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} /><b style={{ position: "absolute", left: 6, top: 5, fontSize: 9.4, lineHeight: 1.35, textShadow: "0 1px 4px #000" }}>Intelligent.<br />Immersive.<br />Yours.</b></span>
+        <span style={{ display: "block", color: "#9a9aa0", margin: "3px 0 2px" }}>Featured</span>
+        <span style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 3 }}>{["f39-lighthouse.jpg", "hero-castle.jpg", "f02-frames.jpg", "f25-ship.jpg"].map((s) => <img key={s} src={`${CROP}${s}`} alt="" style={{ width: "100%", height: 15, objectFit: "cover", borderRadius: 2, display: "block" }} />)}</span>
+      </div>
+    </Stage>
   </Ax>;
 }
 

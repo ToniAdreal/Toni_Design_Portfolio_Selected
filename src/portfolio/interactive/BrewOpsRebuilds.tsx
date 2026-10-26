@@ -62,12 +62,16 @@ export function Spark({ points, color, w = 74, h = 22 }: { points: string; color
 /* ---------------- Shared hi-fi sidebar (files 31-50) ---------------- */
 const NAV31: Array<[string, string]> = [["⌂", "Control Tower"], ["⌂", "Overview"], ["📈", "Insights"], ["📋", "Investigations"], ["🗄", "Production"], ["📦", "Inventory"], ["⬡", "Logistics"], ["🛡", "Quality"], ["✓", "Approvals"], ["📄", "Reports"], ["⚙", "Settings"]];
 export function Side31({ active = "Control Tower" }: { active?: string }) {
+  // Pass 4: file 37 prints "Maintenance" as the active nav item, in
+  // the slot the shared list gives to Production — swap just that
+  // entry for this slide instead of forking the whole nav.
+  const nav = active === "Maintenance" ? NAV31.map(([ic, t]) => t === "Production" ? ["🔧", "Maintenance"] as [string, string] : [ic, t] as [string, string]) : NAV31;
   return <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 12, padding: "8px 7px", display: "flex", flexDirection: "column", gap: 1, fontSize: 9.8, color: "#3c4652" }}>
     <div style={{ padding: "0 2px 6px" }}>
       <div style={{ background: RED, color: "#fff", fontStyle: "italic", fontWeight: 800, fontSize: 11, borderRadius: 3, padding: "2px 6px", transform: "skewX(-6deg)", display: "inline-block" }}>Budweiser</div>
       <div style={{ fontWeight: 800, letterSpacing: "0.13em", fontSize: 9.5, color: INK, marginTop: 5, lineHeight: 1.3 }}>BREWOPS<br />INTELLIGENCE 🌾</div>
     </div>
-    {NAV31.map(([ic, t]) => <span key={t} style={{ display: "flex", gap: 6, alignItems: "center", padding: "3px 6px", borderRadius: 7, background: t === active ? "#fdf3e0" : "transparent", color: t === active ? "#8a5c00" : "#3c4652", fontWeight: t === active ? 700 : 400, whiteSpace: "nowrap" }}><span aria-hidden="true" style={{ width: 12, textAlign: "center" }}>{ic}</span>{t}</span>)}
+    {nav.map(([ic, t]) => <span key={t} style={{ display: "flex", gap: 6, alignItems: "center", padding: "3px 6px", borderRadius: 7, background: t === active ? "#fdf3e0" : "transparent", color: t === active ? "#8a5c00" : "#3c4652", fontWeight: t === active ? 700 : 400, whiteSpace: "nowrap" }}><span aria-hidden="true" style={{ width: 12, textAlign: "center" }}>{ic}</span>{t}</span>)}
     <div style={{ border: "1px solid #e7e2d9", borderRadius: 8, padding: "5px 7px", marginTop: 6, lineHeight: 1.45 }}>
       <span style={{ color: "#18a957" }}>●</span> <b style={{ color: INK }}>System Status</b><br /><span style={{ color: "#6b7280" }}>All systems operational</span>
     </div>

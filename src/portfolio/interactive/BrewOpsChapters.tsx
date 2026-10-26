@@ -133,7 +133,11 @@ import { BoX, BO3_CSS, CTDash, HiFi, Side31, Spark, BrewOpsAnnotatedShell, BrewO
 const AMBER = "#f5a800";
 const RED = "#e0483e";
 
-function Bo({ n, title, sub, children, label, dark = true, foot, serif = false, center = false }: { n: string; title: ReactNode; sub?: string; children: ReactNode; label: string; dark?: boolean; foot?: string; serif?: boolean; center?: boolean }) {
+function Bo({ n, title, sub, children, label, dark = true, foot, serif = false, center = false, bare = false }: { n: string; title: ReactNode; sub?: string; children: ReactNode; label: string; dark?: boolean; foot?: string; serif?: boolean; center?: boolean; bare?: boolean }) {
+  // Pass 4: `bare` renders the slide body only (file 01's printed
+  // composition is a full-bleed photograph that carries its own
+  // title zone; the shell head/foot would duplicate it).
+  if (bare) return <div className={`tks bo3${dark ? " tks--dark" : ""}`} style={{ ...(dark ? { background: "#0a141f" } : {}), padding: "10px 12px", fontSize: 12.6, lineHeight: 1.45 }} role="region" aria-label={label}><style>{BO3_CSS}</style>{children}</div>;
   return <div className={`tks bo3${dark ? " tks--dark" : ""}`} style={{ ...(dark ? { background: "#0a141f" } : {}), padding: "16px 20px 10px", fontSize: 12.6, lineHeight: 1.45 }} role="region" aria-label={label}>
     <style>{BO3_CSS}</style>
     <div className="tks-head"><span><b>BrewOps <span style={{ color: AMBER }}>Intelligence</span></b>&nbsp;&nbsp;|&nbsp;&nbsp;{n} of 50</span><span className="tks-brand" style={{ fontSize: 12, color: "#c8102e", fontStyle: "italic" }}>Budweiser</span></div>
@@ -180,15 +184,25 @@ export function BrewOpsCover() {
   const [approved, setApproved] = useState(false);
   const riskRow: Array<[string, string, string, string]> = [["Overall Risk", "High", "↑ vs prior 7 days", "#e0483e"], ["Service Risk", "22%", "↑ 8pp vs prior 7 days", "#e0483e"], ["Supply Risk", "High", "↑ vs prior 7 days", "#e0483e"], ["Logistics Risk", "Medium", "— no change", "#f5a800"], ["Inventory Risk", "Low", "↓ vs prior 7 days", "#18a957"], ["At Risk SKUs", "128", "$2.7M revenue", "#e0483e"]];
   const sevC = (s: string) => s === "CRITICAL" ? "#e0483e" : s === "WARNING" ? "#f5a800" : "#2F80ED";
-  return <Bo n="01" title="Designing a Beverage Supply-Chain Intelligence Copilot" sub="BrewOps Intelligence — Independent Budweiser Supply-Chain Intelligence Demonstrator." label="BrewOps cover showcase - interactive rebuild of Budweiser_01">
-    <div style={{ display: "grid", gridTemplateColumns: "238px minmax(0,1fr)", gap: 12, alignItems: "start" }}>
-    <div>
-      <p style={{ margin: 0, fontSize: 12.3, lineHeight: 1.55, color: "#dbe5f0" }}>From a 2023 AI blueprint to an <b style={{ color: AMBER }}>independently built operational demonstrator</b>.</p>
-      <img src="/projects/crops/brewops/hero-warehouse.webp" alt="Warehouse aisle of the printed cover photograph" style={{ width: "100%", height: 92, objectFit: "cover", borderRadius: 9, border: "1px solid #22344d", display: "block", margin: "10px 0" }} />
-      <p style={{ margin: 0, fontSize: 11, lineHeight: 1.65, color: "#a9bccd" }}>The monitor shows the <b style={{ color: "#fff" }}>Control Tower</b> for <b style={{ color: "#fff" }}>Fairfield Brewery</b>, date range <b style={{ color: "#fff" }}>May 19 – Jun 1, 2024</b>.</p>
-      <p style={{ margin: "8px 0 0", fontSize: 10.5, lineHeight: 1.6, color: "#8fa5bd" }}>Top nav as printed: Control Tower · Demand · Supply · Logistics · Inventory · Quality · Reports</p>
-    </div>
-    <div style={{ background: "#0e1c2c", border: "1px solid #22344d", borderRadius: 13, padding: "10px 12px", minWidth: 0 }}>
+  // Pass 4: printed composition restored — the stage is the original
+  // warehouse photograph; the baked title zone (left) is covered by a
+  // DOM title veil, and the photographed monitor is covered by the
+  // live DOM dashboard in a monitor frame at the printed position
+  // (slight perspective as photographed). All dashboard content
+  // below stays real DOM inside the monitor.
+  return <Bo n="01" bare title="" label="BrewOps cover showcase - interactive rebuild of Budweiser_01">
+    <div role="img" aria-label="Warehouse with Budweiser crates and a desktop monitor showing the BrewOps Control Tower, as printed" style={{ position: "relative", aspectRatio: "1672 / 941", borderRadius: 12, overflow: "hidden", border: "1px solid #22344d", background: "#06090f" }}>
+      <img src="/projects/crops/brewops/room-monitor.webp" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+      <div style={{ position: "absolute", left: 0, top: 0, width: "33%", height: "100%", background: "linear-gradient(90deg, rgba(5,7,11,0.97) 0%, rgba(5,7,11,0.97) 76%, rgba(5,7,11,0) 100%)", padding: "3.2% 3.5% 0 2.6%" }}>
+        <p style={{ margin: 0, fontSize: 15, fontWeight: 800 }}>BrewOps <span style={{ color: AMBER }}>Intelligence</span></p>
+        <p style={{ margin: "3px 0 0", fontSize: 10.3, lineHeight: 1.5, color: "#a9bccd" }}>Independent Budweiser Supply-Chain<br />Intelligence Demonstrator</p>
+        <span aria-hidden="true" style={{ display: "block", width: 26, height: 3, background: AMBER, borderRadius: 2, margin: "9% 0 7%" }} />
+        <h3 style={{ margin: 0, fontSize: 29, lineHeight: 1.16, fontWeight: 800 }}>Designing a Beverage Supply-Chain Intelligence Copilot</h3>
+        <p style={{ margin: "7% 0 0", fontSize: 12, lineHeight: 1.55, color: "#dbe5f0" }}>From a 2023 AI blueprint to an <b style={{ color: AMBER }}>independently built operational demonstrator</b>.</p>
+      </div>
+      <div role="region" aria-label="Monitor — BrewOps Control Tower dashboard for Fairfield Brewery" style={{ position: "absolute", left: "29%", top: "3.2%", width: "68.5%", height: "89.8%", transform: "perspective(1300px) rotateY(-2.1deg)", transformOrigin: "center", background: "#0e1c2c", border: "3px solid #14171c", borderRadius: 10, padding: "8px 10px", overflow: "hidden", boxShadow: "0 18px 44px rgba(0,0,0,0.55)" }}>
+      <div style={{ width: "126%", transform: "scale(0.794)", transformOrigin: "top left" }}>
+      <p style={{ margin: "0 0 7px", display: "flex", gap: 10, alignItems: "baseline", fontSize: 8.8, color: "#8fa5bd", borderBottom: "1px solid #22344d", paddingBottom: 5, whiteSpace: "nowrap", overflow: "hidden" }}><b style={{ color: "#fff", fontSize: 9.6 }}>BrewOps Intelligence</b><span style={{ color: "#fff", borderBottom: `2px solid ${AMBER}`, paddingBottom: 2 }}>Control Tower</span><span>Demand</span><span>Supply</span><span>Logistics</span><span>Inventory</span><span>Quality</span><span>Reports</span><span style={{ marginLeft: "auto" }}>Facility: <b style={{ color: "#fff" }}>Fairfield Brewery</b> · Date Range: May 19 – Jun 1, 2024 · Filters · <span style={{ color: "#e0483e", fontStyle: "italic", fontWeight: 700 }}>Budweiser</span></span></p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 7 }}>
         {riskRow.map(([k, v, d, c]) => <div key={k} style={{ border: "1px solid #22344d", borderRadius: 9, padding: "6px 9px" }}><span style={{ color: "#8fa5bd", fontSize: 10 }}>{k}</span><div style={{ color: c, fontWeight: 800, fontSize: 17 }}>{v}</div><span style={{ color: "#8fa5bd", fontSize: 9.5 }}>{d}</span></div>)}
       </div>
@@ -228,6 +242,7 @@ export function BrewOpsCover() {
           {[["Demand Forecast", "Statistical Forecast v5.2 — May 19, 2024 8:00 AM", "Demand Analytics"], ["Supply Plan", "IBP Plan v3.1 — May 18, 2024 2:15 PM", "Supply Planning"], ["Inventory Snapshot", "WMS Export v2.7 — May 19, 2024 7:30 AM", "Inventory Mgmt"]].map(([t, w, o]) => <p key={t} style={{ margin: "5px 0", display: "flex", gap: 7, fontSize: 11.3 }}><span>📄</span><span style={{ flex: 1 }}><b style={{ color: "#fff" }}>{t}</b><br /><span style={{ color: "#8fa5bd" }}>{w}</span></span><span style={{ color: "#8fa5bd", fontSize: 10 }}>Owner<br />{o}</span><span style={{ color: "#18a957" }}>✓</span></p>)}
           <p style={{ margin: "6px 0 0", color: "#8fa5bd", fontSize: 10.5 }}>Last updated: May 19, 2024 8:15 AM CDT — Data sources: All systems operational.</p></div>
       </div>
+      </div>
     </div>
     </div>
   </Bo>;
@@ -265,6 +280,9 @@ export function BrewOpsBeforeAfter() {
         <p style={{ margin: 0, fontWeight: 800, letterSpacing: "0.08em", fontSize: 12, color: AMBER }}>AFTER — BREWOPS INTELLIGENCE</p>
         <div style={{ display: "grid", gap: 6, marginTop: 9 }}>
           {AFTER02.map(([t, lead, panel], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#0a141f", border: `1.5px solid ${i === s ? AMBER : "#22344d"}`, borderRadius: 9, padding: "7px 10px", cursor: "pointer", font: "inherit", color: "#dbe5f0", display: "flex", gap: 9 }}>
+            {/* Pass 4: each After row pairs its printed icon tile with
+                the detail panel (the pass-3 residual pairing). */}
+            <span aria-hidden="true" style={{ width: 34, height: 34, flex: "none", borderRadius: 8, background: "#132a42", border: "1px solid #2c4258", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 15 }}>{["🔔", "🗂", "⚖", "✓", "📜"][i]}</span>
             <span style={{ flex: 1 }}><b style={{ color: "#fff", fontSize: 11.8 }}>{t}</b> <span style={{ color: "#8fa5bd", fontSize: 10.5 }}>— {lead}</span><br /><span style={{ fontSize: 10.8, color: "#a9bccd" }}>{panel}</span></span>
             {i < 4 ? <span aria-hidden="true" style={{ color: AMBER, alignSelf: "center" }}>↓</span> : null}
           </button>)}
@@ -1641,7 +1659,7 @@ export function BrewOpsMaintenanceFleet() {
   const [row, setRow] = useState(9);
   const pill37 = (h: number) => h >= 90 ? "#18a957" : h >= 70 ? "#5da85f" : h >= 50 ? "#f5a800" : h >= 30 ? "#e07b1f" : "#e0483e";
   return <Bo n="37" title="Predictive Maintenance - Fleet View" sub="Rank and monitor equipment health across all breweries, sites, and production lines. May 10 - May 17, 2024 (7D) - All Facilities. User as printed: Alex R., Maintenance Lead. Footer as printed: v1.0 - May 2025." dark={false} label="BrewOps predictive maintenance fleet view - interactive rebuild of Budweiser_37">
-    <HiFi active="Production">
+    <HiFi active="Maintenance">
     <Stats items={[["Overall Fleet Health", "78%", "up 5% vs prior 7D"], ["Healthy Assets", "142", "up 12 vs prior 7D"], ["At Risk Assets", "38", "up 4 vs prior 7D"], ["Critical Assets", "7", "down 2 vs prior 7D"], ["MTBF (Hours)", "412", "up 18 vs prior 7D"], ["Open Work Orders", "52", "up 6 vs prior 7D"]]} />
     <div style={{ display: "grid", gridTemplateColumns: "1fr 218px", gap: 10, marginTop: 10, alignItems: "start" }}>
       <div>
@@ -1966,7 +1984,24 @@ export function BrewOpsArchitecture() {
         </div>
         <div style={{ background: "#fff", border: "1px solid #e7e2d9", color: "#141a21", borderRadius: 11, padding: "10px 12px" }}>
           <p className="tks-kicker" style={{ marginTop: 0, color: "#b97a0c" }}>Platform Foundations</p>
-          <p style={{ margin: 0, fontSize: 10.4, lineHeight: 1.65 }}><b>Authorization &amp; Security:</b> Identity Provider (OIDC / SAML) · RBAC / ABAC · MFA &amp; SSO · Secrets Management · Row &amp; Field Level Security<br /><b>Observability &amp; Operations:</b> Logging (ELK / OpenSearch) · Metrics (Prometheus / Grafana) · Tracing (OpenTelemetry) · Alerting &amp; Incident Management · Audit Logs<br /><b>Deployment &amp; Infrastructure:</b> Deployed on AWS (Multi-AZ) · VPC &amp; Networking · EKS (Kubernetes) · Auto Scaling · CI/CD (GitHub Actions) · IaC (Terraform) · Monitoring (CloudWatch) · WAF &amp; Security (DDoS, Firewall, Shield)</p>
+          <p style={{ margin: 0, fontSize: 10.4, lineHeight: 1.65 }}>Authorization &amp; Security · Observability &amp; Operations · Deployment &amp; Infrastructure — the three printed foundation groups sit in one band inside the dashed platform boundary below, as printed. The Storage &amp; Data band closes the layers column above.</p>
+        </div>
+      </div>
+    </div>
+    <div style={{ border: "1.5px dashed #d8a7a0", borderRadius: 11, padding: "9px 11px", marginTop: 10 }}>
+      <p className="tks-kicker" style={{ marginTop: 0, color: "#b3352c" }}>Platform Foundations — inside the BrewOps Intelligence Platform boundary</p>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1.35fr", gap: 8 }}>
+        <div style={{ background: "#fdf3f1", border: "1px solid #f0d4cf", borderRadius: 9, padding: "8px 10px" }}>
+          <p style={{ margin: 0, fontSize: 10.8 }}><b style={{ color: "#b3352c" }}>🛡 AUTHORIZATION &amp; SECURITY</b></p>
+          <p style={{ margin: "4px 0 0", fontSize: 10.2, lineHeight: 1.6 }}>Identity Provider (OIDC / SAML) · RBAC / ABAC · MFA &amp; SSO · Secrets Management · Row &amp; Field Level Security</p>
+        </div>
+        <div style={{ background: "#eef4fd", border: "1px solid #cfdef5", borderRadius: 9, padding: "8px 10px" }}>
+          <p style={{ margin: 0, fontSize: 10.8 }}><b style={{ color: "#2563eb" }}>∿ OBSERVABILITY &amp; OPERATIONS</b></p>
+          <p style={{ margin: "4px 0 0", fontSize: 10.2, lineHeight: 1.6 }}>Logging (ELK / OpenSearch) · Metrics (Prometheus / Grafana) · Tracing (OpenTelemetry) · Alerting &amp; Incident Management · Audit Logs</p>
+        </div>
+        <div style={{ background: "#fdf6ec", border: "1px solid #f0dfba", borderRadius: 9, padding: "8px 10px" }}>
+          <p style={{ margin: 0, fontSize: 10.8 }}><b style={{ color: "#b97a0c" }}>☁ DEPLOYMENT &amp; INFRASTRUCTURE</b></p>
+          <p style={{ margin: "4px 0 0", fontSize: 10.2, lineHeight: 1.6 }}>Deployed on AWS (Multi-AZ) · VPC &amp; Networking · EKS (Kubernetes) · Auto Scaling · CI/CD (GitHub Actions) · IaC (Terraform) · Monitoring (CloudWatch) · WAF &amp; Security (DDoS, Firewall, Shield)</p>
         </div>
       </div>
     </div>
@@ -2048,10 +2083,10 @@ export function BrewOpsInAction() {
     "};",
   ];
   return <Bo n="45" serif title="BrewOps Intelligence in Action" sub="From real-time insights to real results. Built with reusable components, consistent patterns, and production-ready code. Case Study — bw-43-code-and-ui-proof." dark={false} label="BrewOps in action code proof - interactive rebuild of Budweiser_45">
-    <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 11, alignItems: "start" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 9, alignItems: "start" }}>
       <div>
         <p className="tks-kicker" style={{ marginTop: 0 }}>Live dashboard — the file-31 Control Tower, rendered by the component</p>
-        <div style={{ border: "1px solid #e0d9c8", borderRadius: 12, padding: 9, background: "#faf8f5" }}>
+        <div style={{ border: "1px solid #e0d9c8", borderRadius: 12, padding: 7, background: "#faf8f5" }}>
           <div style={{ display: "grid", gridTemplateColumns: "118px minmax(0,1fr)", gap: 9, alignItems: "start" }}>
             <Side31 active="Control Tower" />
             <div style={{ minWidth: 0 }}><CTDash /></div>
@@ -2059,9 +2094,9 @@ export function BrewOpsInAction() {
         </div>
       </div>
       <div style={{ position: "relative" }}>
-        <div style={{ background: "#0d1520", borderRadius: 12, padding: "11px 0 26px", overflow: "hidden" }}>
+        <div style={{ background: "#0d1520", borderRadius: 12, padding: "9px 0 18px", overflow: "hidden" }}>
           <p style={{ margin: "0 13px 7px", fontSize: 10.3, color: "#9fb4c8", fontFamily: "ui-monospace, monospace" }}>KpiCard.tsx — TSX (as printed, abridged)</p>
-          <ol style={{ margin: 0, padding: "0 10px 0 36px", fontFamily: "ui-monospace, monospace", fontSize: 8.8, lineHeight: 1.6, color: "#d7e3ee" }}>
+          <ol style={{ margin: 0, padding: "0 10px 0 36px", fontFamily: "ui-monospace, monospace", fontSize: 8.8, lineHeight: 1.5, color: "#d7e3ee" }}>
             {code45.map((ln, i) => <li key={i} style={{ whiteSpace: "pre" }}>{ln || " "}</li>)}
           </ol>
         </div>
@@ -2072,7 +2107,7 @@ export function BrewOpsInAction() {
         </div>
       </div>
     </div>
-    <p style={{ margin: "12px 0 0", fontSize: 10.8 }}>BrewOps Intelligence Design System v1.0 — May 2024 (as printed).</p>
+    <p style={{ margin: "8px 0 0", fontSize: 10.8 }}>BrewOps Intelligence Design System v1.0 — May 2024 (as printed).</p>
   </Bo>;
 }
 
@@ -2263,12 +2298,14 @@ export function BrewOpsFindingsMatrix() {
         <p aria-live="polite" style={{ margin: "7px 0 0", fontSize: 10.8 }}><b>Finding {f + 1}: {cur[0]}</b> — Severity {cur[1]} / 5 · Frequency {cur[2]} / 5 · Printed band: <b>{printedBand}</b> · Quadrant by position: {quadrant48(cur[1], cur[2])}.</p>
       </div>
       <div style={{ display: "grid", gap: 9 }}>
-        <div style={{ background: "#fff", border: "1.5px solid #c8102e", borderRadius: 11, padding: "10px 12px" }}>
-          <p className="tks-kicker" style={{ marginTop: 0 }}>Top 3 Changes to Prioritize</p>
-          <p style={{ margin: "4px 0", fontSize: 10.8, lineHeight: 1.6 }}><b>1. Surface critical alerts prominently</b> — Move critical alerts above the fold on Overview with clear visual hierarchy. <b style={{ color: "#c8102e" }}>High Priority</b></p>
-          <p style={{ margin: "4px 0", fontSize: 10.8, lineHeight: 1.6 }}><b>2. Improve filter discoverability</b> — Make filters more visible and accessible across all key views. <b style={{ color: "#c8102e" }}>High Priority</b></p>
-          <p style={{ margin: "4px 0", fontSize: 10.8, lineHeight: 1.6 }}><b>3. Simplify investigation flow</b> — Streamline steps to find root cause and recommended actions. <b style={{ color: "#c8102e" }}>High Priority</b></p>
-        </div>
+        {/* Pass 4: the printed Top-3 rail is three separate cards,
+            each with its red number circle — split from the pass-3
+            combined box. */}
+        <p className="tks-kicker" style={{ margin: 0 }}>Top 3 Changes to Prioritize</p>
+        {[["Surface critical alerts prominently", "Move critical alerts above the fold on Overview with clear visual hierarchy."], ["Improve filter discoverability", "Make filters more visible and accessible across all key views."], ["Simplify investigation flow", "Streamline steps to find root cause and recommended actions."]].map(([t, d], i) => <div key={t} style={{ background: "#fff", border: "1.5px solid #c8102e", borderRadius: 11, padding: "8px 11px", display: "flex", gap: 9 }}>
+          <span aria-hidden="true" style={{ width: 21, height: 21, flex: "none", borderRadius: "50%", background: "#c8102e", color: "#fff", fontWeight: 800, fontSize: 11.5, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{i + 1}</span>
+          <p style={{ margin: 0, fontSize: 10.8, lineHeight: 1.55 }}><b>{t}</b> — {d} <b style={{ color: "#c8102e" }}>High Priority</b></p>
+        </div>)}
         <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "10px 12px", fontSize: 10.4, lineHeight: 1.65 }}>
           <p className="tks-kicker" style={{ marginTop: 0 }}>Scales (as printed)</p>
           <p style={{ margin: 0 }}><b>Severity:</b> 5 Very High (Critical) · 4 High (Major) · 3 Medium (Moderate) · 2 Low (Minor) · 1 Very Low (Negligible)<br /><b>Frequency:</b> 1 Rare (&lt; 5% of users) · 2 Uncommon (5–20%) · 3 Occasional (20–50%) · 4 Frequent (50–80%) · 5 Very Frequent (&gt; 80%)</p>

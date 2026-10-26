@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { ReactNode } from "react";
 import "./tokenta-slides.css";
 
 /**
@@ -17,6 +18,19 @@ const TYPE_SCALE = [
   ["Display", "64", "Semibold"], ["Headline", "36", "Semibold"], ["Title", "20", "Medium"], ["Body", "16", "Regular"],
 ];
 const ICONS = ["Home", "Search", "Library", "Live", "On Demand", "Voice", "Profile", "Settings"];
+/** Pass 4: the printed iconography is a line-icon set — drawn here as
+ * inline SVG strokes (the pass-3 residual was text-only chips). */
+const ICON_PATHS: Record<string, ReactNode> = {
+  Home: <><path d="M4 11 12 4l8 7" /><path d="M6 10v9h12v-9" /></>,
+  Search: <><circle cx="11" cy="11" r={6} /><path d="m20 20-3.8-3.8" /></>,
+  Library: <><path d="M5 4v16" /><path d="M9 4v16" /><path d="M9 4h10v16H9" /></>,
+  Live: <><circle cx="12" cy="12" r={2.4} /><path d="M7.5 7.5a6.4 6.4 0 0 0 0 9" /><path d="M16.5 7.5a6.4 6.4 0 0 1 0 9" /></>,
+  "On Demand": <><rect x="3" y="6" width="18" height="12" rx="2" /><path d="m10 9.5 5 2.5-5 2.5z" /></>,
+  Voice: <><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0" /><path d="M12 18v3" /></>,
+  Profile: <><circle cx="12" cy="8" r={3.6} /><path d="M4.5 20a7.6 7.6 0 0 1 15 0" /></>,
+  Settings: <><circle cx="12" cy="12" r={3.2} /><path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M18.5 5.5l-2.1 2.1M7.6 16.4l-2.1 2.1" /></>,
+};
+const LineIcon = ({ name, size = 21 }: { name: string; size?: number }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICON_PATHS[name]}</svg>;
 const SURFACES = [
   ["Base", "#0B0D12"], ["Elevated 1", "#11151B"], ["Elevated 2", "#161A21"],
   ["Outline", "1px – #2A2F36"], ["Divider", "1px – #1E232B"], ["Glow (Active)", "Azure glow"],
@@ -34,7 +48,7 @@ export function AurionXVisualIdentity() {
       <div className="tks-card"><p className="tks-kicker">Mark</p><p style={{ fontSize: 58, textAlign: "center", margin: "4px 0 2px", lineHeight: 1, background: "linear-gradient(90deg,#00E5FF,#7B61FF)", WebkitBackgroundClip: "text", color: "transparent", fontWeight: 900 }}>⋈</p></div>
       <div className="tks-card"><p className="tks-kicker">Wordmark</p><p style={{ fontSize: 40, fontWeight: 600, textAlign: "center", margin: "12px 0 4px" }}>Aurion<span style={{ background: "linear-gradient(90deg,#00E5FF,#7B61FF)", WebkitBackgroundClip: "text", color: "transparent" }}>X</span></p><p style={{ textAlign: "center", margin: 0, letterSpacing: "0.55em", fontSize: 11, color: "#9a9aa0" }}>A U R I O N X</p></div>
       <div className="tks-card"><p className="tks-kicker">Colour — click a swatch</p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 6, marginTop: 6 }}>{COLOURS.map(([n, hex, grp], i) => <button key={n} type="button" onClick={() => setColour(i)} aria-pressed={colour === i} style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer", textAlign: "left", font: "inherit", color: "#f0f0f2" }}><span style={{ display: "block", background: hex, height: 40, borderRadius: 5, border: colour === i ? "2px solid #fff" : "1px solid #333438" }} /><span style={{ display: "block", marginTop: 4, fontSize: 11.5 }}><b>{n}</b></span><span style={{ display: "block", fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: "#9a9aa0" }}>{hex} · {grp}</span></button>)}</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 6, marginTop: 6 }}>{COLOURS.map(([n, hex, grp], i) => <button key={n} type="button" onClick={() => setColour(i)} aria-pressed={colour === i} style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer", textAlign: "left", font: "inherit", color: "#f0f0f2" }}><span style={{ display: "block", background: hex, height: 32, borderRadius: 5, border: colour === i ? "2px solid #fff" : "1px solid #333438" }} /><span style={{ display: "block", marginTop: 4, fontSize: 11.5 }}><b>{n}</b></span><span style={{ display: "block", fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: "#9a9aa0" }}>{hex} · {grp}</span></button>)}</div>
         <p style={{ margin: "8px 0 0" }} aria-live="polite"><b>{COLOURS[colour][0]}</b> — {COLOURS[colour][1]} · {COLOURS[colour][2]}</p></div>
     </div>
     <div className="tks-grid" style={{ gridTemplateColumns: "1.3fr 1fr", marginTop: 7 }}>
@@ -47,7 +61,7 @@ export function AurionXVisualIdentity() {
         </button>)}</div>
         <p style={{ margin: "8px 0 0", color: "#9a9aa0" }} aria-live="polite">Selected: {TYPE_SCALE[typeRow][0]} — {TYPE_SCALE[typeRow][1]}px · {TYPE_SCALE[typeRow][2]} (specimens capped at 30px for the slide canvas).</p></div>
       <div className="tks-card"><p className="tks-kicker">Grid</p><p style={{ margin: "4px 0", color: "#c9c9ce", fontSize: 11.5 }}>12 Columns — callouts as printed: <b>Margins</b> · <b>Gutters</b></p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 3 }}>{Array.from({ length: 12 }, (_, i) => <span key={i} style={{ height: 28, background: "#14161c", border: "1px dashed #2c2f36" }} />)}</div></div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 3 }}>{Array.from({ length: 12 }, (_, i) => <span key={i} style={{ height: 22, background: "#14161c", border: "1px dashed #2c2f36" }} />)}</div></div>
     </div>
     <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1.3fr", marginTop: 7 }}>
       <div className="tks-card"><p className="tks-kicker">Voice wave</p>
@@ -60,7 +74,7 @@ export function AurionXVisualIdentity() {
     </div>
     <div className="tks-grid" style={{ gridTemplateColumns: "1.3fr 1fr", marginTop: 7 }}>
       <div className="tks-card"><p className="tks-kicker">Iconography</p>
-        <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginTop: 6 }}>{ICONS.map((n) => <button key={n} type="button" className="tks-chip" aria-pressed={icon === n} onClick={() => setIcon(n)}>{n}</button>)}</div>
+        <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginTop: 6 }}>{ICONS.map((n) => <button key={n} type="button" className="tks-chip" aria-pressed={icon === n} onClick={() => setIcon(n)} style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 2, padding: "6px 9px" }}><LineIcon name={n} /><span style={{ fontSize: 9.3 }}>{n}</span></button>)}</div>
         <p style={{ margin: "8px 0 0" }} aria-live="polite">Selected icon: <b>{icon}</b> — line icon set as printed (Home, Search, Library, Live, On Demand, Voice, Profile, Settings).</p></div>
       <div className="tks-card"><p className="tks-kicker">Surfaces</p>{SURFACES.map(([n, v]) => <p key={n} style={{ margin: "4px 0", display: "flex", justifyContent: "space-between" }}><span>{n}</span><span style={{ fontFamily: "'IBM Plex Mono', monospace", color: "#9a9aa0" }}>{v}</span></p>)}</div>
     </div>
@@ -97,7 +111,7 @@ export function AurionXTVDesignSystem() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
           {([["edge", "Edge of Tomorrow", "2024 • Action, Sci-Fi • 2h 5m", "A soldier relives the same day in an endless battle for survival."], ["highlands", "Highlands", "2023 • Drama • 1h 48m", "A remote village, a hidden past, a path forward."]] as const).map(([id, name, meta, sub]) => <button key={id} type="button" className="tks-card" style={focus === id ? { borderImage: "linear-gradient(90deg,#2979FF,#7B61FF) 1", boxShadow: "0 0 0 2px #7B61FF" } : undefined} aria-pressed={focus === id} onClick={() => setFocus(id)}>
             <span className="tks-kicker">{focus === id ? "Focused" : "Rest"}</span>
-            <span style={{ display: "block", height: 40, background: "linear-gradient(160deg,#3a4a63,#14161c)", borderRadius: 6, margin: "5px 0" }} />
+            <span style={{ display: "block", height: 32, background: "linear-gradient(160deg,#3a4a63,#14161c)", borderRadius: 6, margin: "5px 0" }} />
             <b style={{ display: "block" }}>{name}</b><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>{meta}</span>
             <span style={{ display: "block", color: "#c9c9ce", fontSize: 11, marginTop: 3 }}>{sub}</span>
             {id === "edge" && <span style={{ display: "block", marginTop: 6 }}>▶ Play&nbsp;&nbsp;More Info</span>}
@@ -112,7 +126,7 @@ export function AurionXTVDesignSystem() {
       <div>
         <p className="tks-kicker">Remote Control Focus Ring</p>
         <div style={{ textAlign: "center", padding: "10px 0" }}>
-          <div style={{ width: 96, height: 96, borderRadius: "50%", border: "3px solid #2979FF", margin: "0 auto", display: "grid", placeItems: "center", boxShadow: "0 0 18px rgba(123,97,255,.45)" }}>
+          <div style={{ width: 80, height: 80, borderRadius: "50%", border: "3px solid #2979FF", margin: "0 auto", display: "grid", placeItems: "center", boxShadow: "0 0 18px rgba(123,97,255,.45)" }}>
             <div><button type="button" className="tks-chip" aria-label="Up" onClick={() => setFocus("edge")}>⌃</button><br />
             <button type="button" className="tks-chip" aria-label="Left" onClick={() => setFocus("edge")}>‹</button> <span style={{ display: "inline-block", width: 26, height: 26, borderRadius: "50%", background: "#22242a", verticalAlign: "middle" }} /> <button type="button" className="tks-chip" aria-label="Right" onClick={() => setFocus("highlands")}>›</button><br />
             <button type="button" className="tks-chip" aria-label="Down" onClick={() => setFocus("highlands")}>⌄</button></div>

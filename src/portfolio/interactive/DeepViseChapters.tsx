@@ -899,6 +899,13 @@ const LAYERS19: Array<[string, string, string, string]> = [
 export function DeepViseDataToCredit() {
   const [s, setS] = useState(3);
   return <Dv n="19" title="19 Data-to-Credit Decision Flow" sub="Clarify which transformations are model outputs, which are product rules and which require accountable human judgment." label="DeepVise data-to-credit flow — interactive rebuild of DeepVise_19">
+    {/* Pass 4: the printed header carries both purpose blocks at
+        the top right (the pass-3 residual showed only the Lender
+        purpose, on layer 6). Texts transcribed from the print. */}
+    <div style={{ display: "flex", gap: 18, flexWrap: "wrap", marginBottom: 9 }}>
+      <p style={{ margin: 0, fontSize: 11, lineHeight: 1.5, color: "#44536a" }}>🏭 <b style={{ color: "#0B1726" }}>Factory purpose</b><br />Turn machine behavior into trustworthy evidence.</p>
+      <p style={{ margin: 0, fontSize: 11, lineHeight: 1.5, color: "#44536a", borderLeft: "1px solid #dde4ec", paddingLeft: 18 }}>🏛 <b style={{ color: "#0B1726" }}>Lender purpose</b><br />Convert evidence into sound credit decisions.</p>
+    </div>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 7, alignItems: "stretch" }}>
       {LAYERS19.map(([t, body, status, note], i) => {
         const head = ["#102A43", "#102A43", "#2F80ED", "#12C7D4", "#6C5CE7", "#0B1726"][i];
@@ -1137,7 +1144,7 @@ const EVID25: Array<[string, string, string, number]> = [
 export function DeepViseBrandSystem() {
   const [col, setCol] = useState(3);
   return <Dv n="25" title="From purple concept to product credibility" sub="DeepVise — Industrial AI for Real-World Decisions. Evolving our identity to reflect trust, precision and evidence—built for engineers and risk teams." label="DeepVise brand system — interactive rebuild of DeepVise_25">
-    <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", gap: 11, alignItems: "start" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "300px 1fr 168px", gap: 11, alignItems: "start" }}>
       <div style={{ display: "grid", gap: 9 }}>
         <div className="tks-card">
           <p className="tks-kicker" style={{ marginTop: 0 }}>Mark construction</p>
@@ -1206,13 +1213,23 @@ export function DeepViseBrandSystem() {
           </div>
         </div>
       </div>
+      {/* Pass 4: the printed right-hand photo column — machine,
+          sensor and control-room photographs are pure imagery in
+          the original and are reproduced as real crops (the pass-3
+          note that no clean crop exists was wrong: the photos sit
+          in their own column, clear of slide furniture). */}
+      <div style={{ display: "grid", gap: 8 }}>
+        <img src="/projects/crops/deepvise/dv25-machine.jpg" alt="Industrial compressor machinery, as printed in the slide's photo column" style={{ width: "100%", height: 116, objectFit: "cover", borderRadius: 9, display: "block" }} />
+        <img src="/projects/crops/deepvise/dv25-sensor.jpg" alt="Vibration sensor mounted on a pipe, as printed in the slide's photo column" style={{ width: "100%", height: 117, objectFit: "cover", borderRadius: 9, display: "block" }} />
+        <img src="/projects/crops/deepvise/dv25-controlroom.jpg" alt="Control room monitoring wall, as printed in the slide's photo column" style={{ width: "100%", height: 88, objectFit: "cover", borderRadius: 9, display: "block" }} />
+      </div>
     </div>
     <div className="tks-grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(170px,1fr))", marginTop: 10 }}>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Color usage</p><b>DO</b> Use color with semantic meaning and text labels.<br /><b style={{ color: "#b3352c" }}>DON’T</b> Rely on color alone without context.</div>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Data visualization</p><b>DO</b> Show context: units, baselines and confidence.<br /><b style={{ color: "#b3352c" }}>DON’T</b> Show charts without scales or context.</div>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Typography &amp; numbers</p><b>DO</b> Use clear hierarchy and monospaced numbers for alignment — ASSET ID CT-7A-00023 · 14:32:18 · 92 /100.<br /><b style={{ color: "#b3352c" }}>DON’T</b> Use decorative fonts or misaligned numbers.</div>
     </div>
-    <p style={{ color: "#555", margin: "10px 0 0" }}>Source: Original DeepVise deck (pages 1–36) established the name and purple identity. This image: portfolio reconstruction of the new visual system. Photographic panels on the printed slide (machine, sensor, control room) are represented structurally.</p>
+    <p style={{ color: "#555", margin: "10px 0 0" }}>Source: Original DeepVise deck (pages 1–36) established the name and purple identity. This image: portfolio reconstruction of the new visual system.</p>
   </Dv>;
 }
 
@@ -1365,8 +1382,14 @@ export function DeepViseHeroEntry() {
         </div>
         <p style={{ margin: "12px 0 0", fontSize: 11, lineHeight: 1.6, color: "#44536a" }}>🛡 Raw telemetry remains inside participating factory environments. Data stays local. Evidence is permissioned. You stay in control.</p>
       </div>
-    <div aria-live="polite">
-      {ws === 0 ? <div style={{ background: "#0B1726", color: "#dbe5f0", borderRadius: 12, overflow: "hidden" }}>
+    {/* Pass 4: overlay method — the right zone is the original
+        factory photograph; the live DOM dashboard sits over the
+        photographed dashboard at its printed position, so the
+        factory ceiling, machine and floor stay photographic while
+        every dashboard element stays real DOM. */}
+    <div aria-live="polite" role="img" aria-label="Factory floor with the DeepVise dashboard floating over it, as printed" style={{ position: "relative", aspectRatio: "881 / 657", borderRadius: 12, overflow: "hidden", background: "#0B1726" }}>
+      <img src="/projects/crops/deepvise/dv27-factory.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+      {ws === 0 ? <div style={{ position: "absolute", left: "5%", top: "20.5%", width: "85.5%", height: "74.5%", background: "#0B1726", color: "#dbe5f0", borderRadius: 10, overflow: "hidden", boxShadow: "0 14px 34px rgba(0,0,0,0.5)" }}>
         <div style={{ padding: "7px 13px", borderBottom: "1px solid #22344d", fontSize: 11, color: "#9fb2c8" }}>Overview — Factory A · Press Line 1 <span style={{ float: "right" }}>Signed in: Alex Morgan, Factory admin</span></div>
         <div style={{ display: "grid", gridTemplateColumns: "118px 1fr", minHeight: 150 }}>
           <div style={{ borderRight: "1px solid #22344d", padding: "9px 10px", fontSize: 10.5, color: "#9fb2c8", display: "grid", gap: 5, alignContent: "start" }}>
@@ -1400,7 +1423,7 @@ export function DeepViseHeroEntry() {
           </div>
         </div>
       </div> :
-      <div className="tks-detail"><b>Lender Workspace entry</b> — as printed on this slide, the lender path releases only permissioned evidence: Evidence status — Verified, pending, or needs review—always traceable and auditable (the same ledger counts as the factory panel: Verified 328 · Pending 54 · Needs review 12). No lender dashboard is pictured on this slide, so none is reconstructed here.</div>}
+      <div className="tks-detail" style={{ position: "absolute", left: "5%", right: "9.5%", bottom: "5%" }}><b>Lender Workspace entry</b> — as printed on this slide, the lender path releases only permissioned evidence: Evidence status — Verified, pending, or needs review—always traceable and auditable (the same ledger counts as the factory panel: Verified 328 · Pending 54 · Needs review 12). No lender dashboard is pictured on this slide, so none is reconstructed here.</div>}
     </div>
     </div>
     <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0 }}>01 · Capability</p><b>Monitor industrial assets.</b>
