@@ -128,13 +128,21 @@ function bespoke(slug: string, chapter: ChapterLike, image: GalleryImage): React
 function canvasWidth(slug: string, chapter: ChapterLike, image: GalleryImage): number {
   const file = image.src.split("/").pop() ?? "";
   const title = image.alt;
+  // Pass 5: per-screen wide canvases for dense board screens whose
+  // content is complete but cannot reach the printed aspect at 980px
+  // without shrinking design type below legibility. A wider design
+  // canvas scaled to the same figure keeps type proportionally
+  // smaller — exactly how the printed slide itself works. Measured
+  // before/after at 760px figure width in BUILD_NOTES §16.
+  if (slug === "budweiser" && file.startsWith("Budweiser_45")) return 1470;
+  if (slug === "deepvise" && file.startsWith("DeepVise_26")) return 1470;
+  if (slug === "aurionx" && (file.startsWith("AurionX_17_") || file.startsWith("AurionX_18_"))) return 1280;
   switch (slug) {
     case "tokenta": return tokentaInteractiveFor(chapter.id, title) ? 780 : 980;
     case "next-card":
       if (file.startsWith("Next_Card_Image_01") || file.startsWith("Next_Card_Image_34")) return 980;
       return nextCardChapterFor(file) ? 980 : 780;
     case "aurionx":
-      if (file.startsWith("AurionX_17_") || file.startsWith("AurionX_18_")) return 980;
       return aurionXChapterFor(file) ? 980 : 780;
     case "deepvise": return deepViseChapterFor(file) ? 980 : 780;
     case "allweb3": return allweb3ChapterFor(file) ? 980 : 780;

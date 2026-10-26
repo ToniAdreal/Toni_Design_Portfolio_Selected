@@ -60,13 +60,18 @@ import { DataQuestMarketplace, DataQuestStateMachine, DataQuestTaskDetailV0 } fr
 
 const ACC = "#5b3df5";
 
-function Dq({ n, title, sub, children, label, foot, hideHead, bg }: { n: string; title: string; sub?: string; children: ReactNode; label: string; foot?: string; hideHead?: boolean; bg?: string }) {
+function Dq({ n, title, sub, children, label, foot, hideHead, bg, titleTone }: { n: string; title: string; sub?: string; children: ReactNode; label: string; foot?: string; hideHead?: boolean; bg?: string; titleTone?: "gradient" | "black" }) {
+  // Pass 5: the deck's printed title system is not uniform — the
+  // audit/evolution boards (06, 39) print their slide titles in black
+  // beside a gradient DataQuest wordmark, while the concept slides
+  // print gradient titles. `titleTone="black"` follows the print per
+  // screen instead of forcing the deck-wide gradient (§15.6.4).
   return <div className="tks" role="region" aria-label={label} style={{ background: bg ?? "#f8f7ff", padding: "20px 24px 12px" }}>
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
       <span style={{ fontWeight: 800, fontSize: 13, color: "#191423" }}><span style={{ color: "#6C3BFF" }}>⬡</span> CyberOrigin</span>
       <span style={{ fontSize: 10.5, color: "#8a86a3", fontFamily: "ui-monospace,Menlo,monospace" }}>{n} / 40 · DataQuest</span>
     </div>
-    {hideHead ? null : <h3 style={{ fontSize: 32, lineHeight: 1.12, margin: "0 0 5px", background: "linear-gradient(92deg,#6C3BFF 10%,#2563EB 90%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>{title}</h3>}
+    {hideHead ? null : <h3 style={{ fontSize: 32, lineHeight: 1.12, margin: "0 0 5px", ...(titleTone === "black" ? { color: "#14101f" } : { background: "linear-gradient(92deg,#6C3BFF 10%,#2563EB 90%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }) }}>{title}</h3>}
     {!hideHead && sub ? <p className="tks-lede" style={{ fontSize: 13.5, lineHeight: 1.45, margin: "0 0 13px" }}>{sub}</p> : null}
     {children}
     <div className="tks-foot" style={{ marginTop: 9, paddingTop: 6 }}><span>DataQuest by CyberOrigin</span><span>{foot ?? "Human-action data marketplace for embodied AI"}</span></div>
@@ -321,9 +326,19 @@ function V0Win({ cap, children }: { cap: string; children: ReactNode }) {
 export function DataQuestInitialPrototype() {
   const [p, setP] = useState(0);
   const caps = ["Marketplace", "Task detail", "Profile & wallet", "Company context"];
-  return <Dq n="05" title="Initial responsive web prototype" sub="Early prototype exploring core flows for data collection, task completion, contributor profiles, and platform context." label="DataQuest initial responsive web prototype — interactive rebuild of CyberOrigin_05">
-    <div style={{ display: "flex", gap: 6, marginBottom: 10 }}><span style={{ border: "1.5px solid #6C3BFF", color: "#6C3BFF", borderRadius: 999, padding: "2px 12px", fontSize: 11.5, fontWeight: 600 }}>🕐 Historical</span><span style={{ border: "1.5px solid #6C3BFF", color: "#6C3BFF", borderRadius: 999, padding: "2px 12px", fontSize: 11.5, fontWeight: 600 }}>🗓 V0</span></div>
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} onClick={(e) => { const f = (e.target as HTMLElement).closest("figure"); if (f) setP([...f.parentElement!.children].indexOf(f)); }}>
+  // Pass 5: print layout restored — black title, subtitle, pills and
+  // the three numbered notes in a LEFT column; the 2×2 surface
+  // windows in the right two-thirds (§15.6.4).
+  return <Dq n="05" title="Initial responsive web prototype" hideHead label="DataQuest initial responsive web prototype — interactive rebuild of CyberOrigin_05">
+    <div style={{ display: "grid", gridTemplateColumns: "minmax(0,0.82fr) minmax(0,2fr)", gap: 16 }}>
+      <div>
+        <h3 style={{ fontSize: 29, lineHeight: 1.15, margin: "0 0 7px", color: "#14101f" }}>Initial responsive web prototype</h3>
+        <p style={{ margin: "0 0 9px", fontSize: 11, lineHeight: 1.55, color: "#3f3a55" }}>Early prototype exploring core flows for data collection, task completion, contributor profiles, and platform context.</p>
+        <div style={{ display: "flex", gap: 6, marginBottom: 12 }}><span style={{ border: "1.5px solid #6C3BFF", color: "#6C3BFF", borderRadius: 999, padding: "2px 12px", fontSize: 11.5, fontWeight: 600 }}>🕐 Historical</span><span style={{ border: "1.5px solid #6C3BFF", color: "#6C3BFF", borderRadius: 999, padding: "2px 12px", fontSize: 11.5, fontWeight: 600 }}>🗓 V0</span></div>
+        {([["1", "Core flows", "Marketplace browsing, task detail, submission, profile, and earnings in one connected flow."], ["2", "Responsive layout", "A web prototype that adapts from desktop browsing to mobile capture."], ["3", "Platform context", "Company and contributor context screens included in the same prototype."]] as Array<[string, string, string]>).map(([num, t, d]) => <p key={num} style={{ margin: "0 0 10px", fontSize: 10.4, lineHeight: 1.55, color: "#3f3a55" }}><b style={{ fontSize: 15, color: "#14101f" }}>{num} · {t}</b><br />{d}</p>)}
+      </div>
+      <div>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }} onClick={(e) => { const f = (e.target as HTMLElement).closest("figure"); if (f) setP([...f.parentElement!.children].indexOf(f)); }}>
       <V0Win cap={caps[0]}>
         <b style={{ fontSize: 13, color: "#14101f" }}>Marketplace</b><br /><span style={{ color: "#6d6884" }}>Browse data collection tasks and earn rewards.</span>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 5, marginTop: 6 }}>{V0_CATS.map(([n, b, price], ci) => <div key={n} style={{ border: "1px solid #eeeaf9", borderRadius: 7, padding: "5px 6px", fontSize: 9.3, lineHeight: 1.4 }}><b style={{ fontSize: 10 }}>{n}</b><br /><span style={{ color: "#6d6884" }}>{b}</span><br /><span style={{ color: ["#6C3BFF", "#2563EB", "#1d9e57", "#e07b16", "#6C3BFF", "#1d9e57"][ci], fontWeight: 700 }}>{price}</span></div>)}</div>
@@ -349,6 +364,8 @@ export function DataQuestInitialPrototype() {
         <p style={{ margin: "3px 0", color: "#55506e" }}>🌍 World coverage map · Human accuracy — Real people, real insights · Diverse coverage — Global scale, local context · Quality first — Rigorous review and validation</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 5, marginTop: 5 }}>{[["10M+", "Tasks completed"], ["50K+", "Active contributors"], ["180+", "Countries"], ["98%", "Approval accuracy"]].map(([v, k]) => <div key={k} style={{ textAlign: "center", border: "1px solid #eeeaf9", borderRadius: 7, padding: "4px 2px" }}><b style={{ fontSize: 13, color: "#6C3BFF" }}>{v}</b><br /><span style={{ color: "#8a86a3" }}>{k}</span></div>)}</div>
       </V0Win>
+    </div>
+      </div>
     </div>
     <span aria-live="polite" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)" }}>Focused window: {caps[p]}</span>
   </Dq>;
@@ -381,7 +398,7 @@ export function DataQuestResolvedExposed() {
         {items.map(([n, b], ri) => <button key={n} type="button" onClick={() => setSel(n)} aria-pressed={sel === n} style={{ display: "flex", gap: 8, alignItems: "center", textAlign: "left", background: "#fff", border: `1px solid ${sel === n ? color : "#e9e6f4"}`, borderRadius: 9, padding: "6px 9px", cursor: "pointer", font: "inherit" }}><span style={{ flex: "none", width: 26, height: 26, borderRadius: "50%", background: bg, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>{icons[ri]}</span><b style={{ fontSize: 12, flex: "none", width: 118, lineHeight: 1.3 }}>{n}</b><span style={{ color: "#6d6884", fontSize: 10.8, lineHeight: 1.42, borderLeft: "1px solid #eeeaf9", paddingLeft: 8 }}>{b}</span></button>)}
       </div>
     </div>);
-  return <Dq n="06" title="What the first prototype resolved and exposed" sub="Audit summary of what's working, what's unclear, and what needs to be addressed next." label="DataQuest prototype audit — interactive rebuild of CyberOrigin_06">
+  return <Dq n="06" title="What the first prototype resolved and exposed" sub="Audit summary of what's working, what's unclear, and what needs to be addressed next." titleTone="black" label="DataQuest prototype audit — interactive rebuild of CyberOrigin_06">
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, alignItems: "start" }}>
       {panel("Resolved", "#6C3BFF", "#f6f4ff", RESOLVED, RES_ICONS, "✓")}
       {panel("Exposed", "#d63a47", "#fdf3f4", EXPOSED, EXP_ICONS, "!")}
@@ -478,13 +495,54 @@ const LOFI_KITCHEN_NOTES: Record<number, string> = {
   2: "Capture screens as printed: 3.1 “Chop the vegetable — Use a clear cutting motion. Keep hands and tools in view.” · 3.4 Tips: Keep your workspace well lit · Show hands and tools clearly · Avoid blocking the view · Record in a quiet environment.",
   4: "Verification screens as printed: 5.3 Action needed — “The lighting was too low in part of the recording.” · 5.5 Approved! — You earned +$12.50.",
 };
-function WireGlyph({ label, hot, onPick }: { label: string; hot: boolean; onPick: () => void }) {
+const WF_LINES: Record<string, Array<[string, string]>> = {
+  "1.1 Discover – home": [["Good morning, Alex", "Find tasks near you"], ["Urban Street Scene", "Image · $1.20 · 0.4 mi"], ["Storefront Photos", "Image · $0.95 · 0.8 mi"]],
+  "1.2 Browse categories": [["Categories", "Browse by type"], ["Image Capture", "24 tasks"], ["Video Capture", "18 tasks"]],
+  "1.3 Task list (filtered)": [["All tasks", "Filter · Sort"], ["Urban Street Scene", "$1.20 · Image Capture"], ["Receipt OCR", "$0.60 · Text"]],
+  "1.4 Task card options": [["Task card", "Density options"], ["Compact", "Price · time · category"], ["Expanded", "With requirements preview"]],
+  "2.1 Task detail – overview": [["Urban Street Scene", "Image Capture"], ["Reward $1.20", "per approved task"], ["About this task", "Storefronts + street activity"]],
+  "2.2 Requirements": [["Requirements", "Before you start"], ["Clear, in-focus photo", "✓"], ["At least 2 storefronts", "✓"]],
+  "2.3 Eligibility": [["Eligibility", "Quick check"], ["Location", "On site ✓"], ["Device camera", "Ready ✓"]],
+  "2.4 Start task": [["Ready to start?", "Urban Street Scene"], ["Reward $1.20", "per approved task"], ["Start task", ""]],
+  "3.1 Capture – guidance": [["Camera", "Align within the frame"], ["Storefronts + street", "in view"], ["Guidance", "Step 1 of 3"]],
+  "3.2 Capture – recording": [["Recording…", "00:07"], ["Hold steady", ""], ["Stop", ""]],
+  "3.3 Capture – review": [["Review photo", "Check before submitting"], ["Sharpness", "Good"], ["Retake · Use photo", ""]],
+  "3.4 Capture – tips": [["Tips", "For a clean capture"], ["Daylight works best", ""], ["Avoid faces & plates", ""]],
+  "4.1 Uploading": [["Uploading…", "68%"], ["IMG_2481.jpg", "2.4 MB"], ["Keep this screen open", ""]],
+  "4.2 Processing": [["Processing", "Checking quality…"], ["Blur check", "✓"], ["Content check", "…"]],
+  "4.3 Quality check": [["Quality check", "Passed"], ["Clarity", "✓ Pass"], ["Content", "✓ Pass"]],
+  "5.1 Submitted": [["Submitted ✓", "Task complete"], ["Under review", "Typically 2–4 hrs"], ["Reward pending", "$1.20"]],
+  "5.2 In review": [["Urban Street Scene", "In review"], ["Submitted", "Today 9:41 AM"], ["Est. review", "2–4 hrs"]],
+  "5.3 Needs changes": [["Needs changes", "Reviewer note"], ["Photo too dark", "Resubmit a brighter one"], ["Fix & resubmit", ""]],
+  "5.4 Feedback & resubmit": [["Feedback", "From reviewer"], ["Storefronts unreadable", ""], ["Resubmit", ""]],
+  "5.5 Approved": [["Approved ✓", "+$1.20 earned"], ["Quality", "Meets requirements"], ["Earnings updated", ""]],
+  "6.1 Earnings overview": [["Earnings", "$128.45"], ["Pending", "$42.75"], ["Lifetime", "$1,428.70"]],
+  "6.2 Activity": [["Activity", "Recent"], ["Urban Street Scene", "Approved · Today"], ["Storefront Capture", "In review · Yesterday"]],
+  "6.3 Payouts": [["Payouts", "Wallet $128.45"], ["Minimum payout", "$10.00"], ["Request payout", ""]],
+  "7.1 Profile": [["Alex M.", "Contributor"], ["Tasks completed", "132"], ["Approval rate", "98%"]],
+  "7.2 Offline state": [["You're offline", "No connection"], ["Drafts saved", "2 on this device"], ["Retry", ""]],
+};
+function WireGlyph({ label, hot, onPick, lines: linesProp }: { label: string; hot: boolean; onPick: () => void; lines?: Array<[string, string]> }) {
+  // Pass 5: the printed wireframe phones carry real microcopy (screen
+  // title, task names, prices, states), not anonymous grey bars
+  // (§15.6.4). Each phone now shows its flow's printed lines — task
+  // names/prices derived from this deck's own printed surfaces
+  // (files 05/15/16: Urban Street Scene $1.20, kitchen flow), states
+  // from the printed flow label itself. Phones without a table entry
+  // keep the grey-bar wireframe.
+  const lines = linesProp ?? WF_LINES[label];
   return <button type="button" onClick={onPick} aria-pressed={hot} style={{ background: "#fff", border: `1.5px solid ${hot ? "#6C3BFF" : "#c9c9d4"}`, borderRadius: 8, padding: "4px 4px 5px", cursor: "pointer", font: "inherit", flex: 1, minWidth: 0 }}>
-    <span aria-hidden="true" style={{ display: "block", border: "1px solid #d8d8e2", borderRadius: 4, padding: "4px 3px", height: 62, background: "repeating-linear-gradient(180deg,#fff 0 8px,#f1f1f6 8px 9px)" }}>
-      <span style={{ display: "block", height: 5, background: "#c9c9d4", borderRadius: 2, marginBottom: 4 }} />
-      <span style={{ display: "block", height: 20, border: "1px solid #d8d8e2", borderRadius: 2, marginBottom: 4, position: "relative" }}><span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#b9b9c6", fontSize: 11 }}>✕</span></span>
-      <span style={{ display: "block", height: 5, width: "70%", background: "#dcdce6", borderRadius: 2, marginBottom: 4 }} />
-      <span style={{ display: "block", height: 8, width: "55%", background: "#3f3f46", borderRadius: 3, margin: "0 auto" }} />
+    <span aria-hidden="true" style={{ display: "block", border: "1px solid #d8d8e2", borderRadius: 4, padding: "4px 3px", height: 62, background: "repeating-linear-gradient(180deg,#fff 0 8px,#f1f1f6 8px 9px)", overflow: "hidden" }}>
+      {lines ? <>
+        <span style={{ display: "block", fontSize: 6.9, fontWeight: 700, color: "#14101f", lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{lines[0][0]}</span>
+        <span style={{ display: "block", fontSize: 6.4, color: "#8a86a3", lineHeight: 1.3, marginBottom: 3 }}>{lines[0][1]}</span>
+        {lines.slice(1).map(([t, s]) => <span key={t} style={{ display: "block", borderTop: "1px solid #e9e6f7", paddingTop: 2, marginTop: 2, lineHeight: 1.3 }}><span style={{ display: "block", fontSize: 6.6, fontWeight: 600, color: "#3f3a55", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t}</span>{s ? <span style={{ display: "block", fontSize: 6.2, color: "#8a86a3" }}>{s}</span> : null}</span>)}
+      </> : <>
+        <span style={{ display: "block", height: 5, background: "#c9c9d4", borderRadius: 2, marginBottom: 4 }} />
+        <span style={{ display: "block", height: 20, border: "1px solid #d8d8e2", borderRadius: 2, marginBottom: 4, position: "relative" }}><span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#b9b9c6", fontSize: 11 }}>✕</span></span>
+        <span style={{ display: "block", height: 5, width: "70%", background: "#dcdce6", borderRadius: 2, marginBottom: 4 }} />
+        <span style={{ display: "block", height: 8, width: "55%", background: "#3f3f46", borderRadius: 3, margin: "0 auto" }} />
+      </>}
     </span>
     <span style={{ display: "block", fontSize: 7.8, color: "#55506e", marginTop: 3, lineHeight: 1.3 }}>{label}</span>
   </button>;
@@ -496,7 +554,7 @@ function LoFiBoard({ n, variant }: { n: string; variant: "kitchen" | "street" })
   const bands = [[0, 1], [2, 3], [4, 5, 6]];
   const flowBlock = (fi: number) => { const [name, purpose, screens] = LOFI_FLOWS[fi]; return <div key={name} style={{ flex: fi >= 4 ? [1.5, 1, 0.7][fi - 4] : 1, minWidth: 0 }}>
     <p style={{ margin: "0 0 4px", fontSize: 10.5, fontWeight: 800, color: fi === f ? "#6C3BFF" : "#33304a" }}>{fi + 1} {name} <span style={{ fontWeight: 400, color: "#8a86a3", fontSize: 9 }}>· {purpose}</span></p>
-    <div style={{ display: "flex", gap: 4 }}>{screens.map((sc) => <WireGlyph key={sc} label={sc} hot={fi === f} onPick={() => setF(fi)} />)}</div>
+    <div style={{ display: "flex", gap: 4 }}>{screens.map((sc) => <WireGlyph key={sc} label={sc} lines={variant === "street" ? (WF_LINES[`${sc} (street)`] ?? WF_LINES[sc]) : WF_LINES[sc]} hot={fi === f} onPick={() => setF(fi)} />)}</div>
   </div>; };
   return <Dq n={n} title={street ? "Low-fidelity exploration board" : "Low-fidelity exploration"} sub="Exploring end-to-end flows across discovery, capture, verification, rewards, and account states." label={`DataQuest low-fidelity exploration — interactive rebuild of CyberOrigin_${n}`} foot="Notes: All screens are low-fidelity explorations · Final UI will follow the DataQuest design system" bg="#f7f7f9">
     <div style={{ display: "grid", gridTemplateColumns: "1fr 218px", gap: 12, alignItems: "start" }}>
@@ -1648,7 +1706,7 @@ export function DataQuestEvolution() {
   const stageC = ["#0d9488", "#6C3BFF", "#d6336c"];
   const stageIcons = ["🖥", "📱", "⬡"];
   const stageCaps = ["Functional layouts and task flows validated early user needs.", "Validated flows and interactions before moving into visual design.", "A unified, trustworthy system that scales with clarity and confidence."];
-  return <Dq n="39" title="The evolution of a unified data collection and rewards system" sub="From early exploration to a cohesive product experience built for clarity, trust, and scale." label="DataQuest evolution — interactive rebuild of CyberOrigin_39">
+  return <Dq n="39" title="The evolution of a unified data collection and rewards system" sub="From early exploration to a cohesive product experience built for clarity, trust, and scale." titleTone="black" label="DataQuest evolution — interactive rebuild of CyberOrigin_39">
     <div style={{ display: "grid", gridTemplateColumns: "1fr 26px 1fr 26px 1fr", gap: 6, alignItems: "stretch" }}>
       {EVOLUTION39.map(([t, b, d], i) => <span key={t} style={{ display: "contents" }}>
         {i > 0 ? <span aria-hidden="true" style={{ alignSelf: "center", textAlign: "center", fontSize: 19, fontWeight: 800, background: "linear-gradient(90deg,#6C3BFF,#d6336c)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>➜</span> : null}

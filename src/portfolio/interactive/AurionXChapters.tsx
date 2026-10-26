@@ -75,8 +75,11 @@ const Stage = ({ bg, ratio = "1672 / 941", label, children }: { bg: string; rati
   <img src={bg} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
   {children}
 </div>;
-/** A live DOM television screen positioned over a photographed one. */
-const TvBox = ({ l, t, w, h, children, label }: { l: number; t: number; w: number; h: number; children?: ReactNode; label: string }) => <div role="region" aria-label={label} style={{ position: "absolute", left: `${l}%`, top: `${t}%`, width: `${w}%`, height: `${h}%`, background: "#04060a", borderRadius: 4, overflow: "hidden", boxShadow: "0 0 0 2px #0a0a0c, 0 6px 24px rgba(0,0,0,0.55)" }}>{children}</div>;
+/** A live DOM television screen positioned over a photographed one.
+ * Pass 5: `tf` applies the photographed device's plane (CSS
+ * perspective/rotate/skew measured on the print) so the cover sits
+ * in the device instead of floating axis-aligned in front of it. */
+const TvBox = ({ l, t, w, h, children, label, tf }: { l: number; t: number; w: number; h: number; children?: ReactNode; label: string; tf?: string }) => <div role="region" aria-label={label} style={{ position: "absolute", left: `${l}%`, top: `${t}%`, width: `${w}%`, height: `${h}%`, background: "#04060a", borderRadius: 4, overflow: "hidden", boxShadow: "0 0 0 2px #0a0a0c, 0 6px 24px rgba(0,0,0,0.55)", transform: tf, transformOrigin: "center center" }}>{children}</div>;
 /** Spectral voice wave (SVG polyline). */
 const Wave = ({ color = VI, w = 120, h = 22 }: { color?: string; w?: number; h?: number }) => <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden="true" style={{ display: "inline-block", verticalAlign: "middle" }}><polyline fill="none" stroke={color} strokeWidth="1.8" points={Array.from({ length: 30 }, (_, i) => `${(i * w) / 29},${h / 2 + Math.sin(i * 1.3) * (h / 2 - 3) * (0.4 + 0.6 * Math.abs(Math.sin(i * 0.55)))}`).join(" ")} /></svg>;
 
@@ -93,7 +96,11 @@ export function AurionXHero() {
   // visible. Room, sofa, console and shelving stay photographic.
   return <Ax n="01" title="" label="AurionX cinematic hero — interactive rebuild of AurionX_01">
     <Stage bg={`${CROP}room-hero.jpg`} label="Living room with a wall-mounted television playing the castle film still, as printed">
-      <div style={{ position: "absolute", left: 0, top: 0, width: "37%", height: "100%", background: "linear-gradient(90deg, rgba(5,5,7,0.97) 0%, rgba(5,5,7,0.97) 74%, rgba(5,5,7,0) 100%)", padding: "15% 4% 0 3.2%" }}>
+      {/* Pass 5: veil is fully opaque (0.985, matched to the wall's
+          local tone #050507) until 82% of its 40% width = 32.8% of the
+          stage — past the baked title's bounding box (ends ≈28% of
+          stage) — so no baked letter can ghost at the fade edge. */}
+      <div style={{ position: "absolute", left: 0, top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, rgba(5,5,7,0.985) 0%, rgba(5,5,7,0.985) 82%, rgba(5,5,7,0) 100%)", padding: "15% 4% 0 3.2%" }}>
         <h3 style={{ fontSize: 56, margin: "0 0 10px", lineHeight: 1.02, fontWeight: 500 }}>AurionX</h3>
         <p style={{ fontSize: 16.5, lineHeight: 1.45, margin: "0 0 14px", color: "#e8e8ea" }}>An AI-Native Viewing Layer<br />for Global Entertainment</p>
         <p style={{ margin: 0, color: "#c9c9ce", fontSize: 12, lineHeight: 1.6 }}>Solo Product Designer and Engineer<br />2024</p>
@@ -290,7 +297,15 @@ export function AurionXTVProblem() {
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
       {PROBLEM_PANELS.map((x, i) => <button key={x.n} type="button" onClick={() => setP(i)} aria-pressed={i === p} style={{ padding: 0, border: `1.5px solid ${i === p ? VI : "#23242a"}`, borderRadius: 9, overflow: "hidden", cursor: "pointer", font: "inherit", background: "#000", display: "block", width: "100%" }}>
         <Stage bg={`${CROP}f06-room${i + 1}.jpg`} ratio="840 / 432" label={`Printed panel ${x.n}: viewer in the living room, ${x.label}`}>
-          <span style={{ position: "absolute", left: "1.6%", top: "3%", border: "1.5px solid #e8e8ea", borderRadius: 3, padding: "0 6px", fontWeight: 800, color: "#fff", background: "#000", fontSize: 12 }}>{x.n}</span>
+          {/* Pass 5: the baked panel number sits at the room crop's
+              top-left corner (its box straddles the photo's corner,
+              ≈left 1% / top 6% of the panel incl. caption zone); the
+              pass-4 chip at top 3% left the baked numeral visible,
+              and a first pass-5 placement at top 9.2% left its top
+              sliver peeking above the DOM chip (verified in the
+              slot-06 zoom). The DOM chip is now 6.2% wide at
+              left 0.9% / top 6.2% — it swallows the baked box. */}
+          <span style={{ position: "absolute", left: "0.9%", top: "6.2%", width: "6.2%", aspectRatio: "1", display: "flex", alignItems: "center", justifyContent: "center", border: "1.5px solid #e8e8ea", borderRadius: 3, padding: 0, fontWeight: 800, color: "#fff", background: "#000", fontSize: 13, boxSizing: "border-box" }}>{x.n}</span>
           <TvBox l={F06_TV[i][0]} t={F06_TV[i][1]} w={F06_TV[i][2]} h={F06_TV[i][3]} label={`Television in panel ${x.n}`}>{tvInner(i)}</TvBox>
         </Stage>
       </button>)}
@@ -431,10 +446,26 @@ const INSIGHTS = [
 export function AurionXInsights() {
   const [i2, setI2] = useState(5);
   const [rec, setRec] = useState<string | null>(null);
+  // Pass 5: the pass-3/4 re-log said file 10's only text-free crop
+  // regions are faces. Re-measured: each panel also carries a
+  // face-free, text-free region (castle skyline, the remote in hand,
+  // the poster's storm sky, the room's lamp wall). Panels 1–4 now use
+  // those abstract crops from THIS slide (f10-*.jpg, visually
+  // verified: no faces, no readable text); panels 5–6 use gradient
+  // scene tiles sampled from the slide's palette with the printed
+  // structure drawn as DOM on top (subtitle bars / confidence bar),
+  // because their clean regions are the performer's face (5) and a
+  // text card (6).
+  const tile = (j: number, visual: string) => j === 0 ? <Img src={`${CROP}f10-scene-skyline.jpg`} h={66} alt={visual} />
+    : j === 1 ? <Img src={`${CROP}f10-remote-hand.jpg`} h={66} alt={visual} />
+    : j === 2 ? <Img src={`${CROP}f10-poster-landscape.jpg`} h={66} alt={visual} />
+    : j === 3 ? <Img src={`${CROP}f10-lamp-texture.jpg`} h={66} alt={visual} />
+    : j === 4 ? <Still h={66} tone="#33241a"><span style={{ display: "block", background: "#000", borderRadius: 3, padding: "2px 5px", fontSize: 8.2, lineHeight: 1.45, color: "#e8e8ea" }}>Original<br />“I need you to trust me.”</span><span style={{ display: "block", background: "#000", borderRadius: 3, padding: "2px 5px", fontSize: 8.2, lineHeight: 1.45, color: "#e8e8ea", marginTop: 4 }}>Localized<br />“Necesito que confíes en mí.”</span></Still>
+    : <Still h={66} tone="#1d2739"><span style={{ display: "block", fontSize: 8.4, lineHeight: 1.5 }}><span style={{ color: ACC }}>✦</span> AI Recommendation<span style={{ display: "block", marginTop: 5, color: "#c9c9ce" }}>Confidence: Medium</span><span style={{ display: "block", height: 4, background: "#26272c", borderRadius: 2, marginTop: 3 }}><span style={{ display: "block", width: "55%", height: "100%", background: GRAD, borderRadius: 2 }} /></span></span></Still>;
   return <Ax n="10" title="Insight Synthesis" serif label="AurionX insight synthesis — interactive rebuild of AurionX_10">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>
       {INSIGHTS.map(([ev, impl, visual], j) => <button key={ev} type="button" onClick={() => setI2(j)} aria-pressed={j === i2} style={{ textAlign: "left", background: "#0d0f16", border: `1.5px solid ${j === i2 ? VI : "#23242a"}`, borderRadius: 10, padding: "10px 12px", cursor: "pointer", font: "inherit", color: "#e8e8ea", display: "grid", gridTemplateColumns: "86px 1fr", gap: 10 }}>
-        <Still h={66} tone={["#233148", "#2a2438", "#183038", "#26262e", "#33241a", "#1d2739"][j]}><span style={{ fontSize: 8.2, lineHeight: 1.45 }}>{visual}</span></Still>
+        {tile(j, visual)}
         <span>
           <span style={{ display: "block", fontSize: 9.6, fontWeight: 800, letterSpacing: "0.1em", color: ACC }}>EVIDENCE</span>
           <span style={{ display: "block", fontSize: 11.6, lineHeight: 1.5, margin: "3px 0" }}>{ev}</span>
@@ -1502,23 +1533,31 @@ export function AurionXEcosystem() {
   // Every baked UI surface is covered by a live DOM counterpart at
   // its printed position: title veil, Scene Recall panel, the TV,
   // Five-Minute Cut and Global Voice glass panels, laptop and tablet
-  // screens. The devices sit at slight angles in the photograph;
-  // the DOM screens are axis-aligned (noted in §15).
-  const glass: React.CSSProperties = { position: "absolute", background: "rgba(9,11,17,0.965)", border: "1px solid #2e3038", borderRadius: 8, padding: "1.6% 1.8%", fontSize: 8.8, lineHeight: 1.5, color: "#e8e8ea", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" };
+  // screens.
+  // Pass 5: all cover geometry re-measured on the stage crop itself
+  // (room-ecosystem.jpg, 1400×788) instead of the full slide, and
+  // every cover now carries the photographed plane's transform
+  // (perspective + rotate, measured from the print's edge slopes):
+  // Scene Recall panel rotateZ +2.5° / rotateY −14°, Five-Minute Cut
+  // +3° / −13°, Global Voice +1.6° / −9°, laptop −2.6° / +14°,
+  // tablet −3.4° / −16° (+2° X). The TV is frontal (no transform).
+  // The title veil is opaque 0.985 until 86% of its 38% width =
+  // 32.7% of stage, past the baked title's right edge (≈32.5%).
+  const glass: React.CSSProperties = { position: "absolute", background: "rgba(9,11,17,0.965)", border: "1px solid #2e3038", borderRadius: 8, padding: "1.6% 1.8%", fontSize: 8.8, lineHeight: 1.5, color: "#e8e8ea", boxShadow: "0 10px 30px rgba(0,0,0,0.5)", transformOrigin: "center center" };
   return <Ax n="39" title="Final Product Ecosystem" sub="Outcome — AurionX: An AI-Native Viewing Layer for Global Entertainment." eyebrow="OUTCOME" label="AurionX final product ecosystem — interactive rebuild of AurionX_39">
     <Stage bg={`${CROP}room-ecosystem.jpg`} label="The AurionX ecosystem in the living room: television, floating panels, laptop and tablet, as printed">
-      <div style={{ position: "absolute", left: 0, top: 0, width: "35%", height: "27.5%", background: "linear-gradient(100deg, rgba(5,5,7,0.97) 52%, rgba(5,5,7,0) 98%)", padding: "1.8% 0 0 1.8%" }}>
+      <div style={{ position: "absolute", left: 0, top: 0, width: "38%", height: "27.5%", background: "linear-gradient(100deg, rgba(5,5,7,0.985) 0%, rgba(5,5,7,0.985) 86%, rgba(5,5,7,0) 100%)", padding: "1.8% 0 0 1.8%" }}>
         <p style={{ margin: 0, fontSize: 10.5 }}><span style={{ border: "1.5px solid #e8e8ea", borderRadius: 4, padding: "0 6px", fontWeight: 800 }}>39</span>&nbsp; <span style={{ color: ACC, letterSpacing: "0.14em", fontSize: 8.8, fontWeight: 700 }}>OUTCOME</span></p>
         <p style={{ margin: "3px 0 2px", fontSize: 15.5, fontWeight: 600 }}>Final Product Ecosystem</p>
         <p style={{ margin: 0, fontSize: 14, fontWeight: 800, background: GRAD, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>AurionX</p>
         <p style={{ margin: "1px 0 0", fontSize: 8.6, color: "#c9c9ce", lineHeight: 1.45 }}>An AI-Native Viewing Layer<br />for Global Entertainment</p>
       </div>
-      <div style={{ ...glass, left: "3.6%", top: "25.8%", width: "17.2%", height: "29.5%" }} role="region" aria-label="Scene Recall panel">
+      <div style={{ ...glass, left: "4.2%", top: "27.8%", width: "15.6%", height: "25.6%", transform: "perspective(700px) rotateY(-14deg) rotateZ(2.5deg)" }} role="region" aria-label="Scene Recall panel">
         <b style={{ fontSize: 9.6 }}>Scene Recall</b>
         {SCENES.map(([tc, t], i) => <button key={tc} type="button" aria-pressed={scene === i} onClick={() => setScene(i)} style={{ display: "block", width: "100%", textAlign: "left", marginTop: 4, background: i === scene ? "#1b2030" : "#10131b", border: `1px solid ${i === scene ? ACC : "#2c2e35"}`, borderRadius: 5, color: "#e8e8ea", font: "inherit", fontSize: 8.4, padding: "3px 6px", cursor: "pointer" }}>{i + 1} · {tc} — {t}{i === scene ? " · Selected scene" : ""}</button>)}
         <p style={{ margin: "5px 0 0", display: "flex", gap: 4 }}><span className="tks-chip" style={{ fontSize: 8.2, padding: "1px 7px" }}>↩ Back to playback</span><span className="tks-chip" style={{ fontSize: 8.2, padding: "1px 7px" }}>Cancel</span></p>
       </div>
-      <TvBox l={25.2} t={18.4} w={44.4} h={53.5} label="Television — Scene Recall results over the lighthouse film">
+      <TvBox l={24.0} t={19.7} w={45.0} h={47.8} label="Television — Scene Recall results over the lighthouse film">
         <img src={`${CROP}f39-lighthouse.jpg`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
         <span style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(3,5,9,0.88) 0%, rgba(3,5,9,0.55) 34%, transparent 55%)" }} aria-hidden="true" />
         <span style={{ position: "absolute", left: "3.5%", top: "5%", right: "3.5%", fontSize: 9.2 }}>
@@ -1530,7 +1569,7 @@ export function AurionXEcosystem() {
         <span style={{ position: "absolute", left: "50%", bottom: "9%", transform: "translateX(-50%)", background: "#111d", padding: "2px 10px", borderRadius: 4, whiteSpace: "nowrap", fontSize: 9.4 }}>The wind never stops out here.</span>
         <span style={{ position: "absolute", left: "3%", right: "3%", bottom: "3.5%", height: 3, background: "#2c2e35", borderRadius: 2 }}><span style={{ display: "block", height: "100%", width: "38%", background: GRAD, borderRadius: 2 }} /></span>
       </TvBox>
-      <div style={{ ...glass, left: "72.2%", top: "4.9%", width: "21.2%", height: "35%" }} role="region" aria-label="Five-Minute Cut panel">
+      <div style={{ ...glass, left: "72.6%", top: "5.8%", width: "20.6%", height: "34.4%", transform: "perspective(700px) rotateY(-13deg) rotateZ(3deg)" }} role="region" aria-label="Five-Minute Cut panel">
         <p style={{ margin: 0, display: "flex", justifyContent: "space-between" }}><b style={{ fontSize: 9.6 }}>Five-Minute Cut</b><span style={{ color: "#9a9aa0" }}>5 MIN</span></p>
         <label style={{ display: "block", marginTop: 4 }}>Configuration — Balanced <input type="range" min={0} max={100} value={balance} onChange={(e) => setBalance(Number(e.target.value))} aria-label="Five-minute cut balance" style={{ width: "100%", height: 3, accentColor: AZ }} /></label>
         <p style={{ margin: "3px 0" }}><button type="button" className="tks-chip" style={{ fontSize: 8.2, padding: "1px 7px" }} aria-pressed={spoiler} onClick={() => setSpoiler((v) => !v)}>Spoiler protection {spoiler ? "ON" : "OFF"}</button></p>
@@ -1538,7 +1577,7 @@ export function AurionXEcosystem() {
         <img src={`${CROP}f39-lighthouse.jpg`} alt="" style={{ width: "100%", height: 20, objectFit: "cover", borderRadius: 3, display: "block" }} />
         <p style={{ margin: "4px 0 0" }}><span className="tks-chip" style={{ fontSize: 8.2, padding: "1px 7px" }}>Export cut</span></p>
       </div>
-      <div style={{ ...glass, left: "75.1%", top: "39.2%", width: "19.6%", height: "31.6%" }} role="region" aria-label="Global Voice panel">
+      <div style={{ ...glass, left: "77.1%", top: "40.2%", width: "17.2%", height: "31.0%", transform: "perspective(700px) rotateY(-9deg) rotateZ(1.6deg)" }} role="region" aria-label="Global Voice panel">
         <p style={{ margin: 0 }}>◯ <b style={{ color: ACC, fontSize: 9.6 }}>Global Voice</b></p>
         <Wave color={CY} w={110} h={11} />
         <p style={{ margin: "2px 0", color: "#c9c9ce" }}>I found three possible scenes</p>
@@ -1547,14 +1586,14 @@ export function AurionXEcosystem() {
         <p style={{ margin: "3px 0 0" }}><button type="button" className="tks-chip" style={{ fontSize: 8.2, padding: "1px 7px" }} aria-pressed={aiAudio} onClick={() => setAiAudio((v) => !v)}>AI-generated audio {aiAudio ? "ON" : "OFF"}</button></p>
         <p style={{ margin: "3px 0 0", fontFamily: '"IBM Plex Mono",monospace', color: "#9a9aa0" }}>00:42:18</p>
       </div>
-      <div style={{ position: "absolute", left: "5%", top: "59.6%", width: "21.2%", height: "33.4%", background: "#07090f", border: "1px solid #2e3038", borderRadius: 6, padding: "1.4% 1.6%", fontSize: 8.2, color: "#e8e8ea", transform: "rotate(-1.2deg)", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }} role="region" aria-label="Laptop companion — Home">
+      <div style={{ position: "absolute", left: "6.9%", top: "62.8%", width: "17.6%", height: "27.0%", background: "#07090f", border: "1px solid #2e3038", borderRadius: 6, padding: "1.4% 1.6%", fontSize: 8.2, color: "#e8e8ea", transform: "perspective(700px) rotateY(14deg) rotateZ(-2.6deg)", transformOrigin: "center center", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }} role="region" aria-label="Laptop companion — Home">
         <b>⌂ Home</b><span style={{ display: "block", color: "#9a9aa0", margin: "3px 0 2px" }}>Continue Watching</span>
         <span style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 3 }}>{["f39-lighthouse.jpg", "hero-castle.jpg", "f25-eclipse.jpg", "f25-ship.jpg"].map((s) => <img key={s} src={`${CROP}${s}`} alt="" style={{ width: "100%", height: 17, objectFit: "cover", borderRadius: 2, display: "block" }} />)}</span>
         <span style={{ display: "block", color: "#9a9aa0", margin: "4px 0 2px" }}>Recommended For You</span>
         <span style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 3 }}>{["f02-castle.jpg", "f19-face.jpg", "f19-kitchen.jpg", "f30-still-b.jpg"].map((s) => <img key={s} src={`${CROP}${s}`} alt="" style={{ width: "100%", height: 17, objectFit: "cover", borderRadius: 2, display: "block" }} />)}</span>
         <span style={{ display: "block", color: "#9a9aa0", marginTop: 4 }}>Recently Added</span>
       </div>
-      <div style={{ position: "absolute", left: "68.9%", top: "65.4%", width: "24.8%", height: "31.8%", background: "#07090f", border: "1px solid #2e3038", borderRadius: 6, padding: "1.4% 1.6%", fontSize: 8.2, color: "#e8e8ea", transform: "rotate(1.5deg)", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }} role="region" aria-label="Tablet companion">
+      <div style={{ position: "absolute", left: "69.6%", top: "66.2%", width: "22.8%", height: "29.6%", background: "#07090f", border: "1px solid #2e3038", borderRadius: 6, padding: "1.4% 1.6%", fontSize: 8.2, color: "#e8e8ea", transform: "perspective(750px) rotateY(-16deg) rotateX(2deg) rotateZ(-3.4deg)", transformOrigin: "center center", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }} role="region" aria-label="Tablet companion">
         <span style={{ position: "relative", display: "block", height: "62%", borderRadius: 3, overflow: "hidden" }}><img src={`${CROP}f39-tablet.jpg`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} /><b style={{ position: "absolute", left: 6, top: 5, fontSize: 9.4, lineHeight: 1.35, textShadow: "0 1px 4px #000" }}>Intelligent.<br />Immersive.<br />Yours.</b></span>
         <span style={{ display: "block", color: "#9a9aa0", margin: "3px 0 2px" }}>Featured</span>
         <span style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 3 }}>{["f39-lighthouse.jpg", "hero-castle.jpg", "f02-frames.jpg", "f25-ship.jpg"].map((s) => <img key={s} src={`${CROP}${s}`} alt="" style={{ width: "100%", height: 15, objectFit: "cover", borderRadius: 2, display: "block" }} />)}</span>

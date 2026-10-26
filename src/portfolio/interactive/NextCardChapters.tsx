@@ -59,7 +59,11 @@ export function NextCardAnswer() {
       <div className="nc-darkcard">
         <p style={{ margin: 0 }}><b>ACQUISITION FUNNEL</b><br /><span style={{ color: "#c9c9ce" }}>Digital. Merchant. Community. Compounding Growth.</span></p>
         <div role="group" aria-label="Funnel stages" style={{ marginTop: 6 }}>{FUNNEL.map(([t, s, v, l], i) => <button key={t} type="button" onClick={() => setStage(i)} aria-pressed={stage === i} style={{ display: "flex", justifyContent: "space-between", width: "100%", background: stage === i ? "#2a1408" : "transparent", border: "none", borderBottom: "1px solid #232426", color: "#fff", padding: "5px 2px", cursor: "pointer", font: "inherit", textAlign: "left" }}><span><b>{t}</b> <span style={{ color: "#c9c9ce" }}>{s}</span></span><span><b className="nc-acc">{v}</b> {l}</span></button>)}</div>
-        <p style={{ display: "flex", justifyContent: "space-between", margin: "8px 0 0" }} aria-live="polite"><span>CAC Target <b className="nc-acc">¥45</b></span><span>Activation Rate <b className="nc-acc">75%</b></span><span>Referral Rate <b className="nc-acc">28%</b></span></p>
+        {/* Pass 5 (§11 leftover): the one-line flex row ran the three
+            labels together at column width. Stacked label-over-value
+            in a 3-column grid with hairline separators instead —
+            same printed facts, no crowding. */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, margin: "9px 0 0" }} aria-live="polite">{[["CAC Target", "¥45"], ["Activation Rate", "75%"], ["Referral Rate", "28%"]].map(([l, v], i) => <span key={l} style={{ borderLeft: i ? "1px solid #2c2c2f" : undefined, paddingLeft: i ? 10 : 0 }}><span style={{ display: "block", fontSize: 11, color: "#9a9aa0", letterSpacing: "0.04em" }}>{l}</span><b className="nc-acc" style={{ fontSize: 16 }}>{v}</b></span>)}</div>
       </div>
     </div>
   </Nc>;

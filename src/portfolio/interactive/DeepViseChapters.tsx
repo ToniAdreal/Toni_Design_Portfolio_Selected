@@ -1249,8 +1249,32 @@ export function DeepViseDesignSystem() {
   const [perm, setPerm] = useState(0);
   const PERMS = [["Full access", "Can view, edit and share."], ["View only", "Can view and export."], ["Restricted", "Limited data due to policy."], ["No access", "Insufficient permissions."]];
   return <Dv n="26" title="DeepVise Design System" sub="Five printed sections: Foundations (Evidence: Prototype pages 13–14) · Navigation & Actions (13–15) · Data Display (13–16) · Decision Components (15–16) · States & Accessibility (16–17)." label="DeepVise design system — interactive rebuild of DeepVise_26">
-    <p style={{ margin: "0 0 2px", color: "#555" }}>All five printed sections are shown stacked, as on the board — the dark rail at left of the original carries the DeepVise wordmark and the section list.</p>
-    <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>1 · Foundations</p><p className="tks-kicker" style={{ marginTop: 0 }}>The visual and structural building blocks of the DeepVise system · Color tokens</p>
+    {/* Pass 5: the §15 trade-off (rail would compress every specimen
+        ~8%) is revisited with the wider canvas — this screen now
+        renders on a 1470px design canvas (registry), so the printed
+        dark rail fits at 150px while the specimen column is WIDER at
+        design size (≈1290px) than the whole pass-4 slide (980px).
+        Rail block proportions follow the print's row heights
+        (20/12/29/16/23). */}
+    <div style={{ display: "grid", gridTemplateColumns: "150px minmax(0,1fr)", gap: 10, alignItems: "stretch" }}>
+      <div style={{ background: "#0B1726", borderRadius: 10, color: "#dbe6f2", padding: "12px 12px 10px", display: "flex", flexDirection: "column" }}>
+        <p style={{ margin: "0 0 8px", fontSize: 13, fontWeight: 800, color: "#fff" }}>⬢ DeepVise</p>
+        {([
+          ["1", "Foundations", "The visual and structural building blocks of the DeepVise system.", "Evidence: Prototype pages 13–14", 20],
+          ["2", "Navigation and Actions", "Consistent navigation, primary actions and utility controls.", "Evidence: Prototype pages 13–15", 12],
+          ["3", "Data Display", "Present information clearly with scannable patterns and meaningful context.", "Evidence: Prototype pages 13–16", 29],
+          ["4", "Decision Components", "Guide decisions with clear comparisons, thresholds and context.", "Evidence: Prototype pages 15–16", 16],
+          ["5", "States and Accessibility", "Every interaction state is designed for clarity, recovery and access.", "Evidence: Prototype pages 16–17", 23],
+        ] as Array<[string, string, string, string, number]>).map(([num, t, d, ev, grow], i) => <div key={num} style={{ flexGrow: grow, borderTop: i ? "1px solid #22344d" : undefined, paddingTop: i ? 8 : 0, marginTop: i ? 8 : 0 }}>
+          <span style={{ fontSize: 19, fontWeight: 800, color: "#12C7D4", lineHeight: 1 }}>{num}</span>
+          <b style={{ display: "block", fontSize: 12.5, textTransform: "uppercase", letterSpacing: "0.04em", margin: "4px 0 3px", lineHeight: 1.3 }}>{t}</b>
+          <span style={{ display: "block", fontSize: 10, lineHeight: 1.5, color: "#a9bcd2" }}>{d}</span>
+          <span style={{ display: "block", fontSize: 9.5, lineHeight: 1.45, color: "#7e93ab", marginTop: 4 }}>{ev}</span>
+        </div>)}
+      </div>
+      <div style={{ display: "grid", gap: 10, minWidth: 0, alignContent: "start" }}>
+    <p style={{ margin: "0 0 2px", color: "#555" }}>All five printed sections are shown stacked, as on the board, beside the board's dark section rail.</p>
+    <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>1 · Foundations</p><p className="tks-kicker" style={{ marginTop: 0 }}>The visual and structural building blocks of the DeepVise system · Color tokens</p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(9,1fr)", gap: 5 }}>
         {TOKENS26.map(([t, role], i) => { const hex = t.split(" ")[1]; return <button key={t} type="button" onClick={() => setTok(i)} aria-pressed={i === tok} style={{ textAlign: "left", background: "transparent", border: i === tok ? "2px solid #2F80ED" : "1px solid #dde4ec", borderRadius: 8, padding: 0, overflow: "hidden", cursor: "pointer", font: "inherit" }}>
           <span style={{ display: "block", height: 30, background: hex }} />
@@ -1265,7 +1289,7 @@ export function DeepViseDesignSystem() {
         <span><b>Border &amp; Elevation</b><br />border-default 1px · border-strong 1px #CBD5E1 · border-focus 2px #2F80ED · elevation-0 none · elevation-1 0 1px 2px rgba(11,23,38,.06) · elevation-2 0 4px 8px rgba(11,23,38,.08) · elevation-3 0 12px 24px rgba(11,23,38,.12)</span>
         <span><b>Grid series</b><br />Series 1 #2F80ED · Series 2 #12C7D4 · Series 3 #6C5CE7 · Series 4 #D99A2B · Series 5 #637083 · Baseline #102A43 · Threshold +/− #D95C5C</span>
       </div></div>
-    <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>2 · Navigation & Actions</p><p className="tks-kicker" style={{ marginTop: 0 }}>Consistent navigation, primary actions and utility controls</p>
+    <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>2 · Navigation & Actions</p><p className="tks-kicker" style={{ marginTop: 0 }}>Consistent navigation, primary actions and utility controls</p>
       <div style={{ display: "flex", gap: 12, alignItems: "center", background: "#fff", border: "1px solid #dde4ec", borderRadius: 9, padding: "6px 12px", fontSize: 11.5, flexWrap: "wrap" }}>
         <b style={{ color: "#0B1726" }}>DeepVise</b><span>Home</span><span>Monitor</span><span style={{ color: "#2F80ED", fontWeight: 700, borderBottom: "2.5px solid #2F80ED", paddingBottom: 2 }}>Finance</span><span>Risk</span><span>Reports</span><span>Admin</span>
         <span style={{ marginLeft: "auto", display: "flex", gap: 9, alignItems: "center" }}><span style={{ border: "1px solid #dde4ec", borderRadius: 6, padding: "2px 9px", color: "#7c8798" }}>Search entities, accounts, reports…</span><span>🔔<sup>3</sup></span><span>?</span><span style={{ width: 22, height: 22, borderRadius: "50%", background: "#102A43", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 9.5, fontWeight: 700 }}>AL</span></span>
@@ -1280,7 +1304,7 @@ export function DeepViseDesignSystem() {
         <button type="button" style={{ background: "#D95C5C", color: "#fff", border: "none", borderRadius: 8, padding: "7px 13px", cursor: "pointer", font: "inherit", fontWeight: 700 }}>Delete ▾</button>
         <span style={{ fontSize: 10.5, color: "#7c8798" }}>Primary · Secondary · Tertiary · Destructive</span>
       </div></div>
-    <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>3 · Data Display</p><p className="tks-kicker" style={{ marginTop: 0 }}>Present information clearly with scannable patterns and meaningful context</p>
+    <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>3 · Data Display</p><p className="tks-kicker" style={{ marginTop: 0 }}>Present information clearly with scannable patterns and meaningful context</p>
       <p style={{ margin: 0, fontSize: 11.5 }}>Filters: <b>Date range</b> Apr 1 – May 31, 2024 · <b>Entity:</b> All entities · <b>Currency:</b> USD · More filters ⌄</p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 7, marginTop: 7 }}>
         {[["Cash Balance", "USD 128.4M", "↑ 8.7%", "#1d9e57", "Bank stmt."], ["EBITDA", "USD 42.7M", "↓ −4.3%", "#b3352c", "GL"], ["Covenant Headroom · Total Leverage", "1.35x", "↑ 0.12x", "#1d9e57", "Covenant calc."]].map(([k, v, d, c, ev2]) => <div key={k} style={{ border: "1px solid #dde4ec", borderRadius: 9, padding: "7px 10px", background: "#fff" }}><span style={{ fontSize: 10.3, color: "#7c8798" }}>{k}</span><br /><b style={{ fontSize: 16, color: "#0B1726" }}>{v}</b> <b style={{ color: c, fontSize: 11.5 }}>{d}</b><br /><span style={{ fontSize: 9.8, color: "#7c8798" }}>vs Apr 1 – Mar 31 · Evidence: {ev2}</span></div>)}
@@ -1300,7 +1324,7 @@ export function DeepViseDesignSystem() {
       <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Permission badges — select</p>
       <Chips items={PERMS.map(([t]) => t)} value={perm} onPick={setPerm} />
       <p style={{ margin: "6px 0 0" }} aria-live="polite">{PERMS[perm][0]}: {PERMS[perm][1]}</p></div>
-    <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>4 · Decision Components</p><p className="tks-kicker" style={{ marginTop: 0 }}>Guide decisions with clear comparisons, thresholds and context</p>
+    <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>4 · Decision Components</p><p className="tks-kicker" style={{ marginTop: 0 }}>Guide decisions with clear comparisons, thresholds and context</p>
       <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1.3fr 1fr 1fr", gap: 7, fontSize: 10.5, lineHeight: 1.55 }}>
         <div style={{ border: "1px solid #dde4ec", borderRadius: 9, padding: "7px 9px", background: "#fff" }}>
           <b>KPI with threshold — Total Leverage</b><br /><b style={{ fontSize: 17, color: "#0B1726" }}>3.25x</b> <span style={{ color: "#1d9e57", fontWeight: 700 }}>✓ Within limit</span><br />Threshold ≤ 3.50x
@@ -1333,7 +1357,7 @@ export function DeepViseDesignSystem() {
       <label style={{ display: "block" }}>Cost change {cost}%
         <input type="range" min={-20} max={20} value={cost} onChange={(e) => setCost(Number(e.target.value))} aria-label="What-if cost change percent" style={{ width: "100%" }} /></label>
       <p style={{ margin: "6px 0 0" }} aria-live="polite">Inputs set to Revenue {rev}% · Cost {cost}% — [Recalculate impact]. (The printed board shows the inputs only; no recalculated result is printed, so none is invented here.)</p></div>
-    <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>5 · States & Accessibility</p><p className="tks-kicker" style={{ marginTop: 0 }}>Every interaction state is designed for clarity, recovery and access</p>
+    <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0, color: "#2F80ED" }}>5 · States & Accessibility</p><p className="tks-kicker" style={{ marginTop: 0 }}>Every interaction state is designed for clarity, recovery and access</p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 7, fontSize: 10.5, lineHeight: 1.55 }}>
         <div style={{ border: "1px solid #dde4ec", borderRadius: 9, padding: "7px 9px", background: "#fff" }}>
           <b>Button states</b>
@@ -1358,6 +1382,8 @@ export function DeepViseDesignSystem() {
         </div>
       </div>
       <p style={{ margin: "8px 0 0" }}>Accessibility indicators and examples: Focus Visible — Example, Meets 3:1 focus indicator contrast · Color Contrast — Aa Contrast ratio 7.31 AA · Non-Color Markers (Chart) — Series A / Series B, Pattern + marker · Crosshair (Chart) — Crosshair shows values on hover or focus, Apr · Screen Reader Label — &lt;button aria-label=”Export report as CSV”&gt;Export&lt;/button&gt;, Labels provide context for assistive tech · Keyboard Support — Tab, All interactions reachable via keyboard · Text Resize — 100% 150% 200%, UI remains usable at 200% zoom.</p></div>
+      </div>
+    </div>
   </Dv>;
 }
 
