@@ -12,7 +12,6 @@ import { deepViseChapterFor } from "./DeepViseChapters";
 import { brewOpsChapterFor } from "./BrewOpsChapters";
 import { mengniuChapterFor } from "./MengniuChapters";
 import { NextCardHeroApp, NextCardWireframeWall } from "./NextCardApp";
-import { NextCardWireframeWallShowcase } from "./NextCardPhones";
 import { nextCardChapterFor } from "./NextCardChapters";
 import { AurionXTVDesignSystem, AurionXVisualIdentity } from "./AurionXDesignSystem";
 import {
@@ -20,9 +19,9 @@ import {
   BrewOpsControlTower, BrewOpsCopilot, BrewOpsScenario,
   DeepViseDashboard, DeepVisePortSelector,
   MengniuAlertCenter, MengniuBarnTwin, MengniuCommandCenter,
-  NextCardApplicationFlow, NextCardRewardEngine, NextCardValueEngines, NextCardValueTriangle,
+  NextCardApplicationFlow, NextCardRewardEngine, NextCardValueTriangle,
 } from "./ProjectScreens";
-import { ChatPackCard, OpenTelemetryPR, VerifyGateDemo, VerifyPayEscrow } from "./HackathonScreens";
+import { ChatPackCard, OpenTelemetryPR, PassGateConcept, VerifyGateDemo, VerifyPayEscrow } from "./HackathonScreens";
 
 /**
  * Interactive V2 registry.
@@ -51,8 +50,12 @@ function bespoke(slug: string, chapter: ChapterLike, image: GalleryImage): React
 
   if (slug === "next-card") {
     if (file.startsWith("Next_Card_Image_01")) return <NextCardHeroApp />;
-    if (file.startsWith("Next_Card_Image_34")) return <NextCardWireframeWallShowcase />;
-    if (file.startsWith("Next_Card_Image_22")) return <NextCardValueEngines />;
+    // Pass 6: Image_22 (Proposition) and Image_34 (Wireframe Wall) fall
+    // through to nextCardChapterFor below — the pass-6 rebuilds there
+    // transcribe the prints (all six engine cards at rest; the wall's
+    // actual phone content, decision diamonds and Key Journey
+    // Decisions). The older NextCardValueEngines / WireframeWallShowcase
+    // routes hid content behind selection / used invented microcopy.
     if (file.startsWith("Next_Card_Image_23")) return <NextCardValueTriangle />;
     if (title === "Step 1 — ID OCR & Biometric Liveness") return <NextCardApplicationFlow />;
     if (title === "Reward Engine Logic & Category Rules") return <NextCardRewardEngine />;
@@ -110,9 +113,9 @@ function bespoke(slug: string, chapter: ChapterLike, image: GalleryImage): React
   }
   if (slug === "hackathon") {
     if (title === "VerifyGate Overview") return <VerifyGateDemo />;
-    if (title === "Hash-Chained Evidence Record") return <VerifyGateDemo />;
+    if (title === "Hash-Chained Evidence Record") return <VerifyGateDemo variant="chain" />;
     if (title === "VerifyPay — Verifier-Gated USDC Escrow") return <VerifyPayEscrow />;
-    if (title === "PassGate — Agentic Banking Concept") return <VerifyPayEscrow />;
+    if (title === "PassGate — Agentic Banking Concept") return <PassGateConcept />;
     if (title === "ChatPack — Browser Extension") return <ChatPackCard />;
     if (title === "OpenTelemetry PR #9238 — Merged") return <OpenTelemetryPR />;
   }

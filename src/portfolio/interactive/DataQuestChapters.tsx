@@ -326,16 +326,17 @@ function V0Win({ cap, children }: { cap: string; children: ReactNode }) {
 export function DataQuestInitialPrototype() {
   const [p, setP] = useState(0);
   const caps = ["Marketplace", "Task detail", "Profile & wallet", "Company context"];
-  // Pass 5: print layout restored — black title, subtitle, pills and
-  // the three numbered notes in a LEFT column; the 2×2 surface
-  // windows in the right two-thirds (§15.6.4).
+  // Pass 6 correction: the printed CyberOrigin_05 left column is the
+  // CyberOrigin lockup, a GRADIENT title, the lede and the two pills —
+  // there are no numbered notes on the print (the pass-5 numbered list
+  // was an invention; verified against the original webp in pass 6).
   return <Dq n="05" title="Initial responsive web prototype" hideHead label="DataQuest initial responsive web prototype — interactive rebuild of CyberOrigin_05">
     <div style={{ display: "grid", gridTemplateColumns: "minmax(0,0.82fr) minmax(0,2fr)", gap: 16 }}>
       <div>
-        <h3 style={{ fontSize: 29, lineHeight: 1.15, margin: "0 0 7px", color: "#14101f" }}>Initial responsive web prototype</h3>
-        <p style={{ margin: "0 0 9px", fontSize: 11, lineHeight: 1.55, color: "#3f3a55" }}>Early prototype exploring core flows for data collection, task completion, contributor profiles, and platform context.</p>
-        <div style={{ display: "flex", gap: 6, marginBottom: 12 }}><span style={{ border: "1.5px solid #6C3BFF", color: "#6C3BFF", borderRadius: 999, padding: "2px 12px", fontSize: 11.5, fontWeight: 600 }}>🕐 Historical</span><span style={{ border: "1.5px solid #6C3BFF", color: "#6C3BFF", borderRadius: 999, padding: "2px 12px", fontSize: 11.5, fontWeight: 600 }}>🗓 V0</span></div>
-        {([["1", "Core flows", "Marketplace browsing, task detail, submission, profile, and earnings in one connected flow."], ["2", "Responsive layout", "A web prototype that adapts from desktop browsing to mobile capture."], ["3", "Platform context", "Company and contributor context screens included in the same prototype."]] as Array<[string, string, string]>).map(([num, t, d]) => <p key={num} style={{ margin: "0 0 10px", fontSize: 10.4, lineHeight: 1.55, color: "#3f3a55" }}><b style={{ fontSize: 15, color: "#14101f" }}>{num} · {t}</b><br />{d}</p>)}
+        <p style={{ margin: "0 0 10px", fontSize: 14, fontWeight: 700, color: "#14101f" }}><span style={{ color: "#6C3BFF" }}>⬢</span> CyberOrigin</p>
+        <h3 style={{ fontSize: 31, lineHeight: 1.13, margin: "0 0 9px", fontWeight: 800, background: "linear-gradient(92deg,#2563EB,#6C3BFF)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>Initial responsive web prototype</h3>
+        <p style={{ margin: "0 0 11px", fontSize: 11.5, lineHeight: 1.55, color: "#3f3a55" }}>Early prototype exploring core flows for data collection, task completion, contributor profiles, and platform context.</p>
+        <div style={{ display: "flex", gap: 6 }}><span style={{ border: "1.5px solid #6C3BFF", color: "#6C3BFF", borderRadius: 999, padding: "2px 12px", fontSize: 11.5, fontWeight: 600 }}>🕐 Historical</span><span style={{ border: "1.5px solid #6C3BFF", color: "#6C3BFF", borderRadius: 999, padding: "2px 12px", fontSize: 11.5, fontWeight: 600 }}>🗓 V0</span></div>
       </div>
       <div>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }} onClick={(e) => { const f = (e.target as HTMLElement).closest("figure"); if (f) setP([...f.parentElement!.children].indexOf(f)); }}>
@@ -1162,7 +1163,7 @@ export function DataQuestScopeMap() {
         <span style={{ display: "block", background: colC[ci][1], color: colC[ci][0], borderRadius: 7, padding: "4px 8px", fontSize: 10.5, marginTop: 8, fontWeight: 600 }}>{colNote[ci]}</span>
       </button>)}
     </div>
-    <div className="tks-card" style={{ marginTop: 10, borderColor: "#d9a441", background: "#fffaf0" }}><b>⚠ Caution</b> — Medical data and complex token mechanics stayy out of the first credible launch unless governance or implementation evidence exists. <span style={{ color: "#888" }}>(“stayy” as printed.)</span></div>
+    <div className="tks-card" style={{ marginTop: 10, borderColor: "#d9a441", background: "#fffaf0" }}><b>⚠ Caution</b> — Medical data and complex token mechanics stayy out of the first credible launch unless governance or implementation evidence exists.</div>
   </Dq>;
 }
 

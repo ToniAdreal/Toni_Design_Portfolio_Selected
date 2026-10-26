@@ -1061,6 +1061,168 @@ export function TokentaSearchQueryBuilder() {
 
 /** File-keyed bespoke Tokenta slides (printed deck). Returns null for
  *  files handled by the earlier title-keyed screens (01, 16, 17). */
+/* ---------------- Tokenta_16 — Visual inspiration (pass 6 rebuild) ----------------
+ * Pass 6 audit found this slot rendering the Order Room product screen
+ * (the data title's subject). The printed Tokenta_16 is the visual-
+ * inspiration slide: five dark reference panels with captions + tags. */
+
+const INSP_PANELS: Array<{ n: number; title: string; tag: string; caption: string }> = [
+  { n: 1, title: "Institutional terminals", tag: "DENSITY", caption: "Dense information architecture with clear sections, compact data, and operational clarity." },
+  { n: 2, title: "Audit logs", tag: "PRECISION", caption: "Immutable, time-ordered records with explicit actors, actions, and outcomes." },
+  { n: 3, title: "Code consoles", tag: "EXPLICIT STATES", caption: "Developer-grade interfaces that expose logic, states, and verifiable execution." },
+  { n: 4, title: "Market-data grids", tag: "TRACEABILITY", caption: "High-information tables and charts that enable fast scanning and informed decisions." },
+  { n: 5, title: "Regulatory documents", tag: "LEGIBILITY", caption: "Clear structure, numbered sections, and verifiable evidence for compliance and trust." },
+];
+
+export function TokentaVisualInspiration() {
+  const [sel, setSel] = useState(0);
+  const mono: React.CSSProperties = { fontFamily: "'IBM Plex Mono', monospace" };
+  const panel: React.CSSProperties = { background: "#101012", color: "#d7d7db", borderRadius: 8, padding: "10px 10px 12px", fontSize: 9.3, lineHeight: 1.5, minHeight: 252, outline: "none" };
+  const hrow: React.CSSProperties = { display: "flex", justifyContent: "space-between", color: "#8b8b91", fontSize: 8.3, letterSpacing: ".08em", margin: "7px 0 3px" };
+  const trow: React.CSSProperties = { display: "flex", justifyContent: "space-between", gap: 4, whiteSpace: "nowrap" };
+  const bodies: React.ReactNode[] = [
+    <div key="p1">
+      <p style={hrow}><span>SESSION</span><span style={{ color: "#7ee2a0" }}>● LIVE</span></p>
+      {[["User", "obsrv_7h8x2"], ["Role", "Risk Analyst"], ["Env", "prod"], ["Region", "us-east-1"], ["Time", "2025-05-13 09:41:22 UTC"]].map(([k, v]) => <p key={k} style={trow}><span style={{ color: "#8b8b91" }}>{k}</span><span>{v}</span></p>)}
+      <p style={hrow}><span>ACTIONS</span><span>STATUS · TIME</span></p>
+      {[["create", "esc_01H8Z", "✓ success", "09:41:22"], ["update", "term_sheet_22M", "✓ success", "09:41:58"], ["verify", "asset_7b3e", "✓ success", "09:42:10"], ["approve", "deal_7G9P1", "○ pending", "09:43:05"]].map(([a, o, s, t]) => <p key={a + o} style={trow}><span>{a}</span><span>{o}</span><span>{s}</span><span>{t}</span></p>)}
+      <p style={hrow}><span>SYSTEM HEALTH</span><span>THROUGHPUT 1,240 req/min</span></p>
+      {[["API", "99.98%", "86%"], ["DB", "99.95%", "78%"], ["Queue", "99.90%", "70%"], ["Indexer", "99.93%", "80%"]].map(([k, v, w]) => <p key={k} style={{ ...trow, alignItems: "center" }}><span style={{ color: "#8b8b91", flex: "0 0 42px" }}>{k}</span><span>{v}</span><span style={{ flex: 1, height: 3, background: "#26262a", marginLeft: 5 }}><span style={{ display: "block", height: 3, width: w, background: "#9a9aa0" }} /></span></p>)}
+    </div>,
+    <div key="p2">
+      <p style={hrow}><span>AUDIT LOG</span><span>Filter ▤</span></p>
+      {[["09:41:22", "obsrv_7h8x2", "create", "esc_01H8Z", "success"], ["09:41:58", "obsrv_7h8x2", "update", "term_22M", "success"], ["09:42:10", "svc_verifier", "verify", "asset_7b3e", "success"], ["09:43:05", "compliance_bot", "review", "deal_7G9P1", "pending"], ["09:44:11", "obsrv_7h8x2", "approve", "deal_7G9P1", "success"], ["09:45:02", "orcl_price", "publish", "price_eth", "success"], ["09:45:33", "risk_engine", "score", "asset_7b3e", "success"], ["09:46:01", "treasury_svc", "settle", "esc_01H8Z", "success"]].map((r) => <p key={r[0]} style={{ ...trow, fontSize: 8.6 }}><span>{r[0]}</span><span>{r[1]}</span><span>{r[2]}</span><span>{r[3]}</span><span style={{ color: r[4] === "success" ? "#7ee2a0" : "#e8c26a" }}>{r[4]}</span></p>)}
+      <p style={hrow}><span>DETAILS</span></p>
+      <pre style={{ ...mono, margin: 0, fontSize: 8.4, lineHeight: 1.55, color: "#b9b9be", whiteSpace: "pre-wrap" }}>{"{\n  \"event_id\": \"evt_0132K...9A7F\",\n  \"actor\": \"obsrv_7h8x2\",\n  \"action\": \"update\",\n  \"object\": \"term_22M\",\n  \"status\": \"success\",\n  \"ip\": \"10.0.4.21\",\n  \"tx_hash\": \"0x9f2b...a1c7\",\n  \"timestamp\": \"2025-05-13T09:41:58Z\"\n}"}</pre>
+    </div>,
+    <div key="p3">
+      <p style={{ ...hrow, marginTop: 0 }}><span>escrow.sol</span><span>verifier.py</span><span>risk.ts</span></p>
+      <pre style={{ ...mono, margin: 0, fontSize: 8.3, lineHeight: 1.5, color: "#c9c9ce", whiteSpace: "pre-wrap" }}>{"pragma solidity ^0.8.20;\ncontract Escrow {\n  enum State {\n    Locked,\n    PendingRelease,\n    Released,\n    Disputed,\n    Settled\n  }\n  State public state;\n  address public buyer;\n  address public seller;\n  uint256 public amount;\n  event StateChanged(State indexed newState);\n  event Released(bytes32 indexed proof);\n  function release(bytes32 proof) external {\n    require(state == State.PendingRelease);\n    state = State.Released;\n    emit StateChanged(state);\n    emit Released(proof);\n  }\n}"}</pre>
+      <p style={{ ...hrow, marginBottom: 0 }}><span>Ln 1, Col 1 · Spaces: 2 · UTF-8 · Solidity</span><span style={{ color: "#7ee2a0" }}>✓ Verified</span></p>
+    </div>,
+    <div key="p4">
+      <p style={hrow}><span>MARKET OVERVIEW</span><span style={{ color: "#7ee2a0" }}>● LIVE</span></p>
+      {[["ETH", "2,518.43", "+1.23%", "$8.71B", "$2.14B"], ["BTC", "66,104.21", "+0.72%", "$12.34B", "$3.81B"], ["SOL", "162.77", "−0.31%", "$1.93B", "$0.89B"], ["USDC", "1.0001", "+0.01%", "$4.21B", "$1.75B"], ["LINK", "14.32", "+2.11%", "$0.64B", "$0.32B"]].map((r) => <p key={r[0]} style={trow}><b style={{ width: 30 }}>{r[0]}</b><span>{r[1]}</span><span style={{ color: r[2].startsWith("−") ? "#e88" : "#7ee2a0" }}>{r[2]}</span><span>{r[3]}</span><span>{r[4]}</span></p>)}
+      <p style={hrow}><span>DEPTH (ETH / USDC)</span><span>SPREAD 0.06%</span></p>
+      <svg viewBox="0 0 160 44" style={{ width: "100%", height: 44, display: "block" }} aria-hidden="true"><path d="M2,6 L30,10 L55,16 L78,26 L84,34 L90,26 L115,16 L140,10 L158,6 L158,42 L2,42 Z" fill="#3a3f4a" opacity="0.85" /><line x1="84" y1="2" x2="84" y2="42" stroke="#8b8b91" strokeDasharray="2 2" /></svg>
+      <p style={hrow}><span>RECENT TRADES</span><span>PRICE · SIZE · SIDE</span></p>
+      {[["09:41:22", "2,518.43", "12.45", "B"], ["09:41:19", "2,518.20", "3.11", "S"], ["09:41:18", "2,518.35", "8.00", "B"], ["09:41:17", "2,517.98", "1.25", "S"]].map((r) => <p key={r[0]} style={trow}><span>{r[0]}</span><span>{r[1]}</span><span>{r[2]}</span><span>{r[3]}</span></p>)}
+    </div>,
+    <div key="p5">
+      <p style={hrow}><span>POLICY</span><span>v2.1 · May 12, 2025</span></p>
+      <p style={{ margin: "2px 0 5px", fontSize: 11.5, color: "#fff" }}><b>Asset Verification Policy</b></p>
+      <p style={{ margin: "0 0 4px" }}><b style={{ color: "#fff" }}>1. Purpose</b><br />Define requirements for verifying AI assets prior to listing, including provenance, model integrity, and usage rights.</p>
+      <p style={{ margin: "0 0 4px" }}><b style={{ color: "#fff" }}>2. Scope</b><br />Applies to all AI assets submitted to the Tokenta marketplace.</p>
+      <p style={{ margin: "0 0 3px" }}><b style={{ color: "#fff" }}>3. Requirements</b></p>
+      {[["R1", "Provenance", "Source check", "Yes"], ["R2", "Model Integrity", "Hash + signature", "Yes"], ["R3", "License Validity", "License file", "Yes"], ["R4", "Data Rights", "Terms + proof", "Yes"], ["R5", "Safety Scan", "Scan report", "No"], ["R6", "Attribution", "Attribution info", "No"]].map((r) => <p key={r[0]} style={{ ...trow, borderTop: "1px solid #26262a", padding: "1.5px 0" }}><span>{r[0]}</span><span>{r[1]}</span><span>{r[2]}</span><span>{r[3]}</span></p>)}
+      <p style={{ margin: "4px 0 0" }}><b style={{ color: "#fff" }}>4. Approval</b><br />Assets must meet all mandatory requirements. Approvals are recorded on-chain and immutable.<br /><b style={{ color: "#fff" }}>5. References</b> — See Policy Library for related documents.</p>
+    </div>,
+  ];
+  return <div className="tks" role="region" aria-label="Tokenta visual inspiration — interactive rebuild of Tokenta_16">
+    <Head n="16" kicker="Visual inspiration" />
+    <h3>Visual inspiration.</h3>
+    <p className="tks-lede">The design language borrows the rigor of institutional systems rather than the spectacle of typical crypto marketing.</p>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 10, marginTop: 12 }}>
+      {INSP_PANELS.map((p, i) => <div key={p.n}>
+        <button type="button" aria-pressed={sel === i} onClick={() => setSel(i)} style={{ ...panel, width: "100%", textAlign: "left", cursor: "pointer", font: "inherit", boxShadow: sel === i ? "0 0 0 2px #141416" : "none" }}>
+          <p style={{ margin: "0 0 6px", fontSize: 11.5, color: "#fff" }}><span style={{ border: "1.5px solid #d7d7db", borderRadius: 3, padding: "0 4px", marginRight: 6, fontWeight: 700 }}>{p.n}</span><b>{p.title}</b></p>
+          {bodies[i]}
+        </button>
+        <p style={{ fontSize: 10.6, lineHeight: 1.5, color: "#3c3c41", margin: "8px 0 7px", minHeight: 48 }}>{p.caption}</p>
+        <span style={{ border: "1.5px solid #141416", padding: "2px 8px", fontSize: 9.6, fontWeight: 700, letterSpacing: ".1em" }}>{p.tag}</span>
+      </div>)}
+    </div>
+    <p style={{ fontSize: 10.6, color: "#3c3c41", margin: "14px 0 0" }}>ⓘ References are directional, not copied.</p>
+    <Foot />
+  </div>;
+}
+
+/* ---------------- Tokenta_17 — Wireframe wall (pass 6 rebuild) ----------------
+ * Printed header number is 20. The printed slide is a wall of six light
+ * wireframe screens + five design questions; the slot previously
+ * rendered the hi-fi Term Sheet Builder product screen instead. */
+
+export function TokentaWireframeWall() {
+  const [sel, setSel] = useState(0);
+  const wf: React.CSSProperties = { border: "1.5px solid #c9c9ce", borderRadius: 8, background: "#f4f4f2", padding: "8px 8px", fontSize: 9.0, lineHeight: 1.5, color: "#3c3c41", minHeight: 218, textAlign: "left", width: "100%", cursor: "pointer", font: "inherit", minWidth: 0, overflow: "hidden" };
+  const wh: React.CSSProperties = { margin: "0 0 6px", fontSize: 11, color: "#141416" };
+  const num: React.CSSProperties = { background: "#141416", color: "#fff", borderRadius: 3, padding: "0 5px", marginRight: 6, fontWeight: 700 };
+  const row: React.CSSProperties = { display: "flex", justifyContent: "space-between", gap: 4 };
+  const screens: React.ReactNode[] = [
+    <div key="w1">
+      <p style={wh}><span style={num}>1</span><b>Dashboard</b> <span style={{ color: "#8b8b91" }}>At-a-glance overview of activity, assets, and system health.</span></p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 4 }}>{[["Total Assets", "359"], ["TVL", "18.50B TKA"], ["Active Orders", "102"], ["Escrows", "24"], ["Disputes", "3"]].map(([k, v]) => <span key={k} style={{ border: "1px solid #d8d8dc", borderRadius: 5, padding: "3px 4px" }}>{k}<br /><b style={{ color: "#141416", fontSize: 10.5 }}>{v}</b></span>)}</div>
+      <p style={{ margin: "6px 0 2px" }}><b style={{ color: "#141416" }}>Activity feed</b></p>
+      {["Asset \"Llama-3.1-70B-Instruct\" listed · 2m ago", "Escrow deal_01H8Z...7G9P1 locked · 5m ago", "Quorum completed for deal_01H8Z... · 12m ago", "Dispute opened: deal_01H8Z...7G9P1 · 18m ago", "Attestation created for CodeTrove-22M · 22m ago"].map((t) => <p key={t} style={{ ...row, margin: "1.5px 0" }}><span>○ {t}</span></p>)}
+      <svg viewBox="0 0 160 30" style={{ width: "100%", height: 30, display: "block", marginTop: 4 }} aria-hidden="true"><polyline points="0,22 20,18 40,20 60,12 80,15 100,8 120,11 140,5 159,7" fill="none" stroke="#8b8b91" strokeWidth="1.5" /></svg>
+      <p style={row}><span>Trading volume<br /><b style={{ color: "#141416" }}>2.41M TKA</b></span><span>Escrow volume<br /><b style={{ color: "#141416" }}>18.50B TKA</b></span><span style={{ color: "#8b8b91" }}>View all activity →</span></p>
+    </div>,
+    <div key="w2">
+      <p style={wh}><span style={num}>2</span><b>Marketplace</b> <span style={{ color: "#8b8b91" }}>Browse, search, and filter verifiable AI assets.</span></p>
+      <p style={{ ...row, border: "1px solid #d8d8dc", borderRadius: 5, padding: "2px 6px", margin: "0 0 5px" }}><span>⌕ Search assets by name, capability, or creator…</span><span>Filters · Sort: Recently listed</span></p>
+      <p style={{ margin: "0 0 2px", color: "#8b8b91" }}>Filters — Asset type: ☐ Model ☐ Dataset ☐ Agent ☐ Tool ☐ Eval Suite · Capabilities: Reasoning, Vision, Code, Math, Multimodal · Verification status: ☐ Verified ☐ In verification</p>
+      {[["Llama-3.1-70B-Instruct", "Model", "Meta AI", "125,000", "2.41M", "2d ago"], ["CodeTrove-22M", "Dataset", "AI Collective", "18,500", "892K", "3d ago"], ["VisionPro-Agent", "Agent", "VisionLabs", "42,000", "1.12M", "5d ago"], ["MathEval-1.0", "Eval Suite", "OpenEval", "7,250", "312K", "6d ago"], ["SQLCoder-33B", "Model", "DataSynth", "64,000", "1.05M", "6d ago"]].map((r) => <p key={r[0]} style={{ ...row, margin: "2px 0", borderTop: "1px solid #e4e4e8", paddingTop: 2 }}><span><b style={{ color: "#141416" }}>{r[0]}</b></span><span>{r[1]}</span><span>{r[2]}</span><span>✓</span><span>{r[3]}</span><span>{r[4]}</span><span>{r[5]}</span></p>)}
+      <p style={{ ...row, margin: "4px 0 0", color: "#8b8b91" }}><span>Showing 1–5 of 359 assets</span><span>‹ 1 2 3 … 72 ›</span></p>
+    </div>,
+    <div key="w3">
+      <p style={wh}><span style={num}>3</span><b>Asset detail</b> <span style={{ color: "#8b8b91" }}>Deep dive into an asset with evidence, stats, and provenance.</span></p>
+      <p style={{ ...row, flexWrap: "wrap", gap: "2px 8px" }}><span><b style={{ color: "#141416", fontSize: 11.5 }}>Llama-3.1-70B-Instruct</b> ✓ Verified<br /><span style={{ color: "#8b8b91" }}>Model · Meta AI · Listed 2d ago</span></span><span style={{ textAlign: "right" }}><b style={{ color: "#141416" }}>125,000 TKA</b><br /><span style={{ background: "#141416", color: "#fff", borderRadius: 4, padding: "1px 6px", fontSize: 8.6, whiteSpace: "nowrap" }}>Buy or Make Offer</span></span></p>
+      <p style={{ margin: "5px 0", color: "#8b8b91" }}>Overview · Evidence · Attestations · Provenance · Usage · Activity</p>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+        <p style={{ margin: 0 }}><b style={{ color: "#141416" }}>Key metrics</b><br />Parameters 70B · Context length 128K<br />Training data 15T tokens · Creator Meta Llama 3 Community<br />Usage (30D) 2.41M TKA · TVL 2.41M TKA</p>
+        <p style={{ margin: 0 }}><b style={{ color: "#141416" }}>Verification</b><br />Status Verified · Verified by Tokenta Verifiers<br />Verified on May 13, 2025 · Attestations 5 of 7</p>
+      </div>
+      <p style={{ margin: "6px 0 0" }}><b style={{ color: "#141416" }}>Provenance summary</b><br />Created Apr 12, 2025 → Trained Apr 15, 2025 → Evaluated Apr 28, 2025 → Verified May 13, 2025</p>
+    </div>,
+    <div key="w4">
+      <p style={wh}><span style={num}>4</span><b>Order Room</b> <span style={{ color: "#8b8b91" }}>Negotiate terms, compare offers, and finalize deals.</span></p>
+      <p style={{ margin: "0 0 4px", color: "#8b8b91" }}>Open Offers · My Offers · Counterparties · History · Create Offer</p>
+      <div style={{ display: "grid", gridTemplateColumns: "0.9fr 1.2fr 1fr", gap: 6 }}>
+        <p style={{ margin: 0 }}><b style={{ color: "#141416" }}>Active conversation</b><br />AI Collective did:tok:…9h3tq ●<br />NeuralWorks did:tok:…7h8x2 ●<br /><span style={{ border: "1px solid #c9c9ce", borderRadius: 4, padding: "0 5px" }}>Invite Counterparty</span></p>
+        <p style={{ margin: 0 }}><b style={{ color: "#141416" }}>Conversation</b><br />AI Collective 10:21 — Proposing initial terms for CodeTrove-22M.<br />NeuralWorks 10:22 — Can we adjust the usage cap to 500M tokens/month?<br />AI Collective 10:23 — Yes, and we can include a performance guarantee.<br />NeuralWorks 10:24 — Agreed. Please send the updated term sheet.</p>
+        <p style={{ margin: 0 }}><b style={{ color: "#141416" }}>Term sheet (v1.2)</b><br />Asset CodeTrove-22M · License Commercial<br />Usage cap 500M tokens / month · Territory Worldwide<br />Exclusivity Non-exclusive · Performance ≥ 92% pass on HumanEval<br />Price 18,500 TKA · Payment Upon release<br />Governing law Singapore · Dispute resolution Tokenta Arbitration</p>
+      </div>
+    </div>,
+    <div key="w5">
+      <p style={wh}><span style={num}>5</span><b>Escrow</b> <span style={{ color: "#8b8b91" }}>Secure execution with clear states and full transparency.</span></p>
+      <p style={{ margin: "0 0 5px" }}>{["LOCKED", "PENDING RELEASE", "RELEASED", "DISPUTE", "SETTLED"].map((s, i) => <span key={s} style={{ border: "1px solid #c9c9ce", borderRadius: 999, padding: "0 6px", marginRight: 3, background: i === 0 ? "#e8e8ea" : undefined }}>{s}{i < 4 ? " →" : ""}</span>)}</p>
+      <p style={row}><span>Buyer <b style={{ color: "#141416" }}>NeuralWorks</b> did:tok:…7h8x2</span><span>🔒 <b style={{ color: "#141416" }}>18,500 TKA Locked</b></span><span>Seller <b style={{ color: "#141416" }}>AI Collective</b> did:tok:…9h3tq</span></p>
+      <p style={{ margin: "4px 0" }}>Escrow ID deal_01H8Z…7G9P1 · Locked May 12, 2025</p>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+        <p style={{ margin: 0 }}><b style={{ color: "#141416" }}>Escrow details</b><br />Asset CodeTrove-22M · Amount 18,500 TKA<br />Created May 12, 2025 14:32 UTC · Release conditions 1<br />Dispute window 7 days · Arbitration Tokenta Arbitration<br />Current state Locked</p>
+        <p style={{ margin: 0 }}><b style={{ color: "#141416" }}>State timeline</b><br />◉ Locked — May 12, 2025 14:32 UTC — Funds and assets are locked in escrow.<br />○ Pending Release — Buyer has confirmed conditions. Awaiting final release.<br />○ Released — Assets released to buyer. Funds released to seller.<br />○ Dispute — Dispute raised. Escrow hold pending resolution.<br />○ Settled — Dispute resolved. Funds and/or assets allocated.</p>
+      </div>
+    </div>,
+    <div key="w6">
+      <p style={wh}><span style={num}>6</span><b>Analytics</b> <span style={{ color: "#8b8b91" }}>Monitor performance, risk, and ecosystem health.</span></p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 4 }}>{[["Trading volume", "2.41M TKA", "↑ 12.4%"], ["Active assets", "359", "↑ 8.1%"], ["Unique buyers", "241", "↑ 15.7%"], ["Escrow volume", "18.50B TKA", "↑ 9.6%"], ["Dispute rate", "0.42%", "↓ 1.2%"]].map(([k, v, d]) => <span key={k} style={{ border: "1px solid #d8d8dc", borderRadius: 5, padding: "3px 4px" }}>{k}<br /><b style={{ color: "#141416", fontSize: 10.5 }}>{v}</b> {d}</span>)}</div>
+      <p style={{ margin: "5px 0 2px" }}>Top asset types — Models 48% · Datasets 22% · Agents 15% · Tools 9% · Eval Suites 6%<br />Geography (buyers) — US 32% · SG 18% · GB 11% · DE 7% · Other 32%</p>
+      {[["Llama-3.1-70B-Instruct", "Model", "2.41M", "↑ 12.4%", "142"], ["CodeTrove-22M", "Dataset", "1.12M", "↑ 9.1%", "98"], ["VisionPro-Agent", "Agent", "892K", "↑ 14.3%", "76"]].map((r) => <p key={r[0]} style={{ ...row, margin: "2px 0", borderTop: "1px solid #e4e4e8", paddingTop: 2 }}><span><b style={{ color: "#141416" }}>{r[0]}</b></span><span>{r[1]}</span><span>{r[2]}</span><span>{r[3]}</span><span>{r[4]}</span></p>)}
+      <p style={{ margin: "3px 0 0", color: "#8b8b91" }}>Top assets by volume · View full analytics →</p>
+    </div>,
+  ];
+  const questions: Array<[string, string]> = [
+    ["1. Density", "How much information can we show without sacrificing clarity?"],
+    ["2. Navigation", "How do users move between tasks and maintain context?"],
+    ["3. Comparison", "How do we enable side-by-side comparison and evaluation?"],
+    ["4. State legibility", "Are system states, progress, and statuses immediately clear?"],
+    ["5. Responsive prioritization", "What's essential at each breakpoint and how should it adapt?"],
+  ];
+  return <div className="tks" role="region" aria-label="Tokenta wireframe wall — interactive rebuild of Tokenta_17">
+    <Head n="20." kicker="Wireframe wall" />
+    <h3>Wireframe wall.</h3>
+    <p className="tks-lede">Dense institutional screens were resolved through hierarchy before final styling.</p>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginTop: 12 }}>
+      {screens.map((s, i) => <button key={i} type="button" aria-pressed={sel === i} onClick={() => setSel(i)} style={{ ...wf, boxShadow: sel === i ? "0 0 0 2px #141416" : "none" }}>{s}</button>)}
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "0.8fr repeat(5, 1fr)", gap: 12, marginTop: 14, borderTop: "1.5px solid #141416", paddingTop: 10 }}>
+      <p style={{ margin: 0, fontSize: 12.5, fontWeight: 600, lineHeight: 1.45 }}>Design questions solved at the wireframe stage.</p>
+      {questions.map(([t, q]) => <p key={t} style={{ margin: 0, fontSize: 10.4, lineHeight: 1.5, color: "#3c3c41" }}><b style={{ color: "#141416" }}>{t}</b><br />{q}</p>)}
+    </div>
+    <Foot />
+  </div>;
+}
+
 export function tokentaSlideFor(file: string) {
   if (file.startsWith("Tokenta_06")) return <TokentaThesisEvolution />;
   if (file.startsWith("Tokenta_07")) return <TokentaProductPrinciples />;
@@ -1072,6 +1234,8 @@ export function tokentaSlideFor(file: string) {
   if (file.startsWith("Tokenta_13")) return <TokentaRouteMap />;
   if (file.startsWith("Tokenta_14")) return <TokentaNavigationPriorities />;
   if (file.startsWith("Tokenta_15")) return <TokentaContentTemplates />;
+  if (file.startsWith("Tokenta_16")) return <TokentaVisualInspiration />;
+  if (file.startsWith("Tokenta_17")) return <TokentaWireframeWall />;
   if (file.startsWith("Tokenta_21")) return <TokentaDensityStudy />;
   if (file.startsWith("Tokenta_22")) return <TokentaVerificationSixStages />;
   if (file.startsWith("Tokenta_23")) return <TokentaComponentLibrary />;

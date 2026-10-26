@@ -1528,6 +1528,229 @@ export function NextCardStateMatrix() {
 }
 
 /* ---------------- Routing ---------------- */
+/* ---------------- 18 — Sensitivity Analysis (pass 6 rebuild) ----------------
+ * Pass 6 audit: this slot rendered the Reward Engine screen (the data
+ * title's subject). Printed Image 18 is the sensitivity analysis:
+ * scenario matrix + tornado chart, all figures Modeled. */
+const SENS_SCENARIOS = [
+  { name: "CONSERVATIVE", sub: "Lower assumptions", app: "2.0M", appr: "18%", act: "40%", cards: "~144K" },
+  { name: "BASE", sub: "Base assumptions", app: "2.5M", appr: "20%", act: "60%", cards: "300K" },
+  { name: "UPSIDE", sub: "Higher assumptions", app: "3.0M", appr: "22%", act: "70%", cards: "~462K" },
+];
+const SENS_TORNADO = [
+  { label: "APPLICATION VOLUME", sub: "(Unique applicants) ±20% vs. base", lo: 20, hi: 20, loT: "-60K", hiT: "+60K", range: "240K – 360K" },
+  { label: "APPROVAL RATE", sub: "(Approval rate) ±2pp vs. base", lo: 10, hi: 10, loT: "-30K", hiT: "+30K", range: "270K – 330K" },
+  { label: "ACTIVATION RATE", sub: "(Activation rate) ±10pp vs. base", lo: 8.3, hi: 8.3, loT: "-25K", hiT: "+25K", range: "275K – 325K" },
+];
+export function NextCardSensitivity() {
+  const [sc, setSc] = useState(1);
+  const cell: React.CSSProperties = { padding: "9px 10px", borderTop: "1px solid #2c2c2f", fontSize: 12.5 };
+  return <Nc n="18" title="Sensitivity Analysis" label="Next Card sensitivity analysis — interactive rebuild of Next_Card_Image_18">
+    <p style={{ color: "#c9c9ce", margin: "0 0 4px" }}>Assessing the impact of conversion assumptions on approved cards <span style={{ border: "1.5px solid #ff4b1f", color: "#ff4b1f", borderRadius: 6, padding: "1px 9px", fontWeight: 700, fontSize: 11, marginLeft: 8 }}>MODELED</span></p>
+    <div style={{ display: "grid", gridTemplateColumns: "1.05fr 1fr", gap: 18, marginTop: 10 }}>
+      <div>
+        <p className="nc-acc" style={{ margin: 0, fontWeight: 700, letterSpacing: ".06em" }}>SCENARIO MATRIX</p>
+        <p style={{ color: "#c9c9ce", margin: "2px 0 8px", fontSize: 12 }}>Conversion assumptions and resulting approved cards</p>
+        <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr 1fr 1fr 1.1fr", border: "1px solid #2c2c2f" }}>
+          <span style={cell} /><span style={cell}><b>APPLICATION</b><br /><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>(Unique applicants)</span></span><span style={cell}><b>APPROVAL</b><br /><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>(Approval rate)</span></span><span style={cell}><b>ACTIVATION</b><br /><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>(Activation rate)</span></span><span style={cell}><b>APPROVED CARDS</b><br /><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>(Result)</span></span>
+          {SENS_SCENARIOS.map((s, i) => <div key={s.name} style={{ display: "contents" }}>
+            <button type="button" aria-pressed={sc === i} onClick={() => setSc(i)} style={{ ...cell, background: i === 1 ? "#c9330d" : sc === i ? "#2a1408" : "transparent", color: "#fff", border: "none", borderTop: "1px solid #2c2c2f", textAlign: "left", cursor: "pointer", font: "inherit" }}><b>{s.name}</b><br /><span style={{ fontSize: 10.5, color: "#e8e8ea" }}>{s.sub}</span></button>
+            {[s.app, s.appr, s.act].map((v, j) => <span key={j} style={{ ...cell, background: i === 1 ? "#8f2407" : undefined }}><b style={{ fontSize: 15 }}>{v}</b><br /><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>{["Lower", "Base", "Higher"][i]}</span></span>)}
+            <span style={{ ...cell, background: i === 1 ? "#ff4b1f" : undefined }}>{i === 1 ? <><span style={{ fontSize: 10.5 }}>Approximately</span><br /><b style={{ fontSize: 19 }}>300K</b><br /><span style={{ fontSize: 10.5 }}>Modeled</span></> : <><b style={{ fontSize: 15 }}>{s.cards}</b><br /><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>Modeled</span></>}</span>
+          </div>)}
+        </div>
+        <p style={{ margin: "10px 0 0", fontSize: 12 }} aria-live="polite">Selected scenario: <b>{SENS_SCENARIOS[sc].name}</b> — {SENS_SCENARIOS[sc].app} applicants · {SENS_SCENARIOS[sc].appr} approval · {SENS_SCENARIOS[sc].act} activation → <b className="nc-acc">{SENS_SCENARIOS[sc].cards}</b> approved cards (Modeled).</p>
+      </div>
+      <div>
+        <p className="nc-acc" style={{ margin: 0, fontWeight: 700, letterSpacing: ".06em" }}>SENSITIVITY (TORNADO) ANALYSIS</p>
+        <p style={{ color: "#c9c9ce", margin: "2px 0 8px", fontSize: 12 }}>Impact of changing each conversion assumption on approved cards (Change applied independently while others held at base)</p>
+        <p style={{ margin: "0 0 6px", fontSize: 11, display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10 }}><span><span style={{ background: "#ff4b1f", padding: "0 7px", marginRight: 5 }}>&nbsp;</span>Lower (Impact to Approved Cards) <span style={{ background: "#8a8a90", padding: "0 7px", margin: "0 5px 0 12px" }}>&nbsp;</span>Higher (Impact to Approved Cards)</span> <span style={{ color: "#9a9aa0", textAlign: "right" }}>IMPACT RANGE (Approved Cards) Modeled</span></p>
+        {SENS_TORNADO.map((t) => <div key={t.label} style={{ display: "grid", gridTemplateColumns: "128px 1fr 74px", gap: 8, alignItems: "center", borderTop: "1px solid #2c2c2f", padding: "7px 0" }}>
+          <span style={{ fontSize: 11 }}><b>{t.label}</b><br /><span style={{ color: "#9a9aa0", fontSize: 10 }}>{t.sub}</span></span>
+          <span style={{ position: "relative", height: 22, display: "block" }}>
+            <span style={{ position: "absolute", top: 0, height: 22, right: "50%", width: `${t.lo}%`, background: "#ff4b1f", display: "flex", alignItems: "center", paddingLeft: 6, boxSizing: "border-box" }}><span style={{ fontSize: 10.5, fontWeight: 700, whiteSpace: "nowrap" }}>{t.loT}</span></span>
+            <span style={{ position: "absolute", top: 0, height: 22, left: "50%", width: `${t.hi}%`, background: "#8a8a90", display: "flex", alignItems: "center", justifyContent: "flex-end", paddingRight: 6, boxSizing: "border-box" }}><span style={{ fontSize: 10.5, fontWeight: 700, whiteSpace: "nowrap" }}>{t.hiT}</span></span>
+            <span style={{ position: "absolute", left: "50%", top: -4, height: 30, borderLeft: "1.5px dashed #c9c9ce" }} />
+          </span>
+          <span style={{ fontSize: 11.5, textAlign: "right" }}>{t.range}</span>
+        </div>)}
+        <p style={{ display: "flex", justifyContent: "space-between", color: "#9a9aa0", fontSize: 10.5, margin: "4px 74px 0 136px" }}><span>150K</span><span>200K</span><span>250K</span><span><b style={{ color: "#ff4b1f", fontSize: 12 }}>300K</b></span><span>350K</span><span>400K</span><span>450K</span></p>
+        <p style={{ textAlign: "center", color: "#ff4b1f", fontWeight: 700, fontSize: 11, margin: "1px 0 0" }}>BASE OUTCOME <span style={{ color: "#9a9aa0", fontWeight: 400 }}>(Modeled)</span></p>
+      </div>
+    </div>
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, marginTop: 14, border: "1px solid #2c2c2f", borderRadius: 8, padding: "9px 12px" }}>
+      <p style={{ margin: 0, fontSize: 12.5 }}><b className="nc-acc">💡 KEY TAKEAWAY</b>&nbsp;&nbsp; Application volume is the most influential driver of approved cards, followed by approval rate, then activation rate.</p>
+      <p style={{ margin: 0, color: "#9a9aa0", fontSize: 10.5, whiteSpace: "nowrap" }}>pp = percentage points &nbsp;|&nbsp; All results are Modeled &nbsp;|&nbsp; Figures may not sum due to rounding</p>
+    </div>
+  </Nc>;
+}
+
+/* ---------------- 22 — Proposition Architecture (pass 6 rebuild) ----------------
+ * Pass 6 audit: slot rendered a Unit Economics Scorecard. Printed
+ * Image 22 is "One Card. Six Value Engines." around the central card. */
+const ENGINES = [
+  { n: "01", name: "Daily Spend Rewards", need: "Feel good every day I spend", feat: "Tiered points on everyday categories", obj: "Drive primary card spend", metric: "Monthly active spenders" },
+  { n: "02", name: "Digital Lifestyle Privileges", need: "Access the apps and content I love", feat: "Curated partner benefits and bundles", obj: "Increase engagement and retention", metric: "Benefit redemption rate" },
+  { n: "03", name: "Local City Perks", need: "Enjoy more in my city", feat: "Local dining, transit, and lifestyle offers", obj: "Drive local wallet share", metric: "Local offer redemption rate" },
+  { n: "04", name: "Social and Referral Rewards", need: "Share and earn with my squad", feat: "Referral rewards and group challenges", obj: "Acquire new-to-bank customers", metric: "Referral conversion rate" },
+  { n: "05", name: "Credit Growth Support", need: "Build credit with confidence", feat: "Smart credit limit and usage insights", obj: "Improve credit health and loyalty", metric: "Credit active rate" },
+  { n: "06", name: "Responsible Lifestyle", need: "Spend smart and stay in control", feat: "Budgeting tools and spend alerts", obj: "Reduce risk and delinquencies", metric: "On-time payment rate" },
+];
+export function NextCardProposition() {
+  const [e, setE] = useState(0);
+  const card = (en: typeof ENGINES[number], i: number) => <button key={en.n} type="button" aria-pressed={e === i} onClick={() => setE(i)} style={{ display: "block", width: "100%", textAlign: "left", background: e === i ? "#1d0d06" : "#101012", border: `1px solid ${e === i ? "#ff4b1f" : "#2c2c2f"}`, borderRadius: 8, overflow: "hidden", color: "#fff", cursor: "pointer", font: "inherit", padding: 0 }}>
+    <span style={{ display: "block", background: "#e9e2d8", color: "#141416", padding: "4px 10px", fontWeight: 700, fontSize: 12.5 }}><span className="nc-acc" style={{ marginRight: 7 }}>{en.n}</span>{en.name}</span>
+    {[["User need", en.need], ["Product feature", en.feat], ["Bank objective", en.obj], ["Primary metric", en.metric]].map(([k, v]) => <span key={k} style={{ display: "grid", gridTemplateColumns: "86px 1fr", gap: 6, padding: "3.5px 10px", borderTop: "1px solid #232426", fontSize: 11 }}><span style={{ color: "#9a9aa0" }}>{k}</span><span>{v}</span></span>)}
+  </button>;
+  return <Nc n="22" title="One Card. Six Value Engines." label="Next Card proposition architecture — interactive rebuild of Next_Card_Image_22">
+    <p style={{ color: "#c9c9ce", margin: "0 0 10px" }}>A connected proposition that fits Gen Z lifestyles and drives sustainable value for the bank. <span style={{ color: "#9a9aa0" }}>Proposition Architecture · For what's next.</span></p>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 0.92fr 1fr", gap: 12, alignItems: "center" }}>
+      <div style={{ display: "grid", gap: 10 }}>{ENGINES.slice(0, 3).map((en, i) => card(en, i))}</div>
+      <div style={{ background: "linear-gradient(150deg,#1b1b1e,#0a0a0b)", border: "1px solid #2c2c2f", borderRadius: 14, padding: "18px 16px", minHeight: 218, position: "relative" }}>
+        <p style={{ margin: 0, letterSpacing: ".3em", fontSize: 12 }}>NEXT CARD</p>
+        <p style={{ margin: "26px 0 4px", fontSize: 64, fontWeight: 800, lineHeight: 1, background: "linear-gradient(120deg,#ff4b1f,#ff8a3d)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>N</p>
+        <p style={{ margin: 0, color: "#9a9aa0", fontSize: 17 }}>▦</p>
+        <p style={{ position: "absolute", right: 16, bottom: 12, margin: 0, letterSpacing: ".24em", fontSize: 9.5, color: "#c9c9ce" }}>FOR WHAT'S NEXT</p>
+      </div>
+      <div style={{ display: "grid", gap: 10 }}>{ENGINES.slice(3).map((en, i) => card(en, i + 3))}</div>
+    </div>
+    <p style={{ margin: "9px 0 0", fontSize: 12 }} aria-live="polite">Engine {ENGINES[e].n} — <b>{ENGINES[e].name}</b>: primary metric <b className="nc-acc">{ENGINES[e].metric}</b>.</p>
+    <div style={{ display: "grid", gridTemplateColumns: "0.62fr 1fr 1fr 1fr 1fr", gap: 10, marginTop: 10, border: "1px solid #57200f", borderRadius: 8, padding: "9px 12px", alignItems: "center" }}>
+      <p className="nc-acc" style={{ margin: 0, fontWeight: 700, lineHeight: 1.35 }}>The Architecture in Action</p>
+      {[["Understand Gen Z needs", "Deep insight into lifestyles, behaviors, and aspirations."], ["Design six value engines", "Each engine solves a need and creates measurable outcomes."], ["Connect to one card experience", "Seamless, digital-first journey across all touchpoints."], ["Drive sustainable value", "Stronger engagement, healthier customers, better bank results."]].map(([t, d], i) => <p key={t} style={{ margin: 0, fontSize: 11.5 }}><b>{t}</b><br /><span style={{ color: "#c9c9ce" }}>{d}</span>{i < 3 ? <span className="nc-acc" style={{ float: "right" }}>›</span> : null}</p>)}
+    </div>
+  </Nc>;
+}
+
+/* ---------------- 24 — Product Principles (pass 6 rebuild) ----------------
+ * Pass 6 audit: slot rendered the ID-OCR application flow. Printed
+ * Image 24 is the five product principles under the card hero. Card
+ * artwork + example thumbs are text-free crops from the original. */
+export function NextCardPrinciples() {
+  const [paid, setPaid] = useState(false);
+  const col: React.CSSProperties = { borderLeft: "1px solid #d8d2c6", padding: "0 12px" };
+  const num: React.CSSProperties = { fontSize: 30, fontWeight: 800, color: "#ff4b1f", margin: 0, lineHeight: 1 };
+  const ex: React.CSSProperties = { display: "flex", gap: 8, margin: "7px 0", fontSize: 11, lineHeight: 1.45 };
+  const ic: React.CSSProperties = { flex: "0 0 auto", width: 30, height: 30, background: "#141416", borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15 };
+  return <Nc n="24" title="Product Principles" light label="Next Card product principles — interactive rebuild of Next_Card_Image_24">
+    <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 14, alignItems: "center", background: "#0a0a0b", margin: "-6px -6px 12px", padding: "12px 14px", borderRadius: 8 }}>
+      <div>
+        <p style={{ color: "#fff", fontSize: 21, fontWeight: 800, margin: 0, lineHeight: 1.15 }}>Five principles guide every decision we make.</p>
+        <p style={{ color: "#c9c9ce", margin: "5px 0 0", fontSize: 12 }}>Designed for China's Gen Z. Built for real life. <span style={{ color: "#9a9aa0" }}>Credit card, reimagined.</span></p>
+      </div>
+      <img src="/projects/crops/nextcard/principles-card.jpg" alt="Next Card physical card artwork from the original slide" style={{ width: "100%", borderRadius: 8, display: "block" }} />
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 0 }}>
+      <div style={{ padding: "0 12px 0 0" }}>
+        <p style={num}>1.</p><p style={{ fontSize: 15.5, fontWeight: 700, margin: "3px 0" }}>Useful every week, not once a year</p>
+        <p style={{ fontSize: 11.5, color: "#4a4a48", margin: 0 }}>Real, frequent value in daily life—so Next Card stays in your wallet.</p>
+        <p style={{ fontSize: 9.5, letterSpacing: ".1em", color: "#8a8578", margin: "10px 0 2px" }}>EXAMPLES</p>
+        <div style={ex}><span style={ic}>☕</span><span><b>Daily essentials</b><br />Coffee, transit, groceries</span></div>
+        <div style={ex}><span style={ic}>🎟</span><span><b>Weekly treats</b><br />Movies, concerts, gaming</span></div>
+        <div style={ex}><span style={ic}>🏷</span><span><b>Member perks</b><br />Early access, special pricing</span></div>
+      </div>
+      <div style={col}>
+        <p style={num}>2.</p><p style={{ fontSize: 15.5, fontWeight: 700, margin: "3px 0" }}>Digital by default</p>
+        <p style={{ fontSize: 11.5, color: "#4a4a48", margin: 0 }}>Seamless mobile-first experience from apply to manage.</p>
+        <div style={{ border: "1.5px solid #141416", borderRadius: 16, padding: "8px 9px", marginTop: 10, fontSize: 10.5, background: "#fff" }}>
+          <p style={{ margin: 0, fontWeight: 700, letterSpacing: ".06em" }}>NEXT CARD</p>
+          <div style={{ background: "#141416", color: "#fff", borderRadius: 8, padding: "7px 8px", margin: "6px 0" }}>Available credit<br /><b style={{ fontSize: 15 }}>¥18,600.00</b><div style={{ height: 4, background: "#3a3a3e", borderRadius: 2, margin: "5px 0 3px" }}><div style={{ height: 4, width: "93%", background: "#ff4b1f", borderRadius: 2 }} /></div><span style={{ color: "#c9c9ce", fontSize: 9.5 }}>Total credit ¥20,000.00</span></div>
+          <p style={{ display: "flex", justifyContent: "space-between", margin: "4px 0", color: "#4a4a48" }}><span>Transactions</span><span>Statement</span><span>Repay</span><span>More</span></p>
+          <p style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "4px 0 0" }}><span>Due in 6 days<br /><b>¥2,350.00</b></span><button type="button" onClick={() => setPaid(!paid)} style={{ background: paid ? "#1d9e57" : "#ff4b1f", color: "#fff", border: "none", borderRadius: 6, padding: "3px 12px", font: "inherit", fontWeight: 700, cursor: "pointer" }}>{paid ? "Paid ✓" : "Repay"}</button></p>
+        </div>
+      </div>
+      <div style={col}>
+        <p style={num}>3.</p><p style={{ fontSize: 15.5, fontWeight: 700, margin: "3px 0" }}>Local before national</p>
+        <p style={{ fontSize: 11.5, color: "#4a4a48", margin: 0 }}>Deep partnerships in cities and campuses before expanding wider.</p>
+        <p style={{ fontSize: 9.5, letterSpacing: ".1em", color: "#8a8578", margin: "10px 0 2px" }}>EXAMPLES</p>
+        {[["principles-city.jpg", "City favorites", "Local dining, nightlife, and lifestyle"], ["principles-campus.jpg", "Campus first", "Student events, dining, study spaces"], ["principles-lantern.jpg", "Local brands", "Support emerging local businesses"]].map(([img, t, d]) => <div key={t} style={ex}><img src={`/projects/crops/nextcard/${img}`} alt="" style={{ width: 34, height: 34, borderRadius: 6, objectFit: "cover" }} /><span><b>{t}</b><br />{d}</span></div>)}
+      </div>
+      <div style={col}>
+        <p style={num}>4.</p><p style={{ fontSize: 15.5, fontWeight: 700, margin: "3px 0" }}>Social without encouraging irresponsible spending</p>
+        <p style={{ fontSize: 11.5, color: "#4a4a48", margin: 0 }}>Share experiences and rewards, with guardrails that put well-being first.</p>
+        <p style={{ fontSize: 9.5, letterSpacing: ".1em", color: "#8a8578", margin: "10px 0 2px" }}>EXAMPLES</p>
+        <div style={ex}><span style={ic}>👥</span><span><b>Shared moments</b><br />Split bills, group treats, shared rewards</span></div>
+        <div style={ex}><span style={ic}>🛡</span><span><b>Smart guardrails</b><br />Budget alerts, spend limits, cool-off reminders</span></div>
+        <div style={ex}><span style={ic}>📊</span><span><b>Positive rewards</b><br />Earn for on-time payments and healthy habits</span></div>
+      </div>
+      <div style={col}>
+        <p style={num}>5.</p><p style={{ fontSize: 15.5, fontWeight: 700, margin: "3px 0" }}>Credit growth through transparent behavior</p>
+        <p style={{ fontSize: 11.5, color: "#4a4a48", margin: 0 }}>Clear actions. Visible progress. Better habits. Stronger future.</p>
+        <p style={{ fontSize: 9.5, letterSpacing: ".1em", color: "#8a8578", margin: "10px 0 2px" }}>EXAMPLES</p>
+        <div style={{ border: "1px solid #d8d2c6", borderRadius: 8, padding: "8px 9px", background: "#fff" }}>
+          <p style={{ margin: "0 0 5px", fontWeight: 700, fontSize: 11.5 }}>Your progress</p>
+          <div style={{ display: "flex", gap: 9, alignItems: "center" }}>
+            <svg viewBox="0 0 44 44" style={{ width: 52, height: 52 }} aria-hidden="true"><circle cx="22" cy="22" r="18" fill="none" stroke="#e8e2d6" strokeWidth="4.5" /><circle cx="22" cy="22" r="18" fill="none" stroke="#ff4b1f" strokeWidth="4.5" strokeDasharray={`${2 * Math.PI * 18 * (720 / 850)} ${2 * Math.PI * 18}`} transform="rotate(-90 22 22)" strokeLinecap="round" /><text x="22" y="22" textAnchor="middle" fontSize="11" fontWeight="800" fill="#141416">720</text><text x="22" y="31" textAnchor="middle" fontSize="5.4" fill="#8a8578">out of 850</text></svg>
+            <p style={{ margin: 0, fontSize: 10, lineHeight: 1.6 }}>On-time payments <b>Excellent</b><br />Credit usage <b>Good</b><br />Account age <b>Good</b><br />Credit mix <b>Building</b></p>
+          </div>
+          <p style={{ margin: "6px 0 0", fontSize: 10.5, borderTop: "1px solid #eee9df", paddingTop: 5 }}>▤ See what helps improve <span style={{ float: "right" }}>›</span></p>
+        </div>
+      </div>
+    </div>
+  </Nc>;
+}
+
+/* ---------------- 34 — Low-Fidelity Wireframe Wall (pass 6 rebuild) ----------------
+ * Pass 6 audit: slot rendered the light Iteration Board. Printed
+ * Image 34 is the dark end-to-end journey wireframe wall: left rail
+ * (legend, principles, modeled KPIs), nine wireframe phones, decision
+ * diamonds and the Key Journey Decisions box. */
+const WF_PHONES: Array<{ t: string; note: string; body: React.ReactNode }> = [
+  { t: "LANDING PAGE", note: "Hero value prop + primary CTA.", body: <><b style={{ fontSize: 12.5 }}>Next is your move.</b><br />A credit card built for how you live.<br />✓ No annual fee<br />✓ Transparent<br />✓ Built for Gen Z</> },
+  { t: "BENEFIT DETAIL", note: "Benefit storytelling builds trust and intent.", body: <><b>Why Next Card?</b><br />★ Earn more — Get rewards that fit your lifestyle.<br />▣ Use anywhere — Online and offline, everyday.<br />☑ Build credit — Grow your score with smart tools.</> },
+  { t: "APPLICATION", note: "Minimal fields. Progress indicator on top.", body: <><b>Let's get started</b><br />It takes about 3 minutes.<br />Full name / ID number / Phone number / City (fields)<br />☐ I agree to the terms</> },
+  { t: "APPROVAL", note: "Real-time progress reduces anxiety.", body: <><b>Almost there</b><br />We're reviewing your information.<br /><span style={{ fontSize: 17, fontWeight: 800 }}>80%</span><br />Usually done in under 2 minutes.</> },
+  { t: "DASHBOARD", note: "At-a-glance financial control center.", body: <><b>Hi, Alex</b><br />Available Credit<br /><b style={{ fontSize: 12.5 }}>¥ 12,000.00</b><br />Total Credit ¥ 15,000<br />Spent ¥ 1,230.00 · Due ¥ 860.00 · Due Date May 20</> },
+  { t: "REWARDS", note: "Points balance + easy redemption.", body: <><b>My Rewards</b><br />Points Balance <b>2,560</b><br />¥20 Coffee Voucher 2,000 pts<br />¥50 Movie Voucher 4,000 pts<br />¥30 Ride Voucher 2,500 pts</> },
+  { t: "LOCAL PERKS", note: "Nearby perks drive everyday value.", body: <><b>Local Perks</b> · 📍 Shenzhen<br />% Arabica 10% off 200m<br />HEYTEA Buy 1 Get 1 350m<br />POP MART 5% off 500m</> },
+  { t: "REFERRAL", note: "Social currency + shared benefits.", body: <><b>Invite Friends</b><br />You get ¥30 · They get ¥30<br />Your Referral Code<br /><b>NEXTPALS</b></> },
+  { t: "CREDIT BUILDER", note: "Actionable steps improve credit.", body: <><b>Build Your Credit</b><br /><span style={{ fontSize: 15, fontWeight: 800 }}>720</span> Good<br />Next Goal 750<br />☑ Pay on time 100%<br />○ Keep low usage 30%<br />○ Use longer 6 months</> },
+];
+const WF_CTA = ["Get Started", "Apply Now", "Continue", "", "", "See All Rewards", "View Map", "Invite Now", "View Tips"];
+export function NextCardWireframeWall() {
+  const [p, setP] = useState(4);
+  const rail: React.CSSProperties = { border: "1px solid #2c2c2f", borderRadius: 8, padding: "8px 10px", marginBottom: 9, fontSize: 10.8, lineHeight: 1.55 };
+  return <Nc n="34" title="Low-Fidelity Wireframe Wall" label="Next Card low-fidelity wireframe wall — interactive rebuild of Next_Card_Image_34">
+    <div style={{ display: "grid", gridTemplateColumns: "168px 1fr", gap: 14 }}>
+      <div>
+        <p style={{ margin: "0 0 8px", fontSize: 10.8, color: "#c9c9ce" }}><span className="nc-acc" style={{ fontWeight: 700 }}>NEXT CARD</span><br />CHINA GEN Z CREDIT-CARD CONCEPT<br /><span style={{ color: "#9a9aa0" }}>Journey-first. Mobile-first. Simple, transparent, empowering.</span></p>
+        <div style={rail}><b className="nc-acc">JOURNEY LEGEND</b><br />→ Primary flow<br />┄ Alternative flow<br />◆ Decision point<br />◎ Key interaction</div>
+        <div style={rail}><b className="nc-acc">DESIGN PRINCIPLES</b><br /><b>Clarity over complexity</b> — One primary action per screen.<br /><b>Progressive disclosure</b> — Show what matters, when it matters.<br /><b>Trust by design</b> — Transparent terms, real-time feedback.<br /><b>Gen Z expression</b> — Personal, social, and rewarding.</div>
+        <div style={{ ...rail, borderColor: "#57200f" }}><b className="nc-acc">KPIs (Modeled)</b>{[["Activation Rate", "28.4%"], ["Application Completion Rate", "61.2%"], ["Approval Rate", "72.0%"], ["90-Day Retention", "46.8%"], ["Monthly Active Rate", "38.7%"]].map(([k, v]) => <p key={k} style={{ display: "flex", justifyContent: "space-between", margin: "2px 0" }}><span>• {k}</span><b>{v}</b></p>)}<span style={{ color: "#9a9aa0" }}>Modeled metrics for concept evaluation.</span></div>
+      </div>
+      <div>
+        <p className="nc-acc" style={{ margin: "0 0 6px", fontWeight: 700, letterSpacing: ".08em", fontSize: 11.5 }}>END-TO-END USER JOURNEY</p>
+        {/* The print runs all nine phones in one row at full slide width;
+            on the fixed 980px canvas that leaves ~82px per phone and the
+            microcopy wraps word-by-word, so the wall renders 5 + 4 — the
+            same nine phones, notes and order as printed. */}
+        {[WF_PHONES.slice(0, 5), WF_PHONES.slice(5)].map((rowPhones, ri) => <div key={ri} style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 6, marginBottom: ri === 0 ? 8 : 0 }}>
+          {rowPhones.map((ph, j) => { const i = ri * 5 + j; return <div key={ph.t}>
+            <p style={{ textAlign: "center", margin: "0 0 4px", fontSize: 8.8, color: "#c9c9ce" }}><span style={{ display: "inline-flex", width: 15, height: 15, borderRadius: "50%", background: "#fff", color: "#141416", fontWeight: 800, alignItems: "center", justifyContent: "center", fontSize: 9.5, marginBottom: 2 }}>{i + 1}</span><br />{ph.t}</p>
+            <button type="button" aria-pressed={p === i} onClick={() => setP(i)} style={{ width: "100%", background: "#f2f0eb", color: "#33322f", border: p === i ? "2px solid #ff4b1f" : "2px solid transparent", borderRadius: 10, padding: "6px 7px 7px", fontSize: 9.3, lineHeight: 1.55, textAlign: "left", cursor: "pointer", font: "inherit", minHeight: 132 }}>
+              {ph.body}
+              {WF_CTA[i] ? <span style={{ display: "block", background: "#ff4b1f", color: "#fff", borderRadius: 5, textAlign: "center", fontWeight: 700, padding: "2px 0", marginTop: 5, fontSize: 9.3 }}>{WF_CTA[i]}</span> : null}
+            </button>
+            <p style={{ fontSize: 8.6, color: "#9a9aa0", margin: "4px 0 0", lineHeight: 1.45 }}>{ph.note}</p>
+          </div>; })}
+        </div>)}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1.35fr", gap: 10, marginTop: 12, alignItems: "start" }}>
+          <p style={{ margin: 0, fontSize: 10.8, lineHeight: 1.6 }}><span style={{ color: "#ff4b1f" }}>◆</span> <b>Information complete?</b><br /><span style={{ color: "#9a9aa0" }}>NO → back to Landing · YES ↓</span></p>
+          <p style={{ margin: 0, fontSize: 10.8, lineHeight: 1.6 }}><span style={{ color: "#ff4b1f" }}>◆</span> <b>Approved?</b><br /><span style={{ color: "#9a9aa0" }}>NO → <b style={{ color: "#fff" }}>Not Approved</b> — We're unable to approve your application now. [Learn More] · Reapply Later<br />YES ↓</span></p>
+          <p style={{ margin: 0, fontSize: 10.8, lineHeight: 1.6 }}><span style={{ color: "#ff4b1f" }}>◎</span> <b>First-time user?</b><br /><span style={{ color: "#9a9aa0" }}>Take a quick tour to learn key features. [Start Tour] · Skip</span></p>
+          <div style={{ border: "1px solid #57200f", borderRadius: 8, padding: "8px 10px", fontSize: 10.6, lineHeight: 1.55 }}>
+            <b className="nc-acc">KEY JOURNEY DECISIONS</b><br />
+            <span style={{ color: "#ff4b1f" }}>◆</span> <b>Information complete?</b> If users drop fields, guide them back with inline prompts and save progress automatically.<br />
+            <span style={{ color: "#ff4b1f" }}>◆</span> <b>Approved?</b> If not approved, transparently explain reason and offer credit builder path to requalify.<br />
+            <span style={{ color: "#ff4b1f" }}>◎</span> <b>First-time user?</b> Offer guided tour to accelerate activation and discovery.
+          </div>
+        </div>
+        <p style={{ margin: "9px 0 0", fontSize: 11.5 }} aria-live="polite">Step {p + 1} of 9 — <b>{WF_PHONES[p].t}</b>: {WF_PHONES[p].note}</p>
+      </div>
+    </div>
+  </Nc>;
+}
+
 export function nextCardChapterFor(file: string) {
   if (file.startsWith("Next_Card_Image_02")) return <NextCardAnswer />;
   if (file.startsWith("Next_Card_Image_03")) return <NextCardRoleTimeline />;
@@ -1545,6 +1768,10 @@ export function nextCardChapterFor(file: string) {
   if (file.startsWith("Next_Card_Image_15")) return <NextCardWhyCitiesWin />;
   if (file.startsWith("Next_Card_Image_16")) return <NextCardTamFunnel />;
   if (file.startsWith("Next_Card_Image_17")) return <NextCardConversionEquation />;
+  if (file.startsWith("Next_Card_Image_18")) return <NextCardSensitivity />;
+  if (file.startsWith("Next_Card_Image_22")) return <NextCardProposition />;
+  if (file.startsWith("Next_Card_Image_24")) return <NextCardPrinciples />;
+  if (file.startsWith("Next_Card_Image_34")) return <NextCardWireframeWall />;
   if (file.startsWith("Next_Card_Image_19")) return <NextCardSegments />;
   if (file.startsWith("Next_Card_Image_20")) return <NextCardJobsPains />;
   if (file.startsWith("Next_Card_Image_21")) return <NextCardJourney />;

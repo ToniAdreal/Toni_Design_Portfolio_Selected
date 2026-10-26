@@ -148,17 +148,17 @@ export const tokenta: Project = {
       images: [
         {
           file: 'Tokenta_16.png',
-          title: 'Active Order Room',
-          caption: 'The centralized hub for negotiating a specific asset transfer. The split-pane design places communication on one side and structured deal terms on the other.',
-          rationale: 'Combining unstructured chat with structured parameter negotiation prevents miscommunication during complex commercial agreements.',
-          tags: ['Communication', 'Layout']
+          title: 'Visual Inspiration',
+          caption: 'Five reference panels — institutional terminals, audit logs, code consoles, market-data grids, regulatory documents — tagged density, precision, explicit states, traceability, legibility. References are directional, not copied.',
+          rationale: 'The design language borrows the rigor of institutional systems rather than the spectacle of typical crypto marketing.',
+          tags: ['Design Language', 'References']
         },
         {
           file: 'Tokenta_17.png',
-          title: 'Term Sheet Builder',
-          caption: 'The interactive interface for defining licensing terms, usage limits, and payment schedules. The component translates legal and technical constraints into smart contract parameters.',
-          rationale: 'Abstracting smart contract logic into a familiar term sheet format bridges the gap between legal intent and on-chain execution.',
-          tags: ['Forms', 'Smart Contracts']
+          title: 'Wireframe Wall',
+          caption: 'Six wireframe screens — Dashboard, Marketplace, Asset detail, Order Room, Escrow, Analytics — resolved through hierarchy before final styling, over five design questions: density, navigation, comparison, state legibility, responsive prioritization. (Slide header as printed: 20.)',
+          rationale: 'Dense institutional screens were resolved through hierarchy before final styling.',
+          tags: ['Wireframes', 'Process']
         },
         {
           file: 'Tokenta_18.png',
