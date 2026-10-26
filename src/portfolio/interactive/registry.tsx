@@ -19,7 +19,7 @@ import {
   BrewOpsControlTower, BrewOpsCopilot, BrewOpsScenario,
   DeepViseDashboard, DeepVisePortSelector,
   MengniuAlertCenter, MengniuBarnTwin, MengniuCommandCenter,
-  NextCardApplicationFlow, NextCardRewardEngine, NextCardValueTriangle,
+  NextCardApplicationFlow, NextCardRewardEngine,
 } from "./ProjectScreens";
 import { ChatPackCard, OpenTelemetryPR, PassGateConcept, VerifyGateDemo, VerifyPayEscrow } from "./HackathonScreens";
 
@@ -56,7 +56,10 @@ function bespoke(slug: string, chapter: ChapterLike, image: GalleryImage): React
     // actual phone content, decision diamonds and Key Journey
     // Decisions). The older NextCardValueEngines / WireframeWallShowcase
     // routes hid content behind selection / used invented microcopy.
-    if (file.startsWith("Next_Card_Image_23")) return <NextCardValueTriangle />;
+    // Pass 7: Image_23 falls through to nextCardChapterFor — its rebuild
+    // there draws the printed value triangle (all three party boxes and
+    // every edge label at rest); the ProjectScreens tab view hid two of
+    // the three parties behind selection.
     if (title === "Step 1 — ID OCR & Biometric Liveness") return <NextCardApplicationFlow />;
     if (title === "Reward Engine Logic & Category Rules") return <NextCardRewardEngine />;
     const nc = nextCardChapterFor(file);

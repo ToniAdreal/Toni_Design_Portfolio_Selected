@@ -9,6 +9,7 @@ import "./tokenta-slides.css";
  * #7B61FF on Charcoal #0B0D12.
  */
 
+const CROP = "/projects/crops/aurionx/";
 const COLOURS = [
   ["Cyan", "#00E5FF", "Spectral"], ["Azure", "#2979FF", "Spectral"], ["Violet", "#7B61FF", "Spectral"],
   ["Charcoal", "#0B0D12", "Neutrals"], ["Slate", "#2A2F36", "Neutrals"], ["Ivory", "#F5F3EE", "Neutrals"],
@@ -45,32 +46,32 @@ export function AurionXVisualIdentity() {
   return <div className="tks tks--dark" style={{ background: "#07080d", padding: "18px 22px 14px" }} role="region" aria-label="AurionX visual identity system — interactive rebuild of AurionX_17">
     <div className="tks-head"><span><b>⋈ AurionX</b>&nbsp;&nbsp;|&nbsp;&nbsp;17 of 41&nbsp;&nbsp;·&nbsp;&nbsp;Visual Identity System</span></div>
     <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1.2fr 1.4fr", marginTop: 7 }}>
-      <div className="tks-card"><p className="tks-kicker">Mark</p><p style={{ fontSize: 58, textAlign: "center", margin: "4px 0 2px", lineHeight: 1, background: "linear-gradient(90deg,#00E5FF,#7B61FF)", WebkitBackgroundClip: "text", color: "transparent", fontWeight: 900 }}>⋈</p></div>
-      <div className="tks-card"><p className="tks-kicker">Wordmark</p><p style={{ fontSize: 40, fontWeight: 600, textAlign: "center", margin: "12px 0 4px" }}>Aurion<span style={{ background: "linear-gradient(90deg,#00E5FF,#7B61FF)", WebkitBackgroundClip: "text", color: "transparent" }}>X</span></p><p style={{ textAlign: "center", margin: 0, letterSpacing: "0.55em", fontSize: 11, color: "#9a9aa0" }}>A U R I O N X</p></div>
+      <div className="tks-card"><p className="tks-kicker">Mark</p><p style={{ fontSize: 104, textAlign: "center", margin: "10px 0 6px", lineHeight: 1, background: "linear-gradient(90deg,#00E5FF,#7B61FF)", WebkitBackgroundClip: "text", color: "transparent", fontWeight: 900 }}>⋈</p></div>
+      <div className="tks-card"><p className="tks-kicker">Wordmark</p><p style={{ fontSize: 54, fontWeight: 600, textAlign: "center", margin: "20px 0 6px" }}>Aurion<span style={{ background: "linear-gradient(90deg,#00E5FF,#7B61FF)", WebkitBackgroundClip: "text", color: "transparent" }}>X</span></p><p style={{ textAlign: "center", margin: 0, letterSpacing: "0.55em", fontSize: 11, color: "#9a9aa0" }}>A U R I O N X</p></div>
       <div className="tks-card"><p className="tks-kicker">Colour — click a swatch</p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 6, marginTop: 6 }}>{COLOURS.map(([n, hex, grp], i) => <button key={n} type="button" onClick={() => setColour(i)} aria-pressed={colour === i} style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer", textAlign: "left", font: "inherit", color: "#f0f0f2" }}><span style={{ display: "block", background: hex, height: 32, borderRadius: 5, border: colour === i ? "2px solid #fff" : "1px solid #333438" }} /><span style={{ display: "block", marginTop: 4, fontSize: 11.5 }}><b>{n}</b></span><span style={{ display: "block", fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: "#9a9aa0" }}>{hex} · {grp}</span></button>)}</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 6, marginTop: 6 }}>{COLOURS.map(([n, hex, grp], i) => <button key={n} type="button" onClick={() => setColour(i)} aria-pressed={colour === i} style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer", textAlign: "left", font: "inherit", color: "#f0f0f2" }}><span style={{ display: "block", background: hex, height: 52, borderRadius: 5, border: colour === i ? "2px solid #fff" : "1px solid #333438" }} /><span style={{ display: "block", marginTop: 4, fontSize: 11.5 }}><b>{n}</b></span><span style={{ display: "block", fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, color: "#9a9aa0" }}>{hex} · {grp}</span></button>)}</div>
         <p style={{ margin: "8px 0 0" }} aria-live="polite"><b>{COLOURS[colour][0]}</b> — {COLOURS[colour][1]} · {COLOURS[colour][2]}</p></div>
     </div>
     <div className="tks-grid" style={{ gridTemplateColumns: "1.3fr 1fr", marginTop: 7 }}>
       <div className="tks-card"><p className="tks-kicker">Typography — Suisse Intl (Light · Regular · Medium · Semibold · Bold)</p>
         <div>{TYPE_SCALE.map(([n, s, w], i) => <button key={n} type="button" aria-pressed={typeRow === i} onClick={() => setTypeRow(i)} style={{ display: "flex", alignItems: "baseline", gap: 12, width: "100%", background: typeRow === i ? "#10131b" : "transparent", border: "none", borderBottom: "1px solid #23252c", padding: "3px 6px", cursor: "pointer", font: "inherit", color: "#f0f0f2", textAlign: "left" }}>
           <span style={{ width: 74, fontSize: 11.5, color: "#9a9aa0" }}>{n}</span>
-          <span style={{ fontSize: Math.min(30, Number(s)), lineHeight: 1.15, fontWeight: w === "Semibold" ? 700 : w === "Medium" ? 500 : 400 }}>Ag</span>
+          <span style={{ fontSize: Math.min(46, Number(s) * 0.72), lineHeight: 1.15, fontWeight: w === "Semibold" ? 700 : w === "Medium" ? 500 : 400 }}>Ag</span>
           <span style={{ marginLeft: "auto", fontFamily: "'IBM Plex Mono', monospace", fontSize: 17, color: "#00E5FF" }}>{s}</span>
           <span style={{ width: 66, fontSize: 11, color: "#9a9aa0" }}>{w}</span>
         </button>)}</div>
-        <p style={{ margin: "8px 0 0", color: "#9a9aa0" }} aria-live="polite">Selected: {TYPE_SCALE[typeRow][0]} — {TYPE_SCALE[typeRow][1]}px · {TYPE_SCALE[typeRow][2]} (specimens capped at 30px for the slide canvas).</p></div>
+        <p style={{ margin: "8px 0 0", color: "#9a9aa0" }} aria-live="polite">Selected: {TYPE_SCALE[typeRow][0]} — {TYPE_SCALE[typeRow][1]}px · {TYPE_SCALE[typeRow][2]}.</p></div>
       <div className="tks-card"><p className="tks-kicker">Grid</p><p style={{ margin: "4px 0", color: "#c9c9ce", fontSize: 11.5 }}>12 Columns — callouts as printed: <b>Margins</b> · <b>Gutters</b></p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 3 }}>{Array.from({ length: 12 }, (_, i) => <span key={i} style={{ height: 22, background: "#14161c", border: "1px dashed #2c2f36" }} />)}</div></div>
     </div>
     <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1.3fr", marginTop: 7 }}>
       <div className="tks-card"><p className="tks-kicker">Voice wave</p>
-        <svg viewBox="0 0 300 50" width="100%" height="30" role="img" aria-label="Voice wave: flowing cyan-to-violet waveform lines"><path d="M0,25 C50,5 90,45 150,25 C210,5 250,45 300,25" fill="none" stroke="#00E5FF" strokeWidth="1.2" opacity={0.4 + glow * 0.6} /><path d="M0,25 C50,15 90,35 150,25 C210,15 250,35 300,25" fill="none" stroke="#7B61FF" strokeWidth="1.2" /></svg>
+        <svg viewBox="0 0 300 50" width="100%" height="54" preserveAspectRatio="none" role="img" aria-label="Voice wave: flowing cyan-to-violet waveform lines"><path d="M0,25 C50,5 90,45 150,25 C210,5 250,45 300,25" fill="none" stroke="#00E5FF" strokeWidth="1.2" opacity={0.4 + glow * 0.6} /><path d="M0,25 C50,15 90,35 150,25 C210,15 250,35 300,25" fill="none" stroke="#7B61FF" strokeWidth="1.2" /></svg>
         <p style={{ color: "#9a9aa0", margin: 0 }}>The wave's energy follows the activation stage selected on the right.</p></div>
       <div className="tks-card"><p className="tks-kicker">Activation — select a state</p>
         <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginTop: 6 }}>{ACTIVATION.map((a, i) => <button key={a} type="button" className="tks-chip" aria-pressed={stage === i} onClick={() => setStage(i)}>{String(i + 1).padStart(2, "0")} {a}</button>)}</div>
-        <p style={{ textAlign: "center", fontSize: 26, margin: "5px 0 0", background: "linear-gradient(90deg,#00E5FF,#7B61FF)", WebkitBackgroundClip: "text", color: "transparent", fontWeight: 900, opacity: 0.25 + glow * 0.75 }} aria-live="polite">⋈</p>
-        <p style={{ textAlign: "center", color: "#9a9aa0", margin: 0 }}>{ACTIVATION[stage]} — mark glow {(glow * 100).toFixed(0)}% (visualised from the printed state sequence)</p></div>
+        <p style={{ textAlign: "center", margin: "8px 0 2px", display: "flex", justifyContent: "center", gap: 13 }} aria-live="polite">{ACTIVATION.map((a, i) => <span key={a} style={{ fontSize: 34, lineHeight: 1, background: "linear-gradient(90deg,#00E5FF,#7B61FF)", WebkitBackgroundClip: "text", color: "transparent", fontWeight: 900, opacity: i === stage ? 1 : 0.16 + ([0.08, 0.3, 0.5, 0.85, 1, 0.95][i]) * 0.4 }} title={a}>⋈</span>)}</p>
+        <p style={{ textAlign: "center", color: "#9a9aa0", margin: 0 }}>{ACTIVATION[stage]} — the six printed activation states, glowing in sequence.</p></div>
     </div>
     <div className="tks-grid" style={{ gridTemplateColumns: "1.3fr 1fr", marginTop: 7 }}>
       <div className="tks-card"><p className="tks-kicker">Iconography</p>
@@ -111,15 +112,15 @@ export function AurionXTVDesignSystem() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
           {([["edge", "Edge of Tomorrow", "2024 • Action, Sci-Fi • 2h 5m", "A soldier relives the same day in an endless battle for survival."], ["highlands", "Highlands", "2023 • Drama • 1h 48m", "A remote village, a hidden past, a path forward."]] as const).map(([id, name, meta, sub]) => <button key={id} type="button" className="tks-card" style={focus === id ? { borderImage: "linear-gradient(90deg,#2979FF,#7B61FF) 1", boxShadow: "0 0 0 2px #7B61FF" } : undefined} aria-pressed={focus === id} onClick={() => setFocus(id)}>
             <span className="tks-kicker">{focus === id ? "Focused" : "Rest"}</span>
-            <span style={{ display: "block", height: 32, background: "linear-gradient(160deg,#3a4a63,#14161c)", borderRadius: 6, margin: "5px 0" }} />
+            <span style={{ display: "block", height: 62, borderRadius: 6, margin: "5px 0", overflow: "hidden", position: "relative" }}><img src={`${CROP}${id === "edge" ? "f02-castle.jpg" : "f30-wide-a.jpg"}`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} /></span>
             <b style={{ display: "block" }}>{name}</b><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>{meta}</span>
             <span style={{ display: "block", color: "#c9c9ce", fontSize: 11, marginTop: 3 }}>{sub}</span>
             {id === "edge" && <span style={{ display: "block", marginTop: 6 }}>▶ Play&nbsp;&nbsp;More Info</span>}
           </button>)}
         </div>
-        <p className="tks-kicker" style={{ marginTop: 8 }}>Progress Indicators — drag to update Linear, Buffered and Circular together</p>
+        <p className="tks-kicker" style={{ marginTop: 8 }}>Progress Indicators</p>
         <input type="range" min={0} max={100} value={progress} onChange={(e) => setProgress(Number(e.target.value))} aria-label="Progress" style={{ width: "100%" }} />
-        <p style={{ margin: "4px 0", color: "#c9c9ce" }}>Linear {progress}% · Buffered {progress}% · Circular {progress}% (printed at 54% / 54% / 75%)</p>
+        <p style={{ margin: "4px 0", color: "#c9c9ce" }}>Linear {progress}% · Buffered {progress}% · Circular {progress}%</p>
         <p className="tks-kicker" style={{ marginTop: 7 }}>Timeline Markers</p>
         <p style={{ margin: "4px 0" }}>{chapters.map(([n, v]) => <button key={n} type="button" className="tks-chip" style={{ marginRight: 5 }} aria-pressed={progress === v} onClick={() => setProgress(v)}>{n} — {v === 0 ? "00:00" : v === 100 ? "60:00" : n.split("· ")[1]}</button>)}</p>
       </div>
@@ -137,7 +138,6 @@ export function AurionXTVDesignSystem() {
         <p className="tks-kicker" style={{ marginTop: 8 }}>Confidence States</p>
         {voice === "Search for sci-fi movies" && <p style={{ border: "1px solid #2c2d30", borderRadius: 8, padding: "8px", margin: "5px 0" }}>◉ Playing — Edge of Tomorrow<br /><span style={{ color: "#7ee787" }}>100% confident</span> (High confidence)</p>}
         {voice === "What should I watch?" && <p style={{ border: "1px solid #2c2d30", borderRadius: 8, padding: "8px", margin: "5px 0" }}>◉ Did you mean Edge of Tomorrow?<br /><span style={{ color: "#c4a7ff" }}>40% confident</span> (Low confidence)</p>}
-        {!voice && <p style={{ color: "#9a9aa0", margin: "5px 0" }}>Use a Voice &amp; Input prompt to see the printed confidence states.</p>}
         <p className="tks-kicker" style={{ marginTop: 7 }}>Loading &amp; Cancellation</p>
         <p style={{ margin: "4px 0" }}>{loading ? "◌ Loading your experience... Please wait" : "✕ Cancelled — No changes were made"} <button type="button" className="tks-chip" style={{ marginLeft: 8 }} onClick={() => setLoading((v) => !v)}>{loading ? "Cancel" : "Reload"}</button></p>
       </div>
@@ -147,7 +147,7 @@ export function AurionXTVDesignSystem() {
         <p style={{ margin: "6px 0" }}><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>Secondary</span><br /><button type="button" className="tks-btn tks-btn--ghost" style={{ width: "100%" }} onClick={() => inList ? setModal("remove") : (setInList(true), notify("Added to My List"))}>{inList ? "✓ In My List — Remove…" : "+ My List"}</button></p>
         <p style={{ margin: "6px 0" }}><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>Destructive</span><br /><button type="button" className="tks-btn" style={{ background: "#d92d20", borderColor: "#d92d20", color: "#fff", width: "100%" }} disabled={deleted} onClick={() => setModal("delete")}>{deleted ? "Download Deleted" : "🗑 Delete"}</button></p>
         <p className="tks-kicker" style={{ marginTop: 8 }}>Toast</p>
-        <p style={{ border: "1px solid #2c2d30", borderLeft: "3px solid #7B61FF", borderRadius: 6, padding: "8px", margin: "5px 0" }}>✓ Added to My List <span style={{ color: "#9a9aa0" }}>(printed toast specimen)</span></p>
+        <p style={{ border: "1px solid #2c2d30", borderLeft: "3px solid #7B61FF", borderRadius: 6, padding: "8px", margin: "5px 0" }}>✓ Added to My List</p>
         <p className="tks-kicker" style={{ marginTop: 8 }}>Subtitle Styles</p>
         <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>{(["Default", "Large", "High Contrast"] as const).map((s) => <button key={s} type="button" className="tks-chip" aria-pressed={subtitle === s} onClick={() => setSubtitle(s)}>{s}</button>)}</div>
         <p style={{ margin: "8px 0 0", background: "#000", padding: "10px", textAlign: "center", color: subtitle === "High Contrast" ? "#ffe600" : "#fff", fontSize: subtitle === "Large" ? 16 : 12.5, fontWeight: subtitle === "Large" ? 800 : 500, textTransform: subtitle === "Large" ? "uppercase" : "none" }} aria-live="polite">{subtitle === "Large" ? "THE JOURNEY IS JUST BEGINNING." : "The journey is just beginning."}</p>

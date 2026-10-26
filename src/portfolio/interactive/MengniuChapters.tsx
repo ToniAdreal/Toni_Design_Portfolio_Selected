@@ -93,16 +93,42 @@ const TAX01: Array<[string, string, Array<[string, string]>]> = [
 const pill01 = (t: string) => t === "PROTOTYPE"
   ? <span style={{ background: BLUE, color: "#fff", borderRadius: 999, padding: "0 7px", fontSize: 8.6, fontWeight: 800, flex: "none" }}>PROTOTYPE</span>
   : <span style={{ border: "1.5px dashed #8a93a0", color: "#5b6470", borderRadius: 999, padding: "0 7px", fontSize: 8.6, fontWeight: 800, flex: "none" }}>CONCEPTUAL</span>;
+const art01 = (i: number) => <svg viewBox="0 0 200 92" style={{ width: "100%", height: 84, display: "block" }} aria-hidden="true">
+  {i === 0 ? <g fill="none" stroke="#0B6B3A" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M30 26 C18 18 10 24 14 34 C17 41 26 44 33 42" /><path d="M86 26 C98 18 106 24 102 34 C99 41 90 44 83 42" />
+    <path d="M38 16 C50 8 66 8 78 16 C83 34 82 50 76 62 C70 74 64 80 58 80 C52 80 46 74 40 62 C34 50 33 34 38 16 Z" />
+    <circle cx="48" cy="38" r="2.4" fill="#0B6B3A" /><circle cx="68" cy="38" r="2.4" fill="#0B6B3A" />
+    <path d="M44 62 C50 58 66 58 72 62 C70 70 64 74 58 74 C52 74 46 70 44 62 Z" />
+    <path d="M96 74 C116 74 118 58 134 58 C148 58 150 70 164 66" strokeDasharray="4 4" stroke="#7fb894" />
+    <path d="M164 38 C176 38 182 46 182 54 C182 64 164 78 164 78 C164 78 146 64 146 54 C146 46 152 38 164 38 Z" fill="#eef7f1" />
+    <circle cx="164" cy="54" r="6" />
+  </g> : i === 1 ? <g fill="none" stroke="#0B6B3A" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 58 C18 40 30 32 52 30 L96 28 C112 28 122 34 130 44 L146 40 L142 54 C132 66 118 70 100 70 L44 70 C28 70 18 66 18 58 Z" />
+    <path d="M130 44 C140 36 150 34 158 38" /><circle cx="162" cy="42" r="7" />
+    <path d="M34 70 L34 84 M118 70 L118 84" /><path d="M52 44 a10 8 0 1 1 20 0 a10 8 0 1 1 -20 0" stroke="#7fb894" />
+    <path d="M150 66 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0" stroke="#2456C8" />
+  </g> : i === 2 ? <g fill="none" stroke="#0B6B3A" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 78 L16 40 L58 14 L100 40 L100 78" /><path d="M8 80 L108 80" />
+    <path d="M34 78 L34 54 L58 54 L58 78 M34 54 L58 78 M58 54 L34 78" />
+    <rect x="66" y="34" width="16" height="13" />
+    <path d="M138 18 a15 15 0 1 1 -0.1 0 Z" /><path d="M138 26 L138 46 M138 46 m-6 0 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0" fill="#eef7f1" />
+    <path d="M160 62 q5 -6 10 0 q5 -6 10 0" stroke="#2456C8" /><path d="M160 74 q5 -6 10 0 q5 -6 10 0" stroke="#2456C8" />
+  </g> : <g fill="none" stroke="#0B6B3A" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M58 76 C30 58 22 40 30 28 C37 17 54 18 62 30 C70 18 87 17 94 28 C102 40 86 58 58 76 Z" transform="translate(6,4)" />
+    <polyline points="30,48 48,48 56,34 66,60 72,48 92,48" stroke="#D95C5C" transform="translate(6,4)" />
+    <path d="M138 22 L168 30 L168 52 C168 68 154 78 138 84 C122 78 108 68 108 52 L108 30 Z" fill="#eef7f1" />
+    <path d="M124 52 L134 62 L152 42" stroke="#2e9e5b" strokeWidth="3.4" />
+  </g>}
+</svg>;
 export function MengniuTaxonomy({ n = "01" }: { n?: string }) {
   const [sel, setSel] = useState<[number, number]>([0, 0]);
-  const illus = ["🐄📍", "🐄〰", "🏠🌡", "❤🛡"];
   return <Mn n={n} title="Sensor Taxonomy" sub="Grouping the signals that inform the digital twin." label="Mengniu sensor taxonomy — interactive rebuild" rule>
     <p style={{ margin: "0 0 10px auto", maxWidth: 430, fontSize: 11.3, lineHeight: 1.6, color: "#4a5462" }}>🧊 These sensor signals are organized into four domains to structure how real-world data is captured and interpreted by the Mengniu Digital Twin platform.</p>
     <div aria-hidden="true" style={{ borderTop: "2px dashed #b9cdc2", margin: "0 30px", position: "relative", height: 10 }}><span style={{ position: "absolute", left: "50%", top: -10, borderLeft: "2px dashed #b9cdc2", height: 10 }} /></div>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 9, alignItems: "start" }}>
       {TAX01.map(([num, name, signals], di) => <div key={name} style={{ background: "#fff", border: "1px solid #e2e8e2", borderRadius: 12, padding: "10px 11px" }}>
         <span style={{ display: "flex", gap: 7, alignItems: "center" }}><span style={{ width: 23, height: 23, borderRadius: "50%", background: GREEN, color: "#fff", fontWeight: 800, fontSize: 12, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{num}</span><b style={{ fontSize: 12.3, lineHeight: 1.3 }}>{name}</b></span>
-        <p aria-hidden="true" style={{ fontSize: 21, textAlign: "center", margin: "8px 0 4px" }}>{illus[di]}</p>
+        <span style={{ display: "block", margin: "6px 0 2px" }}>{art01(di)}</span>
         <div style={{ display: "grid", gap: 4 }}>
           {signals.map(([s, t], si) => <button key={s} type="button" onClick={() => setSel([di, si])} aria-pressed={sel[0] === di && sel[1] === si} style={{ display: "flex", justifyContent: "space-between", gap: 6, alignItems: "center", textAlign: "left", background: sel[0] === di && sel[1] === si ? "#eef7f1" : "#fafcfa", border: `1px solid ${sel[0] === di && sel[1] === si ? GREEN : "#e6ece6"}`, borderRadius: 8, padding: "5px 8px", cursor: "pointer", font: "inherit", fontSize: 10.6, color: "#141a21" }}>{s}{pill01(t)}</button>)}
         </div>
@@ -138,7 +164,12 @@ export function MengniuVisualDirection({ n = "02" }: { n?: string }) {
   return <Mn n={n} title="Visual Direction Board" sub="The references that shaped the digital twin interface — a curated set of influences and design principles drawn from agriculture, industrial interfaces, spatial software, and monitoring systems, translated into a coherent visual language for clarity, trust, and operational efficiency." label="Mengniu visual direction board — interactive rebuild">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 9, alignItems: "start" }}>
       {VIS02.map(([num, name, strap, bullets], i) => <button key={name} type="button" onClick={() => setC(i)} aria-pressed={i === c} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === c ? GREEN : "#e2e8e2"}`, borderRadius: 12, padding: 0, overflow: "hidden", cursor: "pointer", font: "inherit", color: "#141a21" }}>
-        <span aria-hidden="true" style={{ display: "block", height: 64, background: `linear-gradient(135deg, ${["#7a5c3d", "#33566b", "#4a6741", "#6b3333"][i]}, #141a21)`, color: "#ffffffcc", fontSize: 19, padding: "8px 10px" }}>{["🌾", "🏭", "🧭", "🔔"][i]}</span>
+        {i === 0 ? <img src="/projects/crops/mengniu/vis02-h1.jpg" alt="Grass and silos photograph from the printed board (crop)" style={{ display: "block", width: "100%", height: 64, objectFit: "cover" }} />
+          : i === 2 ? <img src="/projects/crops/mengniu/vis02-h3.jpg" alt="Aerial farm photograph from the printed board (crop)" style={{ display: "block", width: "100%", height: 64, objectFit: "cover" }} />
+          : <span aria-hidden="true" style={{ display: "block", height: 64, background: "#0d141b", padding: "7px 9px", boxSizing: "border-box" }}>
+            {i === 1 ? <svg viewBox="0 0 200 50" style={{ width: "100%", height: "100%", display: "block" }}><rect x="2" y="2" width="196" height="46" rx="4" fill="#101c26" stroke="#2c4258" /><polyline points="8,36 40,28 72,31 104,18 136,22 168,12 192,16" fill="none" stroke="#35D07F" strokeWidth="2" />{[["2,450 t", 10], ["98.6%", 62], ["85.7%", 112], ["24.5 °C", 158]].map(([v, x]) => <text key={v as string} x={x as number} y="14" fontSize="8.5" fill="#9fe8bb">{v}</text>)}{[0, 1, 2, 3, 4, 5].map((b) => <rect key={b} x={10 + b * 14} y={40 - b * 1.6} width="8" height={6 + b * 1.6} fill="#2456C8" opacity="0.75" />)}</svg>
+            : <svg viewBox="0 0 200 50" style={{ width: "100%", height: "100%", display: "block" }}><rect x="2" y="2" width="196" height="46" rx="4" fill="#160f10" stroke="#4a2c2c" />{[["▲", "#D99A2B", "10:24"], ["▲", "#D95C5C", "10:18"], ["●", "#7fb894", "10:12"]].map(([g, c, t], r) => <g key={t as string}><text x="10" y={17 + r * 14} fontSize="9" fill={c as string}>{g}</text><rect x="24" y={10 + r * 14} width={120 - r * 26} height="6" rx="3" fill="#3a3f45" /><text x="188" y={17 + r * 14} fontSize="7.5" fill="#8a93a0" textAnchor="end">{t}</text></g>)}</svg>}
+          </span>}
         <span style={{ display: "block", padding: "8px 11px" }}>
           <b style={{ display: "block", fontSize: 11.8, letterSpacing: "0.04em" }}><span style={{ color: GREEN }}>{num}</span> {name.toUpperCase()}</b>
           <span style={{ display: "block", fontSize: 10.2, lineHeight: 1.55, color: "#4a5462", margin: "4px 0 6px" }}>{strap}</span>
@@ -260,7 +291,13 @@ export function MengniuUserTaskModel({ n = "05" }: { n?: string }) {
   const [u, setU] = useState(0);
   const [t, setT] = useState(0);
   const persona = (idx: number, eyebrow: string, title: string, body: string, filled: boolean) => <button type="button" onClick={() => setU(idx)} aria-pressed={u === idx} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${u === idx ? GREEN : "#e2e8e2"}`, borderRadius: 12, padding: "12px 14px", cursor: "pointer", font: "inherit", color: "#141a21", display: "flex", gap: 12 }}>
-    <span aria-hidden="true" style={{ width: 52, height: 52, borderRadius: "50%", flex: "none", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 22, background: filled ? GREEN : "#fff", border: filled ? "none" : `2px solid ${GREEN}`, color: filled ? "#fff" : GREEN }}>👤</span>
+    <span aria-hidden="true" style={{ width: 58, height: 58, borderRadius: "50%", flex: "none", display: "inline-flex", alignItems: "center", justifyContent: "center", background: filled ? GREEN : "#fff", border: filled ? "none" : `2px solid ${GREEN}`, overflow: "hidden" }}>
+      <svg viewBox="0 0 48 48" style={{ width: 46, height: 46, display: "block" }} fill="none" stroke={filled ? "#fff" : GREEN} strokeWidth="2.2" strokeLinecap="round">
+        <circle cx="24" cy="17" r="7.5" />
+        <path d="M10 40 C12 31 17 27 24 27 C31 27 36 31 38 40" />
+        {filled ? <path d="M13 13 C17 7 31 7 35 13 L35 15 L13 15 Z" fill={filled ? "#fff" : "none"} stroke="none" opacity="0.9" /> : <><circle cx="20.5" cy="17" r="3.4" /><circle cx="27.5" cy="17" r="3.4" /><path d="M17 17 L13 16 M31 17 L35 16" /></>}
+      </svg>
+    </span>
     <span><span style={{ display: "block", fontSize: 9.8, fontWeight: 800, letterSpacing: "0.1em", color: GREEN }}>{eyebrow}</span><b style={{ display: "block", fontSize: 13.5, margin: "2px 0" }}>{title}</b><span style={{ display: "block", fontSize: 11, lineHeight: 1.6, color: "#4a5462" }}>{body}</span><span aria-hidden="true" style={{ display: "block", width: 44, height: 3, background: GREEN, borderRadius: 2, marginTop: 7, position: "relative" }}><span style={{ position: "absolute", right: -2, top: -2.5, width: 8, height: 8, borderRadius: "50%", background: GREEN }} /></span></span>
   </button>;
   return <Mn n={n} title="User and Task Model" sub="Who the prototype supports and what they need to do." label="Mengniu user and task model — interactive rebuild">
@@ -269,9 +306,16 @@ export function MengniuUserTaskModel({ n = "05" }: { n?: string }) {
       {persona(1, "SECONDARY VIEWER", "Technical Evaluator, Operations Manager, or Animal-Welfare Specialist", "Reviews insights, validates data quality and system performance, and supports decision-making across teams.", false)}
     </div>
     <p style={{ margin: "14px 0 8px" }}><span style={{ background: GREEN, color: "#fff", borderRadius: 999, padding: "3px 14px", fontSize: 11, fontWeight: 800, letterSpacing: "0.08em" }}>CORE TASKS</span></p>
+    <div aria-hidden="true" style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 8, margin: "2px 0 6px" }}>
+      {TASKS05.map(([, title], i) => <span key={title} style={{ display: "flex", alignItems: "center" }}>
+        <span style={{ flex: 1, borderTop: i ? `2.5px solid ${GREEN}` : "2.5px solid transparent", position: "relative" }}>{i ? <span style={{ position: "absolute", right: -1, top: -5.5, fontSize: 9, color: GREEN }}>▶</span> : null}</span>
+        <span style={{ width: 23, height: 23, borderRadius: "50%", background: i === t ? GREEN : "#fff", border: `2px solid ${GREEN}`, color: i === t ? "#fff" : GREEN, fontSize: 11.5, fontWeight: 800, display: "inline-flex", alignItems: "center", justifyContent: "center", flex: "none", zIndex: 1 }}>{i + 1}</span>
+        <span style={{ flex: 1, borderTop: i < 4 ? `2.5px solid ${GREEN}` : "2.5px solid transparent" }} />
+      </span>)}
+    </div>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 8, alignItems: "start" }}>
       {TASKS05.map(([icon, title, body], i) => <button key={title} type="button" onClick={() => setT(i)} aria-pressed={i === t} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === t ? GREEN : "#e2e8e2"}`, borderRadius: 11, padding: "9px 10px", cursor: "pointer", font: "inherit", color: "#141a21" }}>
-        <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><span aria-hidden="true" style={{ width: 30, height: 30, borderRadius: "50%", border: `1.5px solid ${GREEN}`, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 14 }}>{icon}</span><span style={{ width: 19, height: 19, borderRadius: "50%", background: GREEN, color: "#fff", fontSize: 10.5, fontWeight: 800, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{i + 1}</span></span>
+        <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><span aria-hidden="true" style={{ width: 30, height: 30, borderRadius: "50%", border: `1.5px solid ${GREEN}`, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 14 }}>{icon}</span></span>
         <b style={{ display: "block", fontSize: 11.6, lineHeight: 1.35, margin: "6px 0 3px" }}>{title}</b>
         <span style={{ display: "block", fontSize: 9.9, lineHeight: 1.55, color: "#4a5462" }}>{body}</span>
       </button>)}
@@ -325,6 +369,30 @@ const FLOW07: Array<[string, string, string]> = [
   ["Follow the animal through the milking sequence", "Cow 5247 · Milking in Progress — stages: Approach · Identify · Attach · Milking · Complete. Milk Yield 12.4 L · Milking Time 4:32 · Flow Rate 2.6 L/min.", "Milking progress, yield, quality indicators, and process exceptions."],
   ["Return to barn overview", "Barn Overview — Cows 1,256 · In Milk 1,034 · Milking 48 · Alerts 7. Operator returns to the barn overview to continue monitoring the herd.", "Updated herd status and confirmation that the system is running smoothly."],
 ];
+const sketch07 = (i: number) => <svg viewBox="0 0 160 62" style={{ width: "100%", height: 56, display: "block", borderRadius: 6 }} aria-hidden="true">
+  <rect x="1" y="1" width="158" height="60" rx="6" fill={i === 2 || i === 3 ? "#10161d" : "#eef4ee"} stroke="#cfd8d1" />
+  {i === 0 || i === 5 ? <g stroke="#7fb894" fill="none" strokeWidth="1.6">
+    <path d="M14 50 L80 12 L146 50" /><path d="M14 50 L146 50" />
+    {[0, 1, 2, 3].map((r) => <line key={r} x1={26 + r * 4} y1={44 - r * 6} x2={134 - r * 4} y2={44 - r * 6} stroke="#b9cdc2" />)}
+    {[22, 48, 74, 100, 126].map((x) => <circle key={x} cx={x} cy="40" r="2.4" fill="#0B6B3A" stroke="none" />)}
+    {i === 5 ? <g fill="#0B6B3A"><rect x="10" y="6" width="34" height="10" rx="3" /><rect x="52" y="6" width="24" height="10" rx="3" fill="#2456C8" /></g> : null}
+  </g> : i === 1 ? <g fill="none" stroke="#7fb894" strokeWidth="1.6">
+    <path d="M16 46 L80 20 L144 46 L80 56 Z" /><path d="M16 46 L16 34 L80 10 L144 34 L144 46" stroke="#b9cdc2" />
+    <rect x="58" y="30" width="44" height="18" fill="#35D07F" opacity="0.35" stroke="#35D07F" />
+    <circle cx="80" cy="39" r="4" fill="#35D07F" stroke="none" />
+  </g> : i === 2 ? <g fill="none" stroke="#7fb894" strokeWidth="1.6">
+    <path d="M14 44 C14 32 22 27 36 26 L58 25 C68 25 74 29 79 35 L90 33 L87 42 C80 50 71 53 59 53 L28 53 C19 53 14 50 14 44 Z" fill="#1a242e" />
+    {[0, 1, 2, 3].map((r) => <g key={r}><rect x="104" y={12 + r * 11} width="42" height="6" rx="3" fill="#2c3e33" /><rect x="104" y={12 + r * 11} width={30 - r * 5} height="6" rx="3" fill={r === 3 ? "#D99A2B" : "#35D07F"} /></g>)}
+  </g> : i === 3 ? <g fill="none" stroke="#D95C5C" strokeWidth="1.8">
+    <path d="M26 42 C14 32 12 22 19 17 C25 13 34 15 38 21 C42 15 51 13 57 17 C64 22 62 32 50 42 L38 50 Z" transform="translate(-4,4)" />
+    <polyline points="24,34 34,34 39,25 45,42 49,34 62,34" stroke="#f0a3a3" transform="translate(-4,4)" />
+    <text x="86" y="30" fontSize="13" fill="#f0a3a3" stroke="none" fontWeight="700">38.6 °C</text>
+    <text x="86" y="45" fontSize="8" fill="#8fa5bd" stroke="none">↑ 1.2 °C</text>
+  </g> : <g fill="none" stroke="#7fb894" strokeWidth="1.6">
+    {["Approach", "Identify", "Attach", "Milking", "Complete"].map((_, k) => <g key={k}><circle cx={22 + k * 29} cy="22" r="7" fill={k < 3 ? "#0B6B3A" : "#fff"} />{k < 4 ? <line x1={29 + k * 29} y1="22" x2={44 + k * 29} y2="22" /> : null}</g>)}
+    <rect x="14" y="40" width="132" height="7" rx="3.5" fill="#dcebe1" stroke="none" /><rect x="14" y="40" width="86" height="7" rx="3.5" fill="#0B6B3A" stroke="none" />
+  </g>}
+</svg>;
 export function MengniuInteractionFlow({ n = "07" }: { n?: string }) {
   const [s, setS] = useState(0);
   return <Mn n={n} title="Primary Interaction Flow" sub="From entering the barn to returning to overview." label="Mengniu primary interaction flow — interactive rebuild" center>
@@ -333,7 +401,8 @@ export function MengniuInteractionFlow({ n = "07" }: { n?: string }) {
       {FLOW07.map(([t, body, learns], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? GREEN : "#e2e8e2"}`, borderRadius: 11, padding: "8px 9px", cursor: "pointer", font: "inherit", color: "#141a21", position: "relative" }}>
         {i < 5 ? <span aria-hidden="true" style={{ position: "absolute", right: -8, top: 18, color: GREEN, zIndex: 2, fontSize: 11 }}>→</span> : null}
         <span style={{ display: "flex", gap: 6, alignItems: "center" }}><span style={{ width: 21, height: 21, borderRadius: "50%", background: GREEN, color: "#fff", fontSize: 11.5, fontWeight: 800, display: "inline-flex", alignItems: "center", justifyContent: "center", flex: "none" }}>{i + 1}</span><b style={{ fontSize: 11.3, lineHeight: 1.3 }}>{t}</b></span>
-        <span style={{ display: "block", background: "#f4f8f5", border: "1px solid #e6ece6", borderRadius: 7, padding: "6px 7px", fontSize: 9.5, lineHeight: 1.55, color: "#37424e", marginTop: 7, minHeight: 118 }}>{body}</span>
+        <span style={{ display: "block", marginTop: 7 }}>{sketch07(i)}</span>
+        <span style={{ display: "block", background: "#f4f8f5", border: "1px solid #e6ece6", borderRadius: 7, padding: "6px 7px", fontSize: 9.5, lineHeight: 1.55, color: "#37424e", marginTop: 6, minHeight: 118 }}>{body}</span>
         <span style={{ display: "block", marginTop: 7 }}><span style={{ display: "block", fontSize: 9.2, fontWeight: 800, letterSpacing: "0.07em", color: GREEN }}>OPERATOR LEARNS:</span><span style={{ fontSize: 9.6, lineHeight: 1.5, color: "#4a5462" }}>{learns}</span></span>
       </button>)}
     </div>
@@ -359,7 +428,7 @@ const TABLE08: Array<[string, string, string, string, string, string]> = [
 const pin08 = (text: string) => <p style={{ margin: 0, fontSize: 9.2, lineHeight: 1.5, color: "#5b6470", borderLeft: "2px dotted #b9cdc2", paddingLeft: 7 }}>{text}</p>;
 export function MengniuWireframeBoard({ n = "08" }: { n?: string }) {
   const [p, setP] = useState(2);
-  const panel = (idx: number, children: React.ReactNode) => <div onClick={() => setP(idx)} style={{ background: "#fff", border: `1.5px solid ${p === idx ? GREEN : "#dfe5df"}`, borderRadius: 11, padding: "9px 11px", cursor: "pointer" }}>
+  const panel = (idx: number, children: React.ReactNode) => <div onClick={() => setP(idx)} style={{ background: "#fffef9", border: p === idx ? `1.5px solid ${GREEN}` : "1.5px dashed #9db8a7", borderRadius: 11, padding: "9px 11px", cursor: "pointer" }}>
     <p style={{ margin: "0 0 6px", fontSize: 11.6 }}><b>{WIRE08[idx][0]}. {WIRE08[idx][1]}</b> <span style={{ float: "right", fontSize: 9.4, color: GREEN, fontWeight: 700 }}>◆ {WIRE08[idx][3]}</span></p>
     {children}
   </div>;
@@ -374,9 +443,23 @@ export function MengniuWireframeBoard({ n = "08" }: { n?: string }) {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
           {panel(0, <>
             <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>{[["Total Cows", "1,024"], ["Milking", "128"], ["Avg Activity", "72%"], ["Alerts", "12"], ["Avg Temp", "24.6 °C"]].map(([k, v]) => <span key={k} style={{ border: "1px solid #e2e8e2", borderRadius: 7, padding: "4px 8px", fontSize: 9.6 }}><span style={{ color: "#5b6470" }}>{k}</span> <b>{v}</b></span>)}</div>
-            <p style={{ margin: "6px 0 0", fontSize: 9.8, color: "#4a5462" }}>Environment: 23.5 °C · 68% · 12 m/s · Updated 30s ago · Barn map with stall grid and cow markers.</p>
+            <svg viewBox="0 0 200 62" style={{ width: "100%", height: 54, display: "block", marginTop: 6 }} aria-hidden="true"><g fill="none" stroke="#5b7a66" strokeWidth="1.5">
+              <path d="M14 44 L70 24 L126 44 L70 56 Z" /><path d="M14 44 L14 30 L70 12 L126 30 L126 44" strokeDasharray="4 3" />
+              <path d="M70 24 L70 56 M42 34 L42 50 M98 34 L98 50" stroke="#b9cdc2" />
+              {[30, 56, 82].map((x) => <circle key={x} cx={x} cy="42" r="2.2" fill="#0B6B3A" stroke="none" />)}
+              <circle cx="70" cy="36" r="4.5" stroke="#D99A2B" /><circle cx="70" cy="36" r="1.6" fill="#D99A2B" stroke="none" />
+            </g></svg>
+            <p style={{ margin: "4px 0 0", fontSize: 9.8, color: "#4a5462" }}>Environment: 23.5 °C · 68% · 12 m/s · Updated 30s ago · Isometric barn wireframe with stall grid and cow markers, as sketched.</p>
           </>)}
-          {panel(1, <p style={{ margin: 0, fontSize: 9.8, lineHeight: 1.6, color: "#37424e" }}>{WIRE08[1][2]}</p>)}
+          {panel(1, <>
+            <svg viewBox="0 0 200 46" style={{ width: "100%", height: 40, display: "block", marginBottom: 5 }} aria-hidden="true"><g fill="none" stroke="#5b7a66" strokeWidth="1.6">
+              <path d="M16 32 C16 20 24 15 40 14 L76 13 C88 13 96 17 102 23 L114 20 L111 30 C103 38 92 41 78 41 L32 41 C22 41 16 38 16 32 Z" strokeDasharray="5 3" />
+              <path d="M102 23 C110 17 118 15 124 18" /><circle cx="128" cy="21" r="5.5" />
+              <path d="M28 41 L28 48 M92 41 L92 48" />
+              <circle cx="52" cy="26" r="5" stroke="#D99A2B" />
+            </g></svg>
+            <p style={{ margin: 0, fontSize: 9.8, lineHeight: 1.6, color: "#37424e" }}>{WIRE08[1][2]}</p>
+          </>)}
         </div>
         {panel(2, <>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 5, marginBottom: 6 }}>{[["Health Score", "72"], ["Activity", "82"], ["Temperature", "59 ⚠"], ["Rumination", "68"]].map(([k, v]) => <span key={k} style={{ border: "1px solid #e2e8e2", borderRadius: 7, padding: "4px 8px", fontSize: 9.6 }}><span style={{ color: "#5b6470" }}>{k}</span> <b>{v}</b></span>)}</div>
@@ -423,16 +506,32 @@ const OPT09: Array<[string, string, string, string[], string[]]> = [
   ["OPTION 2", "Ring Chart", "⭕", ["Clear dimension separation", "Compact and scannable"], ["Similar readability challenges", "Value comparison still limited"]],
   ["OPTION 3", "Stacked Cluster", "▦", ["Grouped by dimension", "Better for herd-level view"], ["Less intuitive for individuals", "Visually dense"]],
 ];
+const diagram09 = (i: number) => <span style={{ display: "block", position: "relative", height: 96, margin: "6px 0" }} aria-hidden="true">
+  <svg viewBox="0 0 120 96" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+    {i === 0 ? <g stroke={GREEN} fill="none" strokeWidth="1.4">
+      <circle cx="60" cy="48" r="44" strokeDasharray="3 3" stroke="#b9cdc2" />
+      {[0, 60, 120, 180, 240, 300].map((a) => <line key={a} x1="60" y1="48" x2={60 + 44 * Math.cos(a * Math.PI / 180)} y2={48 + 44 * Math.sin(a * Math.PI / 180)} />)}
+      {[0, 60, 120, 180, 240, 300].map((a) => <circle key={a} cx={60 + 44 * Math.cos(a * Math.PI / 180)} cy={48 + 44 * Math.sin(a * Math.PI / 180)} r="3" fill="#eef7f1" />)}
+    </g> : i === 1 ? <g stroke={GREEN} fill="none" strokeWidth="1.4">
+      <circle cx="60" cy="48" r="45" /><circle cx="60" cy="48" r="36" stroke="#b9cdc2" />
+      {[30, 90, 150, 210, 270, 330].map((a) => <path key={a} d={`M ${60 + 36 * Math.cos(a * Math.PI / 180)} ${48 + 36 * Math.sin(a * Math.PI / 180)} A 36 36 0 0 1 ${60 + 36 * Math.cos((a + 42) * Math.PI / 180)} ${48 + 36 * Math.sin((a + 42) * Math.PI / 180)}`} strokeWidth="3.4" />)}
+    </g> : <g fill="none" stroke={GREEN} strokeWidth="1.3">
+      {[0, 1, 2].map((r) => [0, 1, 2].map((c) => <rect key={`${r}${c}`} x={66 + c * 17} y={14 + r * 24} width="14" height="20" rx="3" fill={r === 1 && c === 1 ? "#cdeedb" : "#eef7f1"} />))}
+      <circle cx="34" cy="48" r="30" strokeDasharray="3 3" stroke="#b9cdc2" />
+    </g>}
+  </svg>
+  <img src="/projects/crops/mengniu/cow09.jpg" alt="" style={{ position: "absolute", left: i === 2 ? 4 : "50%", top: "50%", transform: i === 2 ? "translateY(-50%)" : "translate(-50%,-50%)", width: 58, height: 58, borderRadius: "50%", objectFit: "cover", border: `2px solid ${GREEN}` }} />
+</span>;
 export function MengniuHealthExplorations({ n = "09" }: { n?: string }) {
   const [o, setO] = useState(3);
   const optCol = (idx: number, children: React.ReactNode) => <button type="button" onClick={() => setO(idx)} aria-pressed={o === idx} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${o === idx ? GREEN : "#e2e8e2"}`, borderRadius: 12, padding: "10px 12px", cursor: "pointer", font: "inherit", color: "#141a21" }}>{children}</button>;
   return <Mn n={n} title="Health Control Explorations" sub="Comparing visualization approaches for complex indicators." label="Mengniu health control explorations — interactive rebuild" rule>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 300px", gap: 12, alignItems: "start" }}>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, alignItems: "start" }}>
-        {OPT09.map(([tag, name, glyph, pros, cons], i) => optCol(i, <>
+        {OPT09.map(([tag, name, , pros, cons], i) => optCol(i, <>
           <p style={{ margin: 0, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", color: GREEN }}>{tag}</p>
           <b style={{ display: "block", fontSize: 13.5, margin: "2px 0 4px" }}>{name}</b>
-          <p aria-hidden="true" style={{ fontSize: 30, textAlign: "center", margin: "6px 0" }}>{glyph}</p>
+          {diagram09(i)}
           {pros.map((x) => <p key={x} style={{ margin: "0 0 2px", fontSize: 10, color: "#0B6B3A" }}>✓ {x}</p>)}
           {cons.map((x) => <p key={x} style={{ margin: "0 0 2px", fontSize: 10, color: "#D95C5C" }}>✕ {x}</p>)}
         </>))}
@@ -467,11 +566,23 @@ const MAP10: Array<[string, string[]]> = [
 export function MengniuMinimap({ n = "10" }: { n?: string }) {
   const [o, setO] = useState(2);
   const [f, setF] = useState("1F");
-  const mapGlyph = (variant: number) => <span aria-hidden="true" style={{ display: "block", height: 74, borderRadius: 7, background: variant === 2 ? "repeating-linear-gradient(0deg,#eef7f1 0 12px,#dcebe1 12px 13px), repeating-linear-gradient(90deg,transparent 0 16px,#cfd8d1 16px 17px)" : variant === 1 ? "linear-gradient(90deg,#eef7f1 33%,#f7fbf8 33% 66%,#eef7f1 66%)" : "#f2f6f3", border: "1px solid #d8dcd8", position: "relative", marginBottom: 6 }}>
-    <span style={{ position: "absolute", left: "38%", top: "40%", width: 9, height: 9, borderRadius: "50%", background: GREEN, border: "2px solid #fff" }} />
-    <span style={{ position: "absolute", left: "62%", top: "22%", width: 6, height: 6, borderRadius: "50%", background: "#8a93a0" }} />
-    <span style={{ position: "absolute", left: "20%", top: "62%", width: 6, height: 6, borderRadius: "50%", background: "#8a93a0" }} />
-  </span>;
+  const mapGlyph = (variant: number) => <svg viewBox="0 0 160 74" style={{ display: "block", width: "100%", height: 74, borderRadius: 7, border: "1px solid #d8dcd8", marginBottom: 6, background: "#f7faf7" }} aria-hidden="true">
+    {variant === 0 ? <g stroke="#9db8a7" fill="none" strokeWidth="1.3">
+      {[16, 32, 48].map((y) => <line key={y} x1="8" y1={y} x2="152" y2={y} />)}
+      <line x1="80" y1="6" x2="80" y2="68" strokeDasharray="4 3" />
+      {[[40, 24], [104, 40], [62, 56], [126, 20]].map(([x, y]) => <circle key={`${x}${y}`} cx={x} cy={y} r="3" fill={GREEN} stroke="none" />)}
+    </g> : variant === 1 ? <g strokeWidth="1.2">
+      <rect x="8" y="8" width="66" height="26" fill="#dcebe1" stroke="#9db8a7" /><rect x="86" y="8" width="66" height="26" fill="#eef7f1" stroke="#9db8a7" />
+      <rect x="8" y="42" width="66" height="26" fill="#eef7f1" stroke="#9db8a7" /><rect x="86" y="42" width="66" height="26" fill="#cdeedb" stroke="#9db8a7" />
+      <circle cx="112" cy="52" r="3.4" fill={GREEN} stroke="none" /><circle cx="34" cy="20" r="3" fill="#8a93a0" stroke="none" />
+    </g> : <g stroke="#9db8a7" fill="none" strokeWidth="1.1">
+      {[0, 1, 2, 3, 4, 5].map((c) => <line key={c} x1={14 + c * 22} y1="8" x2={14 + c * 22} y2="66" />)}
+      {[0, 1, 2].map((r) => <line key={r} x1="8" y1={12 + r * 24} x2="152" y2={12 + r * 24} />)}
+      <line x1="8" y1="37" x2="152" y2="37" stroke={GREEN} strokeWidth="2.4" />
+      <circle cx="80" cy="37" r="5" stroke={GREEN} strokeWidth="2" /><circle cx="80" cy="37" r="1.8" fill={GREEN} stroke="none" />
+      {[[36, 24], [124, 50], [58, 58]].map(([x, y]) => <circle key={`${x}${y}`} cx={x} cy={y} r="2.4" fill="#37424e" stroke="none" />)}
+    </g>}
+  </svg>;
   return <Mn n={n} title="Minimap and Selection Explorations" sub="From broad barn layout to pen-level precision." label="Mengniu minimap explorations — interactive rebuild">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr) 1.35fr", gap: 9, alignItems: "start" }}>
       {MAP10.map(([name, verdicts], i) => <button key={name} type="button" onClick={() => setO(i)} aria-pressed={o === i} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${o === i ? GREEN : "#e2e8e2"}`, borderRadius: 11, padding: "9px 11px", cursor: "pointer", font: "inherit", color: "#141a21" }}>
@@ -482,9 +593,19 @@ export function MengniuMinimap({ n = "10" }: { n?: string }) {
       <div style={{ background: "#fff", border: `2px solid ${GREEN}`, borderRadius: 11, padding: "10px 12px" }}>
         <b style={{ fontSize: 12.5 }}>Final Minimap Treatment</b>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 92px 30px", gap: 8, marginTop: 7, alignItems: "start" }}>
-          <span aria-hidden="true" style={{ display: "block", height: 120, borderRadius: 7, background: "repeating-linear-gradient(0deg,#eef7f1 0 14px,#dcebe1 14px 15px), repeating-linear-gradient(90deg,transparent 0 18px,#cfd8d1 18px 19px)", border: "1px solid #d8dcd8", position: "relative" }}>
-            <span style={{ position: "absolute", left: "44%", top: "46%", width: 11, height: 11, borderRadius: "50%", background: GREEN, border: "2px solid #fff" }} />
-          </span>
+          <svg viewBox="0 0 220 120" style={{ display: "block", width: "100%", height: 120, borderRadius: 7, border: "1px solid #d8dcd8", background: "#fbfdfb" }} aria-hidden="true">
+            <g stroke="#9db8a7" fill="none" strokeWidth="1.1">
+              {[0, 1, 2, 3, 4, 5, 6, 7].map((c) => <line key={c} x1={14 + c * 27} y1="8" x2={14 + c * 27} y2="52" />)}
+              {[0, 1, 2, 3, 4, 5, 6, 7].map((c) => <line key={c} x1={14 + c * 27} y1="68" x2={14 + c * 27} y2="112" />)}
+              <line x1="8" y1="30" x2="212" y2="30" stroke="#dcebe1" /><line x1="8" y1="90" x2="212" y2="90" stroke="#dcebe1" />
+            </g>
+            <line x1="8" y1="60" x2="212" y2="60" stroke={GREEN} strokeWidth="3" />
+            <rect x="188" y="50" width="18" height="20" fill="#cdeedb" stroke={GREEN} />
+            <text x="197" y="63" fontSize="10" fill={GREEN} textAnchor="middle" stroke="none">✚</text>
+            <circle cx="96" cy="60" r="8" fill="none" stroke={GREEN} strokeWidth="2" /><circle cx="96" cy="60" r="3" fill={GREEN} />
+            {[[30, 20], [58, 42], [140, 18], [168, 44], [44, 96], [150, 100], [182, 80]].map(([x, y]) => <circle key={`${x}${y}`} cx={x} cy={y} r="2.4" fill="#37424e" />)}
+            <text x="212" y="14" fontSize="9" fill="#5b6470" textAnchor="end" stroke="none">N ↑</text>
+          </svg>
           <span style={{ background: "#f7fbf8", border: "1px solid #e2e8e2", borderRadius: 8, padding: "6px 8px", fontSize: 9.6, lineHeight: 1.6 }}><b>Cow #8127</b><br />Pen B-12 · Zone 3<br />Activity ✓ Normal<br />Last Feed 2h ago<br />Milking Due 1h</span>
           <span style={{ display: "grid", gap: 3 }}>{["3F", "2F", "1F", "B1"].map((fl) => <button key={fl} type="button" onClick={() => setF(fl)} aria-pressed={f === fl} style={{ background: f === fl ? GREEN : "#fff", color: f === fl ? "#fff" : "#37424e", border: "1px solid #d8dcd8", borderRadius: 5, fontSize: 9.6, padding: "3px 0", cursor: "pointer", fontWeight: 700 }}>{fl}</button>)}</span>
         </div>
@@ -509,9 +630,9 @@ export function MengniuCowOverlay({ n = "11" }: { n?: string }) {
   const [h, setH] = useState(-1);
   const hex = (label: string, value: number | string, big?: boolean): React.CSSProperties => ({ clipPath: "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)", background: big ? GREEN : "#12241ae6", border: "none", color: "#fff", width: big ? 118 : 92, height: big ? 102 : 80, display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontSize: big ? 15 : 12.5, fontWeight: 800, cursor: "pointer" });
   return <Mn n={n} title="" dark label="Mengniu cow 0986 health overlay — interactive rebuild">
-    <div style={{ position: "relative", minHeight: 340, borderRadius: 12, overflow: "hidden", background: "#0d0b09 url(/projects/crops/mengniu/barn-0986.jpg) left center / auto 100% no-repeat", padding: "18px 14px" }}>
-      <p aria-hidden="true" style={{ position: "absolute", inset: "0 0 0 auto", width: "46%", background: "linear-gradient(90deg,transparent,#0d0b09d9 45%)", margin: 0 }} />
-      <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 6, flexWrap: "wrap", position: "relative", paddingRight: 10 }}>
+    <div style={{ position: "relative", minHeight: 380, borderRadius: 12, overflow: "hidden", background: "#0d0b09 url(/projects/crops/mengniu/barn-0986.jpg) center / cover no-repeat", padding: "18px 14px" }}>
+      <p aria-hidden="true" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 55% 60% at 72% 55%, rgba(6,12,8,0.42), transparent 70%)", margin: 0 }} />
+      <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 6, flexWrap: "wrap", position: "relative", paddingRight: 10, marginTop: 58 }}>
         <div style={{ display: "grid", gap: 6 }}>
           {HEX11.slice(0, 3).map(([d, v], i) => <button key={d} type="button" onClick={() => setH(i)} aria-pressed={h === i} style={{ ...hex(d, v), outline: h === i ? `2px solid ${GREEN}` : "none", outlineOffset: 2 }}>{d}<span style={{ fontSize: 17 }}>{v}</span></button>)}
         </div>
@@ -520,28 +641,33 @@ export function MengniuCowOverlay({ n = "11" }: { n?: string }) {
           {HEX11.slice(3).map(([d, v], i) => <button key={d} type="button" onClick={() => setH(i + 3)} aria-pressed={h === i + 3} style={{ ...hex(d, v), outline: h === i + 3 ? `2px solid ${GREEN}` : "none", outlineOffset: 2 }}>{d}<span style={{ fontSize: 17 }}>{v}</span></button>)}
         </div>
       </div>
-      <p aria-live="polite" style={{ margin: "12px 0 0", textAlign: "right", fontSize: 11.4, color: "#cfe3d6", position: "relative" }}>{h === -1 ? "Cow 0986 — overall state Healthy. Select a hexagon to read a dimension." : `${HEX11[h][0]} ${HEX11[h][1]} — one of the six health dimensions overlaid on the animal in the barn.`}</p>
+      <p aria-live="polite" style={{ margin: "16px 0 0 auto", textAlign: "right", fontSize: 11.4, color: "#e6f2ea", position: "relative", background: "rgba(6,12,8,0.62)", borderRadius: 8, padding: "6px 10px", maxWidth: 430 }}>{h === -1 ? "Cow 0986 — overall state Healthy. Select a hexagon to read a dimension." : `${HEX11[h][0]} ${HEX11[h][1]} — one of the six health dimensions overlaid on the animal in the barn.`}</p>
     </div>
   </Mn>;
 }
 
 /* ---------------- 12 — Constraints ---------------- */
 const CONS12: Array<[string, string, string]> = [
-  ["Sensor signals were virtual and simulated", "The prototype did not connect to live farm sensors; all values were simulated to demonstrate behavior and interaction.", "⬡"],
-  ["Farm environment and layout were synthetic", "Barn maps were hand-modeled for clarity, not surveyed from a specific Mengniu facility.", "⬡"],
-  ["AI and model logic were illustrative", "Health scores combined simple rules; the production model was out of prototype scope.", "⬡"],
-  ["Single-operator, desktop-first scope", "The prototype targeted one operator role on desktop; roles and mobile were scoped out.", "⬡"],
-  ["No live farm trial during the prototype", "Evaluation happened in a review setting; field validation was proposed future work (file 19).", "⬡"],
+  ["Limited access to production users and live farm systems", "Restricted access for observation, testing, and user validation.", "🔒"],
+  ["Complex biological and operational domain", "High domain complexity requires careful research and validation.", "🧬"],
+  ["Need to communicate to both technical and non-technical reviewers", "Deliver clear, relevant insights across diverse audiences.", "👥"],
+  ["Solo ownership across design and engineering", "End-to-end responsibility from discovery to delivery.", "👤"],
+  ["Need to produce a working prototype and a final presentation within the project period", "Tight timeline requires strong prioritization and execution.", "📅"],
 ];
 export function MengniuConstraints({ n = "12" }: { n?: string }) {
   const [c, setC] = useState(0);
-  const card = (i: number, wide?: boolean) => <button key={CONS12[i][0]} type="button" onClick={() => setC(i)} aria-pressed={c === i} style={{ gridColumn: wide ? "1 / -1" : undefined, textAlign: "left", background: "#11161a", border: `1.5px solid ${c === i ? GREEN : "#232a2e"}`, borderRadius: 13, padding: "14px 16px", cursor: "pointer", font: "inherit", color: "#e8eef5" }}>
-    <span aria-hidden="true" style={{ fontSize: 21, color: GREEN }}>{CONS12[i][2]}</span>
-    <b style={{ display: "block", fontSize: 14.5, margin: "6px 0 4px" }}>{CONS12[i][0]}</b>
-    <span aria-hidden="true" style={{ display: "block", width: 34, height: 3, background: GREEN, borderRadius: 2, marginBottom: 7 }} />
-    <span style={{ display: "block", fontSize: 11.3, lineHeight: 1.65, color: "#aeb9c2" }}>{CONS12[i][1]}</span>
+  const hexIcon = (glyph: string) => <span aria-hidden="true" style={{ flex: "none", width: 86, height: 96, background: "#2a3a30", clipPath: "polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+    <span style={{ width: 82, height: 92, background: "#10160f", clipPath: "polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 34 }}>{glyph}</span>
+  </span>;
+  const card = (i: number, wide?: boolean) => <button key={CONS12[i][0]} type="button" onClick={() => setC(i)} aria-pressed={c === i} style={{ gridColumn: wide ? "1 / -1" : undefined, textAlign: "left", background: "#11161a", border: `1.5px solid ${c === i ? "#35D07F" : "#232a2e"}`, borderRadius: 13, padding: "16px 18px", cursor: "pointer", font: "inherit", color: "#e8eef5", display: "flex", gap: 16, alignItems: "center" }}>
+    {hexIcon(CONS12[i][2])}
+    <span>
+      <b style={{ display: "block", fontSize: 16.5, lineHeight: 1.35 }}>{CONS12[i][0]}</b>
+      <span aria-hidden="true" style={{ display: "block", width: 34, height: 3, background: "#35D07F", borderRadius: 2, margin: "8px 0" }} />
+      <span style={{ display: "block", fontSize: 11.8, lineHeight: 1.6, color: "#aeb9c2" }}>{CONS12[i][1]}</span>
+    </span>
   </button>;
-  return <Mn n={n} title="Constraints" sub="What shaped and bounded this body of work." dark center rule label="Mengniu constraints — interactive rebuild">
+  return <Mn n={n} title="Constraints" dark center rule label="Mengniu constraints — interactive rebuild">
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
       {card(0)}{card(1)}{card(2)}{card(3)}{card(4, true)}
     </div>
@@ -550,60 +676,97 @@ export function MengniuConstraints({ n = "12" }: { n?: string }) {
 
 /* ---------------- 13 — Project Snapshot ---------------- */
 const JOURNEY13: Array<[string, string]> = [
-  ["Research", "🔍"], ["Synthesis", "🧩"], ["Concepts", "💡"], ["Wireframes", "▦"], ["Visual Design", "🎨"], ["Prototype", "🖥"], ["Interaction", "👆"], ["System Story", "📖"], ["Review", "✔"], ["Handoff", "📦"],
+  ["Research", "🔍"], ["Product Definition", "🎯"], ["UX", "👤"], ["UI", "▦"], ["3D World", "⬡"], ["Interaction Logic", "🔀"], ["Technical Architecture", "▤"], ["Prototype Build", "</>"], ["Motion", "▶"], ["Final Presentation", "📈"],
+];
+const CONTRIB13: Array<[string, string]> = [
+  ["Dairy operations team", "Provided domain insights"],
+  ["Data engineering team", "Supplied data samples"],
+  ["Infrastructure team", "Provided edge devices"],
+  ["Stakeholders", "Reviewed & validated"],
 ];
 export function MengniuSnapshot({ n = "13" }: { n?: string }) {
   const [j, setJ] = useState(9);
-  const card = (title: string, body: React.ReactNode) => <div style={{ background: "#fff", border: "1px solid #e6e0cf", borderRadius: 11, padding: "10px 13px" }}><p className="tks-kicker" style={{ marginTop: 0 }}>{title}</p>{body}</div>;
-  const p = (t: string) => <p style={{ margin: 0, fontSize: 11.2, lineHeight: 1.65 }}>{t}</p>;
-  return <Mn n={n} title="Project Snapshot" sub="One designer, one prototype, ten weeks." cream label="Mengniu project snapshot — interactive rebuild">
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 250px", gap: 9, alignItems: "start" }}>
-      {card("The Challenge", p("Dairy operations generate complex, high-volume data that is difficult for operators to interpret quickly. The challenge was to design a system prototype that translates farm and animal data into clear, actionable insight for everyday decision-making."))}
-      {card("The Outcome", p("Delivered a comprehensive high-fidelity prototype including dashboards, spatial navigation (minimap), individual animal profiles, and an end-to-end interaction and system story — ready for review and next-step development."))}
-      <div style={{ display: "grid", gap: 9 }}>
-        {card("Timeline", p("10 weeks — Research and discovery to high-fidelity prototype and handoff. Timeline visuals and detailed case study available separately."))}
-        {card("Product Status", p("Prototype — for evaluation and concept communication; not a production system."))}
+  const block = (icon: string, title: string, body: React.ReactNode) => <div style={{ display: "flex", gap: 11, padding: "9px 0", borderTop: "1px solid #e6e0cf" }}>
+    <span aria-hidden="true" style={{ fontSize: 19, color: GREEN, flex: "none", width: 26, textAlign: "center" }}>{icon}</span>
+    <span><b style={{ display: "block", fontSize: 13 }}>{title}</b><span style={{ display: "block", fontSize: 11.2, lineHeight: 1.6, color: "#37424e", marginTop: 2 }}>{body}</span></span>
+  </div>;
+  return <Mn n={n} title="Project Snapshot" sub="End-to-end solo ownership of a dairy farm digital twin prototype." cream label="Mengniu project snapshot — interactive rebuild">
+    <p className="tks-kicker" style={{ margin: "0 0 4px", color: GREEN }}>SOLO OWNERSHIP JOURNEY</p>
+    <div style={{ display: "flex", alignItems: "flex-start" }}>
+      {JOURNEY13.map(([name, icon], i) => <button key={name} type="button" onClick={() => setJ(i)} aria-pressed={j === i} style={{ flex: 1, background: "transparent", border: "none", cursor: "pointer", font: "inherit", textAlign: "center", padding: "2px 1px", position: "relative", color: "#141a21" }}>
+        {i < 9 ? <span aria-hidden="true" style={{ position: "absolute", top: 52, left: "56%", width: "88%", borderTop: `2.5px solid ${GREEN}` }} /> : null}
+        <span style={{ display: "block", fontSize: 10.5, fontWeight: 800, color: GREEN }}>{String(i + 1).padStart(2, "0")}</span>
+        <span style={{ display: "block", fontSize: 10.3, fontWeight: 700, lineHeight: 1.25, margin: "3px 0 5px", minHeight: 26 }}>{name}</span>
+        <span aria-hidden="true" style={{ display: "inline-flex", width: 30, height: 30, alignItems: "center", justifyContent: "center", fontSize: 15, color: j === i ? GREEN : "#37424e", position: "relative", zIndex: 1 }}>{icon}</span>
+        <span aria-hidden="true" style={{ display: "flex", justifyContent: "center", marginTop: 5 }}><span style={{ width: 17, height: 17, borderRadius: "50%", background: GREEN, color: "#fff", fontSize: 10, display: "inline-flex", alignItems: "center", justifyContent: "center", position: "relative", zIndex: 1 }}>✓</span></span>
+        <span style={{ display: "block", fontSize: 8.8, color: "#0B6B3A", marginTop: 3 }}>Personally owned</span>
+      </button>)}
+    </div>
+    <div style={{ display: "flex", gap: 12, alignItems: "center", background: "#fff", border: "1px solid #e6e0cf", borderRadius: 11, padding: "9px 13px", marginTop: 10, flexWrap: "wrap" }}>
+      <span style={{ fontSize: 11.3 }}><span aria-hidden="true" style={{ marginRight: 6 }}>👥</span><b>Separate research or business contributions, if any</b></span>
+      {CONTRIB13.map(([team, what]) => <span key={team} style={{ fontSize: 10.6, lineHeight: 1.5, borderLeft: "1px solid #e6e0cf", paddingLeft: 12 }}><span style={{ color: GREEN }}>•</span> <b>{team}</b><br /><span style={{ color: "#5b6470" }}>{what}</span></span>)}
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 26px", marginTop: 6 }}>
+      <div>
+        {block("⛰", "The Challenge", "Design and build a realistic, interactive digital twin of a modern dairy farm to visualize operations, monitor animal well-being, and support data-driven decision-making.")}
+        {block("🎯", "The Outcome", "An immersive prototype that unifies real-time data, 3D visualization, and intelligent interactions—helping stakeholders explore insights and improve farm efficiency.")}
+        {block("👤", "Role", <><b>Product Designer & Developer (End-to-end)</b><br />Solo-owned across research, design, development and delivery.</>)}
       </div>
-    </div>
-    <div style={{ background: "#fff", border: "1px solid #e6e0cf", borderRadius: 11, padding: "10px 13px", marginTop: 9 }}>
-      <p className="tks-kicker" style={{ marginTop: 0 }}>Solo Ownership Journey — 10 stops, each personally owned</p>
-      <div style={{ display: "flex", alignItems: "flex-start" }}>
-        {JOURNEY13.map(([name, icon], i) => <button key={name} type="button" onClick={() => setJ(i)} aria-pressed={j === i} style={{ flex: 1, background: "transparent", border: "none", cursor: "pointer", font: "inherit", textAlign: "center", padding: "2px 1px", position: "relative", color: "#141a21" }}>
-          {i < 9 ? <span aria-hidden="true" style={{ position: "absolute", top: 21, left: "58%", width: "84%", borderTop: `2.5px solid ${GREEN}` }} /> : null}
-          <span style={{ display: "block", fontSize: 10.5, fontWeight: 800, color: GREEN }}>{String(i + 1).padStart(2, "0")}</span>
-          <span aria-hidden="true" style={{ display: "inline-flex", width: 30, height: 30, borderRadius: "50%", background: j === i ? GREEN : "#eef7f1", border: `1.5px solid ${GREEN}`, alignItems: "center", justifyContent: "center", fontSize: 13, position: "relative", zIndex: 1 }}>{icon}</span>
-          <span style={{ display: "block", fontSize: 9.8, fontWeight: 700, lineHeight: 1.3, marginTop: 3 }}>{name}</span>
-          <span style={{ display: "block", fontSize: 8.8, color: "#5b6470" }}>Personally owned ✓</span>
-        </button>)}
+      <div>
+        {block("📅", "Timeline", <><b>10 Weeks</b><br />Jan 2024 – Mar 2024</>)}
+        {block("📊", "Product Status", <><b>Prototype Phase</b><br />Presented to leadership and operations teams.</>)}
+        {block("</>", "Technical Stack Summary", "Unity • C# • Blazor • .NET • SQL Server • InfluxDB · WebGL • Three.js • Figma • Adobe After Effects")}
       </div>
-    </div>
-    <div style={{ display: "flex", marginTop: 9, background: "#fff", border: "1px solid #e6e0cf", borderRadius: 11, overflow: "hidden" }}>
-      {[["◉", "User Experience", "Conceptualization of user journeys and interaction flows."], ["▤", "Interface Design", "Layout, components, dashboards, and data visualization."], ["⬡", "Design System", "Typography, color, iconography, and spacing standards."], ["⚙", "Prototyping", "Interactive high-fidelity prototypes for review and testing."]].map(([icon, t, b], i) => <span key={t} style={{ flex: 1, padding: "9px 12px", borderLeft: i ? "1px solid #e6e0cf" : "none" }}><b style={{ display: "block", fontSize: 11.2, color: "#0B6B3A" }}>{icon} {t}</b><span style={{ fontSize: 10.2, lineHeight: 1.55, color: "#4a5462" }}>{b}</span></span>)}
-    </div>
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 22px", marginTop: 10, fontSize: 11.2, lineHeight: 1.6 }}>
-      {[["⬡", "End-to-end ownership of the full product design process."], ["🎯", "Translated complex operational data into intuitive visuals."], ["🔗", "Connected spatial, animal, and system-level perspectives."], ["▤", "Created scalable foundations for future product development."], ["👆", "Designed interactions optimized for speed and clarity."], ["✔", "Delivered presentation-ready artifacts and a clear system story."]].map(([icon, t]) => <p key={t} style={{ margin: 0 }}><span aria-hidden="true" style={{ color: GREEN, marginRight: 7 }}>{icon}</span>{t}</p>)}
     </div>
   </Mn>;
 }
 
 /* ---------------- 14 — Why Dairy Cow Health Matters ---------------- */
-const WHY14: Array<[string, string, string]> = [
-  ["Healthy Cows, Healthy Foundation", "Healthy cows produce better milk, reproduce more reliably, and live longer, more productive lives.", "🐄🛡"],
-  ["From Reactive Care to Proactive Health", "Early detection and prevention reduce disease, stress, and losses — improving welfare and operational outcomes.", "🏠📈"],
-  ["Data That Drives Better Decisions", "Continuous monitoring and clear insights enable timely action, optimized resources, and sustainable farming.", "🥛✔"],
+const WHY14: Array<[string, string]> = [
+  ["Cow Health", "Healthy animals are the foundation of stable farm performance."],
+  ["Farm Operations", "Operator decisions depend on timely, interpretable barn signals."],
+  ["Milk Quality", "Consistent welfare and process control support more reliable milk outcomes."],
 ];
+const LINE14 = "#14532d";
+const art14 = (i: number) => <svg viewBox="0 0 200 200" style={{ width: "100%", height: "100%", display: "block" }} aria-hidden="true">
+  {i === 0 ? <g fill="none" stroke={LINE14} strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M38 62 C20 52 12 62 18 76 C22 86 34 90 44 88" />
+    <path d="M162 62 C180 52 188 62 182 76 C178 86 166 90 156 88" />
+    <path d="M52 44 C70 32 130 32 148 44 C156 70 154 96 146 118 C138 142 124 158 100 158 C76 158 62 142 54 118 C46 96 44 70 52 44 Z" />
+    <path d="M62 118 C76 108 124 108 138 118 C136 140 122 152 100 152 C78 152 64 140 62 118 Z" />
+    <circle cx="76" cy="82" r="3.4" fill={LINE14} /><circle cx="124" cy="82" r="3.4" fill={LINE14} />
+    <ellipse cx="86" cy="132" rx="5" ry="7" /><ellipse cx="114" cy="132" rx="5" ry="7" />
+    <path d="M138 118 L168 108 L168 138 C168 156 154 166 138 172 C122 166 108 156 108 138 L108 122" fill="#2e9e5b" stroke="none" />
+    <path d="M124 140 L134 150 L152 128" stroke="#fff" strokeWidth="5" fill="none" />
+  </g> : i === 1 ? <g fill="none" stroke={LINE14} strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 158 L22 84 L100 34 L150 66" />
+    <path d="M150 66 L150 108" /><path d="M22 158 L128 158" />
+    <rect x="86" y="66" width="28" height="24" />
+    <path d="M44 158 L44 106 L84 106 L84 158 M44 106 L84 158 M84 106 L44 158" />
+    <rect x="104" y="104" width="74" height="56" rx="6" fill="#fff" />
+    <polyline points="112,138 126,124 138,132 152,112 168,118" stroke="#2e9e5b" />
+    <line x1="114" y1="146" x2="120" y2="146" stroke="#2e9e5b" /><line x1="126" y1="146" x2="132" y2="146" stroke="#2e9e5b" /><line x1="138" y1="146" x2="144" y2="146" stroke="#2e9e5b" /><line x1="150" y1="146" x2="156" y2="146" stroke="#2e9e5b" />
+    <path d="M158 84 a12 12 0 0 1 12 12 M150 92 a6 6 0 0 1 6 6" stroke="#2e9e5b" />
+  </g> : <g fill="none" stroke={LINE14} strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M70 30 L130 30 L130 44 C144 50 150 60 150 74 L150 158 C150 166 144 170 136 170 L64 170 C56 170 50 166 50 158 L50 74 C50 60 56 50 70 44 Z" />
+    <line x1="62" y1="46" x2="138" y2="46" /><line x1="58" y1="66" x2="142" y2="66" />
+    <path d="M100 92 C112 108 118 118 118 130 a18 18 0 1 1 -36 0 C82 118 88 108 100 92 Z" />
+    <circle cx="146" cy="146" r="21" fill="#2e9e5b" stroke="none" />
+    <path d="M134 146 L143 155 L159 137" stroke="#fff" strokeWidth="5" />
+  </g>}
+</svg>;
 export function MengniuWhyHealth({ n = "14" }: { n?: string }) {
   const [w, setW] = useState(0);
-  return <Mn n={n} title={<span style={{ color: "#0B6B3A" }}>Why Dairy Cow Health Matters</span>} center label="Mengniu why health matters — interactive rebuild">
+  return <Mn n={n} title={<span style={{ color: "#0B6B3A" }}>Why Dairy Cow Health Matters</span>} sub="Welfare, operations, and milk quality are tightly connected." center label="Mengniu why health matters — interactive rebuild">
     <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr auto 1fr", gap: 8, alignItems: "start" }}>
-      {WHY14.map(([t, b, icon], i) => <span key={t} style={{ display: "contents" }}>
+      {WHY14.map(([t, b], i) => <span key={t} style={{ display: "contents" }}>
         <button type="button" onClick={() => setW(i)} aria-pressed={w === i} style={{ background: "transparent", border: "none", cursor: "pointer", font: "inherit", textAlign: "center", color: "#141a21", padding: "4px 6px" }}>
-          <span aria-hidden="true" style={{ width: 96, height: 96, borderRadius: "50%", border: `2.5px solid ${w === i ? GREEN : "#9db8a7"}`, background: "#eef7f1", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 27 }}>{icon}</span>
-          <b style={{ display: "block", fontSize: 13.5, lineHeight: 1.4, marginTop: 10 }}>{t}</b>
+          <span aria-hidden="true" style={{ width: 168, height: 168, borderRadius: "50%", border: `2px solid ${w === i ? GREEN : "#b9cdc2"}`, background: "#f2f8f3", display: "inline-flex", alignItems: "center", justifyContent: "center", padding: 16, boxSizing: "border-box" }}>{art14(i)}</span>
+          <b style={{ display: "block", fontSize: 17, lineHeight: 1.4, marginTop: 12, color: "#0B6B3A" }}>{t}</b>
           <span aria-hidden="true" style={{ display: "block", width: 40, height: 3, background: GREEN, borderRadius: 2, margin: "7px auto" }} />
-          <span style={{ display: "block", fontSize: 11.2, lineHeight: 1.65, color: "#4a5462" }}>{b}</span>
+          <span style={{ display: "block", fontSize: 11.6, lineHeight: 1.65, color: "#4a5462" }}>{b}</span>
         </button>
-        {i < 2 ? <span aria-hidden="true" style={{ fontSize: 24, color: GREEN, alignSelf: "center" }}>→</span> : null}
+        {i < 2 ? <span aria-hidden="true" style={{ fontSize: 26, color: GREEN, alignSelf: "start", marginTop: 76 }}>→</span> : null}
       </span>)}
     </div>
     <p aria-hidden="true" style={{ margin: "16px 0 0", height: 16, borderRadius: "50%", background: "linear-gradient(180deg,transparent,#d9eadd)" }} />
@@ -612,7 +775,7 @@ export function MengniuWhyHealth({ n = "14" }: { n?: string }) {
 }
 
 /* ---------------- 15 — Research Evidence ---------------- */
-const HL = ({ children }: { children: React.ReactNode }) => <span style={{ background: "#CDEEDB", borderRadius: 2, padding: "0 2px" }}>{children}</span>;
+const HL = ({ children }: { children: React.ReactNode }) => <span style={{ background: "#CDEEDB", color: "#12241a", borderRadius: 2, padding: "0 2px" }}>{children}</span>;
 const RES15: Array<[string, string, string]> = [
   ["Journal of Dairy Science — Review Article", "Transition Period Management and Early Lactation Performance in Dairy Cows", "Focus: Transition health, metabolic balance, and early-lactation performance."],
   ["Journal of Dairy Science — Review Article", "Management and Welfare of Dairy Cows in Automated Milking Systems", "Focus: Automation, cow traffic, and welfare outcomes."],
@@ -623,19 +786,27 @@ const TAKE15: Array<[string, string, string]> = [
   ["❤", "Health & Welfare", "Comfort and housing design directly affect health outcomes and longevity."],
   ["🤖", "Automation Value", "AMS improves consistency but requires careful traffic and system management."],
 ];
+const cowSketch15 = <svg viewBox="0 0 120 44" style={{ width: 104, height: 38, display: "block" }} aria-hidden="true"><g fill="none" stroke="#7fb894" strokeWidth="1.7" strokeLinecap="round">
+  <path d="M8 30 C8 19 15 14 29 13 L58 12 C68 12 75 15 80 20 L90 18 L88 26 C82 33 73 36 62 36 L20 36 C13 36 8 34 8 30 Z" />
+  <path d="M80 20 C87 15 93 14 98 16" /><circle cx="102" cy="19" r="4.5" /><path d="M18 36 L18 42 M72 36 L72 42" />
+</g></svg>;
 export function MengniuResearchEvidence({ n = "15" }: { n?: string }) {
   const [a, setA] = useState(0);
-  const article = (idx: number, big?: boolean) => <button key={RES15[idx][1]} type="button" onClick={() => setA(idx)} aria-pressed={a === idx} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${a === idx ? GREEN : "#e2e8e2"}`, borderRadius: 12, padding: "11px 13px", cursor: "pointer", font: "inherit", color: "#141a21", width: "100%" }}>
-    <span style={{ display: "block", fontSize: 9.8, fontWeight: 800, letterSpacing: "0.07em", color: "#0B6B3A" }}>{RES15[idx][0]}</span>
+  const article = (idx: number, big?: boolean) => <button key={RES15[idx][1]} type="button" onClick={() => setA(idx)} aria-pressed={a === idx} style={{ textAlign: "left", background: "#131a15", border: `1.5px solid ${a === idx ? "#35D07F" : "#263128"}`, borderRadius: 12, padding: "11px 13px", cursor: "pointer", font: "inherit", color: "#e8eef5", width: "100%" }}>
+    <span style={{ display: "block", fontSize: 9.8, fontWeight: 800, letterSpacing: "0.07em", color: "#35D07F" }}>{RES15[idx][0]}</span>
     <b style={{ display: "block", fontSize: big ? 14.5 : 12.6, lineHeight: 1.4, margin: "3px 0" }}>{RES15[idx][1]}</b>
-    <span style={{ display: "block", fontSize: 10.6, lineHeight: 1.6, color: "#4a5462" }}>{RES15[idx][2]}</span>
+    <span style={{ display: "block", fontSize: 10.6, lineHeight: 1.6, color: "#aeb9c2" }}>{RES15[idx][2]}</span>
     {big ? <span style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginTop: 9 }}>
-      {TAKE15.map(([icon, t, b]) => <span key={t} style={{ borderTop: `2px solid ${GREEN}`, paddingTop: 6 }}><b style={{ display: "block", fontSize: 10.6 }}>{icon} {t}</b><span style={{ fontSize: 9.8, lineHeight: 1.55, color: "#4a5462" }}>{b}</span></span>)}
+      {TAKE15.map(([icon, t, b]) => <span key={t} style={{ borderTop: "2px solid #35D07F", paddingTop: 6 }}><b style={{ display: "block", fontSize: 10.6 }}>{icon} {t}</b><span style={{ fontSize: 9.8, lineHeight: 1.55, color: "#aeb9c2" }}>{b}</span></span>)}
     </span> : null}
+    {!big ? <span style={{ display: "block", marginTop: 7 }}>{cowSketch15}</span> : null}
   </button>;
-  return <Mn n={n} title="Research Evidence" sub={<>Peer-reviewed findings behind the prototype decisions — on <HL>dairy productivity:</HL> <HL>transition health</HL>, welfare, and <HL>cow longevity:</HL> as the printed slide highlights them.</>} label="Mengniu research evidence — interactive rebuild">
+  return <Mn n={n} title={<span style={{ color: "#fff" }}>Research Evidence</span>} sub={<span style={{ color: "#aeb9c2" }}>Peer-reviewed findings behind the prototype decisions — on <HL>dairy productivity:</HL> <HL>transition health</HL>, welfare, and <HL>cow longevity:</HL> as the printed slide highlights them.</span>} dark label="Mengniu research evidence — interactive rebuild">
     <div style={{ display: "grid", gridTemplateColumns: "1.25fr 1fr", gap: 9, alignItems: "start" }}>
-      {article(0, true)}
+      <div>
+        <img src="/projects/crops/mengniu/res15-barn.jpg" alt="Barn interior photograph inside the printed lead article card (crop, no text)" style={{ display: "block", width: "100%", height: 118, objectFit: "cover", borderRadius: 10, marginBottom: 9 }} />
+        {article(0, true)}
+      </div>
       <div style={{ display: "grid", gap: 9 }}>{article(1)}{article(2)}</div>
     </div>
     <p style={{ margin: "11px 0 0", background: "#0B6B3A", color: "#fff", borderRadius: 9, padding: "9px 14px", fontSize: 11.4, lineHeight: 1.6 }}>Peer-reviewed research provides the scientific foundation — the printed footer, transcribed as printed: "This collage summarizes archived research themes related to dairy productivity, transition health, animal welfare, and cow longevity. Exact citations and full references appear in the page caption."</p>
@@ -647,11 +818,21 @@ const OPP16 = "How might a farm operator understand the condition of an animal a
 export function MengniuOpportunity({ n = "16" }: { n?: string }) {
   const [lit, setLit] = useState(false);
   return <Mn n={n} title={<span style={{ fontSize: 15, letterSpacing: "0.14em", color: GREEN, fontWeight: 800 }}>OPPORTUNITY STATEMENT</span>} cream label="Mengniu opportunity statement — interactive rebuild">
-    <div style={{ borderTop: "1px solid #d8d2bd", position: "relative", margin: "6px 0 26px" }}><span aria-hidden="true" style={{ position: "absolute", right: 0, top: -9, fontSize: 15 }}>🍃</span></div>
-    <button type="button" onClick={() => setLit(!lit)} aria-pressed={lit} style={{ display: "block", width: "100%", textAlign: "left", background: "transparent", border: "none", padding: 0, cursor: "pointer", font: "inherit" }}>
-      <span style={{ display: "block", fontSize: 33, lineHeight: 1.45, fontWeight: 650, color: "#12241a", maxWidth: 800 }}>{OPP16.split(" ").map((w, i) => <span key={i} style={{ background: lit && (w === "condition" || w === "state" || w === "disconnected") ? "#CDEEDB" : "transparent", borderRadius: 3 }}>{w} </span>)}</span>
-    </button>
-    <p style={{ margin: "22px 0 0", fontSize: 11, color: "#5b6470" }}>{lit ? "Key phrases highlighted — the printed slide carries the statement alone, in one uniform colour, on a cream page." : "Select the statement to highlight its three key phrases."}</p>
+    <div style={{ minHeight: 356, display: "flex", flexDirection: "column" }}>
+      <div style={{ borderTop: "1px solid #d8d2bd", position: "relative", margin: "6px 0 0" }}>
+        <svg viewBox="0 0 120 60" aria-hidden="true" style={{ position: "absolute", right: 0, top: -14, width: 108, height: 54, display: "block" }}>
+          <path d="M104 6 C74 8 44 22 30 48 C56 46 88 34 104 6 Z" fill="none" stroke={GREEN} strokeWidth="2" />
+          <path d="M34 44 C54 30 78 18 100 10" fill="none" stroke="#7fb894" strokeWidth="1.6" />
+          <path d="M52 36 q4 -8 12 -9 M66 28 q4 -8 12 -9 M80 20 q4 -7 11 -8" fill="none" stroke="#7fb894" strokeWidth="1.3" />
+        </svg>
+      </div>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        <button type="button" onClick={() => setLit(!lit)} aria-pressed={lit} style={{ display: "block", width: "100%", textAlign: "left", background: "transparent", border: "none", padding: 0, cursor: "pointer", font: "inherit" }}>
+          <span style={{ display: "block", fontSize: 39, lineHeight: 1.42, fontWeight: 650, color: "#12241a", maxWidth: 820 }}>{OPP16.split(" ").map((w, i) => <span key={i} style={{ background: lit && (w === "condition" || w === "state" || w === "disconnected") ? "#CDEEDB" : "transparent", borderRadius: 3 }}>{w} </span>)}</span>
+        </button>
+        <p style={{ margin: "26px 0 0", fontSize: 11, color: "#5b6470" }}>{lit ? "Key phrases highlighted — the printed slide carries the statement alone, in one uniform colour, on a cream page." : "Select the statement to highlight its three key phrases."}</p>
+      </div>
+    </div>
   </Mn>;
 }
 
@@ -688,13 +869,7 @@ export function MengniuSystemMap({ n = "17" }: { n?: string }) {
 /* ---------------- 18 — Real Farm and Simulated Farm ---------------- */
 export function MengniuRealVsSim({ n = "18" }: { n?: string }) {
   const [side, setSide] = useState(0);
-  const barnArt = (sim: boolean) => <span aria-hidden="true" style={{ display: "block", height: 190, borderRadius: 9, position: "relative", overflow: "hidden", background: sim ? "linear-gradient(180deg,#2c3e33 0%,#1d2a22 60%,#141d17 100%)" : "linear-gradient(180deg,#4a3b2a 0%,#33291d 60%,#241d15 100%)" }}>
-    <span style={{ position: "absolute", inset: "18% 12% 8%", border: "2px solid #ffffff2e", borderRadius: 6, background: "repeating-linear-gradient(90deg,transparent 0 34px,#ffffff14 34px 36px)" }} />
-    <span style={{ position: "absolute", left: "47%", top: 0, bottom: 0, width: 14, background: "#ffffff1c" }} />
-    <span style={{ position: "absolute", left: "30%", top: "38%", fontSize: 20 }}>{sim ? "🐄" : "🐄"}</span>
-    <span style={{ position: "absolute", left: "58%", top: "55%", fontSize: 20 }}>🐄</span>
-    {sim ? <span style={{ position: "absolute", right: 10, top: 8, fontSize: 9.5, color: "#9fe8bb", border: "1px solid #35D07F", borderRadius: 999, padding: "1px 8px" }}>3D TWIN</span> : null}
-  </span>;
+  const barnArt = (sim: boolean) => <img src={sim ? "/projects/crops/mengniu/real18-b.jpg" : "/projects/crops/mengniu/real18-a.jpg"} alt={sim ? "Simulated digital twin barn photograph from the printed slide (crop)" : "Real barn environment photograph from the printed slide (crop)"} style={{ display: "block", width: "100%", height: 215, objectFit: "cover", borderRadius: 9 }} />;
   const panelBtn = (idx: number, badge: string, caption: string, sim: boolean) => <button type="button" onClick={() => setSide(idx)} aria-pressed={side === idx} style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer", font: "inherit", textAlign: "left", color: "#e8eef5" }}>
     <span style={{ display: "block", position: "relative", outline: side === idx ? `2px solid ${GREEN}` : "2px solid transparent", outlineOffset: 3, borderRadius: 9 }}>
       {barnArt(sim)}
@@ -713,59 +888,65 @@ export function MengniuRealVsSim({ n = "18" }: { n?: string }) {
 
 /* ---------------- 19 — Scope Boundary ---------------- */
 const BUILT19: Array<[string, string]> = [
-  ["🖥", "Interactive dashboard and spatial barn views"],
-  ["🐄", "Individual cow profile with health dimensions"],
-  ["▦", "Minimap with pen-level selection"],
-  ["🥛", "Automated milking workflow visualization"],
-  ["⬡", "Simulated sensor data and state logic"],
-  ["📖", "End-to-end interaction and system story"],
+  ["⬡", "Simulated 3D barn environment"],
+  ["🐄", "Cow-level selection and focus"],
+  ["💚", "Six-dimension health interface"],
+  ["▦", "Minimap or barn overview"],
+  ["🥛", "Multi-stage milking workflow"],
+  ["👆", "Demonstrative interaction logic"],
 ];
 const PROPOSED19: Array<[string, string]> = [
-  ["📡", "Live sensor and RFID integration"],
-  ["☁", "Production data platform and APIs"],
-  ["🧠", "Trained health models on farm data"],
-  ["👥", "Multi-role access and farm management"],
-  ["🔔", "Real alerting, tasks, and escalation"],
+  ["📡", "Live sensor ingestion"],
+  ["🔗", "Cross-farm data integration"],
+  ["🧠", "Federated-learning deployment"],
+  ["✔", "Production validation"],
+  ["👥", "Operator rollout"],
 ];
 export function MengniuScope({ n = "19" }: { n?: string }) {
   const [s, setS] = useState(-1);
   const panelList = (items: Array<[string, string]>, color: string, offset: number) => <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
-    {items.map(([icon, t], i) => <li key={t}><button type="button" onClick={() => setS(offset + i)} aria-pressed={s === offset + i} style={{ width: "100%", textAlign: "left", background: s === offset + i ? "#f4f8f5" : "transparent", border: "none", borderBottom: "1px solid #e6ece6", padding: "8px 6px", cursor: "pointer", font: "inherit", fontSize: 11.8, color: "#141a21", display: "flex", gap: 9, alignItems: "center" }}><span aria-hidden="true" style={{ color, fontSize: 14 }}>{icon}</span>{t}</button></li>)}
+    {items.map(([icon, t], i) => <li key={t}><button type="button" onClick={() => setS(offset + i)} aria-pressed={s === offset + i} style={{ width: "100%", textAlign: "left", background: s === offset + i ? "#1a261e" : "transparent", border: "none", borderBottom: "1px solid #263128", padding: "10px 6px", cursor: "pointer", font: "inherit", fontSize: 12.6, color: "#e8eef5", display: "flex", gap: 11, alignItems: "center" }}><span aria-hidden="true" style={{ width: 40, height: 35, flex: "none", background: "#0d130e", border: `1.5px solid ${color}`, clipPath: "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 15, color }}>{icon}</span>{t}</button></li>)}
   </ul>;
-  return <Mn n={n} title="Scope Boundary" center label="Mengniu scope boundary — interactive rebuild">
-    <span aria-hidden="true" style={{ display: "block", height: 3, borderRadius: 2, background: `linear-gradient(90deg, ${GREEN}, ${BLUE})`, boxShadow: `0 0 10px ${GREEN}66`, margin: "0 auto 12px", maxWidth: 420 }} />
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, alignItems: "start" }}>
-      <div style={{ background: "#fff", border: `1.5px solid ${GREEN}`, borderRadius: 12, padding: "12px 14px" }}>
-        <b style={{ display: "block", fontSize: 14, color: GREEN, marginBottom: 6 }}>Built in the Prototype</b>
-        {panelList(BUILT19, GREEN, 0)}
-      </div>
-      <div style={{ background: "#fff", border: `1.5px solid ${BLUE}`, borderRadius: 12, padding: "12px 14px" }}>
-        <b style={{ display: "block", fontSize: 14, color: BLUE, marginBottom: 6 }}>Proposed Integration</b>
-        {panelList(PROPOSED19, BLUE, 10)}
+  return <Mn n={n} title={<span style={{ color: "#fff" }}>Scope Boundary</span>} dark center label="Mengniu scope boundary — interactive rebuild">
+    <div style={{ position: "relative" }}>
+      <img src="/projects/crops/mengniu/barn-0986.jpg" alt="" aria-hidden="true" style={{ position: "absolute", right: -6, top: -58, width: 250, height: 130, objectFit: "cover", borderRadius: 10, opacity: 0.22, maskImage: "linear-gradient(90deg,transparent,#000 55%)", WebkitMaskImage: "linear-gradient(90deg,transparent,#000 55%)" }} />
+      <span aria-hidden="true" style={{ display: "block", height: 3, borderRadius: 2, background: `linear-gradient(90deg, ${GREEN}, ${BLUE})`, boxShadow: `0 0 10px ${GREEN}66`, margin: "0 auto 12px", maxWidth: 420, position: "relative" }} />
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, alignItems: "start", position: "relative" }}>
+        <div style={{ background: "#10160f", border: `1.5px solid ${GREEN}`, borderRadius: 12, padding: "12px 14px" }}>
+          <b style={{ display: "block", fontSize: 14.5, color: "#35D07F", marginBottom: 6 }}>⬡ Built in the Prototype</b>
+          {panelList(BUILT19, "#35D07F", 0)}
+        </div>
+        <div style={{ background: "#0e1220", border: `1.5px solid ${BLUE}`, borderRadius: 12, padding: "12px 14px" }}>
+          <b style={{ display: "block", fontSize: 14.5, color: "#7aa5f0", marginBottom: 6 }}>⬡ Proposed Integration</b>
+          {panelList(PROPOSED19, "#7aa5f0", 10)}
+        </div>
       </div>
     </div>
   </Mn>;
 }
 
 /* ---------------- 20 — Product Goals and Priorities ---------------- */
-const GOALS20: Array<[string, string, string]> = [
-  ["⬡", "Clarity at a Glance", "Operators should understand barn and herd status within seconds of opening the product."],
-  ["🐄", "Animal-Centred Insight", "Every view connects data back to an individual animal and its wellbeing."],
-  ["⚡", "Fast, Confident Action", "Prioritized alerts and clear next steps reduce hesitation and error."],
-  ["🔗", "Trusted Data", "Provenance and freshness are always visible, so decisions rest on evidence."],
-  ["▦", "Spatial Understanding", "The barn's layout is the interface — location is never abstract."],
-  ["🌱", "Scalable Foundation", "Structures and systems that grow from one barn to a whole operation."],
+const GOALS20: Array<[string, string]> = [
+  ["📍", "Immediate spatial understanding"],
+  ["🐄", "Cow-level selection"],
+  ["💚", "Visible health-state changes"],
+  ["🥛", "End-to-end milking demonstration"],
+  ["📶", "A path from sensor input to interpretable action"],
+  ["🔒", "Clear separation between local data and shared learning"],
 ];
 export function MengniuGoals({ n = "20" }: { n?: string }) {
   const [g, setG] = useState(-1);
-  return <Mn n={n} title={<>Product Goals<br /><span style={{ color: "#35D07F" }}>and Priorities</span></>} dark rule label="Mengniu product goals — interactive rebuild">
-    <div style={{ display: "grid", gridTemplateColumns: "0.9fr 1.35fr", gap: 14, alignItems: "start" }}>
-      <p style={{ margin: 0, fontSize: 11.4, lineHeight: 1.7, color: "#aeb9c2" }}>The left half of the printed slide is a barn photograph (represented structurally across this deck). Six goals, in priority order, framed every design decision in the prototype.</p>
+  return <Mn n={n} title="" dark label="Mengniu product goals — interactive rebuild">
+    <div style={{ display: "grid", gridTemplateColumns: "0.92fr 1.3fr", gap: 14, alignItems: "stretch" }}>
+      <div style={{ position: "relative", borderRadius: 12, overflow: "hidden", minHeight: 330, background: "#0d0b09 url(/projects/crops/mengniu/barn-0986.jpg) center / cover no-repeat" }}>
+        <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(5,10,7,0.82) 0%,rgba(5,10,7,0.25) 42%,rgba(5,10,7,0) 65%)" }} />
+        <h3 style={{ position: "relative", fontSize: 34, lineHeight: 1.15, margin: 0, padding: "18px 18px 0", color: "#fff" }}>Product Goals<br /><span style={{ color: "#35D07F" }}>and Priorities</span></h3>
+        <span aria-hidden="true" style={{ position: "relative", display: "block", width: 44, height: 4, background: "#35D07F", borderRadius: 2, margin: "12px 0 0 18px" }} />
+      </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 9 }}>
-        {GOALS20.map(([icon, t, b], i) => <button key={t} type="button" onClick={() => setG(i)} aria-pressed={g === i} style={{ textAlign: "center", background: "#11161a", border: `1.5px solid ${g === i ? "#35D07F" : "#232a2e"}`, borderRadius: 12, padding: "12px 13px", cursor: "pointer", font: "inherit", color: "#e8eef5" }}>
-          <span aria-hidden="true" style={{ width: 44, height: 38, background: "#12241a", border: "1.5px solid #35D07F", clipPath: "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 16, color: "#35D07F" }}>{icon}</span>
-          <b style={{ display: "block", fontSize: 12.8, margin: "7px 0 3px" }}>{t}</b>
-          <span style={{ display: "block", fontSize: 10.4, lineHeight: 1.6, color: "#aeb9c2" }}>{b}</span>
+        {GOALS20.map(([icon, t], i) => <button key={t} type="button" onClick={() => setG(i)} aria-pressed={g === i} style={{ textAlign: "center", background: "#101a13", border: `1.5px solid ${g === i ? "#35D07F" : "#223028"}`, borderRadius: 12, padding: "16px 13px", cursor: "pointer", font: "inherit", color: "#e8eef5", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10 }}>
+          <span aria-hidden="true" style={{ width: 62, height: 54, background: "#12241a", border: "1.5px solid #35D07F", clipPath: "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 21, color: "#35D07F" }}>{icon}</span>
+          <b style={{ fontSize: 13.5, lineHeight: 1.4 }}>{t}</b>
         </button>)}
       </div>
     </div>

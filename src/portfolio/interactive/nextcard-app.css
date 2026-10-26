@@ -68,3 +68,9 @@
 .nc .ncp-browserbar { display: flex; gap: 5px; align-items: center; background: #17181c; padding: 6px 9px; border-bottom: 1px solid #26272c; }
 .nc .ncp-browserbar i { width: 8px; height: 8px; border-radius: 50%; background: #34353b; display: block; }
 .nc .ncp-skel { background: #232428; border-radius: 4px; height: 7px; }
+
+/* Pass 7: equal-height phone rows (print Image 43 — six white phones in one aligned row) */
+.nc .ncp-row.eq { align-items: stretch; }
+.nc .ncp-row.eq > div { display: flex; flex-direction: column; }
+.nc .ncp-row.eq .ncp-cap { flex: none; }
+.nc .ncp-row.eq .ncp-phone { flex: 1; height: 100%; }

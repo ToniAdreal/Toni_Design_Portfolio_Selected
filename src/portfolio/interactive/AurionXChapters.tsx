@@ -136,7 +136,7 @@ export function AurionXThreeFeatures() {
   const [emph, setEmph] = useState(0);
   const [lang, setLang] = useState<"en" | "es">("es");
   const cur = FEATURES[f];
-  return <Ax n="02" title="Three features. Three moments." label="AurionX three-feature overview — interactive rebuild of AurionX_02">
+  return <Ax n="02" title="" label="AurionX three-feature overview — interactive rebuild of AurionX_02">
     <div className="tks-grid" style={{ gridTemplateColumns: "repeat(3,1fr)", gap: 0 }}>
       {FEATURES.map((x, i) => <button key={x.name} type="button" aria-pressed={i === f} onClick={() => setF(i)} style={{ background: "transparent", border: "none", borderLeft: i ? "1px solid #26272a" : "none", borderRadius: 0, padding: "2px 14px", textAlign: "left", color: "inherit", cursor: "pointer" }}>
         <b style={{ fontSize: 23, fontWeight: 700, color: i === f ? "#fff" : "#e8e8ea" }}>{x.name}</b>
@@ -144,17 +144,17 @@ export function AurionXThreeFeatures() {
         {/* Pass 3: the printed TV panel per feature — original artwork
             crop as the visual, every printed TV fact kept as DOM. */}
         <div style={{ margin: "10px 0" }}>
-          {i === 0 ? <><Img src={`${CROP}f02-castle.jpg`} h={98} alt="Castle film still behind the Scene Recall panel" />
+          {i === 0 ? <><Img src={`${CROP}f02-castle.jpg`} h={185} alt="Castle film still behind the Scene Recall panel" />
             <div style={{ fontSize: 10.6, color: "#b9b9be", lineHeight: 1.55, marginTop: 6 }}>
               <p style={{ margin: 0, color: "#e8e8ea" }}>“Show me the moment they first see the castle.”</p>
               <p style={{ margin: "3px 0 0" }}>Top Matches — 1 The Last Light · First view of the castle · 24:17 · 2 Approaching the castle · 37:42 · 3 Inside the castle · 1:08:11. The Last Light · 24:17 / 1:56:03.</p>
             </div></> : null}
-          {i === 1 ? <><Img src={`${CROP}f02-frames.jpg`} h={34} alt="The six printed preview frames of the five-minute cut" />
+          {i === 1 ? <><Img src={`${CROP}f02-frames.jpg`} h={62} alt="The six printed preview frames of the five-minute cut" />
             <div style={{ fontSize: 10.6, color: "#b9b9be", lineHeight: 1.55, marginTop: 6 }}>
               <p style={{ margin: 0, color: "#e8e8ea" }}>Create your five-minute cut</p>
               <p style={{ margin: "3px 0 0" }}>Preferred Duration 3 min / 5 min / 7 min; Emphasis Story / Characters / Action / Emotion / World. Generating your five-minute preview… 00:18. Your Five-Minute Preview (6 frames, 5:00). Preview / Save to Watchlist.</p>
             </div></> : null}
-          {i === 2 ? <><Img src={`${CROP}f02-portrait.jpg`} h={98} alt="Split-screen portrait still behind the Global Voice panel" />
+          {i === 2 ? <><Img src={`${CROP}f02-portrait.jpg`} h={185} alt="Split-screen portrait still behind the Global Voice panel" />
             <div style={{ fontSize: 10.6, color: "#b9b9be", lineHeight: 1.55, marginTop: 6 }}>
               <p style={{ margin: 0 }}>Original (English) “This is our only chance to end the darkness.” ↔ Localized (Spanish) “Esta es nuestra única oportunidad para acabar con la oscuridad.”</p>
               <p style={{ margin: "3px 0 0" }}>Language Español (Latinoamérica) · Audio AI Dubbing · Subtitles On.</p>
@@ -232,7 +232,7 @@ export function AurionXTimeline() {
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(10,1fr)", gap: 5, marginTop: 12 }}>
       {TIMELINE.map(([t, ev, cap], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#0d0f16", border: `1.5px solid ${i === s ? VI : "#23242a"}`, borderRadius: 8, padding: "6px 7px", cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
-        <Still h={30} tone={["#233148", "#2a2438", "#183038", "#26262e", "#1d1d24", "#233148", "#2a2438", "#183038", "#26262e", "#1d1d24"][i]} />
+        <Img src={`${CROP}${["hero-castle.jpg", "f09-board1.jpg", "f16-lane-posters.jpg", "f25-eclipse.jpg", "f02-frames.jpg", "f09-board4.jpg", "f02-castle.jpg", "f32-still.jpg", "f19-kitchen.jpg", "f39-lighthouse.jpg"][i]}`} h={30} alt={`Miniature evidence thumbnail for timeline step ${i + 1}`} />
         <span style={{ display: "block", fontSize: 8.8, fontWeight: 700, lineHeight: 1.4, marginTop: 5 }}>{ev}</span>
         <span style={{ display: "block", fontSize: 8.4, lineHeight: 1.45, color: "#9a9aa0", marginTop: 3 }}>{cap}</span>
       </button>)}
@@ -338,7 +338,7 @@ export function AurionXDiscoveryFriction() {
               stills / poster artwork now use the real crops (poster
               titles are part of the artwork). The reviews card (4) is
               a text UI and stays DOM. */}
-          {["f07-poster.jpg", "f07-details.jpg", "f07-trailer.jpg", "", "f07-decide.jpg", "f07-start.jpg"][i] ? <span style={{ display: "block", margin: "0 0 5px" }}><Img src={`${CROP}${["f07-poster.jpg", "f07-details.jpg", "f07-trailer.jpg", "", "f07-decide.jpg", "f07-start.jpg"][i]}`} h={36} alt={`Printed still for journey step ${i + 1}`} /></span> : null}
+          {["f07-poster.jpg", "f07-details.jpg", "f07-trailer.jpg", "", "f07-decide.jpg", "f07-start.jpg"][i] ? <span style={{ display: "block", margin: "0 0 5px" }}><Img src={`${CROP}${["f07-poster.jpg", "f07-details.jpg", "f07-trailer.jpg", "", "f07-decide.jpg", "f07-start.jpg"][i]}`} h={54} alt={`Printed still for journey step ${i + 1}`} /></span> : null}
           <span style={{ display: "block", fontSize: 9.4, lineHeight: 1.5, color: "#b9b9be" }}>{body}</span>
         </button>
         {f ? <p style={{ margin: "5px 0 0", fontSize: 10, color: "#e8a33d", borderTop: "2px solid #3a3b40", paddingTop: 4, position: "relative" }}><span aria-hidden="true" style={{ position: "absolute", top: -5, left: 12, width: 7, height: 7, background: "#e8a33d", borderRadius: "50%" }} />{f}</p> : null}
@@ -347,9 +347,9 @@ export function AurionXDiscoveryFriction() {
     <hr style={{ border: "none", borderTop: "1px solid #23242a", margin: "14px 0" }} />
     <p style={{ margin: "0 0 8px", fontSize: 11, letterSpacing: "0.14em", fontWeight: 800, background: GRAD, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>AURIONX JOURNEY</p>
     <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1.4fr 1fr" }}>
-      <div className="tks-card"><b>1 · Describe preference</b><p style={{ color: "#c9c9ce" }}>“I want something thought-provoking, visually stunning, and emotionally resonant.”</p><Wave color={CY} w={130} /></div>
+      <div className="tks-card"><b>1 · Describe preference</b><p style={{ color: "#c9c9ce" }}>“I want something thought-provoking, visually stunning, and emotionally resonant.”</p><Img src={`${CROP}f19-face.jpg`} h={40} alt="Viewer portrait still from the printed journey" /><Wave color={CY} w={130} /></div>
       <div className="tks-card"><b>2 · Generate five-minute cut</b><p style={{ color: "#c9c9ce" }}>Your five-minute cut — a personal, spoiler-protected sample of the actual film.</p>{/* Pass 4: printed desert still + thumbnail strip as real crops. */}<Img src={`${CROP}f07-cut.jpg`} h={44} alt="Desert film still heading the printed five-minute cut" /><div style={{ display: "flex", gap: 4, marginTop: 4 }}>{[1, 2, 3, 4, 5].map((k) => <span key={k} style={{ flex: 1 }}><Img src={`${CROP}f07-thumb${k}.jpg`} h={22} alt="" /></span>)}</div><span aria-hidden="true" style={{ display: "block", height: 4, background: GRAD, borderRadius: 2, marginTop: 6 }} /></div>
-      <div className="tks-card"><b>3 · Decide</b><p style={{ display: "flex", gap: 5, marginTop: 6 }}><button type="button" className="tks-btn" style={{ background: GRAD, border: "none", color: "#fff" }} onClick={() => setDecided("start")}>Start movie</button><button type="button" className="tks-btn tks-btn--ghost" onClick={() => setDecided("no")}>Not for me</button></p>
+      <div className="tks-card"><b>3 · Decide</b><Img src={`${CROP}f19-face2.jpg`} h={40} alt="Viewer portrait still at the decision step" /><p style={{ display: "flex", gap: 5, marginTop: 6 }}><button type="button" className="tks-btn" style={{ background: GRAD, border: "none", color: "#fff" }} onClick={() => setDecided("start")}>Start movie</button><button type="button" className="tks-btn tks-btn--ghost" onClick={() => setDecided("no")}>Not for me</button></p>
         <p aria-live="polite" style={{ margin: "6px 0 0" }}>{decided === "start" ? "Decision made in 3 steps — no trailer detour." : decided === "no" ? "Rejected without a 2-hour commitment — describe a new preference." : ""}</p></div>
     </div>
   </Ax>;
@@ -376,21 +376,15 @@ export function AurionXLanguageProblem() {
         <p style={{ margin: "2px 0 6px", fontSize: 11.3, display: "flex", gap: 16, flexWrap: "wrap" }}><span><span aria-hidden="true" style={{ display: "inline-block", width: 11, height: 11, background: AZ, borderRadius: 2, marginRight: 5 }} />Available in original language</span><span><span aria-hidden="true" style={{ display: "inline-block", width: 11, height: 11, border: "1.5px solid #9a9aa0", borderRadius: 2, marginRight: 5 }} />Unavailable in selected language</span></p>
         <p style={{ margin: 0, fontSize: 12.6, lineHeight: 1.65, color: "#d8d8dc" }}>The viewer's language decides what can be watched at all — before quality is even a question.</p>
       </div>
-      <div aria-hidden="true" style={{ position: "relative", height: 102, background: "#0a0e18", border: "1px solid #23242a", borderRadius: 10, overflow: "hidden" }}>
-        <span style={{ position: "absolute", left: "6%", top: "16%", width: "24%", height: "34%", background: AZ, opacity: 0.75, borderRadius: "46% 54% 60% 40%/50%" }} /><span style={{ position: "absolute", left: "13%", top: "52%", textAlign: "center", fontSize: 9.5, color: "#cfe6ff" }}>US</span>
-        <span style={{ position: "absolute", left: "31%", top: "58%", width: "11%", height: "26%", background: AZ, opacity: 0.75, borderRadius: "50% 50% 46% 54%/60%" }} /><span style={{ position: "absolute", left: "32%", top: "86%", fontSize: 9.5, color: "#cfe6ff" }}>Brazil</span>
-        <span style={{ position: "absolute", left: "47%", top: "14%", width: "13%", height: "20%", background: AZ, opacity: 0.75, borderRadius: "50%" }} /><span style={{ position: "absolute", left: "48%", top: "36%", fontSize: 9.5, color: "#cfe6ff" }}>Europe</span>
-        <span style={{ position: "absolute", left: "63%", top: "30%", width: "12%", height: "24%", background: AZ, opacity: 0.75, borderRadius: "50% 46% 54% 50%/56%" }} /><span style={{ position: "absolute", left: "65%", top: "56%", fontSize: 9.5, color: "#cfe6ff" }}>India</span>
-        <span style={{ position: "absolute", left: "80%", top: "66%", width: "13%", height: "20%", background: VI, opacity: 0.8, borderRadius: "54% 46% 50% 50%/50%" }} /><span style={{ position: "absolute", left: "81%", top: "88%", fontSize: 9.5, color: "#ddd2ff" }}>Australia</span>
-        <span style={{ position: "absolute", left: "58%", top: "12%", width: "30%", height: "40%", border: "1.5px solid #3a3b40", borderRadius: "50%", opacity: 0.7 }} />
-        <span style={{ position: "absolute", left: "2%", bottom: 4, fontSize: 8.8, color: "#77787e" }}>World map as printed — regions stylised.</span>
+      <div style={{ border: "1px solid #23242a", borderRadius: 10, overflow: "hidden" }}>
+        <img src={`${CROP}f08-map.jpg`} alt="World map as printed — original-language regions highlighted in blue, Australia in violet" style={{ width: "100%", height: 148, objectFit: "cover", display: "block" }} />
       </div>
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 7, marginTop: 14 }}>
       {LANG_STAGES.map(([title, body], i) => <div key={title}>
         <p style={{ margin: "0 0 5px", fontSize: 11.6 }}><b>{title}</b>{i < 3 ? <span aria-hidden="true" style={{ float: "right", color: ACC }}>›</span> : null}</p>
         <button type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ width: "100%", textAlign: "left", background: "#0d0f16", border: `1.5px solid ${i === s ? VI : "#23242a"}`, borderRadius: 9, padding: "7px 9px", cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
-          <Still h={42} tone={["#233148", "#2a2438", "#183038", "#33241a"][i]}>{i === 1 ? "🔒" : i >= 2 ? <span style={{ background: "#111", padding: "1px 6px", fontSize: 8.8 }}>I kept the truth to protect you.</span> : null}</Still>
+          {i === 0 ? <Img src={`${CROP}f08-poster-face.jpg`} h={64} alt="Echoes in the Wilds still — the desired title" /> : i === 1 ? <Still h={64} tone="#2a2438">🔒</Still> : i === 2 ? <Img src={`${CROP}f08-still3.jpg`} h={64} alt="Subtitle-only performance still"><span style={{ position: "absolute", left: "50%", bottom: 4, transform: "translateX(-50%)", background: "#111", padding: "1px 6px", fontSize: 8.8, whiteSpace: "nowrap" }}>I kept the truth to protect you.</span></Img> : <Img src={`${CROP}f08-still4.jpg`} h={64} alt="Performance-nuance close-up still"><span style={{ position: "absolute", left: "50%", bottom: 4, transform: "translateX(-50%)", background: "#111", padding: "1px 6px", fontSize: 8.8, whiteSpace: "nowrap" }}>I kept the truth to protect you.</span></Img>}
           <span style={{ display: "block", fontSize: 9.5, lineHeight: 1.55, color: "#b9b9be", marginTop: 5 }}>{body}</span>
           <span aria-hidden="true" style={{ display: "block", marginTop: 5 }}><span style={{ fontSize: 9, color: "#9a9aa0" }}>00:18:42</span><span style={{ display: "block", height: 3, background: "#26272c", borderRadius: 2, marginTop: 2 }}><span style={{ display: "block", width: "38%", height: "100%", background: GRAD, borderRadius: 2 }} /></span></span>
         </button>
@@ -400,7 +394,7 @@ export function AurionXLanguageProblem() {
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 7 }}>
       {LANG_TIERS.map(([name, icon, bullets], i) => <button key={name} type="button" onClick={() => setT(i)} aria-pressed={i === t} style={{ textAlign: "left", background: "#0d0f16", border: `1.5px solid ${i === t ? VI : "#23242a"}`, borderRadius: 10, padding: "10px 12px", cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
         <span aria-hidden="true" style={{ fontSize: 19, color: ACC }}>{icon}</span> <b style={{ fontSize: 12.8 }}>{name}</b>
-        <Still h={22} tone="#1d2739" />
+        <Img src={`${CROP}${["f08-tier1.jpg", "f08-tier2.jpg", "f08-tier3.jpg"][i]}`} h={42} alt={`Performer still in the ${name} tier card`} />
         <ul style={{ margin: "7px 0 0", paddingLeft: 15, fontSize: 10.8, lineHeight: 1.6 }}>{bullets.map((b) => <li key={b}>{b}</li>)}</ul>
       </button>)}
     </div>
@@ -462,9 +456,9 @@ export function AurionXInsights() {
     : j === 3 ? <Img src={`${CROP}f10-lamp-texture.jpg`} h={66} alt={visual} />
     : j === 4 ? <Still h={66} tone="#33241a"><span style={{ display: "block", background: "#000", borderRadius: 3, padding: "2px 5px", fontSize: 8.2, lineHeight: 1.45, color: "#e8e8ea" }}>Original<br />“I need you to trust me.”</span><span style={{ display: "block", background: "#000", borderRadius: 3, padding: "2px 5px", fontSize: 8.2, lineHeight: 1.45, color: "#e8e8ea", marginTop: 4 }}>Localized<br />“Necesito que confíes en mí.”</span></Still>
     : <Still h={66} tone="#1d2739"><span style={{ display: "block", fontSize: 8.4, lineHeight: 1.5 }}><span style={{ color: ACC }}>✦</span> AI Recommendation<span style={{ display: "block", marginTop: 5, color: "#c9c9ce" }}>Confidence: Medium</span><span style={{ display: "block", height: 4, background: "#26272c", borderRadius: 2, marginTop: 3 }}><span style={{ display: "block", width: "55%", height: "100%", background: GRAD, borderRadius: 2 }} /></span></span></Still>;
-  return <Ax n="10" title="Insight Synthesis" serif label="AurionX insight synthesis — interactive rebuild of AurionX_10">
+  return <Ax n="10" title="Insight Synthesis" serif light label="AurionX insight synthesis — interactive rebuild of AurionX_10">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>
-      {INSIGHTS.map(([ev, impl, visual], j) => <button key={ev} type="button" onClick={() => setI2(j)} aria-pressed={j === i2} style={{ textAlign: "left", background: "#0d0f16", border: `1.5px solid ${j === i2 ? VI : "#23242a"}`, borderRadius: 10, padding: "10px 12px", cursor: "pointer", font: "inherit", color: "#e8e8ea", display: "grid", gridTemplateColumns: "86px 1fr", gap: 10 }}>
+      {INSIGHTS.map(([ev, impl, visual], j) => <button key={ev} type="button" onClick={() => setI2(j)} aria-pressed={j === i2} style={{ textAlign: "left", background: "#0d0f16", border: `1.5px solid ${j === i2 ? VI : "#23242a"}`, borderRadius: 10, padding: "10px 12px", cursor: "pointer", font: "inherit", color: "#e8e8ea", display: "grid", gridTemplateColumns: "118px 1fr", gap: 10 }}>
         {tile(j, visual)}
         <span>
           <span style={{ display: "block", fontSize: 9.6, fontWeight: 800, letterSpacing: "0.1em", color: ACC }}>EVIDENCE</span>
@@ -475,10 +469,7 @@ export function AurionXInsights() {
         </span>
       </button>)}
     </div>
-    {i2 === 5 ? <div className="tks-card" style={{ marginTop: 9 }} aria-live="polite"><b>AI Recommendation</b> — “Because you watched Arrival and Ex Machina, you might like Annihilation.” Confidence: Medium.
-      <span style={{ display: "inline-block", width: 130, height: 6, background: "#26272c", borderRadius: 3, verticalAlign: "middle", margin: "0 10px" }}><span style={{ display: "block", width: "55%", height: "100%", background: GRAD, borderRadius: 3 }} /></span>
-      <button type="button" className="tks-btn" style={{ background: GRAD, border: "none", color: "#fff" }} onClick={() => setRec("explained")}>Explain why</button> <button type="button" className="tks-btn tks-btn--ghost" onClick={() => setRec("dismissed")}>Not Interested</button> <button type="button" className="tks-btn tks-btn--ghost" onClick={() => setRec("reported")}>Report Issue</button>
-      <span style={{ marginLeft: 8 }}>{rec === "explained" ? "Explained — reversible at any time." : rec === "dismissed" ? "Dismissed — action reversible." : rec === "reported" ? "Reported — recommendation kept visible for correction." : ""}</span></div> : null}
+
   </Ax>;
 }
 
@@ -515,7 +506,7 @@ export function AurionXOpportunityMatrix() {
       <div>
         <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", display: "block" }} role="img" aria-label="Quadrant chart: viewer value against technical feasibility with nine plotted opportunities">
           <rect x={PX} y={8} width={(W - PX - 8) / 2} height={(H - PY - 10) / 2} fill="#7B61FF14" />
-          <rect x={PX + (W - PX - 8) / 2} y={8} width={(W - PX - 8) / 2} height={(H - PY - 10) / 2} fill="#00E5FF17" />
+          <rect x={PX + (W - PX - 8) / 2} y={8} width={(W - PX - 8) / 2} height={(H - PY - 10) / 2} fill="#ffffff06" />
           <rect x={PX} y={8 + (H - PY - 10) / 2} width={(W - PX - 8) / 2} height={(H - PY - 10) / 2} fill="#ffffff06" />
           <rect x={PX + (W - PX - 8) / 2} y={8 + (H - PY - 10) / 2} width={(W - PX - 8) / 2} height={(H - PY - 10) / 2} fill="#2979FF10" />
           <line x1={PX + (W - PX - 8) / 2} y1={8} x2={PX + (W - PX - 8) / 2} y2={H - PY} stroke="#3a3b40" strokeDasharray="4 4" />
@@ -527,14 +518,12 @@ export function AurionXOpportunityMatrix() {
           <text x={PX + 4} y={H - 8} fontSize="9.5" fill="#c9c9ce" fontWeight="700">Technical feasibility</text>
           <text x={PX + 150} y={H - 8} fontSize="8.6" fill="#9a9aa0">Low → High</text>
           {OPPS.map((x, i) => { const [cx, cy] = pt(x.fx, x.vy); return <g key={x.name} onClick={() => setO(i)} style={{ cursor: "pointer" }}>
-            <circle cx={cx} cy={cy} r={i === o ? 10 : 8} fill={x.kind === "sel" ? "url(#axg11)" : "transparent"} stroke={x.kind === "sel" ? "none" : x.kind === "defer" ? VI : CY} strokeWidth="1.8" strokeDasharray={x.kind === "sel" ? undefined : "3.5 2.5"} />
-            <text x={cx} y={cy - 13} fontSize="8.8" fill={i === o ? "#fff" : "#c9c9ce"} textAnchor="middle" fontWeight={i === o ? 800 : 400}>{x.name}</text>
+            <circle cx={cx} cy={cy} r={i === o ? 10 : 8} fill="transparent" stroke={x.kind === "sel" ? "url(#axg11)" : x.kind === "defer" ? VI : CY} strokeWidth="1.8" strokeDasharray={x.kind === "sel" ? undefined : "3.5 2.5"} />
+            <text x={x.fx > 0.8 ? cx - 13 : cx + 13} y={cy + 3} fontSize="8.8" fill={i === o ? "#fff" : "#c9c9ce"} textAnchor={x.fx > 0.8 ? "end" : "start"} fontWeight={i === o ? 800 : 400}>{x.name}</text>
           </g>; })}
           <defs><linearGradient id="axg11" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor={CY} /><stop offset="1" stopColor={VI} /></linearGradient></defs>
         </svg>
-        <div style={{ borderLeft: `3px solid transparent`, borderImage: `${GRAD} 1`, background: "#0d0f16", padding: "9px 13px", marginTop: 8 }} aria-live="polite">
-          <b>{cur.name}</b> — Viewer value: {cur.vy >= 0.5 ? "High" : "Low"} · Technical feasibility: {cur.fx >= 0.5 ? "High" : "Low"} · <b style={{ color: ACC }}>{OPP_STATUS[cur.kind]}</b>
-        </div>
+
       </div>
     </div>
   </Ax>;
@@ -542,9 +531,9 @@ export function AurionXOpportunityMatrix() {
 
 /* ---------------- 12 — Product Principles ---------------- */
 const PRINCIPLES_AX = [
-  ["Speak naturally", "The viewer should describe an intention, not learn commands.", "TV as printed: “Find something inspiring for tonight” over a voice waveform."],
-  ["Stay inside the story", "AurionX should not feel like opening a separate app.", "TV overlay as printed: ◯ “Finding something inspiring… Matching to your mood” · Press ◯ to cancel."],
-  ["Explain AI actions", "Recognition, confidence and progress should remain visible.", "Panel as printed: Understanding ✓ “Find something inspiring for tonight” · Interpreted as Mood: Inspiring · Type: Movie or Series · High confidence · Searching 72% — “This may take a few seconds.”"],
+  ["Speak naturally", "The viewer should describe an intention, not learn commands.", "TV: “Find something inspiring for tonight” over a voice waveform."],
+  ["Stay inside the story", "AurionX should not feel like opening a separate app.", "TV overlay: ◯ “Finding something inspiring… Matching to your mood” · Press ◯ to cancel."],
+  ["Explain AI actions", "Recognition, confidence and progress should remain visible.", "Understanding ✓ “Find something inspiring for tonight” · Interpreted as Mood: Inspiring · Type: Movie or Series · High confidence · Searching 72% — “This may take a few seconds.”"],
   ["Make every action reversible", "Viewers must be able to cancel, correct and return instantly.", "“Here are some picks for you” — Arrival · The Night House · Life of Pi · Her · ↩ Undo / Refine / ✕ Cancel."],
 ];
 export function AurionXPrinciples() {
@@ -552,11 +541,11 @@ export function AurionXPrinciples() {
   const [undone, setUndone] = useState(false);
   return <Ax n="12" title="Product Principles" label="AurionX product principles — interactive rebuild of AurionX_12">
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9 }}>
-      {PRINCIPLES_AX.map(([t, b, visual], i) => <button key={t} type="button" onClick={() => setP(i)} aria-pressed={i === p} style={{ textAlign: "left", background: "#0d0f16", border: `1.5px solid ${i === p ? VI : "#23242a"}`, borderRadius: 11, padding: "11px 13px", cursor: "pointer", font: "inherit", color: "#e8e8ea", display: "grid", gridTemplateColumns: "1fr 128px", gap: 12 }}>
+      {PRINCIPLES_AX.map(([t, b, visual], i) => <button key={t} type="button" onClick={() => setP(i)} aria-pressed={i === p} style={{ textAlign: "left", background: "#0d0f16", border: `1.5px solid ${i === p ? VI : "#23242a"}`, borderRadius: 11, padding: "11px 13px", cursor: "pointer", font: "inherit", color: "#e8e8ea", display: "grid", gridTemplateColumns: "1fr 1.05fr", gap: 12 }}>
         <span><b style={{ fontSize: 15.5 }}>{t}</b><span style={{ display: "block", color: "#c9c9ce", marginTop: 4, fontSize: 12, lineHeight: 1.6 }}>{b}</span></span>
         <span>
-          {i === 0 ? <Still h={64} tone="#233148"><span style={{ fontSize: 9 }}>“Find something inspiring for tonight”</span><br /><Wave color={CY} w={104} h={16} /></Still> : null}
-          {i === 1 ? <Still h={64} tone="#2a2438"><span style={{ fontSize: 9 }}>◯ “Finding something inspiring… Matching to your mood”</span><br /><span style={{ border: "1px solid #3a3b40", borderRadius: 999, padding: "1px 7px", fontSize: 8.6 }}>Press ◯ to cancel</span></Still> : null}
+          {i === 0 ? <Img src={`${CROP}f12-landscape.jpg`} h={96} alt="Coastal landscape still on the printed television"><span style={{ position: "absolute", left: 6, bottom: 4, textShadow: "0 1px 4px #000" }}><span style={{ fontSize: 9 }}>“Find something inspiring for tonight”</span><br /><Wave color={CY} w={104} h={14} /></span></Img> : null}
+          {i === 1 ? <Img src={`${CROP}f12-face.jpg`} h={96} alt="Performer close-up still behind the printed overlay"><span style={{ position: "absolute", left: 6, right: 6, bottom: 4, background: "#10131bcc", borderRadius: 5, padding: "3px 7px", fontSize: 9 }}>◯ “Finding something inspiring… Matching to your mood”<br /><span style={{ border: "1px solid #3a3b40", borderRadius: 999, padding: "1px 7px", fontSize: 8.6 }}>Press ◯ to cancel</span></span></Img> : null}
           {i === 2 ? <span style={{ display: "block", background: "#101623", border: "1px solid #26272c", borderRadius: 7, padding: "7px 9px", fontSize: 9.3, lineHeight: 1.6 }}>Understanding ✓<br />Mood: Inspiring · Type: Movie or Series<br />High confidence<br /><span style={{ display: "block", height: 5, background: "#26272c", borderRadius: 3, marginTop: 4 }}><span style={{ display: "block", width: "72%", height: "100%", background: GRAD, borderRadius: 3 }} /></span>Searching 72%</span> : null}
           {i === 3 ? <span style={{ display: "block", fontSize: 9.3 }}><span style={{ display: "flex", gap: 3, marginBottom: 5 }}>{["Arrival", "Night House", "Life of Pi", "Her"].map((x, k) => <span key={x} style={{ flex: 1, height: 40, borderRadius: 5, background: ["#233148", "#33241a", "#183038", "#2a2438"][k], border: "1px solid #26272c", padding: 3, fontSize: 7.6 }}>{x}</span>)}</span><span style={{ display: "flex", gap: 4 }}><span style={{ border: "1px solid #3a3b40", borderRadius: 999, padding: "1px 7px" }}>↩ Undo</span><span style={{ border: "1px solid #3a3b40", borderRadius: 999, padding: "1px 7px" }}>Refine</span><span style={{ border: "1px solid #3a3b40", borderRadius: 999, padding: "1px 7px" }}>✕ Cancel</span></span></span> : null}
         </span>
@@ -574,13 +563,18 @@ const SCOPE_TIERS = [
   ["Designed but not fully implemented", "Add interaction-complete feature", "🧩", AZ],
   ["Future exploration", "Speculative extension", "🔭", VI],
 ];
+const SCOPE_ICONS: ReactNode[] = [
+  <svg key="cube" width={34} height={34} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 2.8 20 7.2v9.6l-8 4.4-8-4.4V7.2z" /><path d="M4 7.2 12 11.6 20 7.2" /><path d="M12 11.6v9.6" /></svg>,
+  <svg key="puzzle" width={34} height={34} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 4.5A2.3 2.3 0 0 1 13.6 4.5V7h5.9v4.6h-2.7a2.3 2.3 0 1 0 0 4.6h2.7V20h-6.9v-2.5A2.3 2.3 0 1 0 9 15.2V20H4v-6.9h2.5A2.3 2.3 0 1 0 4 8.5V7h5z" transform="scale(0.92) translate(1,0.4)" /></svg>,
+  <svg key="scope" width={34} height={34} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m20.5 20.5-5.2-5.2" /><path d="M10.5 6.5v8M6.5 10.5h8" opacity="0.55" /></svg>,
+];
 export function AurionXScope() {
   const [confirmed, setConfirmed] = useState<Record<string, boolean>>({});
   return <Ax n="13" title="Product Scope" sub="Three-tier view of the AurionX portfolio. Status reflects verified evidence only." label="AurionX product scope — interactive rebuild of AurionX_13">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 9 }}>{SCOPE_TIERS.map(([tier, slot, icon, color], ti) => <div key={tier as string} className="tks-card" style={{ borderTop: `3px solid ${color as string}` }}>
       <p style={{ marginTop: 0, display: "flex", gap: 9, alignItems: "center" }}><span aria-hidden="true" style={{ width: 27, height: 27, borderRadius: "50%", border: `2px solid ${color as string}`, color: color as string, display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, flex: "none" }}>{ti + 1}</span><b>{tier as string}</b></p>
       <span aria-hidden="true" style={{ display: "block", height: 2.5, background: color as string, borderRadius: 2, marginBottom: 9 }} />
-      <div style={{ border: "1px dashed #3a3b3f", borderRadius: 8, padding: "12px 10px", textAlign: "center", color: "#c9c9ce" }}><span aria-hidden="true" style={{ display: "block", fontSize: 30, color: color as string, marginBottom: 5 }}>{icon as string}</span>{slot as string}</div>
+      <div style={{ border: "1px dashed #3a3b3f", borderRadius: 8, padding: "12px 10px", textAlign: "center", color: "#c9c9ce" }}><span aria-hidden="true" style={{ display: "flex", justifyContent: "center", color: color as string, marginBottom: 5 }}>{SCOPE_ICONS[ti]}</span>{slot as string}</div>
       <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Candidate features (awaiting verification)</p>
       {["Scene Recall", "Five-Minute Cut", "Global Voice"].map((f) => { const key = `${ti}-${f}`; return <p key={f} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "5px 0", background: "#10131b", borderRadius: 7, padding: "4px 8px" }}><span>{f}</span><button type="button" className="tks-chip" aria-pressed={!!confirmed[key]} onClick={() => setConfirmed((c) => ({ ...c, [key]: !c[key] }))}>{confirmed[key] ? "Status: unconfirmed" : "Confirm status"}</button></p>; })}
     </div>)}</div>
@@ -602,10 +596,10 @@ export function AurionXArchitecture() {
   return <Ax n="14" title="AurionX Product Architecture" label="AurionX product architecture — interactive rebuild of AurionX_14">
     <div style={{ display: "grid", gap: 0 }}>
       {LAYERS.map(([name, color, mods], i) => <span key={name} style={{ display: "contents" }}>
-        <button type="button" onClick={() => setL(i)} aria-pressed={i === l} style={{ display: "grid", gridTemplateColumns: "168px 1fr", textAlign: "left", background: "#0d0f16", border: `1.5px solid ${i === l ? color : "#23242a"}`, borderRadius: 10, overflow: "hidden", cursor: "pointer", font: "inherit", color: "#e8e8ea", padding: 0 }}>
-          <span style={{ padding: "10px 12px", borderRight: "1px solid #23242a", display: "flex", gap: 9, alignItems: "center" }}><span aria-hidden="true" style={{ fontSize: 18 }}>{LAYER_ICONS[i]}</span><b style={{ color, fontSize: 13 }}>{name}</b></span>
-          <span style={{ padding: "8px 10px", display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>{(mods as string[]).map((mod) => <span key={mod} style={{ border: "1px solid #2c2d33", background: "#10131b", borderRadius: 7, padding: "4px 9px", fontSize: 10.6 }}>◈ {mod}</span>)}</span>
-        </button>
+        <div role="button" tabIndex={0} onClick={() => setL(i)} aria-pressed={i === l} style={{ display: "grid", gridTemplateColumns: "168px 1fr", textAlign: "left", background: "#0d0f16", border: `1.5px solid ${i === l ? color : "#23242a"}`, borderRadius: 10, overflow: "hidden", cursor: "pointer", color: "#e8e8ea" }}>
+          <span style={{ padding: "12px 12px", borderRight: "1px solid #23242a", display: "flex", gap: 9, alignItems: "center" }}><span aria-hidden="true" style={{ fontSize: 17, color }}>{["◎", "∿", "⬡", "▦", "⬢"][i]}</span><b style={{ color, fontSize: 13.5 }}>{name}</b></span>
+          <span style={{ padding: "8px 10px", display: "flex", gap: 6, alignItems: "stretch" }}>{(mods as string[]).map((mod) => <span key={mod} style={{ flex: 1, border: "1.5px solid #34353d", background: "#10131b", borderRadius: 8, padding: "9px 8px", fontSize: 10.8, display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", gap: 5 }}><span aria-hidden="true" style={{ color }}>◈</span>{mod}</span>)}</span>
+        </div>
         {i < 4 ? <span aria-hidden="true" style={{ display: "flex", justifyContent: i % 2 ? "flex-start" : "flex-end", padding: "1px 60px", color: "#8f9bff", fontSize: 11 }}><span>↑</span><span style={{ marginLeft: 26 }}>↓</span></span> : null}
       </span>)}
     </div>
@@ -686,21 +680,43 @@ const LANES: Array<[string, string, string, string, string]> = [
 export function AurionXExperienceMap() {
   const [s, setS] = useState(4);
   const [lane, setLane] = useState(0);
+  const stepCard = (i: number) => i === 0 ? <Img src={`${CROP}f16-browse.jpg`} h={52} alt="Foundation browse screen, as printed" />
+    : i === 1 ? <Img src={`${CROP}f16-play.jpg`} h={52} alt="Playback still, as printed" />
+    : i === 2 ? <span style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 52, borderRadius: 7, border: "1px solid #26272c", background: "#0a0d16" }}><span aria-hidden="true" style={{ width: 26, height: 26, borderRadius: "50%", background: "radial-gradient(circle at 42% 42%, #dfe9ff, #2979FF 55%, #7B61FF)", boxShadow: "0 0 12px #2979FF88" }} /><span style={{ fontSize: 8.2, color: "#c9c9ce", marginTop: 3 }}>How can I help?</span></span>
+    : i === 6 ? <Img src={`${CROP}f16-found.jpg`} h={52} alt="Scene found still — Foundation S1 · E8 · 14:27" />
+    : i === 7 ? <Img src={`${CROP}f16-continue.jpg`} h={52} alt="Playback still — the story continues" />
+    : <Still h={52} tone={["#233148", "#2a2438", "#183038", "#26262e", "#33241a", "#1d2739", "#233148", "#2a2438"][i]}><span style={{ fontSize: 8.4, lineHeight: 1.45 }}>{MAP_STEPS[i][2]}</span></Still>;
+  const laneCard = (title: string, img: string, foot: string) => <span style={{ display: "block", border: "1px solid #34353d", borderRadius: 8, background: "#0b0e15", padding: "5px 7px" }}>
+    <span style={{ display: "block", fontSize: 9.3, color: ACC, marginBottom: 3 }}>{title}</span>
+    <Img src={img} h={34} alt="" />
+    <span style={{ display: "block", fontSize: 8.6, color: "#c9c9ce", marginTop: 3 }}>{foot}</span>
+  </span>;
+  const laneRow = (li: number) => { const [name, color, gloss, at5, at7] = LANES[li]; const imgs = (li === 0 ? [`${CROP}f16-lane-scene.jpg`, `${CROP}f16-lane-jump.jpg`] : li === 1 ? [`${CROP}f16-lane-cut.jpg`, `${CROP}f16-lane-cutstill.jpg`] : [`${CROP}f16-lane-posters.jpg`, `${CROP}f16-lane-matches.jpg`]) as [string, string];
+    return <div key={name} style={{ display: "grid", gridTemplateColumns: "148px 1fr", gap: 12, alignItems: "center" }}>
+      <button type="button" onClick={() => setLane(li)} aria-pressed={lane === li} style={{ textAlign: "left", background: "transparent", border: "none", cursor: "pointer", font: "inherit", color: "#e8e8ea", padding: 0 }}>
+        <b style={{ color, fontSize: 13.5 }}>{name}</b>
+        <span style={{ display: "block", fontSize: 9.6, color: "#9a9aa0", marginTop: 2, lineHeight: 1.5 }}>{gloss}</span>
+      </button>
+      <div style={{ position: "relative", height: 96 }}>
+        <svg viewBox="0 0 1000 96" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} aria-hidden="true">
+          <path d="M0,80 H330 Q375,80 375,52 H640 Q685,52 685,80 H1000" fill="none" stroke={color} strokeWidth="2" vectorEffect="non-scaling-stroke" opacity={lane === li ? 1 : 0.45} />
+          <circle cx="4" cy="80" r="4.5" fill={color} /><circle cx="994" cy="80" r="4.5" fill={color} />
+        </svg>
+        <span style={{ position: "absolute", left: "36%", top: 0, width: "27%" }}>{laneCard(li === 0 ? "Scene identified — 14:27" : li === 1 ? "Creating a 5-minute cut from this episode…" : "Searching your library for matches… (+12 more)", imgs[0], at5)}</span>
+        <span style={{ position: "absolute", left: "67%", top: 0, width: "27%" }}>{laneCard(li === 0 ? "Jump to scene — 14:27" : li === 1 ? "Your 5-minute cut — 5:00" : "Top matches — Foundation · Dune · Silo", imgs[1], at7)}</span>
+      </div>
+    </div>; };
   return <Ax n="16" title="End-to-End Experience Map" sub="One assistant. Multiple ways to watch." eyebrow="AURIONX EXPERIENCE MAP" label="AurionX experience map — interactive rebuild of AurionX_16">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(8,1fr)", gap: 5 }}>
-      {MAP_STEPS.map(([t, desc, card], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "transparent", border: "none", padding: 0, cursor: "pointer", font: "inherit", color: "#e8e8ea", position: "relative" }}>
+      {MAP_STEPS.map(([t, desc], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "transparent", border: "none", padding: 0, cursor: "pointer", font: "inherit", color: "#e8e8ea", position: "relative" }}>
         {i < 7 ? <span aria-hidden="true" style={{ position: "absolute", right: -6, top: 26, color: ACC, zIndex: 2, fontSize: 11 }}>›</span> : null}
         <b style={{ display: "block", fontSize: 11.3 }}><span style={{ color: ACC }}>{i + 1}</span> {t}</b>
         <span style={{ display: "block", fontSize: 9.2, lineHeight: 1.5, color: "#9a9aa0", margin: "3px 0 5px", minHeight: 40 }}>{desc}</span>
-        <Still h={46} tone={["#233148", "#2a2438", "#183038", "#26262e", "#33241a", "#1d2739", "#233148", "#2a2438"][i]}><span style={{ fontSize: 8.4, lineHeight: 1.45 }}>{card}</span></Still>
+        {stepCard(i)}
       </button>)}
     </div>
-    <div style={{ display: "grid", gap: 7, marginTop: 13 }}>
-      {LANES.map(([name, color, gloss, at5, at7], li) => <button key={name} type="button" onClick={() => setLane(li)} aria-pressed={lane === li} style={{ display: "grid", gridTemplateColumns: "138px 1fr 1fr", gap: 10, alignItems: "center", textAlign: "left", background: "#0d0f16", border: `1.5px solid ${lane === li ? color : "#23242a"}`, borderRadius: 10, padding: "8px 12px", cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
-        <span><b style={{ color, fontSize: 12.6 }}>{name}</b><span style={{ display: "block", fontSize: 9.4, color: "#9a9aa0", marginTop: 2 }}>{gloss}</span></span>
-        <span style={{ borderLeft: `2.5px solid ${color}`, paddingLeft: 10, fontSize: 10.8 }}><span style={{ color: "#9a9aa0", fontSize: 9.2 }}>STEP 5 · CONFIRM</span><br />{at5}</span>
-        <span style={{ borderLeft: `2.5px solid ${color}`, paddingLeft: 10, fontSize: 10.8 }}><span style={{ color: "#9a9aa0", fontSize: 9.2 }}>STEP 7 · RESULT</span><br />{at7}</span>
-      </button>)}
+    <div style={{ display: "grid", gap: 10, marginTop: 14 }}>
+      {laneRow(0)}{laneRow(1)}{laneRow(2)}
     </div>
   </Ax>;
 }
@@ -788,19 +804,24 @@ export function AurionXUserFlow() {
             {i < 7 ? <span aria-hidden="true" style={{ position: "absolute", right: -7, top: "45%", color: AZ, zIndex: 2, fontSize: 11 }}>→</span> : null}
           </button>)}
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 6, marginTop: 16 }}>
-          {FLOW_FALLBACKS.map(([d], i) => <button key={d} type="button" onClick={() => setFb(i)} aria-pressed={i === fb} style={{ background: "transparent", border: "none", cursor: "pointer", font: "inherit", color: "#e8e8ea", padding: 0 }}>
-            <span aria-hidden="true" style={{ display: "block", width: 34, height: 34, margin: "0 auto", transform: "rotate(45deg)", borderRadius: 6, background: i === fb ? VI : "#241a3d", border: `1.5px solid ${VI}` }} />
-            <span style={{ display: "block", fontSize: 9.8, fontWeight: 700, marginTop: 6, lineHeight: 1.35 }}>{d}</span>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 6, marginTop: 18 }}>
+          {FLOW_FALLBACKS.map(([d, action, prompt], i) => <button key={d} type="button" onClick={() => setFb(i)} aria-pressed={i === fb} style={{ background: "transparent", border: "none", cursor: "pointer", font: "inherit", color: "#e8e8ea", padding: 0 }}>
+            <span aria-hidden="true" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 92, height: 92, margin: "0 auto", transform: "rotate(45deg)", borderRadius: 10, background: i === fb ? "#241a3d" : "#0d0f16", border: `1.5px solid ${VI}` }}>
+              <span style={{ transform: "rotate(-45deg)", display: "block", width: 74, textAlign: "center" }}>
+                <span style={{ display: "block", fontSize: 15, color: "#b18cff" }}>{["⧉", "⌕", "◎", "▤", "⇄"][i]}</span>
+                <span style={{ display: "block", fontSize: 8.6, fontWeight: 700, lineHeight: 1.3, marginTop: 2 }}>{d}</span>
+              </span>
+            </span>
+            <span style={{ display: "block", marginTop: 10, textAlign: "left", background: "#171126", border: `1.5px solid ${i === fb ? VI : "#2c2344"}`, borderRadius: 9, padding: "7px 9px" }}>
+              <b style={{ display: "block", fontSize: 10.4, color: "#b18cff" }}>{action}</b>
+              <span style={{ display: "block", fontSize: 8.8, lineHeight: 1.5, color: "#c9c9ce", marginTop: 2 }}>{prompt}</span>
+            </span>
           </button>)}
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 6, marginTop: 8 }}>
-          {FLOW_FALLBACKS.map(([d, action, prompt], i) => <button key={d} type="button" onClick={() => setFb(i)} aria-pressed={i === fb} style={{ textAlign: "left", background: "#171126", border: `1.5px solid ${i === fb ? VI : "#2c2344"}`, borderRadius: 9, padding: "8px 9px", cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
-            <b style={{ display: "block", fontSize: 10.6, color: "#b18cff" }}>{action}</b>
-            <span style={{ display: "block", fontSize: 9, lineHeight: 1.5, color: "#c9c9ce", marginTop: 3 }}>{prompt}</span>
-          </button>)}
+        <p style={{ margin: "10px 0 0", fontSize: 10.6, color: "#9a9aa0", borderTop: "1.5px dashed #3a3b40", paddingTop: 7 }}>↩ Dashed return loop as printed: every clarification returns to the flow.</p>
+        <div style={{ border: "1px solid #23242a", borderRadius: 10, padding: "10px 12px", background: "#0d0f16", fontSize: 11.3, lineHeight: 1.6, marginTop: 9, maxWidth: 520 }}>
+          <b>Designed for natural conversation</b> — the system guides, clarifies, and gets you to the right scene.
         </div>
-        <p style={{ margin: "10px 0 0", fontSize: 10.6, color: "#9a9aa0", borderTop: "1.5px dashed #3a3b40", paddingTop: 7 }}>↩ Dashed return loop as printed: every clarification returns to the flow — Designed for natural conversation: the system guides, clarifies, and gets you to the right scene.</p>
       </div>
     </div>
   </Ax>;
@@ -861,22 +882,17 @@ export function AurionXErrorStates() {
     </span>
   </button>;
   const candidates = <span style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5, marginTop: 8 }}>
-    <span style={{ border: `1.5px solid ${pick === "first" ? AZ : "#2c2d33"}`, borderRadius: 8, padding: "6px 8px", fontSize: 10.3 }}><b>First Confrontation</b><br />Episode 4 · 18:47 · Confidence <span style={{ color: ACC }}>92%</span>{pick === "first" ? " ✓" : ""}</span>
-    <span style={{ border: `1.5px solid ${pick === "final" ? VI : "#2c2d33"}`, borderRadius: 8, padding: "6px 8px", fontSize: 10.3 }}><b>Final Confrontation</b><br />Episode 8 · 41:02 · Confidence <span style={{ color: ACC }}>87%</span>{pick === "final" ? " ✓" : ""}</span>
+    <span style={{ border: `1.5px solid ${pick === "first" ? AZ : "#2c2d33"}`, borderRadius: 8, padding: "6px 8px", fontSize: 10.3 }}><Img src={`${CROP}f19-kitchen.jpg`} h={30} alt="Kitchen confrontation still, first candidate" /><b>First Confrontation</b><br />Episode 4 · 18:47 · Confidence <span style={{ color: ACC }}>92%</span>{pick === "first" ? " ✓" : ""}</span>
+    <span style={{ border: `1.5px solid ${pick === "final" ? VI : "#2c2d33"}`, borderRadius: 8, padding: "6px 8px", fontSize: 10.3 }}><Img src={`${CROP}f07-thumb2.jpg`} h={30} alt="Film still, final confrontation candidate" /><b>Final Confrontation</b><br />Episode 8 · 41:02 · Confidence <span style={{ color: ACC }}>87%</span>{pick === "final" ? " ✓" : ""}</span>
   </span>;
   return <Ax n="24" title="Error and Clarification States" sub="Clear feedback. Helpful next steps." label="AurionX error and clarification states — interactive rebuild of AurionX_23 (printed 24)">
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9 }}>
       {tvCard(ERROR_STATES[0], 0, candidates)}
       {tvCard(ERROR_STATES[1], 1, <span style={{ display: "block", marginTop: 8 }}><Wave color={CY} w={170} /></span>)}
-      {tvCard(ERROR_STATES[2], 2, <span style={{ display: "block", marginTop: 8 }}><Still h={36} tone="#33241a"><b>AURION RISING</b> · Episode 5 · 33:12 remaining</Still></span>)}
+      {tvCard(ERROR_STATES[2], 2, <span style={{ display: "block", marginTop: 8 }}><Img src={`${CROP}f25-eclipse.jpg`} h={40} alt="Aurion Rising poster artwork"><span style={{ position: "absolute", left: 6, bottom: 4, textShadow: "0 1px 4px #000" }}><b>AURION RISING</b> · Episode 5 · 33:12 remaining</span></Img></span>)}
       {tvCard(ERROR_STATES[3], 3, <span style={{ display: "block", marginTop: 8, fontSize: 20, color: ACC }}>⌕</span>)}
     </div>
-    <div style={{ display: "flex", gap: 6, marginTop: 10, alignItems: "center" }} role="group" aria-label="Choose confrontation">
-      <span style={{ fontSize: 11, color: "#9a9aa0" }}>Candidate choice (states 1–2):</span>
-      <button type="button" className="tks-chip" aria-pressed={pick === "first"} onClick={() => setPick("first")}>First Confrontation · 92%</button>
-      <button type="button" className="tks-chip" aria-pressed={pick === "final"} onClick={() => setPick("final")}>Final Confrontation · 87%</button>
-      <span style={{ marginLeft: "auto", fontSize: 11, color: "#9a9aa0" }}><span style={{ letterSpacing: "0.3em" }}>A U R I O N X</span> · Voice or remote. You're in control.</span>
-    </div>
+
   </Ax>;
 }
 
@@ -892,14 +908,14 @@ const PIPELINE = [
   ["Timecode seek", "Playback result — 00:18:24:07 · Scene start — Precise timecode seek and playback"],
 ];
 const PIPE_FILL: ReactNode[] = [
-  <span key="f1"><Still h={32} tone="#233148">🎬 poster</Still><span style={{ display: "block", marginTop: 4, wordBreak: "break-all" }}>AurionX_S01E04_1080p.mov · 01:02:17 · 2.1 GB</span></span>,
-  <span key="f2">{["00:00:00", "00:00:02", "00:00:05", "01:02:15"].map((t) => <span key={t} style={{ display: "block" }}><Still h={16} tone="#2a2438" />{t}</span>)}</span>,
+  <span key="f1"><Img src={`${CROP}f02-castle.jpg`} h={36} alt="Input film poster still" /><span style={{ display: "block", marginTop: 4, wordBreak: "break-all" }}>AurionX_S01E04_1080p.mov · 01:02:17 · 2.1 GB</span></span>,
+  <span key="f2">{["00:00:00", "00:00:02", "00:00:05", "01:02:15"].map((t) => <span key={t} style={{ display: "block" }}><Img src={`${CROP}f02-frames.jpg`} h={16} alt="" />{t}</span>)}</span>,
   <span key="f3"><span style={{ display: "block" }}>00:00:02 <b>ARIA</b> “We're approaching the relay station.”</span><span style={{ display: "block" }}>00:00:05 <b>KIAN</b> “Systems look stable.”</span><span style={{ display: "block" }}>00:00:07 <b>ARIA</b> “Until they're not.”</span><span style={{ display: "block" }}>00:00:10 <b>KIAN</b> “Copy that.”</span></span>,
   <span key="f4">{[["Scene ID", "SCN_000245"], ["Start / End", "00:18:24:07 → 00:20:11:03"], ["Duration", "00:01:46:20"], ["Location", "Relay Station"], ["Characters", "Aria, Kian"], ["Keywords", "relay station, instability, approach, systems"]].map(([k, v]) => <span key={k} style={{ display: "block" }}><span style={{ color: "#9a9aa0" }}>{k}</span> {v}</span>)}</span>,
   <span key="f5">{[245, 246, 247, 248, 249].map((id, r) => <span key={id} style={{ display: "flex", gap: 3, alignItems: "center", marginBottom: 3 }}><span style={{ color: "#9a9aa0" }}>SCN_000{id}</span>{[0, 1, 2, 3, 4, 5].map((c) => <span key={c} style={{ width: 9, height: 9, borderRadius: 2, background: [CY, AZ, VI, "#FF8FB2", "#8F9BFF", ACC][(r + c) % 6], opacity: 0.55 + ((r * 7 + c * 13) % 45) / 100 }} />)}</span>)}</span>,
   <span key="f6"><svg viewBox="0 0 100 62" style={{ width: "100%" }} aria-hidden="true">{Array.from({ length: 26 }, (_, i) => <circle key={i} cx={8 + ((i * 37) % 84)} cy={6 + ((i * 23) % 50)} r={i === 7 ? 3.4 : 1.7} fill={i === 7 ? CY : i % 3 ? AZ : VI} opacity={i === 7 ? 1 : 0.65} />)}<circle cx={8 + ((7 * 37) % 84)} cy={6 + ((7 * 23) % 50)} r={7} fill="none" stroke={CY} strokeDasharray="2.5 2" /></svg><span style={{ display: "block" }}>3-D vector index</span></span>,
   <span key="f7">{[["00:18:24:07", "Best match"], ["00:42:11:12", "2nd best"], ["00:07:33:21", "3rd best"], ["00:55:09:18", "4th best"]].map(([t, r], k) => <span key={t} style={{ display: "block", marginBottom: 3 }}><Still h={15} tone={k === 0 ? "#183038" : "#1d1d24"} />{t} · <b style={{ color: k === 0 ? ACC : "#9a9aa0" }}>{r}</b></span>)}</span>,
-  <span key="f8"><Still h={32} tone="#183038">▶ scene still</Still><span style={{ display: "block", marginTop: 4 }}>00:18:24:07 · Scene start</span><span aria-hidden="true" style={{ display: "block", height: 3.5, background: "#26272c", borderRadius: 2, marginTop: 3 }}><span style={{ display: "block", width: "30%", height: "100%", background: GRAD, borderRadius: 2 }} /></span><span style={{ display: "block", marginTop: 3 }}>⏮ ▶ ⏭ transport</span></span>,
+  <span key="f8"><Img src={`${CROP}hero-castle.jpg`} h={36} alt="Playback scene still" /><span style={{ display: "block", marginTop: 4 }}>00:18:24:07 · Scene start</span><span aria-hidden="true" style={{ display: "block", height: 3.5, background: "#26272c", borderRadius: 2, marginTop: 3 }}><span style={{ display: "block", width: "30%", height: "100%", background: GRAD, borderRadius: 2 }} /></span><span style={{ display: "block", marginTop: 3 }}>⏮ ▶ ⏭ transport</span></span>,
 ];
 export function AurionXTechnicalPipeline() {
   const [s, setS] = useState(3);
@@ -916,7 +932,6 @@ export function AurionXTechnicalPipeline() {
         {PIPE_FILL[i]}
       </button>)}
     </div>
-    <p style={{ margin: "10px 0 0", fontSize: 12.6 }} aria-live="polite"><b>{PIPELINE[s][0]}</b> — {PIPELINE[s][1]}</p>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1.2fr", gap: 7, marginTop: 9 }}>
       <p style={{ margin: 0, border: "1.5px dashed #3a3b40", borderRadius: 9, padding: "8px 11px", fontSize: 10.8 }}><b>Structured metadata store</b> — scene and transcript metadata</p>
       <p style={{ margin: 0, border: "1.5px dashed #3a3b40", borderRadius: 9, padding: "8px 11px", fontSize: 10.8 }}><b>Vector index store</b> — semantic vectors for all scenes</p>
@@ -936,7 +951,7 @@ export function AurionXCutScenario() {
   // are covered by live DOM screens (movie page left, five-minute-cut
   // UI right) and the printed thought bubbles are live DOM bubbles
   // positioned over the photographed ones.
-  return <Ax n="25" title="Five-Minute Cut Scenario" label="AurionX five-minute cut scenario — interactive rebuild of AurionX_25">
+  return <Ax n="25" title="" label="AurionX five-minute cut scenario — interactive rebuild of AurionX_25">
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
       <Stage bg={`${CROP}f25-roomL.jpg`} ratio="840 / 806" label="Viewer facing the Eclipse Horizon movie page on the television">
         <span style={{ position: "absolute", left: "63%", top: "6.5%", width: "31%", background: "#101014", border: "1.5px solid #55565e", borderRadius: "50%", padding: "4.5% 3%", textAlign: "center", fontSize: 9.6, lineHeight: 1.4 }}>Two hours is a big commitment.</span>
@@ -969,7 +984,6 @@ export function AurionXCutScenario() {
         </TvBox>
       </Stage>
     </div>
-    <p style={{ margin: "9px 0 0", fontSize: 11.4 }} aria-live="polite">Total 05:00 — selected segment: {CUT_SEGMENTS[seg][0]} ({CUT_SEGMENTS[seg][1]}).{watch ? " Eclipse Horizon is on the watchlist." : ""}</p>
     <p style={{ margin: "10px 0 0", background: "#0d0f16", border: "1px solid #23242a", borderRadius: 9, padding: "9px 14px", textAlign: "center", fontSize: 13.5 }}>A trailer sells the movie. A highlight cut helps the viewer decide.</p>
   </Ax>;
 }
@@ -988,18 +1002,24 @@ export function AurionXStoryboard() {
     <div style={{ display: "grid", gridTemplateColumns: "1fr 118px", gap: 12, alignItems: "start" }}>
       <div>
         <p className="tks-kicker" style={{ marginTop: 0 }}>Source filmstrip — click a scene to select / suppress it</p>
-        <div style={{ display: "grid", gridTemplateColumns: cols, gap: 2.5, alignItems: "end" }}>
+        <div style={{ display: "grid", gridTemplateColumns: cols, gap: 2.5 }}>
           <span />
-          {SOURCE_SCENES.map((t, c) => <button key={t} type="button" onClick={() => toggle(t)} aria-pressed={selected.includes(t)} style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
-            <Still h={20} tone={selected.includes(t) ? "#233148" : "#14161c"} />
-            <span style={{ display: "block", fontSize: 7.6, marginTop: 2, color: selected.includes(t) ? "#fff" : "#77787e" }}>{String(c + 1).padStart(2, "0")}<br />{t}</span>
-          </button>)}
+          <span style={{ gridColumn: "2 / -1", position: "relative", display: "block" }}>
+            <Img src={`${CROP}f27-source-strip.jpg`} h={30} alt="Source filmstrip stills, as printed" />
+            <span style={{ position: "absolute", inset: 0, display: "grid", gridTemplateColumns: `repeat(${SOURCE_SCENES.length}, 1fr)` }}>
+              {SOURCE_SCENES.map((t) => <button key={t} type="button" onClick={() => toggle(t)} aria-pressed={selected.includes(t)} aria-label={`Scene at ${t}`} style={{ background: selected.includes(t) ? "transparent" : "#00000088", border: "none", borderBottom: selected.includes(t) ? `2.5px solid ${CY}` : "2.5px solid #3a3b40", cursor: "pointer", padding: 0 }} />)}
+            </span>
+          </span>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: cols, gap: 2.5, marginTop: 2 }}>
+          <span />
+          {SOURCE_SCENES.map((t, c) => <span key={t} style={{ fontSize: 7.6, textAlign: "center", color: selected.includes(t) ? "#fff" : "#77787e" }}>{String(c + 1).padStart(2, "0")}<br />{t}</span>)}
         </div>
         <div style={{ display: "grid", gridTemplateColumns: cols, gap: 2.5, marginTop: 7 }}>
           {[...SIGNALS, ...NEG_SIGNALS].map((sig, r) => <span key={sig} style={{ display: "contents" }}>
             <span style={{ fontSize: 8.8, lineHeight: 1.3, alignSelf: "center", color: r >= 6 ? "#b18cff" : ACC }}>{r >= 6 ? "▽" : "△"} {sig}</span>
-            {SOURCE_SCENES.map((t, c) => <span key={t} style={{ display: "flex", alignItems: r >= 6 ? "flex-start" : "flex-end", height: 30, borderBottom: r >= 6 ? "none" : "1px solid #1d1e24", borderTop: r >= 6 ? "1px solid #1d1e24" : "none" }}>
-              <span style={{ display: "block", width: "100%", height: `${r >= 6 ? 100 - barH(r, c) + 30 : barH(r, c)}%`, maxHeight: "100%", background: r >= 6 ? VI : AZ, opacity: selected.includes(t) ? 0.95 : 0.4, borderRadius: 1.5 }} />
+            {SOURCE_SCENES.map((t, c) => <span key={t} style={{ display: "flex", alignItems: r >= 6 ? "flex-start" : "flex-end", justifyContent: "center", height: 24, borderBottom: r >= 6 ? "none" : "1px solid #1d1e24", borderTop: r >= 6 ? "1px solid #1d1e24" : "none" }}>
+              <span style={{ display: "block", width: 7, height: `${r >= 6 ? 100 - barH(r, c) + 30 : barH(r, c)}%`, maxHeight: "100%", background: r >= 6 ? VI : AZ, opacity: selected.includes(t) ? 0.95 : 0.4, borderRadius: 1 }} />
             </span>)}
           </span>)}
         </div>
@@ -1008,10 +1028,11 @@ export function AurionXStoryboard() {
           {SOURCE_SCENES.map((t) => <span key={t} style={{ textAlign: "center", fontSize: 11.5, color: selected.includes(t) ? "#2FBF71" : "#55565a" }}>{selected.includes(t) ? "↓" : "✕"}</span>)}
         </div>
         <p className="tks-kicker" style={{ marginTop: 10 }}>Preview filmstrip — selected highlights in story order</p>
-        <div style={{ display: "flex", gap: 3, alignItems: "center", flexWrap: "wrap" }}>
-          {selected.map((t) => <span key={t} style={{ textAlign: "center" }}><Still h={22} tone="#233148" /><span style={{ display: "block", fontSize: 7.8, marginTop: 2 }}>{t}</span></span>)}
-          <span style={{ fontSize: 10.6, color: "#c9c9ce", marginLeft: 6 }}>⟵ Preview runtime (example) 02:18 ⟶ (as printed for the original selection of {PRINTED_SELECTED.length} scenes)</span>
+        <Img src={`${CROP}f27-preview-strip.jpg`} h={42} alt="Preview filmstrip stills, as printed" />
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 7.8, color: "#c9c9ce", marginTop: 2 }}>
+          {selected.map((t) => <span key={t}>{t}</span>)}
         </div>
+        <p style={{ fontSize: 10.6, color: "#c9c9ce", margin: "4px 0 0" }}>⟵ Preview runtime (example) 02:18 ⟶ (as printed for the original selection of {PRINTED_SELECTED.length} scenes)</p>
       </div>
       <div style={{ display: "grid", gap: 8 }}>
         {[["① INPUT", "The full movie is split into scenes."], ["② AI EVALUATION", "Each scene is evaluated across multiple signals."], ["③ SELECTION", "Remaining scenes are chosen in story order."], ["④ PREVIEW OUTPUT", "A focused preview is assembled."]].map(([t, b]) => <p key={t} style={{ margin: 0, borderLeft: `3px solid ${ACC}`, paddingLeft: 9, fontSize: 10.4, lineHeight: 1.55 }}><b style={{ color: ACC }}>{t}</b><br />{b}</p>)}
@@ -1127,12 +1148,12 @@ export function AurionXVoiceBeforeAfter() {
   const stillCard = (label: string, lang: string, sub: string, img: string) => <div>
     <p style={{ margin: "0 0 5px", fontSize: 13.5 }}><b>{label}</b> <span style={{ color: "#9a9aa0", fontSize: 11.5 }}>{lang}</span></p>
     <div style={{ border: "1px solid #26272c", borderRadius: 10, overflow: "hidden" }}>
-      <Img src={img} h={128} alt={`${label} film still — same scene, same timecode`}><span style={{ background: "#111", padding: "2px 9px", fontSize: 10.6, color: "#fff", position: "absolute", left: "50%", bottom: 8, transform: "translateX(-50%)", whiteSpace: "nowrap", borderRadius: 4 }}>{sub}</span></Img>
+      <Img src={img} h={112} alt={`${label} film still — same scene, same timecode`}><span style={{ background: "#111", padding: "2px 9px", fontSize: 10.6, color: "#fff", position: "absolute", left: "50%", bottom: 8, transform: "translateX(-50%)", whiteSpace: "nowrap", borderRadius: 4 }}>{sub}</span></Img>
     </div>
     <p style={{ textAlign: "center", fontFamily: '"IBM Plex Mono",monospace', margin: "5px 0 0", fontSize: 12.5 }}>00:12:47:09</p>
   </div>;
   return <Ax n="31" title="" label="AurionX global voice before and after — interactive rebuild of AurionX_30 (printed 31)">
-    <p style={{ margin: "0 0 4px", display: "flex", justifyContent: "space-between", fontSize: 10.6, color: "#9a9aa0" }}><span>AurionX Portfolio | Image 31 of 41</span><span>Global Voice Before and After</span></p>
+    <p style={{ margin: "0 0 4px", display: "flex", justifyContent: "space-between", fontSize: 10.6, color: "#9a9aa0" }}><span>AurionX Portfolio | 31 of 41</span><span>Global Voice Before and After</span></p>
     <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 14, alignItems: "start" }}>
       <div>
         <h3 style={{ fontSize: 34, margin: "0 0 5px" }}>Global Voice Before and After</h3>
@@ -1141,27 +1162,27 @@ export function AurionXVoiceBeforeAfter() {
       <p style={{ margin: 0, textAlign: "right" }}><span style={{ display: "block", fontSize: 10.6, color: "#9a9aa0", letterSpacing: "0.08em" }}>TARGET LANGUAGE</span><span style={{ fontSize: 25, fontWeight: 800, background: GRAD, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>English</span></p>
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 10 }}>
-      {stillCard("Original", "Indonesian speech", "Kamu pergi tanpa pamit?", `${CROP}f30-still-a.jpg`)}
-      {stillCard("Localized", "English (dubbed)", "You left without saying goodbye?", `${CROP}f30-still-b.jpg`)}
+      {stillCard("Original", "Indonesian speech", "Kamu pergi tanpa pamit?", `${CROP}f30-wide-a.jpg`)}
+      {stillCard("Localized", "English (dubbed)", "You left without saying goodbye?", `${CROP}f30-wide-b.jpg`)}
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1.15fr", gap: 14, marginTop: 10, fontSize: 12 }}>
       <p style={{ margin: 0 }}><span style={{ color: "#9a9aa0", fontSize: 10.6 }}>ORIGINAL TRANSCRIPT (INDONESIAN)</span><br />Kamu pergi tanpa pamit?</p>
       <p style={{ margin: 0 }}><span style={{ color: "#9a9aa0", fontSize: 10.6 }}>TRANSLATED TRANSCRIPT (ENGLISH)</span><br />You left without saying goodbye?</p>
       <p style={{ margin: 0 }}><span style={{ fontSize: 10.6, background: GRAD, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent", fontWeight: 800 }}>LIP-SYNC STATUS / PREVIEW QUALITY</span><br /><span style={{ color: "#c9c9ce" }}>Lip-sync optimized for timing and naturalness. Not a final representation of performance.</span></p>
     </div>
-    <div className="tks-card" style={{ marginTop: 11 }}>
+    <div style={{ marginTop: 9 }}>
       <p className="tks-kicker" style={{ marginTop: 0 }}>Waveform comparison</p>
       <div style={{ position: "relative" }}>
         {/* Pass 3: printed waveforms are dense vertical-bar waveforms,
             not sine curves — redrawn as bars (same deterministic data). */}
-        <svg viewBox="0 0 300 96" style={{ width: "100%", display: "block" }} role="img" aria-label="Waveform comparison: original Indonesian above, localized English below, sharing one playhead">
-          {Array.from({ length: 100 }, (_, i) => { const h = 5 + Math.abs(Math.sin(i * 0.9 + 1) * Math.sin(i * 0.23)) * 36; return <rect key={`a${i}`} x={i * 3} y={22 - h / 2} width={1.7} height={h} fill="#2DD4BF" opacity={0.85} />; })}
-          {Array.from({ length: 100 }, (_, i) => { const h = 5 + Math.abs(Math.sin(i * 0.9 + 4) * Math.sin(i * 0.21 + 1)) * 36; return <rect key={`b${i}`} x={i * 3} y={72 - h / 2} width={1.7} height={h} fill={VI} opacity={0.9} />; })}
-          <line x1={(pos / 100) * 300} y1={0} x2={(pos / 100) * 300} y2={96} stroke="#fff" strokeWidth="1.4" />
+        <svg viewBox="0 0 300 54" style={{ width: "100%", display: "block" }} role="img" aria-label="Waveform comparison: original Indonesian above, localized English below, sharing one playhead">
+          {Array.from({ length: 120 }, (_, i) => { const h = 2.5 + Math.abs(Math.sin(i * 0.9 + 1) * Math.sin(i * 0.23)) * 15; return <rect key={`a${i}`} x={i * 2.5} y={13 - h / 2} width={1.1} height={h} fill="#2DD4BF" opacity={0.85} />; })}
+          {Array.from({ length: 120 }, (_, i) => { const h = 2.5 + Math.abs(Math.sin(i * 0.9 + 4) * Math.sin(i * 0.21 + 1)) * 15; return <rect key={`b${i}`} x={i * 2.5} y={41 - h / 2} width={1.1} height={h} fill={VI} opacity={0.9} />; })}
+          <line x1={(pos / 100) * 300} y1={0} x2={(pos / 100) * 300} y2={54} stroke="#fff" strokeWidth="1.2" />
           <polygon points={`${(pos / 100) * 300},0 ${(pos / 100) * 300 - 4},-0 ${(pos / 100) * 300 + 4},0 ${(pos / 100) * 300},6`} fill="#fff" />
         </svg>
         <span style={{ position: "absolute", left: 2, top: 0, fontSize: 9.6, color: "#2DD4BF" }}>● Original (Indonesian)</span>
-        <span style={{ position: "absolute", left: 2, top: 50, fontSize: 9.6, color: "#b18cff" }}>● Localized (English)</span>
+        <span style={{ position: "absolute", left: 2, top: 29, fontSize: 9.6, color: "#b18cff" }}>● Localized (English)</span>
       </div>
       <label style={{ display: "flex", gap: 9, alignItems: "center", marginTop: 7 }}>Playhead <input type="range" min={0} max={100} value={pos} onChange={(e) => setPos(Number(e.target.value))} aria-label="Waveform playhead" style={{ flex: 1, accentColor: AZ }} /> <span style={{ fontFamily: '"IBM Plex Mono",monospace' }}>00:12:47:09</span></label>
       <p style={{ margin: "6px 0 0", color: "#c9c9ce", fontSize: 11.6 }}>Identical timecode. Different language. Clear context. Supporting creators in reaching more audiences with clarity, empathy, and precision.</p>
@@ -1199,7 +1220,6 @@ export function AurionXLanguageSetup() {
     </div>
     <div style={{ borderTop: "1px solid #23242a", padding: "7px 11px", fontSize: 9.4, lineHeight: 1.6, color: "#9a9aa0" }}>
       <span style={{ color: ACC }}>{idx === 0 ? "Remote focus" : "Voice shortcuts"}</span> — {SETUP_SHORTCUTS[idx].join(" · ")}
-      <span aria-hidden="true" style={{ display: "block", height: 22, marginTop: 5, borderRadius: 4, background: "linear-gradient(180deg,#1c1d22,#101114)", border: "1px solid #2c2d33" }} />
     </div>
   </div>;
   return <Ax n="32" title="" label="AurionX language and voice setup — interactive rebuild of AurionX_31 (printed 32)">
@@ -1221,6 +1241,12 @@ export function AurionXLanguageSetup() {
         {done ? <p style={{ fontSize: 10.4, margin: "7px 0 0" }} aria-live="polite">Processing with: {SETUP_LANGS[lang]} · {SETUP_MODES[mode][0]} · {SETUP_VOICES[voice][0]}.</p> : null}
       </>)}
     </div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 8, marginTop: 12 }}>
+      {SETUP_TITLES.map((_, idx) => <div key={idx} style={{ display: "flex", gap: 9, borderTop: "1px solid #23242a", paddingTop: 8 }}>
+        <span style={{ width: 44, flex: "none" }}><Img src={`${CROP}f31-remote.jpg`} h={92} alt="Physical remote control photograph, as printed" /></span>
+        <span style={{ fontSize: 9.6, lineHeight: 1.65, color: "#c9c9ce" }}><b style={{ color: "#e8e8ea" }}>{idx === 0 ? "Remote focus" : "Voice shortcuts"}</b>{SETUP_SHORTCUTS[idx].map((sc) => <span key={sc} style={{ display: "block" }}>{sc}</span>)}</span>
+      </div>)}
+    </div>
     <p style={{ color: "#9a9aa0", margin: "11px 0 0", fontSize: 11.3 }}>Availability may vary by region and title. Voice options depend on permissions from rights holders.</p>
   </Ax>;
 }
@@ -1235,7 +1261,7 @@ export function AurionXCutPipeline() {
   return <Ax n="28" title="" label="AurionX five-minute cut technical pipeline — interactive rebuild of AurionX_32 (printed 28)">
     <p style={{ margin: "0 0 10px", display: "flex", justifyContent: "space-between", fontSize: 11.5 }}><span><b>28 / 41</b> · Five-Minute Cut Technical Pipeline</span><span style={{ color: "#b18cff" }}>Proposed architecture — verify against implementation</span></p>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(9,1fr)", gap: 4.5 }}>
-      {CUT_PIPELINE.map(([t, icon], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "center", background: "#0d0f16", border: `1.5px solid ${i === s ? VI : "#23242a"}`, borderRadius: 9, padding: "7px 4px", cursor: "pointer", font: "inherit", color: "#e8e8ea", position: "relative" }}>
+      {CUT_PIPELINE.map(([t, icon], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "center", background: "transparent", border: "1.5px solid transparent", borderBottom: `2.5px solid ${i === s ? VI : "transparent"}`, borderRadius: 0, padding: "7px 4px", cursor: "pointer", font: "inherit", color: "#e8e8ea", position: "relative" }}>
         <span style={{ display: "inline-flex", width: 19, height: 19, border: `1.5px solid ${VI}`, borderRadius: 4, alignItems: "center", justifyContent: "center", fontSize: 10.5, fontWeight: 800 }}>{i + 1}</span>
         <span aria-hidden="true" style={{ display: "block", fontSize: 17, color: "#b18cff", margin: "4px 0 2px" }}>{icon}</span>
         <b style={{ display: "block", fontSize: 9.3, lineHeight: 1.3 }}>{t}</b>
@@ -1243,19 +1269,18 @@ export function AurionXCutPipeline() {
       </button>)}
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(9,1fr)", gap: 4.5, marginTop: 9, fontSize: 8.8, lineHeight: 1.5 }}>
-      <div style={{ gridColumn: "1 / 4", border: "1px solid #23242a", borderRadius: 8, padding: "6px 8px", background: "#0d0f16" }}>
+      <div style={{ gridColumn: "1 / 3", border: "1px solid #23242a", borderRadius: 8, padding: "6px 8px", background: "#0d0f16" }}>
         <b style={{ color: ACC }}>Signal inputs</b>
         <p style={{ margin: "3px 0 0" }}>👁 Visual · 🔊 Audio · ▤ Transcript · ⬡ Metadata<br />↘ branching into the feature matrix</p>
       </div>
       <div style={{ border: "1px solid #23242a", borderRadius: 8, padding: "6px 7px", background: "#0d0f16" }}><b style={{ color: ACC }}>Feature matrix</b><span aria-hidden="true" style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 2, marginTop: 4 }}>{Array.from({ length: 24 }, (_, i) => <span key={i} style={{ width: 5, height: 5, borderRadius: "50%", background: AZ, opacity: 0.3 + ((i * 29) % 70) / 100 }} />)}</span></div>
-      <div style={{ border: "1px solid #23242a", borderRadius: 8, padding: "6px 7px", background: "#0d0f16" }}><b style={{ color: "#b18cff" }}>Highlight scoring</b><span aria-hidden="true" style={{ display: "flex", gap: 2.5, alignItems: "flex-end", height: 26, marginTop: 4 }}>{[40, 70, 55, 90, 62, 80].map((h, i) => <span key={i} style={{ flex: 1, height: `${h}%`, background: VI, borderRadius: 1.5 }} />)}</span></div>
+      <div style={{ border: "1px solid #23242a", borderRadius: 8, padding: "6px 7px", background: "#0d0f16" }}><b style={{ color: "#b18cff" }}>Highlight scoring</b><span aria-hidden="true" style={{ display: "flex", gap: 2.5, alignItems: "flex-end", height: 44, marginTop: 4 }}>{[40, 70, 55, 90, 62, 80].map((h, i) => <span key={i} style={{ flex: 1, height: `${h}%`, background: VI, borderRadius: 1.5 }} />)}</span></div>
       <div style={{ border: "1px solid #23242a", borderRadius: 8, padding: "6px 7px", background: "#0d0f16" }}><b style={{ color: ACC }}>Spoiler constraints</b><p style={{ margin: "3px 0 0" }}>✓ No ending scenes<br />✕ Twist scene 41<br />✓ Dialogue-safe only</p></div>
       <div style={{ border: "1px solid #23242a", borderRadius: 8, padding: "6px 7px", background: "#0d0f16", textAlign: "center" }}><b style={{ color: "#b18cff" }}>Duration</b><svg viewBox="0 0 40 40" style={{ width: 38, display: "block", margin: "3px auto 0" }} aria-hidden="true"><circle cx="20" cy="20" r="16" fill="none" stroke="#26272c" strokeWidth="4.5" /><circle cx="20" cy="20" r="16" fill="none" stroke={VI} strokeWidth="4.5" strokeDasharray="100.5" strokeDashoffset="18" transform="rotate(-90 20 20)" /><text x="20" y="24" fontSize="8.5" fill="#fff" textAnchor="middle" fontWeight="800">05:00</text></svg><span>Target duration</span></div>
       <div style={{ border: "1px solid #23242a", borderRadius: 8, padding: "6px 7px", background: "#0d0f16" }}><b style={{ color: ACC }}>Sequence assembly</b><p style={{ margin: "3px 0 0" }}>01 · 00:32<br />02 · 00:41<br />03 · 00:28<br />n · 00:37</p></div>
       <div style={{ border: "1px solid #23242a", borderRadius: 8, padding: "6px 7px", background: "#0d0f16" }}><b style={{ color: "#b18cff" }}>Audio normalization</b><br /><Wave color={VI} w={72} h={16} /><br /><Wave color={CY} w={72} h={16} /></div>
-      <div style={{ border: "1px solid #23242a", borderRadius: 8, padding: "6px 7px", background: "#0d0f16" }}><b style={{ color: ACC }}>Video render</b><Still h={24} tone="#183038"><span style={{ fontSize: 8.4 }}>▶ render monitor</span></Still></div>
+      <div style={{ border: "1px solid #23242a", borderRadius: 8, padding: "6px 7px", background: "#0d0f16" }}><b style={{ color: ACC }}>Video render</b><Still h={38} tone="#183038"><span style={{ fontSize: 8.4 }}>▶ render monitor</span></Still></div>
     </div>
-    <p style={{ margin: "10px 0 0", fontSize: 12 }} aria-live="polite"><b>{CUT_PIPELINE[s][0]}</b> — stage {s + 1} of 9 in the printed pipeline.</p>
     <p style={{ margin: "9px 0 0", background: "#0d0f16", border: "1px solid #23242a", borderRadius: 9, padding: "9px 14px", textAlign: "center", fontSize: 12.8 }}>AurionX assembles and renders the selected segments through a programmable media pipeline.</p>
   </Ax>;
 }
@@ -1303,14 +1328,25 @@ export function AurionXVoicePipeline() {
       </div>; })}
     </div>
     <div style={{ border: "1px solid #23242a", borderRadius: 10, background: "#0a0c12", padding: "10px 13px", marginTop: 13 }}>
-      <p className="tks-kicker" style={{ marginTop: 0 }}>Signal tracks</p>
-      {GV_TRACKS.map(([name, color, route], i) => <p key={name} style={{ margin: "5px 0", display: "flex", gap: 10, alignItems: "center", fontSize: 10.8 }}>
-        <span style={{ width: 108, flex: "none" }}>{name}</span>
-        <svg viewBox="0 0 300 12" style={{ flex: 1, height: 12 }} aria-hidden="true"><polyline fill="none" stroke={color} strokeWidth="1.8" strokeDasharray={i % 2 ? "4 3" : undefined} points={`0,6 ${60 + i * 22},6 ${84 + i * 22},${i % 2 ? 2 : 10} ${150 + i * 16},${i % 2 ? 2 : 10} 292,6`} /><circle cx={84 + i * 22} cy={i % 2 ? 2 : 10} r={2.4} fill={color} /><polygon points={`300,6 293,3 293,9`} fill={color} /></svg>
-        <span style={{ color: "#9a9aa0", fontSize: 9.8, width: 218, flex: "none" }}>{route}</span>
-      </p>)}
+      <p className="tks-kicker" style={{ marginTop: 0 }}>Signal tracks — routing as printed</p>
+      <svg viewBox="0 0 1000 200" style={{ width: "100%", display: "block" }} role="img" aria-label="Signal-track routing diagram: original audio feeds separation and subtitle output, background audio is preserved into mixing, localized speech is synthesized in localization and remixed, remixed output plays back, subtitles run from recognition to subtitle output">
+        <line x1="318" y1="2" x2="318" y2="196" stroke="#3a3b40" strokeDasharray="3 4" />
+        <line x1="582" y1="2" x2="582" y2="196" stroke="#3a3b40" strokeDasharray="3 4" />
+        {GV_TRACKS.map(([name]) => <text key={name} x={2} y={22 + GV_TRACKS.findIndex(([n]) => n === name) * 40} fontSize="13.5" fill="#c9c9ce" fontWeight="600">{name.toUpperCase()}</text>)}
+        <polyline points="130,18 888,18 888,4" fill="none" stroke="#2DD4BF" strokeWidth="2" /><polygon points="888,0 884,7 892,7" fill="#2DD4BF" />
+        <polyline points="222,18 222,58" fill="none" stroke="#2DD4BF" strokeWidth="2" /><polygon points="222,64 219,56 225,56" fill="#2DD4BF" />
+        <circle cx="130" cy="18" r="3.5" fill="#2DD4BF" />
+        <polyline points="130,58 756,58 756,4" fill="none" stroke="#2979FF" strokeWidth="2" /><polygon points="756,0 752,7 760,7" fill="#2979FF" />
+        <circle cx="130" cy="58" r="3.5" fill="#2979FF" />
+        <polyline points="574,4 574,98" fill="none" stroke="#7B61FF" strokeWidth="2" />
+        <line x1="574" y1="98" x2="800" y2="98" stroke="#7B61FF" strokeWidth="2" /><line x1="800" y1="98" x2="952" y2="98" stroke="#7B61FF" strokeWidth="2" strokeDasharray="6 4" /><polygon points="960,98 950,94 950,102" fill="#7B61FF" />
+        <circle cx="574" cy="98" r="3.5" fill="#7B61FF" />
+        <polyline points="756,98 756,138 952,138 952,178" fill="none" stroke="#FF8FB2" strokeWidth="2" /><polygon points="952,186 948,176 956,176" fill="#FF8FB2" />
+        <circle cx="756" cy="138" r="3.5" fill="#FF8FB2" />
+        <line x1="130" y1="178" x2="888" y2="178" stroke="#2DD4BF" strokeWidth="2" strokeDasharray="2.5 4" />
+      </svg>
     </div>
-    <p style={{ margin: "10px 0 0", border: "1px solid #2c2d33", borderRadius: 9, padding: "7px 12px", fontSize: 10.8, display: "flex", gap: 10, alignItems: "center" }} aria-live="polite"><span aria-hidden="true" style={{ color: ACC }}>ⓘ</span><span><b>{flat[stage].t}</b> — group {flat[stage].g}, stage {stage + 1} of 10 · STATUS: VERIFY · SIMULATED · FUTURE (no stage carries a filled status, as printed).</span></p>
+    <p style={{ margin: "10px 0 0", border: "1px solid #2c2d33", borderRadius: 9, padding: "8px 12px", fontSize: 11, display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}><span aria-hidden="true" style={{ color: ACC }}>ⓘ</span><span>Implementation status requires source verification</span><span style={{ marginLeft: "auto", display: "flex", gap: 7, alignItems: "center" }}><b>STATUS</b><span style={{ border: "1px solid #2DD4BF", color: "#2DD4BF", borderRadius: 5, padding: "0 7px" }}>VERIFY</span><span style={{ border: "1px solid #2979FF", color: "#8fb7ff", borderRadius: 5, padding: "0 7px" }}>SIMULATED</span><span style={{ border: "1px solid #7B61FF", color: "#b18cff", borderRadius: 5, padding: "0 7px" }}>FUTURE</span></span></p>
   </Ax>;
 }
 
@@ -1366,6 +1402,10 @@ const SYS_LAYERS: Array<[string, string, string[]]> = [
 const SYS_ICONS = [["📺", "🎮", "🎙", "🖥"], ["⬡", "▤", "◔", "🔑"], ["🎙", "🎬", "✦", "🌐", "🗣", "👄", "🎞"], ["🗄", "⬢", "☁", "☰", "📊"]];
 export function AurionXSystemArchitecture() {
   const [l, setL] = useState(2);
+  const wire = (seed: number) => <svg viewBox="0 0 600 22" preserveAspectRatio="none" style={{ width: "100%", height: 22, display: "block" }} aria-hidden="true">
+    {[CY, VI, "#2DD4BF", AZ].map((c, k) => <polyline key={c} points={`${70 + seed * 24 + k * 128},0 ${70 + seed * 24 + k * 128},13 ${88 + seed * 24 + k * 128},22`} fill="none" stroke={c} strokeWidth="1.4" strokeDasharray={k % 2 ? "3 3" : undefined} />)}
+    {[150, 300, 450].map((x, k) => <line key={x} x1={x + seed * 12} y1="0" x2={x + seed * 12} y2="22" stroke={[AZ, VI, CY][k]} strokeWidth="1.2" strokeDasharray={k === 1 ? "2 3" : undefined} />)}
+  </svg>;
   return <Ax n="35" title="" eyebrow="ENGINEERING" label="AurionX complete system architecture — interactive rebuild of AurionX_35">
     <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 12, alignItems: "start" }}>
       <div>
@@ -1374,20 +1414,25 @@ export function AurionXSystemArchitecture() {
       </div>
       <p style={{ margin: 0, border: "1px solid #2c2d33", borderRadius: 9, padding: "7px 11px", fontSize: 11 }}><b>STACK:</b> <span style={{ border: "1px solid #3a3b40", borderRadius: 5, padding: "0 7px" }}>VERIFY</span></p>
     </div>
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 148px", gap: 12, marginTop: 12, alignItems: "start" }}>
-      <div style={{ display: "grid", gap: 0 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 172px", gap: 12, marginTop: 12, alignItems: "start" }}>
+      <div style={{ minWidth: 0 }}>
         {SYS_LAYERS.map(([name, color, mods], i) => <span key={name} style={{ display: "contents" }}>
-          <button type="button" onClick={() => setL(i)} aria-pressed={i === l} style={{ display: "grid", gridTemplateColumns: "158px 1fr", textAlign: "left", background: "#0d0f16", border: `1.5px solid ${i === l ? color : "#23242a"}`, borderRadius: 10, overflow: "hidden", cursor: "pointer", font: "inherit", color: "#e8e8ea", padding: 0 }}>
-            <span style={{ padding: "10px 12px", borderRight: "1px solid #23242a", display: "flex", gap: 8, alignItems: "center" }}><span aria-hidden="true" style={{ fontSize: 16 }}>{SYS_ICONS[i][0]}</span><b style={{ color, fontSize: 12.3 }}>{name}</b></span>
-            <span style={{ padding: "8px 10px", display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>{(mods as string[]).map((mod, mi) => <span key={mod} style={{ border: "1px solid #2c2d33", background: "#10131b", borderRadius: 7, padding: "4px 9px", fontSize: 10.4 }}>{SYS_ICONS[i][mi]} {mod}</span>)}</span>
-          </button>
-          {i < 3 ? <span aria-hidden="true" style={{ display: "flex", justifyContent: "space-around", padding: "1px 30px", fontSize: 10 }}><span style={{ color: CY }}>│</span><span style={{ color: VI }}>┆</span><span style={{ color: "#2DD4BF" }}>┆</span><span style={{ color: AZ }}>│</span></span> : null}
+          <div role="button" tabIndex={0} onClick={() => setL(i)} aria-pressed={i === l} style={{ display: "grid", gridTemplateColumns: "128px 1fr", textAlign: "left", background: "#0d0f16", border: `1.5px solid ${i === l ? color : "#23242a"}`, borderRadius: 10, overflow: "hidden", cursor: "pointer", color: "#e8e8ea" }}>
+            <span style={{ padding: "11px 12px", borderRight: "1px solid #23242a", display: "flex", gap: 8, alignItems: "center" }}><span aria-hidden="true" style={{ fontSize: 15, color }}>{["◎", "⬢", "⬡", "▦"][i]}</span><b style={{ color, fontSize: 11.8 }}>{name}</b></span>
+            <span style={{ padding: "7px 9px", display: "flex", gap: 5, alignItems: "stretch" }}>{(mods as string[]).map((mod, mi) => <span key={mod} style={{ display: "contents" }}>
+              {mi > 0 ? <span aria-hidden="true" style={{ alignSelf: "center", color: "#8f9bff", fontSize: 10 }}>↔</span> : null}
+              <span style={{ flex: 1, border: "1.5px solid #34353d", background: "#10131b", borderRadius: 7, padding: "7px 5px", fontSize: 9.3, display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", gap: 4 }}><span aria-hidden="true" style={{ color }}>{SYS_ICONS[i][mi]}</span>{mod}</span>
+            </span>)}</span>
+          </div>
+          {i < 3 ? wire(i) : null}
         </span>)}
       </div>
-      <div style={{ display: "grid", gap: 8 }}>
-        <div style={{ border: "1px solid #23242a", borderRadius: 10, padding: "9px 11px", background: "#0d0f16" }}>
-          <p className="tks-kicker" style={{ marginTop: 0 }}>AI layer feeds</p>
-          {[["🎬", "Scene Recall", CY], ["✦", "Five-Minute Cut", VI], ["🌐", "Global Voice", "#B18CFF"]].map(([icon, t, c]) => <p key={t as string} style={{ margin: "5px 0", fontSize: 11.3 }}><span aria-hidden="true">{icon as string}</span> <b style={{ color: c as string }}>{t as string}</b></p>)}
+      <div style={{ display: "grid", gap: 10 }}>
+        <div style={{ display: "grid", gap: 9 }}>
+          {[["🎬", "Scene Recall", CY], ["◔", "Five-Minute Cut", AZ], ["🌐", "Global Voice", VI]].map(([icon, t, c]) => <p key={t as string} style={{ margin: 0, display: "flex", gap: 9, alignItems: "center", fontSize: 11.6 }}>
+            <span aria-hidden="true" style={{ width: 52, height: 52, flex: "none", borderRadius: "50%", border: `2px solid ${c as string}`, color: c as string, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 19, background: "#0a0c12" }}>{icon as string}</span>
+            <b style={{ color: c as string }}>{t as string}</b>
+          </p>)}
         </div>
         <div style={{ border: "1px solid #23242a", borderRadius: 10, padding: "9px 11px", background: "#0d0f16", fontSize: 10.4, lineHeight: 1.8 }}>
           <p className="tks-kicker" style={{ marginTop: 0 }}>Legend — line styles</p>
@@ -1408,11 +1453,15 @@ const EVIDENCE = [
 const hexNode = (t: string) => <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: "#171126", border: `1.5px solid ${VI}`, clipPath: "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)", padding: "9px 13px", fontSize: 9.6, fontWeight: 800, letterSpacing: "0.05em", textAlign: "center" }}>{t}</span>;
 export function AurionXEvidence() {
   const [sel, setSel] = useState(6);
-  const evCard = (i: number, hero?: boolean) => { const [t, proves, icon] = EVIDENCE[i]; return <button key={t} type="button" onClick={() => setSel(i)} aria-pressed={i === sel} style={{ textAlign: "left", width: "100%", background: "#0d0f16", border: `1.5px solid ${i === sel ? VI : "#23242a"}`, borderRadius: 10, padding: hero ? "13px 15px" : "9px 11px", cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
-    <span style={{ color: "#8f9bff", fontWeight: 800 }}>{String(i + 1).padStart(2, "0")}</span> <b style={{ fontSize: hero ? 15 : 12.3 }}>{t}</b>
-    <span style={{ display: "block", border: "1px dashed #3a3b3f", borderRadius: 7, padding: hero ? "10px 10px" : "6px", textAlign: "center", color: "#9a9aa0", margin: "8px 0 5px", fontSize: hero ? 12 : 10.4 }}><span aria-hidden="true" style={{ display: "block", fontSize: hero ? 20 : 14, marginBottom: 4 }}>{icon}</span>INSERT VERIFIED CAPTURE</span>
+  const evCard = (i: number, hero?: boolean) => { const [t, proves, icon] = EVIDENCE[i]; return <button key={t} type="button" onClick={() => setSel(i)} aria-pressed={i === sel} style={{ textAlign: "left", width: "100%", height: "100%", background: "#0d0f16", border: `1.5px solid ${i === sel ? VI : "#23242a"}`, borderRadius: 10, padding: hero ? "13px 15px" : "9px 11px", cursor: "pointer", font: "inherit", color: "#e8e8ea" }}>
+    <span style={{ color: "#8f9bff", fontWeight: 800 }}>{String(i + 1).padStart(2, "0")}</span> <b style={{ fontSize: hero ? 15.5 : 12.3 }}>{t}</b>
+    <span style={{ display: "block", border: "1px dashed #3a3b3f", borderRadius: 7, padding: hero ? "26px 10px" : "7px 6px", textAlign: "center", color: "#9a9aa0", margin: "8px 0 5px", fontSize: hero ? 12 : 10.2 }}><span aria-hidden="true" style={{ display: "block", fontSize: hero ? 22 : 14, marginBottom: 4 }}>{icon}</span>INSERT VERIFIED CAPTURE</span>
     <span style={{ display: "block", color: "#c9c9ce", fontSize: hero ? 11.6 : 10.4, margin: 0 }}>{proves}</span>
   </button>; };
+  const bracket = (labelTxt: string, color: string, flip?: boolean) => <div aria-hidden="true" style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+    <span style={{ position: "absolute", top: "6%", bottom: "6%", [flip ? "right" : "left"]: "55%", borderTop: `1.5px solid ${color}`, borderBottom: `1.5px solid ${color}`, [flip ? "borderRight" : "borderLeft"]: `1.5px solid ${color}`, width: "42%" } as React.CSSProperties} />
+    <span style={{ transform: "rotate(-90deg)", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", justifyContent: "center", background: "#171126", border: `1.5px solid ${color}`, clipPath: "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)", padding: "16px 10px", fontSize: 9.3, fontWeight: 800, letterSpacing: "0.05em", color }}>{labelTxt}</span>
+  </div>;
   return <Ax n="36" title="" eyebrow="ENGINEERING" label="AurionX implementation evidence — interactive rebuild of AurionX_36">
     <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 12, alignItems: "start" }}>
       <div>
@@ -1421,20 +1470,21 @@ export function AurionXEvidence() {
       </div>
       <p style={{ margin: 0, textAlign: "right", fontSize: 11 }}><b style={{ color: "#e8a33d" }}>EVIDENCE CAPTURE REQUIRED</b><br /><span style={{ border: "1.5px solid #e8a33d", color: "#e8a33d", borderRadius: 999, padding: "2px 10px", display: "inline-block", marginTop: 5 }}>⚠ INSERT VERIFIED CAPTURE</span></p>
     </div>
-    <div style={{ display: "grid", gridTemplateColumns: "172px 1fr 172px", gap: 7, marginTop: 9, alignItems: "start" }}>
-      <div style={{ display: "grid", gap: 6 }}>{evCard(0)}{evCard(4)}{evCard(5)}</div>
-      <div style={{ display: "grid", gap: 6 }}>
-        {evCard(6, true)}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>{evCard(1)}{evCard(2)}{evCard(3)}</div>
+    <div style={{ display: "grid", gridTemplateColumns: "44px 1fr 44px", gap: 6, marginTop: 10, alignItems: "stretch" }}>
+      {bracket("PRODUCT DECISION", "#2DD4BF")}
+      <div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 7 }}>{evCard(0)}{evCard(1)}{evCard(2)}{evCard(3)}</div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 2.05fr 1fr", gap: 7, marginTop: 7, alignItems: "stretch" }}>
+          <div style={{ display: "grid", gap: 7 }}>{evCard(4)}{evCard(5)}</div>
+          {evCard(6, true)}
+          <div style={{ display: "grid", gap: 7 }}>{evCard(7)}{evCard(8)}</div>
+        </div>
+        <p style={{ margin: "9px 0 0", textAlign: "center" }}>{hexNode("IMPLEMENTATION")}</p>
       </div>
-      <div style={{ display: "grid", gap: 6 }}>{evCard(7)}{evCard(8)}</div>
+      {bracket("OUTPUT", VI, true)}
     </div>
-    <p style={{ margin: "11px 0 0", display: "flex", justifyContent: "space-between", alignItems: "center" }} aria-live="polite">
-      <span>{hexNode("PRODUCT DECISION")}</span>
-      <span style={{ fontSize: 11.3 }}>Selected: <b>{EVIDENCE[sel][0]}</b> — {EVIDENCE[sel][1].toLowerCase()}. {hexNode("IMPLEMENTATION")} sits under slot 07, as printed.</span>
-      <span>{hexNode("OUTPUT")}</span>
-    </p>
-    <p style={{ textAlign: "center", color: "#e8a33d", margin: "10px 0 0", fontSize: 12 }}>⚠ Do not publish placeholders as final evidence.</p>
+    <p style={{ margin: "8px 0 0", fontSize: 11.3 }} aria-live="polite">Selected: <b>{EVIDENCE[sel][0]}</b> — {EVIDENCE[sel][1].toLowerCase()}.</p>
+    <p style={{ textAlign: "center", color: "#e8a33d", margin: "8px 0 0", fontSize: 12 }}>⚠ Do not publish placeholders as final evidence.</p>
   </Ax>;
 }
 
@@ -1497,7 +1547,7 @@ export function AurionXIteration() {
   const tvMock = (v2: boolean) => <div style={{ border: "1px solid #26272c", borderRadius: 10, overflow: "hidden" }}>
     {/* Pass 3: both printed mockups sit over the same lighthouse still —
         real crop underneath, each version's UI state stays DOM over it. */}
-    <Img src={`${CROP}f39-lighthouse.jpg`} h={92} alt="Lighthouse still behind the TV mockup" darken>
+    <Img src={`${CROP}f39-lighthouse.jpg`} h={148} alt="Lighthouse still behind the TV mockup" darken>
       <span style={{ position: "absolute", inset: 0, padding: "6px 8px", textShadow: "0 1px 4px #000", lineHeight: 1.55 }}>{v2 ? <span><b style={{ color: ACC }}>◯ Listening</b> — “I found three possible scenes”<br />1 · 00:42:18 Character on cliff [Selected] · 2 · 00:22:10 Waves crash · 3 · 01:03:55 Storm clouds<br />Scene search — Analyzing… 65%</span>
         : <span><b>Search &amp; Find</b> — “Search for scenes · Describe a moment...”<br />Categories · Tools · Settings in a dense sidebar; 7-item results list.</span>}</span>
     </Img>
@@ -1513,11 +1563,14 @@ export function AurionXIteration() {
       </div>
       <div><p style={{ margin: "0 0 6px", fontSize: 11.6 }}><b style={{ color: "#2DD4BF" }}>VERSION 2</b> <span style={{ color: "#9a9aa0" }}>AURIONX SYSTEM</span></p>{tvMock(true)}</div>
     </div>
-    <table className="tks-table" style={{ marginTop: 12 }}><thead><tr><th>Version 1</th><th style={{ textAlign: "center" }}>Dimension</th><th>Version 2</th></tr></thead>
-      <tbody>{ITERATION.map(([dimName, v1, v2], i) => <tr key={dimName} onClick={() => setDim(i)} style={{ cursor: "pointer", background: i === dim ? "#1d1e20" : undefined }}>
-        <td style={{ color: "#b9b9be" }}>{v1}</td>
-        <td style={{ textAlign: "center", whiteSpace: "nowrap" }}><span aria-hidden="true" style={{ color: ACC }}>→</span> <b>{dimName}</b> <span aria-hidden="true" style={{ color: ACC }}>←</span></td>
-        <td>{v2}</td></tr>)}</tbody></table>
+    <div style={{ marginTop: 14 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: 12, fontSize: 10.6, color: "#9a9aa0", padding: "0 2px 5px" }}><span>Version 1</span><span>Dimension</span><span>Version 2</span></div>
+      {ITERATION.map(([dimName, v1, v2], i) => <div key={dimName} onClick={() => setDim(i)} style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: 12, alignItems: "center", cursor: "pointer", background: i === dim ? "#12141c" : undefined, borderRadius: 7, padding: "5px 8px", fontSize: 11.3 }}>
+        <span style={{ color: "#b9b9be", lineHeight: 1.5 }}>{v1}</span>
+        <span style={{ whiteSpace: "nowrap", textAlign: "center" }}><span aria-hidden="true" style={{ color: ACC }}>→</span> <b>{dimName}</b> <span aria-hidden="true" style={{ color: ACC }}>←</span></span>
+        <span style={{ lineHeight: 1.5 }}>{v2}</span>
+      </div>)}
+    </div>
   </Ax>;
 }
 
@@ -1550,7 +1603,7 @@ export function AurionXEcosystem() {
   // than a mis-registered edge. Before/after enlarged crops are kept in
   // qa/pass6-ax39/; the frontal TV cover is unchanged.
   const glass: React.CSSProperties = { position: "absolute", background: "rgba(9,11,17,0.965)", border: "1px solid #2e3038", borderRadius: 8, padding: "1.6% 1.8%", fontSize: 8.8, lineHeight: 1.5, color: "#e8e8ea", boxShadow: "0 0 14px 1px rgba(140,180,255,0.14), 0 10px 30px rgba(0,0,0,0.5)", transformOrigin: "center center" };
-  return <Ax n="39" title="Final Product Ecosystem" sub="Outcome — AurionX: An AI-Native Viewing Layer for Global Entertainment." eyebrow="OUTCOME" label="AurionX final product ecosystem — interactive rebuild of AurionX_39">
+  return <Ax n="39" title="" label="AurionX final product ecosystem — interactive rebuild of AurionX_39">
     <Stage bg={`${CROP}room-ecosystem.jpg`} label="The AurionX ecosystem in the living room: television, floating panels, laptop and tablet, as printed">
       <div style={{ position: "absolute", left: 0, top: 0, width: "38%", height: "27.5%", background: "linear-gradient(100deg, rgba(5,5,7,0.985) 0%, rgba(5,5,7,0.985) 86%, rgba(5,5,7,0) 100%)", padding: "1.8% 0 0 1.8%" }}>
         <p style={{ margin: 0, fontSize: 10.5 }}><span style={{ border: "1.5px solid #e8e8ea", borderRadius: 4, padding: "0 6px", fontWeight: 800 }}>39</span>&nbsp; <span style={{ color: ACC, letterSpacing: "0.14em", fontSize: 8.8, fontWeight: 700 }}>OUTCOME</span></p>
@@ -1564,8 +1617,8 @@ export function AurionXEcosystem() {
         <p style={{ margin: "5px 0 0", display: "flex", gap: 4 }}><span className="tks-chip" style={{ fontSize: 8.2, padding: "1px 7px" }}>↩ Back to playback</span><span className="tks-chip" style={{ fontSize: 8.2, padding: "1px 7px" }}>Cancel</span></p>
       </div>
       <TvBox l={24.0} t={19.7} w={45.0} h={47.8} label="Television — Scene Recall results over the lighthouse film">
-        <img src={`${CROP}f39-lighthouse.jpg`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
-        <span style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(3,5,9,0.88) 0%, rgba(3,5,9,0.55) 34%, transparent 55%)" }} aria-hidden="true" />
+        <img src={`${CROP}f39-lighthouse.jpg`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "64% 50%" }} />
+        <span style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(3,5,9,0.80) 0%, rgba(3,5,9,0.34) 30%, transparent 47%)" }} aria-hidden="true" />
         <span style={{ position: "absolute", left: "3.5%", top: "5%", right: "3.5%", fontSize: 9.2 }}>
           <span style={{ display: "flex", justifyContent: "space-between" }}><span>◯ <b style={{ color: ACC }}>Listening</b></span><span style={{ fontFamily: '"IBM Plex Mono",monospace' }}>00:42:18</span></span>
           <Wave color={CY} w={120} h={12} />
@@ -1615,7 +1668,7 @@ export function AurionXOutcome() {
   const FEATS = [["Scene Recall", "AI-native scene discovery and recall across global entertainment.", "▤", CY], ["Five-Minute Cut", "AI-assisted highlight edits that distill stories into shareable moments.", "🎬", AZ], ["Global Voice", "AI-generated dubbing and voice experiences for global audiences.", "∿", VI]];
   const OWN = [["◎", "Product strategy"], ["👤", "UX and interface design"], ["⬡", "AI workflow design"], ["▤", "Technical architecture"], ["⌁", "Prototype planning"]];
   return <Ax n="40" title="" eyebrow="OUTCOME" label="AurionX project outcome — interactive rebuild of AurionX_40">
-    <div style={{ display: "grid", gridTemplateColumns: "1.65fr 1fr", gap: 12, alignItems: "start" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "1.65fr 1fr", gap: 12, alignItems: "stretch" }}>
       <div style={{ border: "1px solid #2c2d33", borderRadius: 13, padding: "13px 15px", background: "#0a0c12" }}>
         <p className="tks-kicker" style={{ marginTop: 0 }}>Verified from supplied project context</p>
         <p style={{ fontSize: 33, fontWeight: 300, lineHeight: 1.28, margin: "5px 0 3px" }}>Independent 2024<br />competition<br />concept</p>
@@ -1634,13 +1687,11 @@ export function AurionXOutcome() {
         </div>
         <p style={{ margin: "14px 0 0", borderTop: "1px solid #23242a", paddingTop: 10, fontSize: 11.6 }}><b style={{ color: ACC }}>◎ INDEPENDENT CONCEPT</b> — Not released or commissioned as an official commercial product.</p>
       </div>
-      <div style={{ borderRadius: 13, overflow: "hidden", border: "1px solid #2c2d33" }}>
-        {/* Pass 3: the printed right side is the B/W lighthouse photograph
-            itself — real crop from this file (no text in the region). */}
-        <Img src={`${CROP}f40-lighthouse.jpg`} h={118} alt="Black-and-white lighthouse photograph heading the evidence column" />
-        <div style={{ background: "#0d0f16", padding: "10px 13px" }}>
+      <div style={{ position: "relative", borderRadius: 13, overflow: "hidden", border: "1px solid #2c2d33", minHeight: 430, alignSelf: "stretch" }}>
+        <img src={`${CROP}f40-lighthouse.jpg`} alt="Black-and-white lighthouse photograph filling the right portion of the slide, as printed" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, background: "rgba(9,11,17,0.88)", padding: "10px 13px" }}>
           <p className="tks-kicker" style={{ marginTop: 0, color: "#e8a33d" }}>Not supplied — add only with evidence</p>
-          {OUTCOME_EVIDENCE.map((e) => <p key={e} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "6px 0", fontSize: 11.6 }}><span><span aria-hidden="true" style={{ color: "#e8a33d", marginRight: 7 }}>⚠</span>{e}</span><span style={{ color: "#e8a33d", fontFamily: '"IBM Plex Mono",monospace', fontSize: 9.8 }}>EVIDENCE REQUIRED</span></p>)}
+          {OUTCOME_EVIDENCE.map((e) => <p key={e} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "5px 0", fontSize: 11.4 }}><span><span aria-hidden="true" style={{ color: "#e8a33d", marginRight: 7 }}>⚠</span>{e}</span><span style={{ color: "#e8a33d", fontFamily: '"IBM Plex Mono",monospace', fontSize: 9.6 }}>EVIDENCE REQUIRED</span></p>)}
         </div>
       </div>
     </div>
@@ -1664,7 +1715,7 @@ export function AurionXReflection() {
       {/* Pass 3: printed ratio restored (near 50/50) and the B/W
           lighthouse bleed from the right edge restored as a real crop
           behind the improve column (text stays DOM above it). */}
-      <div style={{ backgroundImage: `linear-gradient(90deg, rgba(7,8,13,0.95) 42%, rgba(7,8,13,0.62)), url(${CROP}f41-lighthouse.jpg)`, backgroundSize: "cover", backgroundPosition: "right top", borderRadius: 8, padding: "2px 10px 2px 2px" }}>
+      <div style={{ backgroundImage: `linear-gradient(90deg, rgba(7,8,13,0.90) 26%, rgba(7,8,13,0.42)), url(${CROP}f41-lighthouse.jpg)`, backgroundSize: "cover", backgroundPosition: "right center", borderRadius: 8, padding: "2px 10px 2px 2px" }}>
         <p className="tks-kicker" style={{ marginTop: 0, color: ACC }}>What I would improve</p>
         {IMPROVE.map((w, i) => <p key={w} style={{ margin: 0, padding: "8px 0", borderBottom: "1px solid #23242a", display: "flex", gap: 11, alignItems: "center" }}>
           <button type="button" onClick={() => setChecked((c) => c.map((v, j) => (j === i ? !v : v)))} aria-pressed={checked[i]} aria-label={`Mark improvement ${i + 1} addressed`} style={{ width: 25, height: 25, borderRadius: "50%", flex: "none", border: "none", background: checked[i] ? GRAD : "#23242a", outline: `1.5px solid ${VI}`, color: "#fff", fontSize: 10.5, fontWeight: 800, cursor: "pointer" }}>{checked[i] ? "✓" : String(i + 1).padStart(2, "0")}</button>
@@ -1677,11 +1728,110 @@ export function AurionXReflection() {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", position: "relative" }}>
         {ROADMAP.map(([v, t], i) => <button key={t} type="button" onClick={() => setRm(i)} aria-pressed={i === rm} style={{ background: "transparent", border: "none", borderLeft: i ? "1px solid #2c2d33" : "none", cursor: "pointer", font: "inherit", color: "#e8e8ea", textAlign: "center", padding: 0 }}>
           <span aria-hidden="true" style={{ width: 19, height: 19, borderRadius: "50%", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "center", background: "#07080d", border: `2.5px solid ${i === rm ? CY : VI}` }}><span style={{ width: 7, height: 7, borderRadius: "50%", background: i === rm ? CY : "transparent" }} /></span>
-          <span style={{ display: "block", marginTop: 8, fontSize: 11.4 }}><b style={{ color: ACC }}>{v}</b> · {t}</span>
+          <span style={{ display: "block", marginTop: 9 }}><b style={{ display: "block", fontSize: 17, color: "#fff", letterSpacing: "0.04em" }}>{v}</b><span style={{ display: "block", fontSize: 11, color: "#c9c9ce", marginTop: 2, lineHeight: 1.45 }}>{t}</span></span>
         </button>)}
       </div>
     </div>
     <p style={{ margin: "16px 0 0", display: "flex", alignItems: "center", gap: 14 }}><span aria-hidden="true" style={{ flex: 1, borderTop: "1px solid #2c2d33" }} /><span style={{ fontSize: 13.4, color: "#d8d8dc" }}>From a focused retrieval tool to a responsible global viewing layer.</span><span aria-hidden="true" style={{ flex: 1, borderTop: "1px solid #2c2d33" }} /></p>
+  </Ax>;
+}
+
+
+/* ---------------- 21 — High-Fidelity Interaction Sequence (print layout; routed here so it shadows the ProjectScreens version) ---------------- */
+const STATES21: Array<[string, string]> = [
+  ["Normal playback", "Watching continues without interruption."],
+  ["AurionX activation", "Hold the AurionX button to speak."],
+  ["Live transcription", "Your words appear on screen in real time."],
+  ["Interpreted request", "AurionX confirms understanding with confidence."],
+  ["Three scene candidates", "AurionX surfaces the top matches with confidence."],
+  ["Selected scene and timeline jump", "AurionX jumps to the scene and resumes playback."],
+];
+const CAND21: Array<[string, string, string]> = [
+  ["Kitchen confrontation", "0:43", "Confidence 91%"], ["Brotherly argument", "1:17", "Confidence 71%"], ["Tense exchange", "0:58", "Confidence —"],
+];
+export function AurionXSceneRecall21() {
+  const [picked, setPicked] = useState(0);
+  const [active, setActive] = useState(4);
+  const bar = (pct: number) => <span style={{ display: "block", height: 3, background: "#ffffff33", borderRadius: 2 }}><span style={{ display: "block", width: `${pct}%`, height: "100%", background: GRAD, borderRadius: 2 }} /></span>;
+  const overlay = (i: number) => i === 1 ? <span style={{ position: "absolute", left: "50%", top: "46%", transform: "translate(-50%,-50%)", textAlign: "center" }}>
+      <span style={{ display: "flex", width: 62, height: 62, margin: "0 auto", borderRadius: "50%", border: "2px solid transparent", background: "linear-gradient(#0a0d16,#0a0d16) padding-box, linear-gradient(135deg,#00E5FF,#7B61FF) border-box", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 2 }}>
+        <span aria-hidden="true" style={{ display: "flex", gap: 2, alignItems: "flex-end", height: 14 }}>{[5, 10, 14, 8, 12].map((h, k) => <span key={k} style={{ width: 2.5, height: h, background: ACC, borderRadius: 1 }} />)}</span>
+        <span style={{ fontSize: 7.6, color: "#c9c9ce" }}>AurionX</span>
+      </span></span>
+    : i === 2 ? <span style={{ position: "absolute", left: "10%", right: "10%", top: "34%", textAlign: "center", fontSize: 10.4, lineHeight: 1.5, textShadow: "0 1px 5px #000" }}>Find the scene where the hero confronts his brother in the kitchen.
+      <span aria-hidden="true" style={{ display: "flex", gap: 2, alignItems: "flex-end", height: 12, justifyContent: "center", marginTop: 5 }}>{[4, 9, 12, 7, 10, 5].map((h, k) => <span key={k} style={{ width: 2.5, height: h, background: "#8fb7ff", borderRadius: 1 }} />)}</span></span>
+    : i === 3 ? <span style={{ position: "absolute", left: "9%", right: "9%", top: "10%", background: "#0b0e15ee", border: "1px solid #2e3038", borderRadius: 8, padding: "8px 10px", fontSize: 9.6, lineHeight: 1.5 }}>
+        <span style={{ color: "#9a9aa0", fontSize: 8.6 }}>Interpreted request</span>
+        <span style={{ display: "block", margin: "4px 0 7px" }}>Find the scene where the hero confronts his brother in the kitchen.</span>
+        <span style={{ display: "flex", justifyContent: "space-between", color: "#9a9aa0", fontSize: 8.6 }}><span>Confidence</span><span style={{ color: "#8fb7ff" }}>High</span></span>
+        <span style={{ display: "block", height: 4, background: "#26272c", borderRadius: 2, margin: "3px 0 6px" }}><span style={{ display: "block", width: "88%", height: "100%", background: GRAD, borderRadius: 2 }} /></span>
+        <span style={{ display: "block", textAlign: "center", color: "#9a9aa0", fontSize: 8.4 }}>◉ Press and hold to cancel</span></span>
+    : i === 4 ? <span style={{ position: "absolute", left: "6%", right: "6%", top: "7%", fontSize: 9.2 }}>
+        <span style={{ color: "#c9c9ce", fontSize: 8.6 }}>Top scene candidates</span>
+        <span style={{ display: "grid", gap: 4, marginTop: 4 }}>
+          {CAND21.map(([nm, dur, conf], ci) => <button key={nm} type="button" aria-pressed={picked === ci} onClick={(e) => { e.stopPropagation(); setPicked(ci); setActive(5); }} style={{ textAlign: "left", background: "#0b0e15ee", border: `1.5px solid ${picked === ci ? AZ : "#2c2d33"}`, borderRadius: 6, padding: "4px 7px", cursor: "pointer", font: "inherit", color: "#e8e8ea", fontSize: 8.8, lineHeight: 1.4 }}><b>{nm}</b><span style={{ float: "right" }}>{dur}</span><br /><span style={{ color: "#8fb7ff" }}>{conf}</span></button>)}
+        </span></span>
+    : i === 5 ? <span style={{ position: "absolute", left: "6%", top: "7%", fontSize: 9.2, textShadow: "0 1px 5px #000" }}>Jumping to scene<br /><b>{CAND21[picked][0]}</b></span>
+    : null;
+  const panel = (i: number) => <div key={i} onClick={() => setActive(i)} style={{ cursor: "pointer" }}>
+    <div style={{ position: "relative", height: 218, borderRadius: 7, overflow: "hidden", border: `1.5px solid ${active === i ? VI : "#26272c"}`, background: "#000" }}>
+      <img src={`${CROP}f21-tv.jpg`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+      {overlay(i)}
+      <span style={{ position: "absolute", left: "5%", right: "5%", bottom: "4%" }}>
+        <span style={{ display: "flex", justifyContent: "space-between", fontFamily: '"IBM Plex Mono",monospace', fontSize: 8.4, marginBottom: 3, textShadow: "0 1px 4px #000" }}><span>{i === 5 ? "43:02" : "32:14"}</span><span>84:07</span></span>
+        {bar(i === 5 ? 51 : 38)}
+      </span>
+    </div>
+    <p style={{ margin: "7px 0 0", fontSize: 11 }}><b><span style={{ color: ACC }}>{i + 1}</span> · {STATES21[i][0]}</b></p>
+    <p style={{ margin: "2px 0 0", fontSize: 9.8, color: "#9a9aa0", lineHeight: 1.5 }}>{STATES21[i][1]}</p>
+  </div>;
+  return <Ax n="21" title="" label="AurionX high-fidelity interaction sequence — interactive rebuild of AurionX_21">
+    <h3 style={{ fontSize: 21, margin: "2px 0 3px" }}>High-Fidelity Interaction Sequence</h3>
+    <p className="tks-lede" style={{ fontSize: 13, margin: "0 0 12px" }}>One continuous moment. Six distinct states.</p>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 7 }}>
+      {[0, 1, 2, 3, 4, 5].map(panel)}
+    </div>
+  </Ax>;
+}
+
+/* ---------------- 26 — Highlight Configuration (print layout; routed here so it shadows the ProjectScreens version) ---------------- */
+const HL26: Array<{ title: string; q: string; options: string[]; voice: string }> = [
+  { title: "Choose highlight type", q: "What would you like to create?", options: ["Five-Minute Cut — A smart highlight in about five minutes.", "Scene Selection — Pick the scenes you want.", "Full Recap — A complete recap of the entire title."], voice: "“Create a five-minute cut”" },
+  { title: "Set the duration", q: "How long would you like your highlight?", options: ["3 minutes — Quick highlight", "5 minutes — Recommended", "10 minutes — More to explore"], voice: "“Make it five minutes”" },
+  { title: "Choose the emphasis", q: "What should we focus on?", options: ["Action — High energy moments", "Story — Plot and narrative", "Characters — Character moments", "Balanced — A mix of all elements"], voice: "“Focus on action”" },
+  { title: "Set spoiler protection", q: "How much should we reveal?", options: ["Strict — Avoid major plot reveals", "Moderate — Some story context ok", "Open — No restrictions"], voice: "“Generate preview”" },
+];
+export function AurionXHighlightConfig26() {
+  const [choices, setChoices] = useState<number[]>([0, 1, 3, 0]);
+  const [done, setDone] = useState(false);
+  const [focus, setFocus] = useState(1);
+  const tile = (si: number, o: string, oi: number) => <button key={o} type="button" aria-pressed={choices[si] === oi} onClick={(e) => { e.stopPropagation(); const next = [...choices]; next[si] = oi; setChoices(next); setDone(false); }} style={{ flex: 1, textAlign: "center", background: choices[si] === oi ? "#141c2eee" : "#0c0d11dd", border: choices[si] === oi ? "1.5px solid transparent" : "1px solid #3a3b44", backgroundImage: choices[si] === oi ? "linear-gradient(#141c2e,#141c2e), linear-gradient(90deg,#2979FF,#7B61FF)" : undefined, backgroundOrigin: "border-box", backgroundClip: choices[si] === oi ? "padding-box, border-box" : undefined, borderRadius: 7, padding: "7px 6px", cursor: "pointer", font: "inherit", color: "#f5f5f5", fontSize: 9.8, lineHeight: 1.45 }}><b style={{ display: "block", fontSize: 10.6 }}>{o.split(" — ")[0]}</b>{o.split(" — ")[1] ?? ""}</button>;
+  const panel = (si: number) => { const st = HL26[si]; return <div key={st.title} onClick={() => setFocus(si)} style={{ position: "relative", border: `1.5px solid ${focus === si ? VI : "#26262b"}`, borderRadius: 10, overflow: "hidden", cursor: "pointer", height: 220, background: "#07090f" }}>
+    <img src={`${CROP}f26-backdrop.jpg`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "78% 50%", display: "block" }} />
+    <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(5,7,12,0.97) 22%, rgba(5,7,12,0.82) 55%, rgba(5,7,12,0.30) 100%)" }} />
+    <span style={{ position: "absolute", left: 5, top: "42%", width: 19, height: 19, borderRadius: "50%", background: "#1d1e24", border: "1px solid #3a3b40", display: "none" }} />
+    <div style={{ position: "relative", padding: "9px 11px", height: "100%", boxSizing: "border-box" }}>
+      <p style={{ margin: 0, fontSize: 9.3, color: "#8fb7ff" }}>Step {si + 1} of 4</p>
+      <h4 style={{ margin: "2px 0 1px", fontSize: 15 }}>{st.title}</h4>
+      <p style={{ margin: "0 0 8px", color: "#c9c9ce", fontSize: 10.3 }}>{st.q}</p>
+      {si === 0 ? <div style={{ display: "grid", gap: 4, maxWidth: "64%" }}>
+        {st.options.map((o, oi) => <button key={o} type="button" aria-pressed={choices[0] === oi} onClick={(e) => { e.stopPropagation(); const next = [...choices]; next[0] = oi; setChoices(next); }} style={{ textAlign: "left", background: choices[0] === oi ? "#141c2eee" : "#0c0d11dd", border: choices[0] === oi ? "1.5px solid #2979FF" : "1px solid #3a3b44", borderRadius: 7, padding: "6px 9px", cursor: "pointer", font: "inherit", color: "#f5f5f5", fontSize: 10, lineHeight: 1.35 }}><b>{o.split(" — ")[0]}</b> <span style={{ color: "#9a9aa0", fontSize: 9 }}>— {o.split(" — ")[1]}</span></button>)}
+      </div> : <div style={{ display: "flex", gap: 5, maxWidth: si === 2 ? "86%" : "82%" }}>
+        {st.options.map((o, oi) => tile(si, o, oi))}
+      </div>}
+      {si === 3 ? <button type="button" onClick={(e) => { e.stopPropagation(); setDone(true); }} style={{ marginTop: 8, background: GRAD, border: "none", color: "#fff", borderRadius: 7, padding: "6px 18px", fontWeight: 700, cursor: "pointer", font: "inherit", fontSize: 11 }}>Generate preview</button> : null}
+      <p style={{ position: "absolute", left: 11, bottom: 5, margin: 0, fontSize: 9.3, color: "#c9c9ce", background: "#0c0d11cc", borderRadius: 999, padding: "2px 9px" }}>🎙 Voice shortcut: {st.voice}</p>
+    </div>
+  </div>; };
+  return <Ax n="26" title="Highlight Configuration" sub="Create a personalized highlight tailored to your preferences." label="AurionX highlight configuration — interactive rebuild of AurionX_26">
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9 }}>
+      {[0, 1, 2, 3].map(panel)}
+    </div>
+    {done ? <p style={{ margin: "9px 0 0", fontSize: 11.6 }} aria-live="polite"><b>Preview ready</b> — {HL26.map((x, i) => x.options[choices[i]].split(" — ")[0]).join(" · ")}</p> : null}
+    <p style={{ margin: "10px 0 0", display: "flex", justifyContent: "space-between", gap: 14, fontSize: 9.8, color: "#8e8e96" }}>
+      <span>Focus moves with directional input — Use Up, Down, Left, Right to navigate · Press Select to confirm · Press Back to return.</span>
+      <span>Voice shortcuts available at any time.</span>
+    </p>
   </Ax>;
 }
 
@@ -1705,10 +1855,12 @@ export function aurionXChapterFor(file: string) {
   if (file.startsWith("AurionX_16_")) return <AurionXExperienceMap />;
   if (file.startsWith("AurionX_19_")) return <AurionXScenario />;
   if (file.startsWith("AurionX_20_")) return <AurionXUserFlow />;
+  if (file.startsWith("AurionX_21_")) return <AurionXSceneRecall21 />;
   if (file.startsWith("AurionX_22_")) return <AurionXSceneIndex />;
   if (file.startsWith("AurionX_23_")) return <AurionXErrorStates />;
   if (file.startsWith("AurionX_24_")) return <AurionXTechnicalPipeline />;
   if (file.startsWith("AurionX_25_")) return <AurionXCutScenario />;
+  if (file.startsWith("AurionX_26_")) return <AurionXHighlightConfig26 />;
   if (file.startsWith("AurionX_27_")) return <AurionXStoryboard />;
   if (file.startsWith("AurionX_28_")) return <AurionXOutputComparison />;
   if (file.startsWith("AurionX_29_")) return <AurionXProgressStates />;

@@ -13,10 +13,10 @@ import "./allweb3-chapters.css";
 
 const G = "#00ff00";
 
-function AwR({ n, title, sub, children, label, foot }: { n: string; title: ReactNode; sub?: string; children: ReactNode; label: string; foot?: string }) {
+function AwR({ n, title, sub, children, label, foot, titleSize, titleAlign }: { n: string; title: ReactNode; sub?: string; children: ReactNode; label: string; foot?: string; titleSize?: number; titleAlign?: "left" | "right" }) {
   return <div className="tks tks--dark aw3" role="region" aria-label={label}>
     <div className="tks-head"><span><b>W ALLWEB3</b>&nbsp;&nbsp;|&nbsp;&nbsp;{n} of 19</span><span className="tks-brand" style={{ fontSize: 12, color: G }}>ALLWEB3</span></div>
-    <h3 style={{ fontSize: 44 }}>{title}</h3>
+    <h3 style={{ fontSize: titleSize ?? 44, textAlign: titleAlign ?? "left", ...(titleSize && titleSize <= 14 ? { letterSpacing: ".14em", color: "#8fbf8f", margin: "2px 0 8px" } : {}) }}>{title}</h3>
     {sub ? <p className="tks-lede">{sub}</p> : null}
     {children}
     <div className="tks-foot"><span>{foot ?? "ALLWEB3 — CMP-2026-042"}</span><span>Illustrative data — as printed</span></div>
@@ -27,14 +27,14 @@ const card = { background: "#0a120a", border: "1px solid #223522", borderRadius:
 
 /* ================= 05 — The opaque campaign workflow (full rebuild) ================= */
 const W05: Array<{ t: string; icon: ReactNode; drop: boolean }> = [
-  { t: "Brief", icon: <span style={{ fontSize: 30 }}>📄</span>, drop: true },
-  { t: "Agency", icon: <span style={{ fontSize: 30 }}>🏢</span>, drop: true },
-  { t: "Outreach", icon: <>{[1, 2, 3].map((i) => <p key={i} style={{ margin: "3px 0", background: "#2a2f2a", borderRadius: 5, padding: "3px 6px" }}>👤 ━━</p>)}</>, drop: true },
-  { t: "Content", icon: <><p style={{ margin: "3px 0", background: "#2a2f2a", borderRadius: 5, padding: "5px 6px" }}>▶</p><p style={{ margin: "3px 0", background: "#2a2f2a", borderRadius: 5, padding: "5px 6px" }}>🖼</p><p style={{ margin: "3px 0", background: "#2a2f2a", borderRadius: 5, padding: "5px 6px" }}>━━ ━━</p></>, drop: true },
-  { t: "Screenshots", icon: <div style={{ border: "1.5px solid #6a706a", borderRadius: 7, padding: "5px 6px", background: "#222622" }}>○<p style={{ margin: "2px 0", fontSize: 15 }}>🖼</p><span style={{ fontSize: 9 }}>♡ ⌕ ▽<br />━━ ━━</span></div>, drop: true },
+  { t: "Brief", icon: <span style={{ fontSize: 30 }}>▤</span>, drop: true },
+  { t: "Agency", icon: <span style={{ fontSize: 30 }}>▦</span>, drop: true },
+  { t: "Outreach", icon: <>{[1, 2, 3].map((i) => <p key={i} style={{ margin: "3px 0", background: "#2a2f2a", borderRadius: 5, padding: "3px 6px" }}>◉ ━━</p>)}</>, drop: true },
+  { t: "Content", icon: <><p style={{ margin: "3px 0", background: "#2a2f2a", borderRadius: 5, padding: "5px 6px" }}>▶</p><p style={{ margin: "3px 0", background: "#2a2f2a", borderRadius: 5, padding: "5px 6px" }}>▨</p><p style={{ margin: "3px 0", background: "#2a2f2a", borderRadius: 5, padding: "5px 6px" }}>━━ ━━</p></>, drop: true },
+  { t: "Screenshots", icon: <div style={{ border: "1.5px solid #6a706a", borderRadius: 7, padding: "5px 6px", background: "#222622" }}>○<p style={{ margin: "2px 0", fontSize: 15 }}>▨</p><span style={{ fontSize: 9 }}>♡ ⌕ ▽<br />━━ ━━</span></div>, drop: true },
   { t: "Spreadsheets", icon: <div style={{ border: "1.5px solid #6a706a", borderRadius: 5, padding: "4px", background: "#222622" }}><span style={{ fontSize: 9 }}>▦ ✕</span><div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1.5, marginTop: 3 }}>{Array.from({ length: 16 }, (_, i) => <span key={i} style={{ height: 6, background: "#3a403a" }} />)}</div></div>, drop: true },
-  { t: "Disputed metrics", icon: <>{["⚠", "?", "⚠"].map((s, i) => <p key={i} style={{ margin: "3px 0", background: "#2a2f2a", borderRadius: 5, padding: "3px 6px" }}>👤 ━━ <span style={{ color: "#ff7a1a", float: "right" }}>{s === "?" ? "?" : "⚠"}</span></p>)}</>, drop: false },
-  { t: "Manual payment", icon: <><p style={{ margin: "3px 0", fontSize: 24 }}>👛</p><p style={{ margin: "3px 0", background: "#2a2f2a", borderRadius: 5, padding: "4px 6px" }}>🏛 ━━</p></>, drop: true },
+  { t: "Disputed metrics", icon: <>{["⚠", "?", "⚠"].map((s, i) => <p key={i} style={{ margin: "3px 0", background: "#2a2f2a", borderRadius: 5, padding: "3px 6px" }}>◉ ━━ <span style={{ color: "#ff7a1a", float: "right" }}>{s === "?" ? "?" : "⚠"}</span></p>)}</>, drop: false },
+  { t: "Manual payment", icon: <><p style={{ margin: "3px 0", fontSize: 24 }}>▭</p><p style={{ margin: "3px 0", background: "#2a2f2a", borderRadius: 5, padding: "4px 6px" }}>⌂ ━━</p></>, drop: true },
 ];
 export function Allweb3OpaqueWorkflow() {
   const [sel, setSel] = useState(6);
@@ -46,9 +46,12 @@ export function Allweb3OpaqueWorkflow() {
         </button>
         <p style={{ textAlign: "center", margin: "2px 0", color: "#8a908a" }}>{i < 7 ? "" : ""}</p>
         {p.drop ? <div style={{ textAlign: "center", opacity: 0.55 }}>
-          <p style={{ margin: 0, color: "#8a908a" }}>┆<br />〽</p>
-          <div style={{ background: "#141714", border: "1px solid #2c302c", borderRadius: 7, padding: "6px 3px", fontSize: 16 }}>{p.t === "Brief" ? "📄" : p.t === "Agency" ? "🏢" : p.t === "Outreach" ? "👥" : p.t === "Content" ? "▶" : p.t === "Screenshots" ? "🖼" : p.t === "Spreadsheets" ? "▦" : "🏛"}</div>
-          <p style={{ margin: "2px 0 0", color: "#ff7a1a", fontSize: 15 }}>⚠</p>
+          <svg width="14" height="34" viewBox="0 0 14 34" style={{ display: "block", margin: "0 auto" }} aria-hidden="true"><line x1="7" y1="0" x2="7" y2="26" stroke="#8a908a" strokeWidth="1.6" strokeDasharray="3 4" /><path d="M2 24 L7 33 L12 24" fill="none" stroke="#8a908a" strokeWidth="1.6" /></svg>
+          <div style={{ background: "#141714", border: "1px solid #2c302c", borderRadius: 7, padding: "8px 5px", fontSize: 20, minHeight: 118, color: "#c9c9ce" }}>
+            <span style={{ display: "block", height: 6, background: "#2c302c", borderRadius: 3, margin: "34px 4px 0" }} />
+            <span style={{ display: "block", height: 6, background: "#2c302c", borderRadius: 3, margin: "5px 10px 0" }} />
+            <span style={{ display: "block", fontSize: 9.5, marginTop: 7 }}>{p.t}</span>{p.t === "Brief" ? "▤" : p.t === "Agency" ? "▦" : p.t === "Outreach" ? "◉" : p.t === "Content" ? "▶" : p.t === "Screenshots" ? "▨" : p.t === "Spreadsheets" ? "▦" : "⌂"}</div>
+          <p style={{ margin: "3px 0 0", color: "#ff7a1a", fontSize: 19 }}>⚠</p>
         </div> : <p style={{ textAlign: "center", ...dim, fontSize: 10.5, margin: "6px 0 0" }}>Set apart as printed — dashed border, disputed at rest.</p>}
       </div>)}
     </div>
@@ -82,15 +85,15 @@ const A07: Array<[string, string, string, string]> = [
 ];
 export function Allweb3LegacyVs() {
   const [sel, setSel] = useState(2);
-  return <AwR n="07" title={<>Legacy process <span style={{ color: G }}>vs ALLWEB3</span></>} label="ALLWEB3 legacy process versus ALLWEB3 — full rebuild of 7.webp" foot="ALLWEB3 — Legacy vs ALLWEB3 · Illustrative data only. Outcomes vary by use case and execution.">
+  return <AwR n="07" titleSize={12} title="ALLWEB3 — LEGACY VS ALLWEB3" label="ALLWEB3 legacy process versus ALLWEB3 — full rebuild of 7.webp" foot="ALLWEB3 — Legacy vs ALLWEB3 · Illustrative data only. Outcomes vary by use case and execution.">
     <div style={{ display: "grid", gridTemplateColumns: "1fr 44px 1.25fr", gap: 0, alignItems: "stretch" }}>
       <div>
         <p style={{ textAlign: "center", margin: "0 0 2px" }}><b style={{ fontSize: 17, letterSpacing: ".06em" }}>LEGACY PROCESS</b></p>
         <p style={{ textAlign: "center", ...dim, margin: "0 0 10px" }}>Fragmented. Manual. Unclear.</p>
-        {L07.map(([ic, t, owner], i) => <div key={t} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 7 }}>
-          <button type="button" onClick={() => setSel(i)} aria-pressed={sel === i} style={{ flex: 1.2, display: "flex", gap: 9, alignItems: "center", background: "#141714", border: "1px solid #2c302c", outline: sel === i ? "2px solid #8a908a" : "none", borderRadius: 9, color: "#e8e8e8", padding: "8px 10px", cursor: "pointer", font: "inherit", textAlign: "left" }}><span style={{ background: "#222622", borderRadius: 6, padding: "4px 7px" }}>{ic}</span><b>{t}</b></button>
+        {L07.map(([ic, t, owner], i) => <div key={t} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
+          <button type="button" onClick={() => setSel(i)} aria-pressed={sel === i} style={{ flex: 1.2, display: "flex", gap: 9, alignItems: "center", background: "#141714", border: "1px solid #2c302c", outline: sel === i ? "2px solid #8a908a" : "none", borderRadius: 9, color: "#e8e8e8", padding: "5px 10px", cursor: "pointer", font: "inherit", textAlign: "left" }}><span style={{ background: "#222622", borderRadius: 6, padding: "4px 7px" }}>{ic}</span><b>{t}</b></button>
           <span style={{ flex: 1, borderTop: "2px dashed #4a504a", position: "relative", textAlign: "center", color: "#8a908a" }}><span style={{ background: "#050805", padding: "0 4px", position: "relative", top: -9 }}>?</span></span>
-          <span style={{ flex: 1, background: "#141714", border: "1px solid #2c302c", borderRadius: 9, padding: "8px 10px", fontSize: 12 }}>👤 {owner}</span>
+          <span style={{ flex: 1, background: "#141714", border: "1px solid #2c302c", borderRadius: 9, padding: "5px 10px", fontSize: 12 }}>👤 {owner}</span>
         </div>)}
       </div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", borderLeft: "1px solid #2c302c", marginLeft: 21 }}>
@@ -99,7 +102,7 @@ export function Allweb3LegacyVs() {
       <div>
         <p style={{ textAlign: "center", margin: "0 0 2px" }}><b style={{ fontSize: 17, letterSpacing: ".06em", color: G }}>ALLWEB3</b></p>
         <p style={{ textAlign: "center", ...dim, margin: "0 0 10px" }}>Structured. Transparent. Automated.</p>
-        {A07.map(([ic, t, d, owner], i) => <button key={t} type="button" onClick={() => setSel(i)} aria-pressed={sel === i} style={{ width: "100%", display: "flex", gap: 9, alignItems: "center", background: "#0a1a0a", border: "1px solid #2c5a2c", outline: sel === i ? `2px solid ${G}` : "none", borderRadius: 9, color: "#e8f5e8", padding: "7px 10px", cursor: "pointer", font: "inherit", textAlign: "left", marginBottom: 7 }}>
+        {A07.map(([ic, t, d, owner], i) => <button key={t} type="button" onClick={() => setSel(i)} aria-pressed={sel === i} style={{ width: "100%", display: "flex", gap: 9, alignItems: "center", background: "#0a1a0a", border: "1px solid #2c5a2c", outline: sel === i ? `2px solid ${G}` : "none", borderRadius: 9, color: "#e8f5e8", padding: "5px 10px", cursor: "pointer", font: "inherit", textAlign: "left", marginBottom: 5 }}>
           <span style={{ width: 21, height: 21, borderRadius: "50%", background: G, color: "#021202", fontWeight: 800, display: "inline-flex", alignItems: "center", justifyContent: "center", flex: "none" }}>{i + 1}</span>
           <span style={{ border: `1.5px solid ${G}`, borderRadius: 7, padding: "4px 6px" }}>{ic}</span>
           <b style={{ minWidth: 118 }}>{t}</b><span style={{ color: G }}>→</span>
@@ -131,38 +134,45 @@ const GAP_LABELS: Array<{ t: string; icon: string; area: string }> = [
 const GAP_RESULTS: Array<[string, string, string]> = [["👁", "Impressions?", "2,500,000"], ["👍", "Engagement?", "125,000"], ["📈", "Conversions?", "3,200"]];
 export function Allweb3TrustGap() {
   const [sel, setSel] = useState(1);
+  const names = ["Attribution", "Identity", "Evidence", "Approval", "Settlement"];
+  const icons = ["◎", "👤", "📄", "🖐", "🏛"];
+  const chip = (i: number, style: React.CSSProperties) => <button key={names[i]} type="button" onClick={() => setSel(i)} aria-pressed={sel === i} style={{ position: "absolute", zIndex: 3, background: "#050805", border: `1.5px dashed ${sel === i ? G : "#4a7a4a"}`, borderRadius: 999, color: "#e8f5e8", padding: "7px 14px", cursor: "pointer", font: "inherit", ...style }}><span style={{ color: G, marginRight: 6 }}>{icons[i]}</span>{names[i]}</button>;
   return <AwR n="08" title={<><span style={{ color: G }}>The</span> trust gap</>} label="ALLWEB3 the trust gap — full rebuild of 8.webp" foot="ALLWEB3 — The Trust Gap">
-    <div style={{ display: "grid", gridTemplateColumns: "190px 1fr 200px", gridTemplateRows: "auto auto auto", gap: 12, alignItems: "center" }}>
-      <span />
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
-        {GAP_LABELS.slice(0, 3).map((l) => <button key={l.t} type="button" onClick={() => setSel(["Attribution", "Identity", "Evidence"].indexOf(l.t))} aria-pressed={sel === ["Attribution", "Identity", "Evidence"].indexOf(l.t)} style={{ background: "transparent", border: "1.5px dashed #4a7a4a", borderRadius: 999, color: "#e8f5e8", padding: "7px 14px", cursor: "pointer", font: "inherit" }}><span style={{ color: G, marginRight: 6 }}>{l.icon}</span>{l.t}</button>)}
-      </div>
-      <span />
-      <div style={{ ...card, textAlign: "center" }}>
+    <div style={{ position: "relative", height: 372 }}>
+      <svg viewBox="0 0 900 372" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 0 }} aria-hidden="true">
+        <defs><filter id="aw8glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter></defs>
+        <g stroke="#5a6a5a" strokeWidth="1.4" strokeDasharray="4 5">
+          <line x1="330" y1="86" x2="352" y2="150" /><line x1="470" y1="52" x2="470" y2="112" /><line x1="612" y1="86" x2="590" y2="150" />
+          <line x1="392" y1="292" x2="392" y2="330" /><line x1="560" y1="292" x2="560" y2="330" />
+        </g>
+        <g fill="#8a908a" fontSize="15" fontWeight="700"><text x="322" y="126">{"//"}</text><text x="452" y="92">{"//"}</text><text x="596" y="126">{"//"}</text><text x="378" y="318">{"//"}</text><text x="546" y="318">{"//"}</text></g>
+        <path d="M188 196 C 240 178, 285 214, 338 196" fill="none" stroke={G} strokeWidth="4" filter="url(#aw8glow)" />
+        <path d="M188 196 L 338 196" fill="none" stroke={G} strokeWidth="2" opacity=".65" />
+        <polygon points="352,150 588,150 636,112 400,112" fill="#171917" stroke="#3a403a" />
+        <rect x="352" y="150" width="284" height="142" fill="#030403" stroke="#3a403a" />
+        <g fill="none" stroke={G} strokeWidth="3.5" filter="url(#aw8glow)">
+          <path d="M636 168 C 720 160, 740 108, 806 104" />
+          <path d="M636 205 L 806 205" />
+          <path d="M636 244 C 720 254, 740 302, 806 306" />
+        </g>
+      </svg>
+      <span style={{ position: "absolute", left: "44.5%", top: 168, zIndex: 2, width: 74, height: 74, borderRadius: "50%", background: "#101210", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 44, color: "#3a403a", fontWeight: 800 }}>?</span>
+      {chip(0, { left: "27%", top: "13%" })}{chip(1, { left: "46.5%", top: "1%" })}{chip(2, { left: "63%", top: "13%" })}
+      {chip(3, { left: "33%", top: "90%" })}{chip(4, { left: "56%", top: "90%" })}
+      <div style={{ ...card, textAlign: "center", position: "absolute", left: 0, top: 118, width: 172, zIndex: 2 }}>
         <p style={{ margin: 0 }}><b>Campaign budget</b></p>
-        <p style={{ fontSize: 28, margin: "6px 0 0" }}>👛</p>
+        <p style={{ fontSize: 28, margin: "6px 0 0", color: G }}>👛</p>
         <p style={{ margin: "4px 0 0" }}><b style={{ fontSize: 19, color: G }}>$100,000</b><br /><span {...{ style: dim }}>Illustrative data</span></p>
       </div>
-      <div style={{ position: "relative", background: "#000", border: "1px solid #2c302c", borderRadius: 12, minHeight: 190, display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <span style={{ position: "absolute", left: -14, top: "50%", color: G, fontSize: 20 }}>➤</span>
-        <span style={{ fontSize: 74, color: "#1e241e", fontWeight: 800 }}>?</span>
-        <span style={{ position: "absolute", right: 8, top: "18%", color: G }}>•</span>
-        <span style={{ position: "absolute", right: 8, top: "48%", color: G }}>•</span>
-        <span style={{ position: "absolute", right: 8, top: "78%", color: G }}>•</span>
-      </div>
-      <div style={{ display: "grid", gap: 10 }}>
-        {GAP_RESULTS.map(([ic, t, v]) => <div key={t} style={{ ...card, display: "flex", gap: 10, alignItems: "center" }}>
+      <div style={{ position: "absolute", right: 0, top: 52, width: 196, display: "grid", gap: 34, zIndex: 2 }}>
+        {GAP_RESULTS.map(([ic, t, v]) => <div key={t} style={{ ...card, display: "flex", gap: 10, alignItems: "center", position: "relative" }}>
+          <span style={{ position: "absolute", left: -13, top: "50%", width: 9, height: 9, borderRadius: "50%", background: G, boxShadow: `0 0 10px ${G}` }} />
           <span style={{ fontSize: 19, color: G }}>{ic}</span>
           <p style={{ margin: 0 }}><b>{t}</b><br /><b style={{ color: G, fontSize: 15 }}>{v}</b><br /><span {...{ style: dim }}>Illustrative data</span></p>
         </div>)}
       </div>
-      <span />
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
-        {GAP_LABELS.slice(3).map((l, i) => <button key={l.t} type="button" onClick={() => setSel(3 + i)} aria-pressed={sel === 3 + i} style={{ background: "transparent", border: "1.5px dashed #4a7a4a", borderRadius: 999, color: "#e8f5e8", padding: "7px 14px", cursor: "pointer", font: "inherit" }}><span style={{ color: G, marginRight: 6 }}>{l.icon}</span>{l.t}</button>)}
-      </div>
-      <span />
     </div>
-    <p style={{ ...dim, margin: "10px 0 0" }} aria-live="polite">Money flows in on a green stream; what comes out is questioned at every dashed break — <b style={{ color: "#e8f5e8" }}>{["Attribution", "Identity", "Evidence", "Approval", "Settlement"][sel]}</b> is one of the five broken links the platform closes.</p>
+    <p style={{ ...dim, margin: "10px 0 0" }} aria-live="polite">Money flows in on a thick glowing green stream; wavy green lines carry it out to the three result boxes, questioned at every dashed break — <b style={{ color: "#e8f5e8" }}>{names[sel]}</b> is one of the five broken links the platform closes.</p>
   </AwR>;
 }
 
@@ -177,6 +187,15 @@ const LOOP13: Array<{ n: string; t: string; d: string; icon: string; pos: string
 ];
 export function Allweb3TrustLoop() {
   const [sel, setSel] = useState(2);
+  const order = [0, 1, 2, 4, 5, 3]; // LOOP13 indexes in loop order 01..06
+  const pos: React.CSSProperties[] = [
+    { left: "38%", top: 0, width: "24%" },
+    { right: 0, top: "24%", width: "27%" },
+    { right: 0, bottom: "16%", width: "27%" },
+    { left: "38%", bottom: 0, width: "24%" },
+    { left: 0, bottom: "16%", width: "27%" },
+    { left: 0, top: "24%", width: "27%" },
+  ];
   return <AwR n="13" title="Verifiable Trust Loop" label="ALLWEB3 verifiable trust loop — full rebuild of 13.webp" foot="ALLWEB3 — Verifiable Trust Loop · Illustrative architecture">
     <div style={{ display: "grid", gridTemplateColumns: "215px 1fr", gap: 16 }}>
       <div>
@@ -192,15 +211,23 @@ export function Allweb3TrustLoop() {
         <p style={{ ...dim, margin: "8px 0 0" }}>Illustrative architecture</p>
       </div>
       <div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gridTemplateRows: "repeat(4, auto)", gap: 8, position: "relative" }}>
-          {LOOP13.map((s, i) => <button key={s.n} type="button" onClick={() => setSel(i)} aria-pressed={sel === i} style={{ gridArea: s.pos, background: "#0d120d", border: s.hot ? `2px solid ${G}` : "1px solid #3a4a3a", outline: sel === i ? `2px solid ${G}` : "none", borderRadius: 11, color: "#e8f5e8", padding: "9px 10px", cursor: "pointer", font: "inherit", textAlign: "left", position: "relative" }}>
-            <span style={{ position: "absolute", top: -13, left: "50%", transform: "translateX(-50%)", width: 25, height: 25, borderRadius: "50%", background: "#0d120d", border: `1.5px solid ${s.hot ? G : "#8a908a"}`, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>{s.icon}</span>
-            <p style={{ margin: "8px 0 0" }}><b style={{ color: G, marginRight: 6 }}>{s.n}</b><b>{s.t}</b></p>
-            <p style={{ margin: "3px 0 0", ...dim, fontSize: 11.5 }}>{s.d}</p>
-          </button>)}
-          <div style={{ gridArea: "2 / 3 / 4 / 4", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "26px 8px" }}>
-            <b style={{ fontSize: 19, lineHeight: 1.3 }}>Portable<br />proof of<br />performance</b>
+        <div style={{ position: "relative", height: 408 }}>
+          <svg viewBox="0 0 620 408" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} aria-hidden="true">
+            <defs><marker id="aw13arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill={G} /></marker></defs>
+            <ellipse cx="310" cy="204" rx="218" ry="152" fill="none" stroke="#3d6b3d" strokeWidth="2" strokeDasharray="7 6" />
+            <path d="M 398 76 A 218 152 0 0 1 520 148" fill="none" stroke={G} strokeWidth="3" markerEnd="url(#aw13arr)" />
+            <path d="M 528 236 A 218 152 0 0 1 442 338" fill="none" stroke={G} strokeWidth="3" markerEnd="url(#aw13arr)" />
+            <path d="M 252 352 A 218 152 0 0 1 104 268" fill="none" stroke={G} strokeWidth="3" markerEnd="url(#aw13arr)" />
+            <path d="M 96 158 A 218 152 0 0 1 200 66" fill="none" stroke={G} strokeWidth="3" markerEnd="url(#aw13arr)" />
+          </svg>
+          <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", textAlign: "center", width: 170 }}>
+            <b style={{ fontSize: 20, lineHeight: 1.3 }}>Portable<br />proof of<br />performance</b>
           </div>
+          {order.map((li, k) => { const st = LOOP13[li]; return <button key={st.n} type="button" onClick={() => setSel(li)} aria-pressed={sel === li} style={{ position: "absolute", ...pos[k], background: "#0d120d", border: st.hot ? `2px solid ${G}` : "1px solid #3a4a3a", outline: sel === li ? `2px solid ${G}` : "none", borderRadius: 11, color: "#e8f5e8", padding: "9px 10px", cursor: "pointer", font: "inherit", textAlign: "left" }}>
+            <span style={{ position: "absolute", top: -13, left: "50%", transform: "translateX(-50%)", width: 25, height: 25, borderRadius: "50%", background: "#0d120d", border: `1.5px solid ${st.hot ? G : "#8a908a"}`, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>{st.icon}</span>
+            <p style={{ margin: "8px 0 0" }}><b style={{ color: G, marginRight: 6 }}>{st.n}</b><b>{st.t}</b></p>
+            <p style={{ margin: "3px 0 0", ...dim, fontSize: 11.5 }}>{st.d}</p>
+          </button>; })}
         </div>
         <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 10 }}>
           <div style={{ border: `2px solid ${G}`, borderRadius: 10, padding: "9px 12px", display: "flex", gap: 10, alignItems: "center" }}>
@@ -208,7 +235,7 @@ export function Allweb3TrustLoop() {
             <p style={{ margin: 0 }}><b>Portable proof</b><br /><span {...{ style: dim }}>(Verifiable certificate)</span></p>
           </div>
         </div>
-        <p style={{ ...dim, margin: "8px 0 0" }} aria-live="polite">Loop order as printed: 01 Identity → 02 Participation → 03 Verified evidence → 04 Reputation → 05 Matching and terms → 06 Settlement → back to Identity. Selected: <b style={{ color: "#e8f5e8" }}>{LOOP13[sel].t}</b>.</p>
+        <p style={{ ...dim, margin: "8px 0 0" }} aria-live="polite">Selected: <b style={{ color: "#e8f5e8" }}>{LOOP13[sel].t}</b> — {LOOP13[sel].d}.</p>
       </div>
     </div>
   </AwR>;
@@ -412,12 +439,12 @@ export function Allweb3IATray() {
 /* ================= 01 — Multi-portal hero: three panels at once ================= */
 export function Allweb3MultiPortalWall() {
   const [sel, setSel] = useState(1);
-  const win = (i: number, url: string, body: ReactNode) => <div style={{ ...card, padding: 0, overflow: "hidden", outline: sel === i ? `2px solid ${G}` : "none" }}>
+  const win = (i: number, url: string, body: ReactNode) => <div style={{ ...card, padding: 0, overflow: "hidden", outline: sel === i ? `2px solid ${G}` : "none", transform: i === 0 ? "perspective(700px) rotateY(13deg) scale(.96)" : i === 2 ? "perspective(700px) rotateY(-13deg) scale(.96)" : "perspective(700px) scale(1.03)", transformOrigin: i === 0 ? "right center" : i === 2 ? "left center" : "center", boxShadow: "0 18px 34px rgba(0,0,0,.55)", zIndex: i === 1 ? 2 : 1, position: "relative" }}>
     <button type="button" onClick={() => setSel(i)} aria-pressed={sel === i} style={{ width: "100%", background: "#0d1a0d", border: "none", borderBottom: "1px solid #223522", color: "#8fbf8f", padding: "5px 9px", cursor: "pointer", font: "inherit", fontSize: 10.5, textAlign: "left" }}>← → ↻ 🔒 {url}</button>
     <div style={{ padding: 9, fontSize: 11.5 }}>{body}</div>
   </div>;
-  return <AwR n="01" title={<>Verifiable growth, from brief <span style={{ color: G }}>to settlement.</span></>} label="ALLWEB3 multi-portal overview — three-panel wall rebuild of 1.webp" foot="ALLWEB3 — CMP-2026-042 · ACTIVE">
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr 1fr 128px", gap: 9, alignItems: "start" }}>
+  return <AwR n="01" titleSize={25} titleAlign="right" title={<>Verifiable growth, from brief <span style={{ color: G }}>to settlement.</span></>} label="ALLWEB3 multi-portal overview — three-panel wall rebuild of 1.webp" foot="ALLWEB3 — CMP-2026-042 · ACTIVE">
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr 1fr 128px", gap: 9, alignItems: "start", perspective: "900px", padding: "6px 2px 2px" }}>
       {win(0, "creator.allweb3.xyz", <>
         <p style={{ margin: 0 }}><b>@cryptomatt</b> — Web3 Creator · <span style={{ color: G }}>VERIFIED</span></p>
         <p style={{ ...dim, margin: "3px 0" }}>Campaigns · Submissions · Earnings · Reputation · Profile · Settings</p>
@@ -442,7 +469,7 @@ export function Allweb3MultiPortalWall() {
           </div>
           <div style={{ flex: 1 }}>
             <p style={{ margin: "0 0 3px" }}><b>Verified Results</b></p>
-            <p style={{ margin: 0, color: G, fontSize: 15 }}>╱╲╱▔▔╲╱ <span style={{ fontSize: 10.5 }}>(line chart as printed)</span></p>
+            <svg viewBox="0 0 120 30" style={{ width: "100%", height: 30, display: "block" }} aria-hidden="true"><polyline points="0,24 18,16 36,19 54,8 72,12 90,5 118,9" fill="none" stroke={G} strokeWidth="2" />{[0,18,36,54,72,90,118].map((x,i)=><circle key={i} cx={x} cy={[24,16,19,8,12,5,9][i]} r="2" fill={G} />)}</svg>
             <p style={{ margin: "4px 0 0" }}><b>Escrow</b> — Locked $82,430.00 · Available $167,570.00 · Pending $21,340.00 · Released $61,090.00</p>
           </div>
         </div>
@@ -462,9 +489,10 @@ export function Allweb3MultiPortalWall() {
         {["Campaign data", "Results & proofs", "Escrow & settlement", "Reputation signals", "System health"].map((t, i) => <p key={t} style={{ margin: "0 0 12px", fontSize: 11.5 }}><span style={{ color: G, marginRight: 5 }}>●</span>{t}{i < 4 ? <span style={{ display: "block", borderLeft: "2px dashed #2c5a2c", height: 8, marginLeft: 4 }} /> : null}</p>)}
       </div>
     </div>
-    <div style={{ ...card, marginTop: 10, textAlign: "center" }}>
-      <b>CMP-2026-042 · <span style={{ color: G }}>ACTIVE</span></b>
-      <p style={{ margin: "4px 0 0", ...dim }}>⇄ Creator submissions · Results &amp; proofs · Reputation updates · Escrow &amp; payouts · Compliance signals · System health — one central campaign node, as printed. Campaign runs May 12 – Jun 30, 2026 · 49 days left.</p>
+    <div style={{ textAlign: "center", marginTop: 4 }}>
+      <svg width="420" height="26" viewBox="0 0 420 26" style={{ display: "block", margin: "0 auto" }} aria-hidden="true"><g stroke="#2c5a2c" strokeWidth="1.5" strokeDasharray="3 4"><line x1="60" y1="0" x2="190" y2="24" /><line x1="210" y1="0" x2="210" y2="24" /><line x1="360" y1="0" x2="230" y2="24" /></g><g fill={G}><circle cx="190" cy="24" r="2.5" /><circle cx="210" cy="24" r="2.5" /><circle cx="230" cy="24" r="2.5" /></g></svg>
+      <span style={{ display: "inline-block", border: `1.5px solid ${G}`, borderRadius: 999, padding: "6px 18px", background: "#0a1a0a" }}><b>CMP-2026-042 · <span style={{ color: G }}>ACTIVE</span></b></span>
+      <p style={{ margin: "5px auto 0", ...dim, maxWidth: 560, fontSize: 11 }}>Creator submissions · Results &amp; proofs · Reputation updates ⇄ Escrow &amp; payouts · Compliance signals · System health. Campaign runs May 12 – Jun 30, 2026 · 49 days left.</p>
     </div>
   </AwR>;
 }
@@ -534,13 +562,22 @@ export function Allweb3EveryRoleMosaic() {
   const mini = (name: string, url: string, body: ReactNode) => <div style={{ ...card, padding: 0, overflow: "hidden" }}>
     <p style={{ background: "#0d1a0d", borderBottom: "1px solid #223522", padding: "5px 9px", margin: 0, fontSize: 11 }}><b>{name}</b> · <span style={{ color: G }}>{url}</span></p>
     <div style={{ padding: 9, fontSize: 11.5 }}>{body}</div></div>;
-  return <AwR n="04" title="One platform. Every role. Total alignment." sub="ALLWEB3 unifies marketing, product, and operations in a single system built for Web3 growth." label="ALLWEB3 one platform every role — mosaic rebuild of 4.webp" foot="ALLWEB3 — alpha.creator / alpha.project / admin / allweb3.io">
+  return <AwR n="04" titleSize={12} title="ALLWEB3 — ONE PLATFORM · EVERY ROLE" label="ALLWEB3 one platform every role — mosaic rebuild of 4.webp" foot="ALLWEB3 — alpha.creator / alpha.project / admin / allweb3.io">
+    <div style={{ display: "grid", gridTemplateColumns: "196px 1fr", gap: 12, alignItems: "start" }}>
+      <div>
+        <p style={{ margin: 0, color: G, fontWeight: 800, letterSpacing: ".18em", fontSize: 12 }}>W ALLWEB3</p>
+        <p style={{ fontSize: 27, fontWeight: 800, lineHeight: 1.18, margin: "10px 0 8px" }}>One<br />platform.<br />Every role.<br /><span style={{ color: G }}>Total<br />alignment.</span></p>
+        <span style={{ display: "block", width: 44, height: 3, background: G, margin: "8px 0" }} />
+        <p style={{ ...dim, margin: 0, lineHeight: 1.55 }}>ALLWEB3 unifies marketing, product, and operations in a single system built for Web3 growth.</p>
+      </div>
+      <div>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
       {mini("Creator Portal", "alpha.creator.allweb3.io", <>
         <p style={{ margin: 0 }}><b>Meridian Protocol: Creator Growth Sprint</b> <span style={{ color: G }}>ACTIVE</span></p>
         <p style={{ margin: "4px 0 0" }}>Total Earnings <b style={{ color: G }}>12,450.75 USDC</b> · Pending Payout 1,240.00</p>
         <p style={{ margin: "4px 0 0" }}>Clicks 45,231 (+24.6%) · Conversions 1,245 (+18.7%) · Engagements 8,932 (+31.2%) · Earnings 12,450.75 (+15.4%)</p>
-        <p style={{ margin: "4px 0 0", ...dim }}>Performance Over Time — line chart, Last 30 days, as printed.</p>
+        <p style={{ margin: "6px 0 1px", ...dim }}>Performance Over Time — Last 30 days</p>
+        <svg viewBox="0 0 120 26" style={{ width: "100%", height: 26, display: "block" }} aria-hidden="true"><polyline points="0,20 20,15 40,17 60,9 80,12 100,5 118,8" fill="none" stroke={G} strokeWidth="2" /></svg>
       </>)}
       {mini("Project Portal", "alpha.project.allweb3.io", <>
         <p style={{ margin: 0 }}><b>Meridian Protocol: Creator Growth Sprint</b> <span style={{ color: G }}>ACTIVE</span></p>
@@ -552,10 +589,12 @@ export function Allweb3EveryRoleMosaic() {
         <p style={{ margin: 0 }}>Total Campaigns <b>128</b> (+12.4%) · Total Creators <b>4,752</b> (+8.7%)</p>
         <p style={{ margin: "4px 0 0" }}>Total Volume 1,245,750.50 USDC (+15.3%) · Platform Fees 124,575.05 (+15.3%)</p>
         <p style={{ margin: "4px 0 0" }}>Recent: Meridian CMP-2026-042 ACTIVE · Zentry CMP-2026-041 ACTIVE · Nexus CMP-2026-040 COMPLETED</p>
-        <p style={{ margin: "4px 0 0", ...dim }}>Platform Activity — bar chart, Last 30 days, as printed. System Health: Operational.</p>
+        <p style={{ margin: "6px 0 1px", ...dim }}>Platform Activity — Last 30 days · System Health: Operational</p>
+        <svg viewBox="0 0 120 26" style={{ width: "100%", height: 26, display: "block" }} aria-hidden="true">{[8, 13, 10, 17, 14, 21, 18, 24].map((h, i) => <rect key={i} x={i * 15 + 2} y={26 - h} width="9" height={h} fill={G} opacity={0.45 + i * 0.07} />)}</svg>
       </>)}
     </div>
-    <div style={{ ...card, marginTop: 8 }}>
+    </div>
+    <div style={{ ...card, marginTop: 8, gridColumn: "1 / -1" }}>
       <p style={{ margin: 0, ...dim, fontSize: 11 }}>PUBLIC WEBSITE — allweb3.io · Built for Web3 Growth · Nav: For Creators · For Projects · Resources · About · Log in · [Get Started]</p>
       <b style={{ fontSize: 18, display: "block", margin: "5px 0 3px" }}>Where creators and projects grow together.</b>
       <p style={{ margin: 0, ...dim }}>ALLWEB3 is the growth engine that connects creators, projects, and communities to drive real impact onchain.</p>
@@ -576,6 +615,7 @@ export function Allweb3EveryRoleMosaic() {
       </div>
       <p style={{ margin: "8px 0 0", ...dim }}>Trusted by leading teams and communities — Meridian · Zentry · Nexus · Fleet · arcade · 4,752+ Verified Creators</p>
     </div>
+    </div>
   </AwR>;
 }
 
@@ -592,8 +632,14 @@ export function Allweb3LegibleLoop() {
     <span style={{ width: 34, height: 34, flex: "none", borderRadius: "50%", border: `1.5px solid ${G}`, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 15 }}>{["🛡", "🎯", "🔗", "⚙"][i]}</span>
     <span><b style={{ fontSize: 13.5 }}>{t}</b> <span style={{ color: G }}>✓</span><br /><span style={{ ...dim, fontSize: 11.5 }}>{d1} {d2}</span></span>
   </button>; };
-  return <AwR n="09" title="Legible performance" label="ALLWEB3 legible performance — pillar loop rebuild of 9.webp" foot="ALLWEB3 — Legible Performance">
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr 1fr", gridTemplateRows: "auto auto auto", gap: 10, alignItems: "center" }}>
+  return <AwR n="09" titleSize={12} title="ALLWEB3 — LEGIBLE PERFORMANCE" label="ALLWEB3 legible performance — pillar loop rebuild of 9.webp" foot="ALLWEB3 — Legible Performance">
+    <div style={{ position: "relative" }}>
+    <svg viewBox="0 0 900 330" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 0 }} aria-hidden="true">
+      <rect x="150" y="42" width="600" height="246" rx="26" fill="none" stroke={G} strokeWidth="3" />
+      <g fill={G}><circle cx="450" cy="42" r="6" /><circle cx="750" cy="165" r="6" /><circle cx="450" cy="288" r="6" /><circle cx="150" cy="165" r="6" /></g>
+      <g fill={G} fontSize="20"><text x="742" y="60">{"›"}</text><text x="742" y="292">{"›"}</text><text x="140" y="292" transform="rotate(180 147 285)">{"›"}</text><text x="140" y="60" transform="rotate(180 147 53)">{"›"}</text></g>
+    </svg>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr 1fr", gridTemplateRows: "auto auto auto", gap: 10, alignItems: "center", position: "relative", zIndex: 1, padding: "6px 10px" }}>
       <span />{pcard(0)}<span />
       {pcard(1)}
       <div style={{ textAlign: "center", padding: "8px 4px" }}>
@@ -603,7 +649,7 @@ export function Allweb3LegibleLoop() {
       {pcard(2)}
       <span />{pcard(3)}<span />
     </div>
-    <p style={{ textAlign: "center", ...dim, margin: "10px 0 0" }}>Loop as printed: Verified identity → Traceable performance → Programmable settlement → Explicit success criteria → back to identity — joined by a green rectangular loop line with node dots and shield-check badges.</p>
+    </div>
   </AwR>;
 }
 
@@ -620,14 +666,15 @@ const ECO_R: Array<[string, string, string]> = [
 ];
 export function Allweb3EcosystemTriangle() {
   const [node, setNode] = useState(0);
-  const circ = (i: number, big?: boolean) => <button key={ECO_R[i][0]} type="button" onClick={() => setNode(i)} aria-pressed={node === i} style={{ width: big ? 118 : 96, height: big ? 118 : 96, borderRadius: "50%", background: "#0d1a0d", border: `2px solid ${node === i ? G : "#3d6b3d"}`, color: "#e8f5e8", cursor: "pointer", font: "inherit", padding: 8, textAlign: "center" }}>
-    <b style={{ fontSize: big ? 12.5 : 11, display: "block", lineHeight: 1.25 }}>{ECO_R[i][0]}</b>
+  const circ = (i: number, style: React.CSSProperties) => <button key={ECO_R[i][0]} type="button" onClick={() => setNode(i)} aria-pressed={node === i} style={{ position: "absolute", zIndex: 2, width: 112, height: 112, borderRadius: "50%", background: "#0d1a0d", border: `2px solid ${node === i ? G : "#3d6b3d"}`, color: "#e8f5e8", cursor: "pointer", font: "inherit", padding: 8, textAlign: "center", ...style }}>
+    <b style={{ fontSize: 12, display: "block", lineHeight: 1.25 }}>{ECO_R[i][0]}</b>
     <span style={{ ...dim, fontSize: 9 }}>{ECO_R[i][1]}</span>
   </button>;
-  const sat = (i: number) => <button key={ECO_R[i][0]} type="button" onClick={() => setNode(i)} aria-pressed={node === i} style={{ ...card, cursor: "pointer", font: "inherit", color: "#e8f5e8", textAlign: "center", borderColor: node === i ? G : "#223522", padding: "7px 6px" }}>
+  const sat = (i: number, style: React.CSSProperties) => <button key={ECO_R[i][0]} type="button" onClick={() => setNode(i)} aria-pressed={node === i} style={{ ...card, position: "absolute", zIndex: 2, cursor: "pointer", font: "inherit", color: "#e8f5e8", textAlign: "center", borderColor: node === i ? G : "#223522", padding: "7px 6px", width: 118, ...style }}>
     <b style={{ fontSize: 11, display: "block" }}>{ECO_R[i][0]}</b><span style={{ ...dim, fontSize: 9.5 }}>{ECO_R[i][1]}</span>
   </button>;
-  return <AwR n="11" title="Three-sided ecosystem" label="ALLWEB3 ecosystem — triangle diagram rebuild of 11.webp" foot="ALLWEB3 — Ecosystem · CMP-2026-042">
+  const lbl = (t: ReactNode, style: React.CSSProperties) => <span style={{ position: "absolute", zIndex: 1, ...dim, fontSize: 9.5, textAlign: "center", lineHeight: 1.35, ...style }}>{t}</span>;
+  return <AwR n="11" titleSize={12} title="ALLWEB3 — THREE-SIDED ECOSYSTEM" label="ALLWEB3 ecosystem — triangle diagram rebuild of 11.webp" foot="ALLWEB3 — Ecosystem · CMP-2026-042">
     <div style={{ display: "grid", gridTemplateColumns: "168px 1fr", gap: 14 }}>
       <div>
         <p style={{ margin: 0 }}>Connecting creators, project teams, and platform operators through identity, matching, verification, reputation, escrow, settlement, and disputes.</p>
@@ -643,22 +690,41 @@ export function Allweb3EcosystemTriangle() {
         </div>
       </div>
       <div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 7, alignItems: "center", justifyItems: "center" }}>
-          <span />{sat(5)}<span style={{ textAlign: "center" }}>{circ(0, true)}</span>{sat(3)}<span />
-          <span style={{ ...dim, fontSize: 10, textAlign: "center" }}>EVIDENCE<br />(Off-chain data)</span>
-          <span style={{ border: "2px dashed #3d6b3d", borderRadius: "50%", padding: "13px 10px", textAlign: "center", fontSize: 10.5, maxWidth: 170 }}>
+        <div style={{ position: "relative", height: 428 }}>
+          <svg viewBox="0 0 640 428" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} aria-hidden="true">
+            <defs><marker id="aw11arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill={G} /></marker>
+            <marker id="aw11arrw" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#e8f5e8" /></marker></defs>
+            <g stroke={G} strokeWidth="2.5" fill="none">
+              <path d="M 268 118 L 168 268" markerEnd="url(#aw11arr)" /><path d="M 158 258 L 258 108" markerEnd="url(#aw11arr)" />
+              <path d="M 218 322 L 428 322" markerEnd="url(#aw11arr)" /><path d="M 438 312 L 228 312" markerEnd="url(#aw11arr)" />
+              <path d="M 392 268 L 292 118" markerEnd="url(#aw11arr)" /><path d="M 282 108 L 382 258" markerEnd="url(#aw11arr)" />
+            </g>
+            <g stroke="#9a9aa0" strokeWidth="1.6" strokeDasharray="5 5" fill="none">
+              <path d="M 376 84 L 492 60" markerEnd="url(#aw11arrw)" />
+              <path d="M 120 268 L 62 210" markerEnd="url(#aw11arrw)" />
+              <path d="M 96 96 L 196 84" markerEnd="url(#aw11arrw)" />
+              <path d="M 210 356 L 240 402" markerEnd="url(#aw11arrw)" />
+              <path d="M 452 356 L 520 396" markerEnd="url(#aw11arrw)" /><path d="M 520 382 L 452 342" markerEnd="url(#aw11arrw)" />
+            </g>
+          </svg>
+          {circ(0, { left: "50%", top: 6, transform: "translateX(-50%)" })}
+          {circ(1, { left: "16%", bottom: 52 })}
+          {circ(2, { right: "16%", bottom: 52 })}
+          <span style={{ position: "absolute", left: "50%", top: 178, transform: "translateX(-50%)", border: "2px dashed #3d6b3d", borderRadius: "50%", padding: "12px 10px", textAlign: "center", fontSize: 10, width: 162, zIndex: 1 }}>
             CAMPAIGN ID <b>CMP-2026-042</b><br />End-to-end flow:<br /><b>Brief → Content → Verification → Settlement</b>
           </span>
-          <span style={{ ...dim, fontSize: 10, textAlign: "center" }}>PAYMENT (Payouts)<br />ESCROW (Hold &amp; release)</span>
-          <span style={{ ...dim, fontSize: 10, textAlign: "center" }}>BRIEF / CONTENT ⇄<br />VERIFICATION / REPUTATION ⇄</span>
-          <span style={{ textAlign: "center" }}>{circ(1, true)}</span>
-          <span style={{ ...dim, fontSize: 10, textAlign: "center" }}>ESCROW / SETTLEMENT ⇄</span>
-          <span style={{ textAlign: "center" }}>{circ(2, true)}</span>
-          {sat(4)}{sat(6)}{sat(7)}
+          {sat(5, { left: 0, top: 30 })}{sat(3, { right: 0, top: 30 })}{sat(4, { left: 0, top: 196 })}
+          {sat(6, { left: "36%", bottom: 0 })}{sat(7, { right: 0, bottom: 6 })}
+          {lbl(<>BRIEF / CONTENT ⇄</>, { left: "24%", top: 168, width: 90 })}
+          {lbl(<>VERIFICATION /<br />REPUTATION ⇄</>, { right: "23%", top: 168, width: 96 })}
+          {lbl(<>ESCROW / SETTLEMENT ⇄</>, { left: "41%", bottom: 128, width: 130 })}
+          {lbl(<>EVIDENCE<br />(Off-chain data)</>, { left: "1%", top: 128, width: 96 })}
+          {lbl(<>PAYMENT (Payouts)<br />ESCROW (Hold &amp; release)</>, { right: "0%", top: 128, width: 118 })}
+          {lbl(<>AUDIT DATA<br />(Proofs &amp; logs)</>, { left: "21%", bottom: 2, width: 100 })}
+          {lbl(<>SETTLEMENT<br />(On-chain finality)</>, { right: "1%", bottom: 66, width: 110 })}
         </div>
         <div style={{ ...card, marginTop: 10 }} aria-live="polite">
           <b>{ECO_R[node][0]}</b> — {ECO_R[node][2]}
-          <p style={{ margin: "4px 0 0", ...dim }}>Labelled edges as printed: BRIEF / CONTENT (Creators ⇄ Project teams) · ESCROW / SETTLEMENT (Project ⇄ Platform) · VERIFICATION / REPUTATION (Platform ⇄ Creators) · PAYMENT (Wallets → Creators) · CONTENT (Social → Project) · EVIDENCE (Oracle → Platform) · AUDIT DATA — Proofs &amp; logs (Project → Blockchain) · SETTLEMENT — On-chain finality (Blockchain ⇄ Payment assets).</p>
         </div>
       </div>
     </div>
@@ -681,40 +747,44 @@ const AUDIT_R: Array<[string, string, string, string, string]> = [
   ["User permission changed", "USR-778", "May 18, 2025 10:15:18", "user_778", "by security"]];
 export function Allweb3AdminWall() {
   const [pr, setPr] = useState(0);
-  const sev = (s: string) => ({ color: s === "High" ? "#ff8a8a" : s === "Medium" ? "#ffb84d" : G });
-  const panel = (title: string, body: ReactNode) => <div style={{ ...card }}><p style={{ margin: "0 0 5px" }}><b style={{ fontSize: 12 }}>{title}</b></p>{body}</div>;
-  return <AwR n="17" title="Admin Portal" label="ALLWEB3 admin portal — dashboard wall rebuild of 17.webp" foot="ALLWEB3 — Meridian Protocol Admin Portal">
-    <div style={{ display: "grid", gridTemplateColumns: "200px 1fr", gap: 14 }}>
+  const sev = (x: string) => ({ color: x === "High" ? "#ff8a8a" : x === "Medium" ? "#ffb84d" : G });
+  const mini = (title: string, body: ReactNode) => <div style={{ border: "1px solid #223522", borderRadius: 6, padding: "6px 8px", minWidth: 0 }}><p style={{ margin: "0 0 3px" }}><b style={{ fontSize: 9.5, letterSpacing: ".05em" }}>{title}</b></p>{body}</div>;
+  const rows = (items: ReactNode[]) => <div>{items.map((r, i) => <p key={i} style={{ display: "flex", justifyContent: "space-between", gap: 6, margin: "2px 0", fontSize: 8.4, lineHeight: 1.32 }}>{r}</p>)}</div>;
+  return <AwR n="17" titleSize={12} title="ALLWEB3 — ADMIN PORTAL · MERIDIAN PROTOCOL" label="ALLWEB3 admin portal — dashboard wall rebuild of 17.webp" foot="ALLWEB3 — Meridian Protocol Admin Portal">
+    <div style={{ display: "grid", gridTemplateColumns: "192px 1fr", gap: 12 }}>
       <div>
         <p style={{ margin: 0, color: G, letterSpacing: ".22em", fontSize: 11 }}>MERIDIAN PROTOCOL</p>
-        <p style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 34, lineHeight: 1.1, margin: "6px 0" }}>Admin<br />Portal</p>
+        <p style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 36, lineHeight: 1.1, margin: "6px 0" }}>Admin<br />Portal</p>
         <span style={{ display: "block", width: 52, height: 3, background: G, margin: "8px 0" }} />
-        <p style={{ ...dim, margin: 0 }}>Designing for the cases where the normal flow fails. Real-time operational overview across the Meridian ecosystem.</p>
-        <div style={{ marginTop: 14 }}>
-          {[["Protect Integrity", "Tools to detect, review, and resolve issues."], ["Ensure Fairness", "Consistent outcomes across campaigns and participants."], ["Maintain Trust", "Audit everything. Explain every action."], ["Operate Safely", "Granular access, real-time visibility, complete control."]].map(([t, d], i) => <button key={t} type="button" onClick={() => setPr(i)} aria-pressed={pr === i} style={{ display: "block", width: "100%", background: "none", border: "none", borderTop: "1px solid #223522", color: "#e8f5e8", padding: "7px 2px", cursor: "pointer", font: "inherit", textAlign: "left" }}>
-            <b style={{ color: pr === i ? G : "#e8f5e8", fontSize: 12.5 }}>{t}</b><br /><span style={{ ...dim, fontSize: 11 }}>{d}</span>
+        <p style={{ ...dim, margin: 0 }}>Designing for the cases where the normal flow fails.</p>
+        <div style={{ marginTop: 12 }}>
+          {[["🛡", "Protect Integrity", "Tools to detect, review, and resolve issues."], ["⚖", "Ensure Fairness", "Consistent outcomes across campaigns and participants."], ["🔍", "Maintain Trust", "Audit everything. Explain every action."], ["🔒", "Operate Safely", "Granular access, real-time visibility, complete control."]].map(([ic, t, d], i) => <button key={t} type="button" onClick={() => setPr(i)} aria-pressed={pr === i} style={{ display: "flex", gap: 9, width: "100%", background: "none", border: "none", borderTop: "1px solid #223522", color: "#e8f5e8", padding: "8px 2px", cursor: "pointer", font: "inherit", textAlign: "left" }}>
+            <span style={{ fontSize: 16, color: G }}>{ic}</span>
+            <span><b style={{ color: pr === i ? G : "#e8f5e8", fontSize: 12.5 }}>{t}</b><br /><span style={{ ...dim, fontSize: 11 }}>{d}</span></span>
           </button>)}
         </div>
       </div>
-      <div>
-        <p style={{ display: "flex", justifyContent: "space-between", margin: "0 0 8px", flexWrap: "wrap", gap: 6 }}>
-          <span><b>Overview</b> — real-time operational overview</span>
-          <span><span style={{ border: "1px solid #2c4a2c", borderRadius: 7, padding: "3px 8px" }}>May 12 – May 18, 2025</span> <span style={{ background: "#0d2410", color: G, borderRadius: 999, padding: "3px 9px", fontWeight: 700 }}>● Operational</span></span>
-        </p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 7, marginBottom: 7 }}>
-          <div style={{ ...card }}><p style={{ margin: 0, ...dim, fontSize: 11 }}>MARKETPLACE HEALTH</p><b style={{ fontSize: 20, color: G }}>98%</b> <span style={{ color: G }}>Healthy</span><p style={{ margin: "3px 0 0", fontSize: 11 }}>Infrastructure · Services · Data Integrity · Integrations — Operational</p></div>
-          <div style={{ ...card }}><p style={{ margin: 0, ...dim, fontSize: 11 }}>ACTIVE CAMPAIGNS</p><b style={{ fontSize: 20 }}>128</b> <span style={{ color: G }}>↑ 12 vs last 7 days</span><p style={{ margin: "3px 0 0", fontSize: 11 }}>Running 96 · Review 18 · Paused 8 · Completed 6</p></div>
-          <div style={{ ...card }}><p style={{ margin: 0, ...dim, fontSize: 11 }}>SYSTEM STATUS</p><p style={{ margin: "3px 0 0", fontSize: 11 }}>API Gateway · Matching Engine · Verification Service · Settlement Service · Notification Service · Data Warehouse — <span style={{ color: G }}>Operational</span></p></div>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
-          {panel("Dispute Queue — 7", DISPUTES_R.map(([id, n2, s, age]) => <p key={id} style={{ display: "flex", justifyContent: "space-between", margin: "3.5px 0", fontSize: 11.5 }}><span>{id} — {n2}</span><span><b {...{ style: sev(s) }}>{s}</b> <span {...{ style: dim }}>{age}</span></span></p>))}
-          {panel("Settlement Activity — $2,842,719.48 Settled (7D) ↑ 18%", SETTLE_R.map(([id, d2, amt]) => <p key={id} style={{ display: "flex", justifyContent: "space-between", margin: "3.5px 0", fontSize: 11.5 }}><span>{id} · {d2}</span><span>{amt} <span style={{ color: G }}>Completed</span></span></p>))}
-          {panel("Flagged Verifications — 12", FLAGGED_R.map(([id, n2, s, age]) => <p key={id} style={{ display: "flex", justifyContent: "space-between", margin: "3.5px 0", fontSize: 11.5 }}><span>{id} — {n2}</span><span><b {...{ style: sev(s) }}>{s}</b> <span {...{ style: dim }}>{age}</span></span></p>))}
-          {panel("Audit Events — View audit log", AUDIT_R.map(([what, id, when]) => <p key={id} style={{ margin: "3.5px 0", fontSize: 11.5 }}>{what}<br /><span {...{ style: dim }}>{id} · {when}</span></p>))}
-        </div>
-        <div style={{ ...card, marginTop: 7 }}>
-          <p style={{ margin: "0 0 4px" }}><b style={{ fontSize: 12 }}>Quick Actions</b></p>
-          <p style={{ margin: 0, fontSize: 11.5 }}>Review Disputes — <b>7 pending</b> · Review Verifications — <b>12 flagged</b> · Manual Payout — Initiate · User Management — Manage access · System Alerts — <span style={{ color: G }}>✓ No critical alerts</span></p>
+      <div style={{ position: "relative", borderRadius: 12, overflow: "hidden", background: "#000", minHeight: 472 }}>
+        <img src="/projects/crops/allweb3/admin-room.jpg" alt="Dark room with the admin dashboard on a desk monitor, keyboard and mug (photo from the original slide)" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <div style={{ position: "absolute", left: "4.2%", top: "4.6%", width: "91.5%", height: "78%", transform: "perspective(1000px) rotateY(-3.5deg)", transformOrigin: "left center", background: "#070a07", borderRadius: 4, padding: "7px 8px", boxSizing: "border-box", overflow: "hidden", fontSize: 9.2, color: "#dfe9df" }}>
+          <p style={{ display: "flex", justifyContent: "space-between", margin: "0 0 6px", alignItems: "center" }}>
+            <span><b style={{ fontSize: 11 }}>Overview</b> <span style={{ ...dim, fontSize: 8.5 }}>— real-time operational overview across the Meridian ecosystem</span></span>
+            <span><span style={{ border: "1px solid #2c4a2c", borderRadius: 5, padding: "2px 6px", fontSize: 8.5 }}>May 12 – May 18, 2025</span> <span style={{ color: G, fontWeight: 700, fontSize: 8.5 }}>● Operational</span></span>
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 6, marginBottom: 6 }}>
+            {mini("MARKETPLACE HEALTH", <p style={{ margin: 0, display: "flex", gap: 7, alignItems: "center" }}><span style={{ width: 34, height: 34, flex: "none", borderRadius: "50%", background: `conic-gradient(${G} 0 98%, #1a2b1a 98% 100%)`, display: "inline-flex", alignItems: "center", justifyContent: "center" }}><b style={{ width: 25, height: 25, borderRadius: "50%", background: "#070a07", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 8.5, color: G }}>98%</b></span><span style={{ fontSize: 8.5, lineHeight: 1.5 }}>Infrastructure · Services<br />Data Integrity · Integrations<br /><span style={{ color: G }}>● Operational</span></span></p>)}
+            {mini("ACTIVE CAMPAIGNS", <p style={{ margin: 0 }}><b style={{ fontSize: 17 }}>128</b> <span style={{ color: G, fontSize: 8.5 }}>↑ 12 vs last 7 days</span><br /><span style={{ fontSize: 8.5 }}>Running 96 · Review 18 · Paused 8 · Completed 6</span></p>)}
+            {mini("SYSTEM STATUS", <p style={{ margin: 0, fontSize: 8.5, lineHeight: 1.55 }}>API Gateway · Matching Engine · Verification Service · Settlement Service · Notification Service · Data Warehouse — <span style={{ color: G }}>Operational</span></p>)}
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 6, marginBottom: 6 }}>
+            {mini("DISPUTE QUEUE — 7", rows(DISPUTES_R.map(([id, n2, x, age]) => <><span>{id} — {n2}</span><span><b {...{ style: sev(x) }}>{x}</b> <span {...{ style: dim }}>{age}</span></span></>)))}
+            {mini("SETTLEMENT ACTIVITY — $2,842,719.48 ↑ 18%", rows(SETTLE_R.map(([id, d2, amt]) => <><span>{id} · {d2}</span><span>{amt} <span style={{ color: G }}>Completed</span></span></>)))}
+            {mini("FLAGGED VERIFICATIONS — 12", rows(FLAGGED_R.map(([id, n2, x, age]) => <><span>{id} — {n2}</span><span><b {...{ style: sev(x) }}>{x}</b> <span {...{ style: dim }}>{age}</span></span></>)))}
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1.9fr 1fr", gap: 6 }}>
+            {mini("AUDIT EVENTS — View audit log", rows(AUDIT_R.map(([what, id, when]) => <><span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{what}</span><span style={{ ...dim, whiteSpace: "nowrap" }}>{id} · {when}</span></>)))}
+            {mini("QUICK ACTIONS", <p style={{ margin: 0, fontSize: 8.8, lineHeight: 1.6 }}>Review Disputes — <b>7 pending</b><br />Review Verifications — <b>12 flagged</b><br />Manual Payout — Initiate · User Management<br />System Alerts — <span style={{ color: G }}>✓ No critical alerts</span></p>)}
+          </div>
         </div>
       </div>
     </div>
@@ -735,7 +805,7 @@ export function Allweb3RoleScopeTree() {
     ["Deployment", "Deployment — the base of the printed delivery diagram."],
   ];
   const treeBtn = (i: number, extra?: React.CSSProperties) => <button key={nodes[i][0]} type="button" onClick={() => setNode(i)} aria-pressed={node === i} style={{ background: node === i ? G : "#0d140d", color: node === i ? "#021202" : "#e8f5e8", border: `1.5px solid ${G}`, borderRadius: 8, padding: "5px 10px", cursor: "pointer", font: "inherit", fontWeight: 700, fontSize: 11.5, ...extra }}>{nodes[i][0]}</button>;
-  return <AwR n="03" title="Solo Product Designer and Full-Stack Builder" sub="IMAGE 03 — ROLE AND SCOPE CARD" label="ALLWEB3 role and scope — tree rebuild of 3.webp" foot="ALLWEB3 — Role and Scope">
+  return <AwR n="03" title="Solo Product Designer and Full-Stack Builder" sub="ROLE AND SCOPE CARD" label="ALLWEB3 role and scope — tree rebuild of 3.webp" foot="ALLWEB3 — Role and Scope">
     <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 14 }}>
       <div>
         <p style={{ margin: 0 }}><b style={{ color: G }}>Role</b> — Solo Product Designer and Full-Stack Builder. End-to-end ownership across strategy, design, development, and deployment — delivering cohesive products that scale.</p>
@@ -760,19 +830,16 @@ export function Allweb3RoleScopeTree() {
         <p style={{ ...dim, margin: "6px 0 0", fontSize: 11.5 }} aria-live="polite"><b style={{ color: "#e8f5e8" }}>{nodes[node][0]}</b> — {nodes[node][1]}</p>
       </div>
     </div>
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, marginTop: 12 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 0, marginTop: 12, border: "1px solid #2c5a2c", borderRadius: 10, overflow: "hidden" }}>
+      <div style={{ padding: "9px 11px", borderRight: "1px solid #223522" }}><p style={{ margin: "0 0 3px", color: G, fontSize: 10.5, letterSpacing: ".08em" }}>ROLE</p><b style={{ fontSize: 12.5 }}>Solo Product Designer and Full-Stack Builder</b></div>
+      <div style={{ padding: "9px 11px", borderRight: "1px solid #223522" }}><p style={{ margin: "0 0 3px", color: G, fontSize: 10.5, letterSpacing: ".08em" }}>OWNERSHIP</p><b style={{ color: G, fontSize: 12.5 }}>SINGLE CONTRIBUTOR</b><p style={{ margin: "2px 0 0", ...dim, fontSize: 11 }}>Full ownership of product vision, execution, and delivery.</p></div>
+      <div style={{ padding: "9px 11px", borderRight: "1px solid #223522" }}><p style={{ margin: "0 0 3px", color: G, fontSize: 10.5, letterSpacing: ".08em" }}>RESPONSIBILITIES</p><p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.5 }}>Product strategy · UX architecture · UI design · Prototyping · Design system · Front-end · Back-end · Deployment</p></div>
+      <div style={{ padding: "9px 11px" }}><p style={{ margin: "0 0 3px", color: G, fontSize: 10.5, letterSpacing: ".08em" }}>TIMELINE</p><b style={{ fontSize: 12.5 }}>APR 2026 — JUN 2026</b><p style={{ margin: "2px 0 0", ...dim, fontSize: 11 }}>(3 MONTHS) · Status <b style={{ color: G }}>● ACTIVE</b></p></div>
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, marginTop: 8 }}>
       {[["Creator Portal", "Content management, audience insights, and growth tools.", "🖥"], ["Project Portal", "Project tracking, milestone management, and collaboration.", "📁"], ["Admin Portal", "Platform oversight, user management, and analytics.", "🛡"]].map(([t, d, ic]) => <div key={t as string} style={{ background: "#0d2410", border: "1px solid #2c5a2c", borderRadius: 10, padding: 10 }}>
         <p style={{ margin: 0, fontSize: 15 }}>{ic as string}</p><b>{t as string}</b><p style={{ margin: "3px 0 0", ...dim }}>{d as string}</p>
       </div>)}
-    </div>
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 8 }}>
-      <div style={{ background: "#0d2410", border: "1px solid #2c5a2c", borderRadius: 10, padding: 10 }}>
-        <p style={{ margin: 0 }}>👤 <b>Ownership</b> — <b style={{ color: G }}>SINGLE CONTRIBUTOR</b></p>
-        <p style={{ margin: "3px 0 0", ...dim }}>Full ownership of product vision, execution, and delivery.</p>
-      </div>
-      <div style={{ ...card }}>
-        <p style={{ margin: 0 }}>📅 <b>Timeline</b> — <b>APR 2026 — JUN 2026</b> <span {...{ style: dim }}>(3 MONTHS)</span> · Status <b style={{ color: G }}>● ACTIVE</b></p>
-      </div>
     </div>
   </AwR>;
 }
@@ -785,26 +852,26 @@ const PAINS_R: Array<{ name: string; icon: string; pains: Array<[string, string]
 ];
 export function Allweb3PainMapFull() {
   const [sel, setSel] = useState<[number, number]>([0, 0]);
-  return <AwR n="06" title="Stakeholder Pain Map" label="ALLWEB3 stakeholder pain map — full rebuild of 6.webp" foot="ALLWEB3 — Stakeholder Pain Map · Illustrative data">
+  return <AwR n="06" titleSize={12} title="W ALLWEB3 — STAKEHOLDER PAIN MAP" label="ALLWEB3 stakeholder pain map — full rebuild of 6.webp" foot="ALLWEB3 — Stakeholder Pain Map · Illustrative data">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
       {PAINS_R.map((g, gi) => <div key={g.name} style={{ ...card, padding: 0, overflow: "hidden" }}>
-        <div style={{ background: "#0d2410", padding: "12px 10px 8px", textAlign: "center", position: "relative" }}>
-          <span style={{ position: "absolute", top: -2, left: "50%", transform: "translate(-50%, -38%)", width: 30, height: 30, borderRadius: "50%", background: "#050805", border: `1.5px solid ${G}`, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 13 }}>{g.icon}</span>
-          <b style={{ fontSize: 14.5, display: "block", marginTop: 8 }}>{g.name}</b>
+        <div style={{ background: "#0d2410", padding: "10px 10px 9px", textAlign: "center" }}>
+          <span style={{ width: 38, height: 38, borderRadius: "50%", background: "#050805", border: `2px solid ${G}`, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 16, boxShadow: `0 0 0 3px #0d2410, 0 0 0 5px ${G}` }}>{g.icon}</span>
+          <b style={{ fontSize: 14.5, display: "block", marginTop: 7 }}>{g.name}</b>
         </div>
         <div style={{ padding: "8px 10px" }}>
           {g.pains.map(([ic, p], pi) => <button key={p} type="button" onClick={() => setSel([gi, pi])} aria-pressed={sel[0] === gi && sel[1] === pi} style={{ display: "flex", gap: 8, alignItems: "center", width: "100%", background: sel[0] === gi && sel[1] === pi ? "#12240f" : "transparent", border: "none", borderLeft: `3px solid ${G}`, color: "#e8f5e8", padding: "5px 7px", cursor: "pointer", font: "inherit", textAlign: "left", marginBottom: 3 }}>
             <span style={{ background: "#0d2410", border: "1px solid #2c5a2c", borderRadius: 6, width: 23, height: 23, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11, flex: "none" }}>{ic}</span>{p}
           </button>)}
         </div>
-        <p style={{ margin: 0, background: "#0d1a0d", padding: "8px 10px", fontSize: 12 }}><span style={{ color: G, fontSize: 15, marginRight: 5 }}>›</span>{g.consequence}</p>
+        <p style={{ margin: 0, background: "#0d2410", borderTop: `1.5px solid ${G}`, padding: "10px 12px", fontSize: 13, lineHeight: 1.45 }}><span style={{ color: G, fontSize: 21, fontWeight: 800, marginRight: 6, verticalAlign: -2 }}>›</span>{g.consequence}</p>
       </div>)}
     </div>
     <div style={{ textAlign: "center", marginTop: 14 }}>
       <span style={{ display: "inline-block", border: `2px solid ${G}`, borderRadius: 999, padding: "10px 26px", background: "#0a1a0a" }}>
         <span style={{ marginRight: 8 }}>🗄</span><b style={{ fontSize: 17, color: G }}>No shared source of truth</b>
       </span>
-      <p style={{ ...dim, margin: "8px 0 0" }} aria-live="polite">All three columns converge on the printed root cause. Selected pain: <b style={{ color: "#e8f5e8" }}>{PAINS_R[sel[0]].name} — {PAINS_R[sel[0]].pains[sel[1]][1]}</b>; consequence as printed: {PAINS_R[sel[0]].consequence}</p>
+      <p style={{ ...dim, margin: "8px 0 0" }} aria-live="polite">Selected pain: <b style={{ color: "#e8f5e8" }}>{PAINS_R[sel[0]].name} — {PAINS_R[sel[0]].pains[sel[1]][1]}</b></p>
     </div>
   </AwR>;
 }
@@ -853,8 +920,8 @@ export function Allweb3PermissionsGlyphs() {
           </tr></thead>
           <tbody>{PERM_AREAS_R.map((a, ai) => <tr key={a}>
             <td style={{ background: "#0d2410", padding: "7px 8px", borderBottom: "1px solid #182818" }}><span style={{ marginRight: 6 }}>{AREA_ICONS_R[ai]}</span><b>{a}</b></td>
-            {PERM_MATRIX_R[a].map((perms, ri) => <td key={ri} onClick={() => setCellSel([ai, ri])} style={{ textAlign: "center", padding: "7px 4px", borderBottom: "1px solid #182818", cursor: "pointer", background: cellSel[0] === ai && cellSel[1] === ri ? "#12240f" : undefined }}>
-              <span style={{ fontSize: 15, letterSpacing: 3 }}>{perms.map((p) => PERM_GLYPH[p][0]).join(" ")}</span>
+            {PERM_MATRIX_R[a].map((perms, ri) => <td key={ri} onClick={() => setCellSel([ai, ri])} style={{ textAlign: "center", padding: "10px 4px", borderBottom: "1px solid #182818", cursor: "pointer", background: cellSel[0] === ai && cellSel[1] === ri ? "#12240f" : undefined }}>
+              <span style={{ fontSize: 30, letterSpacing: 6, color: G, lineHeight: 1.15, display: "block" }}>{perms.map((p) => PERM_GLYPH[p][0]).join(" ")}</span>
               {legend && perms.includes(legend) ? <span style={{ display: "block", color: G, fontSize: 9.5, fontWeight: 700 }}>{legend.toUpperCase()}</span> : null}
             </td>)}
           </tr>)}</tbody>
@@ -863,7 +930,7 @@ export function Allweb3PermissionsGlyphs() {
           <b style={{ color: "#e8f5e8" }}>{PERM_ROLES_R[cellSel[1]][0]} · {PERM_AREAS_R[cellSel[0]]}</b> — {PERM_MATRIX_R[PERM_AREAS_R[cellSel[0]]][cellSel[1]].map((p) => `${p}: ${PERM_GLYPH[p][1]}`).join(" ")}
           {legend ? <> · Legend highlight: <b style={{ color: G }}>{legend}</b> cells are labelled.</> : null}
         </p>
-        <p style={{ textAlign: "center", borderTop: "1px solid #223522", marginTop: 8, paddingTop: 7, ...dim, fontSize: 11.5 }}>🛡 All decisions and overrides are captured in the audit log.</p>
+        <p style={{ textAlign: "center", background: "#0d2410", border: `1.5px solid ${G}`, borderRadius: 9, marginTop: 10, padding: "10px 14px", fontSize: 13, color: "#e8f5e8" }}>🛡 <b>All decisions and overrides are captured in the audit log</b> — with actor, context, before/after state, and reason.</p>
       </div>
     </div>
   </AwR>;

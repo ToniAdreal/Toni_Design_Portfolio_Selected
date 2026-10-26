@@ -60,21 +60,21 @@ import { DataQuestMarketplace, DataQuestStateMachine, DataQuestTaskDetailV0 } fr
 
 const ACC = "#5b3df5";
 
-function Dq({ n, title, sub, children, label, foot, hideHead, bg, titleTone }: { n: string; title: string; sub?: string; children: ReactNode; label: string; foot?: string; hideHead?: boolean; bg?: string; titleTone?: "gradient" | "black" }) {
+function Dq({ n, title, sub, children, label, foot, hideHead, bg, titleTone, bare, centerTitle }: { n: string; title: string; sub?: string; children: ReactNode; label: string; foot?: string; hideHead?: boolean; bg?: string; titleTone?: "gradient" | "black"; bare?: boolean; centerTitle?: boolean }) {
   // Pass 5: the deck's printed title system is not uniform — the
   // audit/evolution boards (06, 39) print their slide titles in black
   // beside a gradient DataQuest wordmark, while the concept slides
   // print gradient titles. `titleTone="black"` follows the print per
   // screen instead of forcing the deck-wide gradient (§15.6.4).
   return <div className="tks" role="region" aria-label={label} style={{ background: bg ?? "#f8f7ff", padding: "20px 24px 12px" }}>
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+    {bare ? null : <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
       <span style={{ fontWeight: 800, fontSize: 13, color: "#191423" }}><span style={{ color: "#6C3BFF" }}>⬡</span> CyberOrigin</span>
       <span style={{ fontSize: 10.5, color: "#8a86a3", fontFamily: "ui-monospace,Menlo,monospace" }}>{n} / 40 · DataQuest</span>
-    </div>
-    {hideHead ? null : <h3 style={{ fontSize: 32, lineHeight: 1.12, margin: "0 0 5px", ...(titleTone === "black" ? { color: "#14101f" } : { background: "linear-gradient(92deg,#6C3BFF 10%,#2563EB 90%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }) }}>{title}</h3>}
-    {!hideHead && sub ? <p className="tks-lede" style={{ fontSize: 13.5, lineHeight: 1.45, margin: "0 0 13px" }}>{sub}</p> : null}
+    </div>}
+    {hideHead ? null : <h3 style={{ fontSize: centerTitle ? 40 : 32, textAlign: centerTitle ? "center" : "left", lineHeight: 1.12, margin: "0 0 5px", ...(titleTone === "black" ? { color: "#14101f" } : { background: "linear-gradient(92deg,#6C3BFF 10%,#2563EB 90%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }) }}>{title}</h3>}
+    {!hideHead && sub ? <p className="tks-lede" style={{ fontSize: 13.5, lineHeight: 1.45, margin: "0 0 13px", textAlign: centerTitle ? "center" : "left" }}>{sub}</p> : null}
     {children}
-    <div className="tks-foot" style={{ marginTop: 9, paddingTop: 6 }}><span>DataQuest by CyberOrigin</span><span>{foot ?? "Human-action data marketplace for embodied AI"}</span></div>
+    {bare ? null : <div className="tks-foot" style={{ marginTop: 9, paddingTop: 6 }}><span>DataQuest by CyberOrigin</span><span>{foot ?? "Human-action data marketplace for embodied AI"}</span></div>}
   </div>;
 }
 
@@ -97,10 +97,12 @@ const dqPhone: CSSProperties = { width: 152, flex: "none", background: "#fff", b
 const DQ_THUMB = ["/projects/crops/dataquest/task-kitchen.jpg", "/projects/crops/dataquest/task-outdoor.jpg", "/projects/crops/dataquest/task-wearable.jpg"];
 export function DataQuestHero() {
   const [s, setS] = useState(1);
-  return <Dq n="01" title="DataQuest" sub="by CyberOrigin — Human-action data marketplace for embodied AI." label="DataQuest hero — interactive rebuild of CyberOrigin_01">
-    <div style={{ display: "grid", gridTemplateColumns: "330px 1fr", gap: 14, alignItems: "start" }}>
+  return <Dq n="01" title="DataQuest" hideHead sub="by CyberOrigin — Human-action data marketplace for embodied AI." label="DataQuest hero — interactive rebuild of CyberOrigin_01">
+    <div style={{ display: "grid", gridTemplateColumns: "248px 1fr", gap: 14, alignItems: "start" }}>
       <div>
-        <div style={{ display: "flex", gap: 10 }}>
+        <h3 style={{ fontSize: 36, lineHeight: 1.1, margin: "2px 0 5px", background: "linear-gradient(92deg,#6C3BFF 10%,#2563EB 90%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>DataQuest</h3>
+        <p style={{ fontSize: 13.5, lineHeight: 1.45, margin: "0 0 10px", color: "#55506e" }}>by CyberOrigin — Human-action data marketplace for embodied AI.</p>
+        <div style={{ display: "flex", gap: 10, position: "relative", zIndex: 3, marginRight: -86, marginTop: 8 }}>
           <div style={dqPhone} aria-hidden="true">
             <div style={{ textAlign: "center", fontSize: 8.5, color: "#8a86a3" }}>9:41</div>
             <b style={{ fontSize: 11, color: "#14101f" }}>Discover</b>
@@ -120,7 +122,7 @@ export function DataQuestHero() {
           {[["👥", "Real people. Real actions."], ["🎯", "Guided capture. High quality data."], ["⚖", "Fair rewards. Transparent tracking."]].map(([i, x]) => <p key={x} style={{ margin: 0, fontSize: 12 }}><span style={{ marginRight: 7 }}>{i}</span><b>{x}</b></p>)}
         </div>
       </div>
-      <div style={{ background: "#fff", border: "1px solid #ddd9f2", borderRadius: 13, overflow: "hidden", boxShadow: "0 10px 26px rgba(80,60,180,0.10)", fontSize: 11 }}>
+      <div style={{ background: "#fff", border: "1px solid #ddd9f2", borderRadius: 13, overflow: "hidden", boxShadow: "0 10px 26px rgba(80,60,180,0.10)", fontSize: 11, marginTop: 64 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 10px", borderBottom: "1px solid #eeeaf9" }}><span style={{ display: "flex", gap: 4 }}>{["#ff5f57", "#febc2e", "#28c840"].map((c) => <i key={c} style={{ width: 8, height: 8, borderRadius: "50%", background: c, display: "block" }} />)}</span><span style={{ flex: 1, textAlign: "center", background: "#f4f2fb", borderRadius: 5, padding: "2px 0", color: "#55506e" }}>🔒 app.dataquest.cyberorigin.ai</span></div>
         <div style={{ display: "grid", gridTemplateColumns: "104px 1fr", minHeight: 218 }}>
           <div style={{ borderRight: "1px solid #eeeaf9", padding: "9px 10px", display: "grid", gap: 5, alignContent: "start", color: "#55506e" }}>
@@ -225,10 +227,23 @@ export function DataQuestDataLoop() {
     <b style={{ fontSize: 12.5, lineHeight: 1.3, display: "block" }}>{t}</b>
     <p style={{ color: "#555", margin: "3px 0 0", fontSize: 11 }}>{b}</p></button>; };
   return <Dq n="03" title="The embodied-AI data loop" sub="How real-world actions become usable robotics training data." label="DataQuest embodied-AI data loop — interactive rebuild of CyberOrigin_03">
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 9, padding: "12px", borderRadius: 18, background: "linear-gradient(135deg,rgba(108,59,255,0.07),rgba(37,99,235,0.07))", border: "1.5px solid #ddd6fb" }}>
-      {order.slice(0, 4).map(card)}
-      <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "1px 0" }}><span style={{ display: "inline-block", background: "linear-gradient(92deg,#6C3BFF,#2563EB)", color: "#fff", borderRadius: 999, padding: "5px 18px", fontWeight: 700, fontSize: 12.5 }}>⬡ DataQuest is the contributor workflow layer</span></div>
-      {order.slice(4).map(card)}
+    <div style={{ position: "relative", padding: "16px 14px", borderRadius: 18, background: "linear-gradient(135deg,rgba(108,59,255,0.05),rgba(37,99,235,0.05))", border: "1.5px solid #ddd6fb" }}>
+      <svg viewBox="0 0 880 300" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} aria-hidden="true">
+        <defs><linearGradient id="dq3track" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#c9bffb" /><stop offset=".55" stopColor="#a5c4fb" /><stop offset="1" stopColor="#7dd3fc" /></linearGradient>
+        <marker id="dq3arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#8ea6e8" /></marker></defs>
+        <ellipse cx="440" cy="150" rx="428" ry="128" fill="none" stroke="url(#dq3track)" strokeWidth="13" opacity=".55" />
+        <path d="M 700 62 A 428 128 0 0 1 862 168" fill="none" stroke="#8ea6e8" strokeWidth="2.5" markerEnd="url(#dq3arr)" />
+        <path d="M 180 240 A 428 128 0 0 1 22 140" fill="none" stroke="#8ea6e8" strokeWidth="2.5" markerEnd="url(#dq3arr)" />
+        <g stroke="#b9adf0" strokeWidth="1.3" strokeDasharray="3 5">
+          <line x1="440" y1="150" x2="110" y2="86" /><line x1="440" y1="150" x2="330" y2="70" /><line x1="440" y1="150" x2="550" y2="70" /><line x1="440" y1="150" x2="770" y2="86" />
+          <line x1="440" y1="150" x2="770" y2="216" /><line x1="440" y1="150" x2="550" y2="232" /><line x1="440" y1="150" x2="330" y2="232" /><line x1="440" y1="150" x2="110" y2="216" />
+        </g>
+      </svg>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 9, position: "relative" }}>
+        {order.slice(0, 4).map(card)}
+        <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "3px 0" }}><span style={{ display: "inline-block", background: "#fff", color: "#33304a", border: "1.5px solid #ddd6fb", boxShadow: "0 8px 22px rgba(80,60,180,.16)", borderRadius: 999, padding: "7px 20px", fontWeight: 600, fontSize: 12.5 }}><span style={{ color: "#6C3BFF", fontWeight: 800 }}>⬡ DataQuest</span> is the contributor workflow layer</span></div>
+        {order.slice(4).map(card)}
+      </div>
     </div>
     <p style={{ background: "#efeaff", borderRadius: 999, padding: "7px 16px", color: "#4a3d8f", fontSize: 12.5, margin: "10px 0 0", textAlign: "center" }}>ⓘ <b>DataQuest enables every step inside the loop</b> — guiding capture, ensuring quality, and turning real-world actions into trusted training data.</p>
   </Dq>;
@@ -267,12 +282,13 @@ export function DataQuestEcosystem() {
   const [sel, setSel] = useState("People");
   const mini = (name: string, body: string) => <button key={name} type="button" onClick={() => setSel(name)} aria-pressed={sel === name} style={{ display: "flex", gap: 6, alignItems: "center", width: "100%", textAlign: "left", background: sel === name ? "#f2efff" : "#fff", border: `1px solid ${sel === name ? "#6C3BFF" : "#e7e4f6"}`, borderRadius: 8, padding: "5px 8px", cursor: "pointer", font: "inherit", fontSize: 11 }}>{ECO_THUMB[name] ? <img src={ECO_THUMB[name]} alt="" style={{ width: 26, height: 26, objectFit: "cover", borderRadius: 5, flex: "none" }} /> : null}<span><b style={{ color: "#14101f" }}>{name}</b><br /><span style={{ color: "#6d6884" }}>{body}</span></span></button>;
   return <Dq n="04" title="CyberOrigin ecosystem" sub="DataQuest is the contributor and workflow layer inside a broader robotics-data system." label="CyberOrigin ecosystem — interactive rebuild of CyberOrigin_04" foot="Security, privacy & compliance at every layer · Encryption in transit and at rest · Consent & data rights · SOC 2 Type II ready">
-    <div style={{ display: "grid", gridTemplateColumns: "0.92fr 1.55fr 1fr", gap: 10, alignItems: "start" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "0.92fr 22px 1.55fr 22px 1fr", gap: 6, alignItems: "start" }}>
       <div style={{ border: "1px solid #e3e0f5", borderRadius: 12, padding: "9px 10px", background: "#fff" }}>
         <p className="tks-kicker" style={{ margin: "0 0 6px" }}>CyberGlove &amp; human capture</p>
         <div style={{ display: "grid", gap: 5 }}>{ECO_CAPTURE.map(([n, b]) => mini(n, b))}</div>
         <p style={{ fontSize: 10.5, color: "#8a86a3", margin: "7px 0 0" }}>Secure capture · Edge processing · Privacy by design</p>
       </div>
+      <span aria-hidden="true" style={{ alignSelf: "center", textAlign: "center", fontSize: 17, color: "#6C3BFF", fontWeight: 800 }}>➜</span>
       <div style={{ border: "1.5px solid #c9bffb", borderRadius: 12, padding: "9px 10px", background: "#fbfaff" }}>
         <p className="tks-kicker" style={{ margin: "0 0 6px" }}>DataQuest — contributor marketplace</p>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr 1fr", gap: 6, alignItems: "start" }}>
@@ -283,7 +299,13 @@ export function DataQuestEcosystem() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5, alignItems: "center" }}>
             {mini("People", "Global contributors and experts")}
             {mini("Tasks", "Human actions and interactions")}
-            <span style={{ gridColumn: "1 / -1", justifySelf: "center", width: 46, height: 46, borderRadius: "50%", background: "linear-gradient(135deg,#6C3BFF,#2563EB)", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>⬡</span>
+            <span style={{ gridColumn: "1 / -1", justifySelf: "center", position: "relative", width: 124, height: 124, borderRadius: "50%", background: "conic-gradient(#6C3BFF 0 25%,#2563EB 25% 50%,#0d9488 50% 75%,#9333ea 75% 100%)", display: "inline-flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 20px rgba(80,60,180,.25)" }}>
+              <span style={{ width: 40, height: 40, borderRadius: "50%", background: "#fff", color: "#6C3BFF", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>⬡</span>
+              <span style={{ position: "absolute", top: 9, left: "50%", transform: "translateX(-50%)", color: "#fff", fontSize: 7.4, fontWeight: 800 }}>PEOPLE</span>
+              <span style={{ position: "absolute", right: 9, top: "50%", transform: "translateY(-50%)", color: "#fff", fontSize: 7.4, fontWeight: 800 }}>TASKS</span>
+              <span style={{ position: "absolute", bottom: 9, left: "50%", transform: "translateX(-50%)", color: "#fff", fontSize: 7.4, fontWeight: 800 }}>QUALITY</span>
+              <span style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)", color: "#fff", fontSize: 7.4, fontWeight: 800 }}>REWARDS</span>
+            </span>
             {mini("Quality", "Standards, reviews and validation")}
             {mini("Rewards", "Earnings, bonuses and leaderboards")}
           </div>
@@ -294,6 +316,7 @@ export function DataQuestEcosystem() {
         </div>
         <div style={{ marginTop: 8, borderTop: "1px dashed #c9bffb", paddingTop: 6, fontSize: 10.5, color: "#4a3d8f" }}><b>Workflow orchestration</b> — Task intake &amp; design → Task publishing &amp; routing → Execution &amp; capture → Quality review &amp; QA → Approval &amp; payout</div>
       </div>
+      <span aria-hidden="true" style={{ alignSelf: "center", textAlign: "center", fontSize: 17, color: "#6C3BFF", fontWeight: 800 }}>➜</span>
       <div style={{ display: "grid", gap: 7 }}>
         {ECO_OUT.map(([n, b], i) => <div key={n} style={{ border: "1px solid #e3e0f5", borderRadius: 12, padding: "8px 10px", background: "#fff", display: "flex", gap: 8 }}><span style={{ flex: "none", width: 30, height: 30, borderRadius: 8, background: "linear-gradient(135deg,#6C3BFF,#2563EB)", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 14 }}>{["🗄", "🏷", "🤖", "🏢"][i]}</span><span><b style={{ fontSize: 12.5, color: ["#6C3BFF", "#2563EB", "#0d9488", "#2563EB"][i] }}>{n}</b><p style={{ color: "#6d6884", margin: "3px 0 0", fontSize: 11 }}>{b}</p></span></div>)}
       </div>
@@ -532,17 +555,19 @@ function WireGlyph({ label, hot, onPick, lines: linesProp }: { label: string; ho
   // from the printed flow label itself. Phones without a table entry
   // keep the grey-bar wireframe.
   const lines = linesProp ?? WF_LINES[label];
-  return <button type="button" onClick={onPick} aria-pressed={hot} style={{ background: "#fff", border: `1.5px solid ${hot ? "#6C3BFF" : "#c9c9d4"}`, borderRadius: 8, padding: "4px 4px 5px", cursor: "pointer", font: "inherit", flex: 1, minWidth: 0 }}>
-    <span aria-hidden="true" style={{ display: "block", border: "1px solid #d8d8e2", borderRadius: 4, padding: "4px 3px", height: 62, background: "repeating-linear-gradient(180deg,#fff 0 8px,#f1f1f6 8px 9px)", overflow: "hidden" }}>
+  return <button type="button" onClick={onPick} aria-pressed={hot} style={{ background: "#fff", border: `1.5px solid ${hot ? "#6C3BFF" : "#c9c9d4"}`, borderRadius: 12, padding: "4px 4px 5px", cursor: "pointer", font: "inherit", flex: "1 1 0", minWidth: 0 }}>
+    <span aria-hidden="true" style={{ display: "block", border: "1px solid #d8d8e2", borderRadius: 7, padding: "4px 3px", height: 108, background: "repeating-linear-gradient(180deg,#fff 0 8px,#f1f1f6 8px 9px)", overflow: "hidden", position: "relative" }}>
+      <span style={{ display: "block", width: 16, height: 3, borderRadius: 2, background: "#d8d8e2", margin: "0 auto 3px" }} />
       {lines ? <>
         <span style={{ display: "block", fontSize: 6.9, fontWeight: 700, color: "#14101f", lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{lines[0][0]}</span>
         <span style={{ display: "block", fontSize: 6.4, color: "#8a86a3", lineHeight: 1.3, marginBottom: 3 }}>{lines[0][1]}</span>
         {lines.slice(1).map(([t, s]) => <span key={t} style={{ display: "block", borderTop: "1px solid #e9e6f7", paddingTop: 2, marginTop: 2, lineHeight: 1.3 }}><span style={{ display: "block", fontSize: 6.6, fontWeight: 600, color: "#3f3a55", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t}</span>{s ? <span style={{ display: "block", fontSize: 6.2, color: "#8a86a3" }}>{s}</span> : null}</span>)}
       </> : <>
         <span style={{ display: "block", height: 5, background: "#c9c9d4", borderRadius: 2, marginBottom: 4 }} />
-        <span style={{ display: "block", height: 20, border: "1px solid #d8d8e2", borderRadius: 2, marginBottom: 4, position: "relative" }}><span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#b9b9c6", fontSize: 11 }}>✕</span></span>
+        <span style={{ display: "block", height: 44, border: "1px solid #d8d8e2", borderRadius: 2, marginBottom: 4, position: "relative" }}><span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#b9b9c6", fontSize: 11 }}>✕</span></span>
         <span style={{ display: "block", height: 5, width: "70%", background: "#dcdce6", borderRadius: 2, marginBottom: 4 }} />
-        <span style={{ display: "block", height: 8, width: "55%", background: "#3f3f46", borderRadius: 3, margin: "0 auto" }} />
+        <span style={{ display: "block", height: 5, width: "85%", background: "#dcdce6", borderRadius: 2, marginBottom: 4 }} />
+        <span style={{ display: "block", height: 8, width: "55%", background: "#3f3f46", borderRadius: 3, margin: "6px auto 0" }} />
       </>}
     </span>
     <span style={{ display: "block", fontSize: 7.8, color: "#55506e", marginTop: 3, lineHeight: 1.3 }}>{label}</span>
@@ -558,19 +583,19 @@ function LoFiBoard({ n, variant }: { n: string; variant: "kitchen" | "street" })
     <div style={{ display: "flex", gap: 4 }}>{screens.map((sc) => <WireGlyph key={sc} label={sc} lines={variant === "street" ? (WF_LINES[`${sc} (street)`] ?? WF_LINES[sc]) : WF_LINES[sc]} hot={fi === f} onPick={() => setF(fi)} />)}</div>
   </div>; };
   return <Dq n={n} title={street ? "Low-fidelity exploration board" : "Low-fidelity exploration"} sub="Exploring end-to-end flows across discovery, capture, verification, rewards, and account states." label={`DataQuest low-fidelity exploration — interactive rebuild of CyberOrigin_${n}`} foot="Notes: All screens are low-fidelity explorations · Final UI will follow the DataQuest design system" bg="#f7f7f9">
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 218px", gap: 12, alignItems: "start" }}>
-      <div>
+    <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 198px", gap: 12, alignItems: "start" }}>
+      <div style={{ minWidth: 0 }}>
         <div style={{ display: "grid", gap: 11 }}>
-          {bands.map((band, bi) => <div key={bi} style={{ display: "flex", gap: 10, borderTop: bi > 0 ? "1px dashed #d8d8e2" : undefined, paddingTop: bi > 0 ? 9 : 0 }}>{band.map(flowBlock)}</div>)}
+          {bands.map((band, bi) => <div key={bi} style={{ display: "flex", gap: 10, minWidth: 0, borderTop: bi > 0 ? "1px dashed #d8d8e2" : undefined, paddingTop: bi > 0 ? 9 : 0 }}>{band.map(flowBlock)}</div>)}
         </div>
         <p aria-live="polite" style={{ margin: "9px 0 0", fontSize: 11, color: "#55506e" }}><b>{LOFI_FLOWS[f][0]}</b> — {LOFI_FLOWS[f][1]}{notes[f] ? <> · {notes[f]}</> : null}</p>
       </div>
-      <div style={{ display: "grid", gap: 8 }}>
-        <div style={{ border: "1px solid #e3e0f5", borderRadius: 11, padding: "9px 11px", background: "#fff" }}>
+      <div style={{ display: "grid", gap: 8, minWidth: 0 }}>
+        <div style={{ border: "1px solid #e3e0f5", borderRadius: 11, padding: "9px 11px", background: "#fff", minWidth: 0, overflowWrap: "break-word" }}>
           <p className="tks-kicker" style={{ margin: "0 0 6px" }}>Key questions resolved by wireframing</p>
           {LOFI_QUESTIONS.map(([q, a]) => <div key={q} style={{ marginBottom: 7 }}><b style={{ fontSize: 11.5 }}>{q}</b><p style={{ color: "#6d6884", margin: "2px 0 0", fontSize: 10.5, lineHeight: 1.45 }}>{a}</p></div>)}
         </div>
-        <div style={{ border: "1px solid #e3e0f5", borderRadius: 11, padding: "9px 11px", background: "#fbfaff", fontSize: 10.5, color: "#6d6884" }}>
+        <div style={{ border: "1px solid #e3e0f5", borderRadius: 11, padding: "9px 11px", background: "#fbfaff", fontSize: 10.5, color: "#6d6884", minWidth: 0, overflowWrap: "break-word" }}>
           <p className="tks-kicker" style={{ margin: "0 0 4px" }}>Notes</p>
           All screens are low-fidelity explorations. Final UI will follow the DataQuest design system.
           <p className="tks-kicker" style={{ margin: "8px 0 4px" }}>Flows covered</p>
@@ -591,9 +616,9 @@ const ACTIVE10: Array<[string, string, number]> = [
 export function DataQuestMobileHome() {
   const [tab, setTab] = useState("Home");
   const [t, setT] = useState(0);
-  return <Dq n="10" title="DataQuest — Mobile home" hideHead label="DataQuest mobile home screen — interactive rebuild of CyberOrigin_10">
+  return <Dq n="10" title="DataQuest — Mobile home" hideHead bare label="DataQuest mobile home screen — interactive rebuild of CyberOrigin_10">
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <div style={{ width: 318, background: "#fff", border: "2.5px solid #221d33", borderRadius: 34, padding: "10px 13px 8px", fontSize: 11, lineHeight: 1.45, color: "#33304a", boxShadow: "0 16px 36px rgba(60,40,160,0.16)" }}>
+      <div style={{ width: 392, background: "#fff", border: "2.5px solid #221d33", borderRadius: 38, padding: "12px 16px 10px", fontSize: 12.5, lineHeight: 1.5, color: "#33304a", boxShadow: "0 16px 36px rgba(60,40,160,0.16)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><span style={{ fontWeight: 700 }}>9:41</span><span style={{ width: 62, height: 15, background: "#221d33", borderRadius: 999 }} /><span>📶 🔋</span></div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 7 }}><b style={{ color: "#6C3BFF", fontSize: 14 }}>⬡ DataQuest</b><span>🔔 <span style={{ border: "1.5px solid #6C3BFF", color: "#6C3BFF", borderRadius: "50%", padding: "1px 5px", fontWeight: 700, fontSize: 9.5 }}>AM</span></span></div>
         <div style={{ background: "linear-gradient(120deg,#6C3BFF,#2563EB)", color: "#fff", borderRadius: 13, padding: "10px 12px", marginTop: 8 }}>
@@ -613,7 +638,7 @@ export function DataQuestMobileHome() {
         </div>
       </div>
     </div>
-    <p aria-live="polite" style={{ textAlign: "center", margin: "10px 0 0", fontSize: 14, fontWeight: 800, color: "#191423" }}><span style={{ color: "#6C3BFF" }}>⬡</span> CyberOrigin</p>
+    <p aria-live="polite" style={{ textAlign: "center", margin: "14px 0 2px", fontSize: 24, fontWeight: 800, color: "#191423", letterSpacing: "-0.01em" }}><span style={{ color: "#6C3BFF" }}>⬡</span> CyberOrigin</p>
   </Dq>;
 }
 
@@ -674,15 +699,19 @@ export function DataQuestTrustContract() {
           <br />✓ Capture with confidence
         </div>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gridTemplateRows: "repeat(4,auto)", gap: 7, alignItems: "stretch" }}>
+      <div style={{ position: "relative" }}>
+      <svg viewBox="0 0 640 300" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} aria-hidden="true"><g stroke="#c9bffb" strokeWidth="1.6" strokeDasharray="4 4"><line x1="320" y1="150" x2="106" y2="37" /><line x1="320" y1="150" x2="320" y2="37" /><line x1="320" y1="150" x2="533" y2="37" /><line x1="320" y1="150" x2="106" y2="112" /><line x1="320" y1="150" x2="533" y2="112" /><line x1="320" y1="150" x2="106" y2="187" /><line x1="320" y1="150" x2="533" y2="187" /><line x1="320" y1="150" x2="320" y2="262" /><line x1="320" y1="150" x2="533" y2="262" /></g></svg>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gridTemplateRows: "repeat(4,auto)", gap: 7, alignItems: "stretch", position: "relative" }}>
         {[[8, "r1c1"], [0, "r1c2"], [1, "r1c3"], [7, "r2c1"], [2, "r2c3"], [6, "r3c1"], [3, "r3c3"], [5, "r4c2"], [4, "r4c3"]].map(([idx, pos]) => { const i = idx as number; const [t, b] = TRUST12[i]; const place: Record<string, CSSProperties> = { r1c1: { gridRow: 1, gridColumn: 1 }, r1c2: { gridRow: 1, gridColumn: 2 }, r1c3: { gridRow: 1, gridColumn: 3 }, r2c1: { gridRow: 2, gridColumn: 1 }, r2c3: { gridRow: 2, gridColumn: 3 }, r3c1: { gridRow: 3, gridColumn: 1 }, r3c3: { gridRow: 3, gridColumn: 3 }, r4c2: { gridRow: 4, gridColumn: 2 }, r4c3: { gridRow: 4, gridColumn: 3 } };
           return <button key={t} type="button" className={`tks-card${i === s ? " is-on" : ""}`} aria-pressed={i === s} onClick={() => setS(i)} style={{ ...place[pos as string], padding: "9px 10px" }}><span className="tks-num" style={{ background: ACC }}>{i + 1}</span> <b style={{ fontSize: 12 }}>{t}</b><p style={{ color: "#555", margin: "4px 0 0", fontSize: 11 }}>{b}</p></button>; })}
         <div style={{ gridRow: "2 / 4", gridColumn: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "4px 6px" }}>
-          <span style={{ width: 88, height: 88, borderRadius: "50%", background: "linear-gradient(150deg,#efeaff,#e3edff)", border: "1.5px solid #c9bffb", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#6C3BFF", fontWeight: 800, fontSize: 10.5, lineHeight: 1.35, padding: 8 }}><span style={{ fontSize: 17 }}>⬡</span>Trust contract</span>
+          <span style={{ width: 148, height: 148, borderRadius: "50%", background: "linear-gradient(150deg,#efeaff,#e3edff)", border: "2px solid #c9bffb", boxShadow: "0 10px 24px rgba(80,60,180,.18)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#6C3BFF", fontWeight: 800, fontSize: 13, lineHeight: 1.35, padding: 12 }}><span style={{ fontSize: 24 }}>⬡</span>Trust contract</span>
           <span style={{ fontSize: 10, color: "#6d6884", marginTop: 6, lineHeight: 1.4 }}>Clear expectations.<br />Fair process.<br />Trusted outcomes.</span>
         </div>
       </div>
+      </div>
     </div>
+    <div style={{ marginTop: 12, background: "linear-gradient(92deg,#efeaff,#e3edff)", border: "1.5px solid #c9bffb", borderRadius: 10, padding: "9px 16px", textAlign: "center", fontSize: 12.5, color: "#4a3d8f" }}><b>Clear expectations before capture build trust and better data</b> — they reduce confusion, low-quality submissions, and disputes.</div>
   </Dq>;
 }
 
@@ -799,7 +828,15 @@ export function DataQuestProfileWallet() {
   const filters = ["All", "Approved", "In review", "Submitted"];
   const rows = ACTIVITY17.filter((r) => filter === 0 || r[2] === filters[filter]);
   const stPill = (st: string) => st === "Approved" ? <span style={{ background: "#e7f7ee", color: "#1d9e57", borderRadius: 999, padding: "1px 8px", fontWeight: 700, fontSize: 10.5 }}>{st}</span> : st === "In review" ? <span style={{ background: "#fdf3e0", color: "#b97a0e", borderRadius: 999, padding: "1px 8px", fontWeight: 700, fontSize: 10.5 }}>{st}</span> : <span style={{ background: "#efeaff", color: "#6C3BFF", borderRadius: 999, padding: "1px 8px", fontWeight: 700, fontSize: 10.5 }}>{st}</span>;
-  return <Dq n="17" title="Profile & Wallet" sub="Early prototype account and reward dashboard for contributors. · Historical · V0" label="DataQuest profile and wallet V0 — interactive rebuild of CyberOrigin_17">
+  return <Dq n="17" title="Profile & Wallet" hideHead sub="Early prototype account and reward dashboard for contributors. · Historical · V0" label="DataQuest profile and wallet V0 — interactive rebuild of CyberOrigin_17">
+    <div style={{ display: "grid", gridTemplateColumns: "198px minmax(0,1fr)", gap: 14, alignItems: "start" }}>
+      <div>
+        <p style={{ margin: 0, fontSize: 11, fontWeight: 800, letterSpacing: ".06em", color: "#6C3BFF" }}>DATAQUEST BY CYBERORIGIN</p>
+        <h3 style={{ fontSize: 30, lineHeight: 1.15, margin: "7px 0 7px", background: "linear-gradient(92deg,#6C3BFF 10%,#2563EB 90%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>Profile &amp; Wallet</h3>
+        <p style={{ display: "flex", gap: 5, margin: "0 0 9px" }}><span style={{ border: "1.5px solid #6C3BFF", color: "#6C3BFF", borderRadius: 999, padding: "2px 10px", fontSize: 11, fontWeight: 600 }}>🕐 Historical</span><span style={{ border: "1.5px solid #6C3BFF", color: "#6C3BFF", borderRadius: 999, padding: "2px 10px", fontSize: 11, fontWeight: 600 }}>🗓 V0</span></p>
+        <p style={{ margin: 0, fontSize: 12.5, lineHeight: 1.5, color: "#55506e" }}>Early prototype account and reward dashboard for contributors.</p>
+      </div>
+      <div>
     <div style={{ background: "#fff", border: "1px solid #ddd9f2", borderRadius: 13, overflow: "hidden", boxShadow: "0 10px 26px rgba(80,60,180,0.10)", fontSize: 11.5 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 10px", borderBottom: "1px solid #eeeaf9" }}><span style={{ display: "flex", gap: 4 }}>{["#ff5f57", "#febc2e", "#28c840"].map((c) => <i key={c} style={{ width: 8, height: 8, borderRadius: "50%", background: c, display: "block" }} />)}</span><span style={{ flex: 1, textAlign: "center", background: "#f4f2fb", borderRadius: 5, padding: "2px 0", color: "#55506e" }}>🔒 app.dataquest.cyberorigin.ai</span></div>
       <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "7px 12px", borderBottom: "1px solid #eeeaf9" }}>
@@ -825,7 +862,12 @@ export function DataQuestProfileWallet() {
             <div style={{ border: "1px solid #eeeaf9", borderRadius: 9, padding: "8px 10px" }}>
               <p className="tks-kicker" style={{ marginTop: 0 }}>Settings</p>
               <p style={{ margin: "4px 0" }}>Payout method — <b>USDC (Polygon)</b><br />Minimum payout — <b>$25.00</b></p>
-              <p style={{ margin: "6px 0 0", display: "flex", gap: 6, flexWrap: "wrap" }}><button type="button" className="tks-chip" aria-pressed={email} onClick={() => setEmail((v) => !v)}>Email notifications {email ? "On" : "Off"}</button><button type="button" className="tks-chip" aria-pressed={tfa} onClick={() => setTfa((v) => !v)}>Two-factor auth {tfa ? "Enabled" : "Disabled"}</button></p>
+              <div style={{ marginTop: 6 }}>
+                {[["Email notifications", email, setEmail, "On", "Off"], ["Two-factor auth", tfa, setTfa, "Enabled", "Disabled"]].map(([label2, val, setter, onTxt, offTxt]) => <p key={label2 as string} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: 0, padding: "5px 0", borderTop: "1px solid #f0edfa", fontSize: 11 }}>
+                  <span>{label2 as string}<br /><span style={{ color: "#8a86a3", fontSize: 10 }}>{(val as boolean) ? (onTxt as string) : (offTxt as string)}</span></span>
+                  <button type="button" role="switch" aria-checked={val as boolean} aria-label={label2 as string} onClick={() => (setter as (f: (v: boolean) => boolean) => void)((v) => !v)} style={{ width: 34, height: 18, flex: "none", borderRadius: 999, border: "none", background: (val as boolean) ? "#6C3BFF" : "#d8d4ee", cursor: "pointer", position: "relative", padding: 0 }}><span style={{ position: "absolute", top: 2, left: (val as boolean) ? 18 : 2, width: 14, height: 14, borderRadius: "50%", background: "#fff", transition: "left .15s" }} /></button>
+                </p>)}
+              </div>
             </div>
             <div style={{ border: "1px solid #eeeaf9", borderRadius: 9, padding: "8px 10px" }}>
               <p className="tks-kicker" style={{ marginTop: 0 }}>Category stats</p>
@@ -841,6 +883,8 @@ export function DataQuestProfileWallet() {
             <p style={{ margin: "5px 0 0", textAlign: "right", color: "#6C3BFF", fontWeight: 600 }}>View all activity →</p>
           </div>
         </div>
+      </div>
+    </div>
       </div>
     </div>
   </Dq>;
@@ -1184,7 +1228,7 @@ export function DataQuestLifecycle() {
   const owners = ["Research", "Marketplace", "Contributor", "Automation", "Reviewer", "Annotation", "Delivery"];
   const ownerSeg = [0, 1, 1, 2, 3, 4, 5, 6, 6];
   const ownerC = ["#6C3BFF", "#2563EB", "#0d9488", "#e07b16", "#e5484d", "#9333ea", "#1d9e57"];
-  return <Dq n="25" title="Data lifecycle" sub="From task request to model feedback." label="DataQuest data lifecycle — interactive rebuild of CyberOrigin_25" foot="High-quality datasets require operational clarity before they require scale — Clear tasks, verified quality, and continuous feedback create trustworthy data that powers better models">
+  return <Dq n="25" title="Data lifecycle" centerTitle sub="From task request to model feedback." label="DataQuest data lifecycle — interactive rebuild of CyberOrigin_25" foot="High-quality datasets require operational clarity before they require scale — Clear tasks, verified quality, and continuous feedback create trustworthy data that powers better models">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(9,1fr)", gap: 6 }}>
       {LIFECYCLE25.map(([t, b], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ position: "relative", textAlign: "center", background: "#fff", border: `1.5px solid ${i === s ? "#6C3BFF" : "#e3e0f5"}`, borderRadius: 10, padding: "8px 6px", cursor: "pointer", font: "inherit" }}><span style={{ position: "absolute", top: 5, left: 6, fontSize: 9.5, fontWeight: 800, color: "#6C3BFF" }}>{String(i + 1).padStart(2, "0")}</span><span style={{ display: "flex", width: 36, height: 36, borderRadius: "50%", background: "#efeaff", alignItems: "center", justifyContent: "center", fontSize: 15, margin: "2px auto 0" }}>{["📄", "🗣", "👥", "📷", "🛡", "👤", "🏷", "☁", "📊"][i]}</span><b style={{ display: "block", fontSize: 10.8, lineHeight: 1.28, margin: "5px 0 2px" }}>{t}</b><span style={{ display: "block", color: "#6d6884", fontSize: 9.5, lineHeight: 1.36, textAlign: "left" }}>{b}</span></button>)}
     </div>
@@ -1224,11 +1268,14 @@ export function DataQuestQualityModel() {
   const qPlace: Record<number, CSSProperties> = { 8: { gridRow: 1, gridColumn: 1 }, 0: { gridRow: 1, gridColumn: 2 }, 1: { gridRow: 1, gridColumn: 3 }, 7: { gridRow: 2, gridColumn: 1 }, 2: { gridRow: 2, gridColumn: 3 }, 6: { gridRow: 3, gridColumn: 1 }, 3: { gridRow: 3, gridColumn: 3 }, 5: { gridRow: 4, gridColumn: 2 }, 4: { gridRow: 4, gridColumn: 3 } };
   const qCard = (i: number) => { const [t, b] = QUALITY27[i]; return <button key={t} type="button" className={`tks-card${i === f ? " is-on" : ""}`} aria-pressed={i === f} onClick={() => setF(i)} style={{ ...qPlace[i], padding: "9px 10px" }}><span style={{ display: "inline-flex", width: 22, height: 22, borderRadius: "50%", background: `${factorC[i]}1e`, color: factorC[i], alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 10.5, marginRight: 6 }}>{i + 1}</span><b style={{ fontSize: 12 }}>{t}</b><p style={{ color: "#555", margin: "4px 0 0", fontSize: 11 }}>{b}</p></button>; };
   return <Dq n="27" title="Quality score model" sub="How a submission is judged before it becomes trustworthy data." label="DataQuest quality score model — interactive rebuild of CyberOrigin_27" foot="Quality scoring should explain outcomes, not behave like a black box — Clear reasons build trust, help contributors improve, and keep data reliable">
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gridTemplateRows: "repeat(4,auto)", gap: 7, alignItems: "stretch" }}>
+    <div style={{ position: "relative" }}>
+    <svg viewBox="0 0 640 300" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} aria-hidden="true"><g stroke="#c9bffb" strokeWidth="1.6" strokeDasharray="4 4"><line x1="320" y1="150" x2="106" y2="37" /><line x1="320" y1="150" x2="320" y2="37" /><line x1="320" y1="150" x2="533" y2="37" /><line x1="320" y1="150" x2="106" y2="112" /><line x1="320" y1="150" x2="533" y2="112" /><line x1="320" y1="150" x2="106" y2="187" /><line x1="320" y1="150" x2="533" y2="187" /><line x1="320" y1="150" x2="320" y2="262" /><line x1="320" y1="150" x2="533" y2="262" /></g></svg>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gridTemplateRows: "repeat(4,auto)", gap: 7, alignItems: "stretch", position: "relative" }}>
       {QUALITY27.map((_, i) => qCard(i))}
       <div style={{ gridRow: "2 / 4", gridColumn: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "4px 6px" }}>
-        <span style={{ width: 92, height: 92, borderRadius: "50%", border: "2.5px solid #6C3BFF", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 12, color: "#4a3d8f", padding: 9, boxShadow: "0 6px 18px rgba(80,60,180,0.14)", lineHeight: 1.3 }}>Submission quality<span style={{ fontWeight: 600, fontSize: 9.5, color: "#8a86a3", marginTop: 3 }}>Low • Medium • High influence</span></span>
+        <span style={{ width: 148, height: 148, borderRadius: "50%", border: "2.5px solid #6C3BFF", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 14.5, color: "#4a3d8f", padding: 12, boxShadow: "0 8px 22px rgba(80,60,180,0.16)", lineHeight: 1.3 }}>Submission quality<span style={{ fontWeight: 600, fontSize: 10.5, color: "#8a86a3", marginTop: 3 }}>Low • Medium • High influence</span></span>
       </div>
+    </div>
     </div>
     <div style={{ marginTop: 12, border: "1.5px dashed #b9b2dd", borderRadius: 12, padding: "9px 13px", position: "relative" }}>
       <span style={{ position: "absolute", top: -8, left: "50%", transform: "translateX(-50%)", background: "#f8f7ff", padding: "0 10px", fontSize: 10.5, fontWeight: 800, letterSpacing: "0.05em", color: "#6C3BFF" }}>SCORE OUTCOMES</span>
@@ -1561,22 +1608,39 @@ const OBJECTS34: Array<[string, string, string, string]> = [
   ["Contributor", "A person who discovers, completes, and earns rewards.", "Contributors complete tasks and earn rewards.", "claims & works on → Task Instance"],
 ];
 export function DataQuestObjectModel() {
-  const [s, setS] = useState(2);
+  const [s2, setS] = useState(2);
   const accent: Record<string, string> = { Campaign: "#6C3BFF", Dataset: "#0d9488", Requirement: "#e07b16", Review: "#e07b16", Reward: "#1d9e57" };
   const objIcons = ["🎯", "🗄", "📄", "▶", "📋", "☁", "🛡", "🎁", "👤"];
-  const tiers: Array<[string, number[]]> = [["Tier 1 — programme & source", [0, 1]], ["Tier 2 — work definition & execution", [2, 3, 4, 5]], ["Tier 3 — people, evaluation & incentive", [8, 7, 6]]];
-  const card = (i: number) => { const [t, b, foot] = OBJECTS34[i]; const c = accent[t] ?? ACC; return <button key={t} type="button" className={`tks-card${i === s ? " is-on" : ""}`} aria-pressed={i === s} onClick={() => setS(i)} style={{ textAlign: "left", padding: 0, overflow: "hidden" }}><span style={{ display: "flex", gap: 8, padding: "8px 11px 6px" }}><span style={{ flex: "none", width: 28, height: 28, borderRadius: 8, background: `${c}1a`, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 13.5 }}>{objIcons[i]}</span><span><b style={{ color: c }}>{t}</b><p style={{ color: "#555", margin: "3px 0 0", fontSize: 11.3, lineHeight: 1.45 }}>{b}</p></span></span><span style={{ display: "block", background: `${c}14`, color: c, fontSize: 10.3, padding: "4px 11px", fontWeight: 600 }}>{foot}</span></button>; };
-  const edgeStrip = (text: string) => <p style={{ margin: "6px 0 0", fontSize: 10.3, color: "#6d6884", background: "#fff", border: "1px dashed #c9bffb", borderRadius: 8, padding: "4px 10px" }}>{text}</p>;
+  const pos: Array<React.CSSProperties> = [
+    { left: "40%", top: 0 }, { left: "78%", top: 0 }, { left: "17%", top: 138 }, { left: "44%", top: 138 }, { left: "71%", top: 138 },
+    { left: "17%", top: 276 }, { left: "44%", top: 276 }, { left: "71%", top: 276 }, { left: "1%", top: 0 },
+  ];
+  const node = (i: number) => { const [t, b] = OBJECTS34[i]; const c = accent[t] ?? ACC; return <div key={t} style={{ position: "absolute", width: 182, ...pos[i], zIndex: 2 }}>
+    <button type="button" aria-pressed={i === s2} onClick={() => setS(i)} style={{ width: "100%", textAlign: "left", background: "#fff", border: `1.5px solid ${i === s2 ? c : "#e3e0f5"}`, borderRadius: 10, padding: "7px 9px", cursor: "pointer", font: "inherit", boxShadow: "0 6px 16px rgba(80,60,180,.10)" }}>
+      <span style={{ display: "flex", gap: 7, alignItems: "center" }}><span style={{ flex: "none", width: 24, height: 24, borderRadius: 7, background: `${c}1a`, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>{objIcons[i]}</span><b style={{ color: c, fontSize: 12.5 }}>{t}</b></span>
+      <span style={{ display: "block", color: "#55506e", fontSize: 10.3, lineHeight: 1.4, marginTop: 4 }}>{b}</span>
+    </button></div>; };
+  const edge = (x1: number, y1: number, x2: number, y2: number, label: string, lx: number, ly: number, dashed?: boolean) => <g key={label + x1}>
+    <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#8f83d8" strokeWidth="1.8" strokeDasharray={dashed ? "5 4" : undefined} markerEnd="url(#dq34arr)" />
+    <text x={lx} y={ly} fontSize="10" fill="#6d6884" textAnchor="middle" style={{ paintOrder: "stroke", stroke: "#f8f7ff", strokeWidth: 3 }}>{label}</text></g>;
   return <Dq n="34" title="Conceptual Object Model" sub="The core entities and relationships that power verifiable human-action tasks." label="DataQuest conceptual object model — interactive rebuild of CyberOrigin_34">
-    <div style={{ display: "grid", gap: 10 }}>
-      {tiers.map(([label, idx], ti) => <div key={label}>
-        <p className="tks-kicker" style={{ margin: "0 0 5px" }}>{label}</p>
-        <div className="tks-grid" style={{ gridTemplateColumns: `repeat(${idx.length},1fr)` }}>{idx.map(card)}</div>
-        {ti === 0 ? edgeStrip("Campaign —defines→ Task Template · Dataset —used by→ Task Template & Requirement") : null}
-        {ti === 1 ? edgeStrip("Task Template —generates→ Task Instance —has→ Requirement —results in→ Submission") : null}
-        {ti === 2 ? edgeStrip("Submission —undergoes→ Review —approved earns→ Reward —earns→ Contributor · Contributor —claims & works on→ Task Instance") : null}
-      </div>)}
+    <div style={{ position: "relative", height: 402 }}>
+      <svg viewBox="0 0 920 402" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} aria-hidden="true">
+        <defs><marker id="dq34arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#8f83d8" /></marker></defs>
+        {edge(455, 62, 300, 132, "defines →", 352, 92)}
+        {edge(760, 62, 330, 132, "used by →", 560, 84)}
+        {edge(150, 62, 470, 132, "claims & works on →", 300, 52, true)}
+        {edge(338, 168, 402, 168, "generates →", 370, 158)}
+        {edge(586, 168, 650, 168, "has →", 618, 158)}
+        {edge(470, 200, 320, 270, "results in →", 372, 240)}
+        {edge(700, 200, 360, 270, "defines quality for →", 540, 226)}
+        {edge(338, 308, 402, 308, "undergoes →", 370, 298)}
+        {edge(586, 308, 650, 308, "approved earns →", 618, 298)}
+        {edge(760, 276, 170, 70, "earns ←", 700, 130, true)}
+      </svg>
+      {OBJECTS34.map((_, i) => node(i))}
     </div>
+    <p aria-live="polite" style={{ margin: "8px 0 0", background: "#fff", border: "1px solid #e3e0f5", borderRadius: 9, padding: "7px 12px", fontSize: 11.5, color: "#44405c" }}><b style={{ color: accent[OBJECTS34[s2][0]] ?? ACC }}>{OBJECTS34[s2][0]}</b> — {OBJECTS34[s2][2]} Relations as printed: {OBJECTS34[s2][3]}.</p>
   </Dq>;
 }
 
@@ -1589,22 +1653,26 @@ const CARDS36: Array<[string, string, string, string[], string[], string[]]> = [
 export function DataQuestTaskCardComparison() {
   const [s, setS] = useState(1);
   return <Dq n="36" title="Task card comparison" sub="Exploring different balances of information density, eligibility visibility, reward prominence, and primary action emphasis. · co-dq-30" label="DataQuest task card comparison — interactive rebuild of CyberOrigin_36" foot="Task card comparison — co-dq-30 · DataQuest by CyberOrigin">
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12, alignItems: "start" }}>
+    <div style={{ display: "grid", gap: 13 }}>
       {CARDS36.map(([l, t, d, body, pros, cons], i) => <div key={l}>
-        <button type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ width: "100%", textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? "#6C3BFF" : "#e3e0f5"}`, borderRadius: 12, padding: "10px 12px", cursor: "pointer", font: "inherit" }}>
-          <span className="tks-num" style={{ background: ACC }}>{l}</span> <b>{t}</b>
-          <p className="tks-kicker" style={{ margin: "4px 0 7px" }}>{d}</p>
-          <span style={{ display: "block", border: "1px solid #eeeaf9", borderRadius: 9, padding: "7px 9px", fontSize: 10.8, lineHeight: 1.5 }}>
-            <img src="/projects/crops/dataquest/street-scene.jpg" alt="" style={{ width: "100%", height: i === 0 ? 64 : 44, objectFit: "cover", borderRadius: 6, display: "block", marginBottom: 6 }} />
-            <b>Image Capture — Urban Street Scene</b><br /><span style={{ color: "#6d6884" }}>Capture a street scene that includes storefronts, pedestrian activity, and vehicles.</span><br />
-            Reward <b style={{ color: ACC }}>$1.20</b> per approved task · Est. time 20–30 min · Location Downtown area
+        <p style={{ margin: "0 0 5px" }}><span className="tks-num" style={{ background: ACC }}>{l}</span> <b>{t}</b> <span className="tks-kicker" style={{ marginLeft: 6 }}>{d}</span></p>
+        <button type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ width: "100%", textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? "#6C3BFF" : "#e3e0f5"}`, borderRadius: 12, padding: 0, overflow: "hidden", cursor: "pointer", font: "inherit", display: "grid", gridTemplateColumns: "200px minmax(0,1fr) 158px", alignItems: "stretch" }}>
+          <img src="/projects/crops/dataquest/street-scene.jpg" alt="" style={{ width: "100%", height: "100%", minHeight: 124, objectFit: "cover", display: "block" }} />
+          <span style={{ display: "block", padding: "10px 12px", fontSize: 11.3, lineHeight: 1.5 }}>
+            <b>Image Capture — Urban Street Scene</b><br /><span style={{ color: "#6d6884" }}>Capture a street scene that includes storefronts, pedestrian activity, and vehicles.</span>
             {body.map((x) => <span key={x} style={{ display: "block", marginTop: 4 }}>{x}</span>)}
-            <span style={{ display: "block", marginTop: 7, background: "#6C3BFF", color: "#fff", textAlign: "center", borderRadius: 7, padding: "4px 0", fontWeight: 700 }}>Start task →</span>
+            <span style={{ display: "block", marginTop: 4, color: "#6d6884" }}>Est. time 20–30 min · Location Downtown area</span>
+          </span>
+          <span style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 7, padding: "10px 12px", borderLeft: "1px solid #eeeaf9", background: "#fbfaff" }}>
+            <span style={{ fontSize: 11, color: "#6d6884" }}>Reward</span>
+            <b style={{ color: ACC, fontSize: 19, marginTop: -5 }}>$1.20</b>
+            <span style={{ fontSize: 10.5, color: "#6d6884", marginTop: -5 }}>per approved task</span>
+            <span style={{ display: "block", background: "#6C3BFF", color: "#fff", textAlign: "center", borderRadius: 7, padding: "6px 0", fontWeight: 700, fontSize: 12 }}>Start task →</span>
           </span>
         </button>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 7, padding: "0 2px" }}>
-          <div><p style={{ margin: "0 0 3px", fontSize: 10.5, fontWeight: 800, color: "#1d9e57" }}>✓ Pros</p>{pros.map((x) => <p key={x} style={{ margin: "2px 0", fontSize: 10, lineHeight: 1.42, color: "#44405c" }}>• {x}</p>)}</div>
-          <div><p style={{ margin: "0 0 3px", fontSize: 10.5, fontWeight: 800, color: "#c22f3d" }}>✕ Cons</p>{cons.map((x) => <p key={x} style={{ margin: "2px 0", fontSize: 10, lineHeight: 1.42, color: "#44405c" }}>• {x}</p>)}</div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 6, padding: "0 2px" }}>
+          <div><p style={{ margin: "0 0 3px", fontSize: 10.5, fontWeight: 800, color: "#1d9e57" }}>✓ Pros</p>{pros.map((x) => <p key={x} style={{ margin: "2px 0", fontSize: 10.5, lineHeight: 1.42, color: "#44405c" }}>• {x}</p>)}</div>
+          <div><p style={{ margin: "0 0 3px", fontSize: 10.5, fontWeight: 800, color: "#c22f3d" }}>✕ Cons</p>{cons.map((x) => <p key={x} style={{ margin: "2px 0", fontSize: 10.5, lineHeight: 1.42, color: "#44405c" }}>• {x}</p>)}</div>
         </div>
       </div>)}
     </div>
@@ -1719,12 +1787,14 @@ export function DataQuestEvolution() {
             {i === 0 ? <span style={{ display: "block" }}>
               <span style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 3, fontSize: 8.6, lineHeight: 1.35 }}>{V0_CATS.map(([n, , price]) => <span key={n} style={{ border: "1px solid #eeeaf9", borderRadius: 5, padding: "2.5px 4px", background: "#fff" }}>{n}<br /><b style={{ color: "#6C3BFF" }}>{price}</b></span>)}</span>
               <span style={{ display: "flex", gap: 6, marginTop: 5 }}><img src="/projects/crops/dataquest/street-scene.jpg" alt="" style={{ width: 52, height: 40, objectFit: "cover", borderRadius: 5 }} /><span style={{ fontSize: 8.8, lineHeight: 1.45, color: "#44405c" }}><b>Urban Street Scene</b> — $1.20 per approved task<br />Leaderboard: Sarah J. $245.60 · Mike T. $198.30 · Alex M. $176.30 · Priya K. $154.20 · You $87.40</span></span>
-            </span> : i === 1 ? <span style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 3 }}>{["Discover", "Task detail", "Capture", "Upload", "Rewards", "Eligibility", "Quality check", "Submitted", "Payouts", "Profile"].map((x) => <span key={x} style={{ border: "1px solid #d8d8e2", borderRadius: 5, padding: "3px 2px", background: "#fff", textAlign: "center", fontSize: 8.4, lineHeight: 1.3 }}><span style={{ display: "block", height: 14, border: "1px solid #e2e2ea", borderRadius: 3, marginBottom: 2, background: "repeating-linear-gradient(180deg,#fff 0 4px,#f1f1f6 4px 5px)" }} />{x}</span>)}</span>
+              <span style={{ display: "grid", gap: 2.5, marginTop: 6 }}>{[["1", "Sarah J.", "$245.60"], ["2", "Mike T.", "$198.30"], ["3", "Alex M.", "$176.30"], ["4", "Priya K.", "$154.20"], ["5", "You", "$87.40"]].map(([r, n2, a]) => <span key={r} style={{ display: "flex", justifyContent: "space-between", background: "#fff", border: "1px solid #eeeaf9", borderRadius: 5, padding: "2.5px 7px", fontSize: 8.8, color: "#44405c" }}><span>{r} · {n2}</span><b>{a}</b></span>)}</span>
+            </span> : i === 1 ? <span style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 3 }}>{["Discover", "Task detail", "Capture", "Upload", "Rewards", "Eligibility", "Quality check", "Submitted", "Payouts", "Profile"].map((x) => <span key={x} style={{ border: "1px solid #d8d8e2", borderRadius: 5, padding: "3px 2px", background: "#fff", textAlign: "center", fontSize: 8.4, lineHeight: 1.3 }}><span style={{ display: "block", height: 38, border: "1px solid #e2e2ea", borderRadius: 3, marginBottom: 2, background: "repeating-linear-gradient(180deg,#fff 0 5px,#f1f1f6 5px 6px)", position: "relative" }}><span style={{ position: "absolute", left: "18%", right: "18%", bottom: 4, height: 6, background: "#3f3f46", borderRadius: 2 }} /></span>{x}</span>)}</span>
             : <span style={{ display: "block", fontSize: 9.3, lineHeight: 1.5, color: "#44405c" }}>
               <span style={{ display: "flex", gap: 5, alignItems: "center" }}><span style={{ width: 18, height: 18, borderRadius: "50%", background: "linear-gradient(135deg,#6C3BFF,#2563EB)", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 9 }}>⬡</span><b>DataQuest by CyberOrigin</b></span>
               <span style={{ display: "flex", gap: 3, alignItems: "center", margin: "5px 0" }}>{REWARD_STATES.map(([st], si) => <span key={st} style={{ display: "contents" }}>{si > 0 ? <span style={{ color: "#b9b2dd" }}>→</span> : null}<span style={{ background: "#efeaff", color: "#6C3BFF", borderRadius: 999, padding: "1px 6px", fontWeight: 700, fontSize: 8.6 }}>{st}</span></span>)}</span>
-              Wallet balance <b>$128.45</b> · Pending rewards <b>$42.75</b> · Lifetime earnings <b>$1,428.70</b>
-              <svg viewBox="0 0 200 22" style={{ width: "100%", height: 22, display: "block", marginTop: 3 }} aria-hidden="true"><polyline points="0,17 33,13 66,15 100,8 133,11 166,4 199,7" fill="none" stroke="#6C3BFF" strokeWidth="2" /></svg>
+              <span style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 4, margin: "2px 0 5px" }}>{[["Wallet balance", "$128.45"], ["Pending rewards", "$42.75"], ["Lifetime earnings", "$1,428.70"]].map(([k, v]) => <span key={k} style={{ background: "#fff", border: "1px solid #eeeaf9", borderRadius: 6, padding: "4px 6px" }}><span style={{ display: "block", color: "#8a86a3", fontSize: 8.2 }}>{k}</span><b style={{ fontSize: 11.5, color: "#14101f" }}>{v}</b></span>)}</span>
+              <svg viewBox="0 0 200 44" style={{ width: "100%", height: 44, display: "block", marginTop: 3 }} aria-hidden="true"><path d="M0,36 L33,27 66,31 100,16 133,22 166,8 199,14 L199,44 L0,44 Z" fill="rgba(108,59,255,.13)" /><polyline points="0,36 33,27 66,31 100,16 133,22 166,8 199,14" fill="none" stroke="#6C3BFF" strokeWidth="2" /></svg>
+              <span style={{ display: "block", marginTop: 4 }}>Overview — Wallet balance <b>$128.45</b> · Pending rewards <b>$42.75</b> · Lifetime earnings <b>$1,428.70</b></span>
             </span>}
           </span>
           <span style={{ display: "block", marginTop: 7, fontSize: 10.5, color: stageC[i], fontWeight: 700 }}>{stageIcons[i]} {stageCaps[i]}</span>

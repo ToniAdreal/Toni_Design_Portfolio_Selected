@@ -102,25 +102,62 @@ const PRINCIPLES = [
 export function TokentaProductPrinciples() {
   const [active, setActive] = useState(0);
   const [step, setStep] = useState(0);
-  const p = PRINCIPLES[active];
+  const box: React.CSSProperties = { border: "1px solid #55565a", borderRadius: 6, padding: "5px 4px", textAlign: "center", fontSize: 9.3, letterSpacing: ".04em", lineHeight: 1.35 };
+  const diagrams: React.ReactNode[] = [
+    <div key="d1">
+      <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+        <span style={{ ...box, flex: 1 }}>📄 {"{…}"}<br />CLAIM</span><span aria-hidden="true">→</span>
+        <span style={{ ...box, flex: 1 }}>🛡 ✓<br />VERIFIED</span>
+      </div>
+      <p style={{ textAlign: "center", margin: "1px 0", color: "#9a9aa0" }}>↓</p>
+      <div style={{ ...box, width: "52%", margin: "0 auto" }}>💧<br />LIQUIDITY</div>
+    </div>,
+    <div key="d2">
+      <div style={{ ...box, width: "52%", margin: "0 auto" }}>💳<br />WALLET</div>
+      <p style={{ textAlign: "center", margin: "1px 0", color: "#9a9aa0" }}>↓&nbsp;&nbsp;&nbsp;&nbsp;↓&nbsp;&nbsp;&nbsp;&nbsp;↓</p>
+      <div style={{ display: "flex", gap: 3 }}>
+        <span style={{ ...box, flex: "1 1 0", minWidth: 0, fontSize: 7.4, letterSpacing: 0, padding: "4px 1px" }}>🛡<br />VERIFIED ID</span>
+        <span style={{ ...box, flex: "1 1 0", minWidth: 0, fontSize: 7.4, letterSpacing: 0, padding: "4px 1px" }}>🎖<br />ATTESTATIONS</span>
+        <span style={{ ...box, flex: "1 1 0", minWidth: 0, fontSize: 7.4, letterSpacing: 0, padding: "4px 1px" }}>📊<br />HISTORY</span>
+      </div>
+    </div>,
+    <div key="d3">
+      {PRINCIPLES[2].flow!.map((f, i) => <div key={f}>
+        {i > 0 && <p style={{ textAlign: "center", margin: "1px 0", color: "#9a9aa0" }}>↓</p>}
+        <div style={{ ...box, display: "flex", justifyContent: "space-between", padding: "5px 8px", borderColor: i <= step ? "#fff" : "#55565a", boxShadow: i <= step ? "0 0 0 1px #fff" : undefined }}>{f.toUpperCase()}<span>{i === 3 ? "🔒" : i > 0 && i <= step ? "✓" : ""}</span></div>
+      </div>)}
+      <button type="button" className="tks-btn" style={{ width: "100%", marginTop: 7, padding: "4px 8px", fontSize: 11 }} disabled={step >= 3} onClick={(e) => { e.stopPropagation(); setStep((s) => s + 1); }}>{step >= 3 ? "State locked 🔒" : "Advance state"}</button>
+    </div>,
+    <div key="d4">
+      <p style={{ textAlign: "center", fontSize: 21, margin: "0 0 2px" }} aria-hidden="true">🏛</p>
+      <p style={{ textAlign: "center", margin: "1px 0", color: "#9a9aa0" }}>↓&nbsp;&nbsp;&nbsp;&nbsp;↓&nbsp;&nbsp;&nbsp;&nbsp;↓</p>
+      <div style={{ display: "flex", gap: 4 }}>
+        <span style={{ ...box, flex: 1 }}>📄<br />POLICY</span>
+        <span style={{ ...box, flex: 1 }}>📄<br />EVIDENCE</span>
+        <span style={{ ...box, flex: 1 }}>📄<br />AUDIT TRAIL</span>
+      </div>
+    </div>,
+    <div key="d5">
+      <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+        <span style={{ ...box, flex: "1 1 0", minWidth: 0, fontSize: 7.6, letterSpacing: 0, padding: "4px 1px" }}>👤<br />BUYER</span><span aria-hidden="true" style={{ fontSize: 8 }}>←→</span>
+        <span style={{ ...box, flex: "0 0 30px", borderRadius: "50%", padding: "6px 0" }}>🔒</span><span aria-hidden="true" style={{ fontSize: 8 }}>←→</span>
+        <span style={{ ...box, flex: "1 1 0", minWidth: 0, fontSize: 7.6, letterSpacing: 0, padding: "4px 1px" }}>👤<br />SELLER</span>
+      </div>
+      <p style={{ textAlign: "center", margin: "1px 0", color: "#9a9aa0" }}>↓</p>
+      <p style={{ textAlign: "center", margin: 0 }}><span style={{ display: "inline-flex", border: "1px solid #fff", borderRadius: "50%", width: 22, height: 22, alignItems: "center", justifyContent: "center" }}>✓</span><br /><span style={{ fontSize: 9.3, letterSpacing: ".04em" }}>SETTLED ON-CHAIN</span></p>
+    </div>,
+  ];
   return <div className="tks" role="region" aria-label="Tokenta product principles — interactive rebuild of Tokenta_07">
     <Head n="07." />
     <h3>Product principles.</h3>
     <p className="tks-lede">Five design principles guide every decision at Tokenta—from verification to settlement.</p>
-    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
-      {PRINCIPLES.map((pr, i) => <button key={pr.n} type="button" className={`tks-card${i === active ? " is-on" : ""}`} style={{ background: "#111", color: "#fff", borderColor: "#111" }} aria-pressed={i === active} onClick={() => { setActive(i); setStep(0); }}>
-        <span className="tks-num tks-num--light">{pr.n}</span>
-        <p style={{ fontWeight: 700, fontSize: 13.5, margin: "8px 0" }}>{pr.title}</p>
-        <p style={{ color: "#c9c9ce", fontSize: 11, margin: 0 }}>{pr.diagram}</p>
-      </button>)}
-    </div>
-    <div className="tks-detail" aria-live="polite">
-      <b>{p.n}. {p.title}</b>
-      <p style={{ margin: "6px 0" }}>{p.body}</p>
-      {p.flow && <div>
-        <div className="tks-flow">{p.flow.map((f, i) => <span key={f} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">↓</span>}<span className="tks-node" style={i <= step ? { borderColor: "#111", boxShadow: "0 0 0 1px #111" } : undefined}>{f}{i > 0 && i <= step ? " ✓" : ""}</span></span>)}</div>
-        <p style={{ margin: "8px 0 0" }}><button type="button" className="tks-btn" disabled={step >= p.flow.length - 1} onClick={() => setStep((s) => s + 1)}>{step >= p.flow.length - 1 ? "State locked 🔒" : "Advance state"}</button></p>
-      </div>}
+    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(5, 1fr)", alignItems: "stretch" }}>
+      {PRINCIPLES.map((pr, i) => <div key={pr.n} className={`tks-card${i === active ? " is-on" : ""}`} style={{ background: "#111", color: "#fff", borderColor: "#111", padding: "12px 11px", cursor: "pointer", display: "flex", flexDirection: "column" }} role="button" tabIndex={0} aria-pressed={i === active} onClick={() => setActive(i)} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActive(i); } }}>
+        <p style={{ margin: 0 }}><span className="tks-num tks-num--light">{pr.n}</span></p>
+        <p style={{ fontWeight: 700, fontSize: 13.5, margin: "8px 0 0", lineHeight: 1.3, minHeight: 36 }}>{pr.title}</p>
+        <div style={{ borderTop: "1px solid #3a3b3f", marginTop: 9, paddingTop: 10 }}>{diagrams[i]}</div>
+        <p style={{ color: "#c9c9ce", fontSize: 11, margin: "12px 0 0", lineHeight: 1.5 }}>{pr.body}</p>
+      </div>)}
     </div>
     <Foot />
   </div>;
@@ -137,25 +174,31 @@ const SCOPE_LAYERS = [
 export function TokentaScopeBoundary() {
   const [active, setActive] = useState(0);
   const [item, setItem] = useState(0);
-  const layer = SCOPE_LAYERS[active];
+  const icons = [["🌐", "🖥", "📄", "🗄"], ["📊", "🛡", ">_", "👥"], ["🏛", "🗄", "🛡", "≋"]];
   return <div className="tks" role="region" aria-label="Tokenta scope boundary — interactive rebuild of Tokenta_08">
     <Head n="08." kicker="Scope boundary" />
     <h3>Scope boundary.</h3>
     <p className="tks-lede">Tokenta is being built in layers. Each layer has a distinct purpose, clear boundaries, and an evolving set of capabilities.</p>
-    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
-      {SCOPE_LAYERS.map((l, i) => <button key={l.n} type="button" className={`tks-card${i === active ? " is-on" : ""}`} style={{ padding: 0, overflow: "hidden" }} aria-pressed={i === active} onClick={() => { setActive(i); setItem(0); }}>
-        <span style={{ display: "block", background: "#111", color: "#fff", padding: "10px 12px" }}><span className="tks-num tks-num--light">{l.n}</span> <b>{l.title}</b><br /><span className="tks-kicker" style={{ color: "#b9b9be" }}>{l.sub}</span></span>
-        <span style={{ display: "block", padding: "10px 12px" }}>{l.intro}</span>
-      </button>)}
+    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(3, 1fr)", alignItems: "stretch" }}>
+      {SCOPE_LAYERS.map((l, li) => <div key={l.n} className="tks-card" style={{ padding: 0, overflow: "hidden", display: "flex", flexDirection: "column" }}>
+        <div style={{ background: "#111", color: "#fff", padding: "10px 12px" }}><span className="tks-num tks-num--light">{l.n}</span> <b style={{ fontSize: 13.5 }}>{l.title}</b><br /><span className="tks-kicker" style={{ color: "#b9b9be" }}>{l.sub}</span></div>
+        <div style={{ padding: "10px 12px", display: "flex", flexDirection: "column", flex: 1 }}>
+          <p style={{ margin: "0 0 8px", fontSize: 12 }}>{l.intro}</p>
+          <p className="tks-kicker" style={{ margin: "0 0 6px" }}>Representative examples</p>
+          {l.items.map(([t, b], i) => <button key={t} type="button" aria-pressed={active === li && item === i} onClick={() => { setActive(li); setItem(i); }} style={{ display: "flex", gap: 9, alignItems: "flex-start", textAlign: "left", font: "inherit", background: active === li && item === i ? "#ececea" : "#fff", border: "1px solid #e2e2de", borderRadius: 7, padding: "7px 9px", marginBottom: 6, cursor: "pointer", width: "100%" }}>
+            <span style={{ fontSize: 16, border: "1px solid #d9d9d4", borderRadius: 6, padding: "3px 5px", lineHeight: 1 }} aria-hidden="true">{icons[li][i]}</span>
+            <span><b style={{ fontSize: 12 }}>{t}</b><br /><span style={{ color: "#555", fontSize: 11, lineHeight: 1.4 }}>{b}</span></span>
+          </button>)}
+          <p style={{ margin: "auto 0 0", background: "#111", color: "#fff", borderRadius: 6, padding: "7px 10px", fontSize: 11.5 }}>{li === 0 ? "✓ " : "○ "}{l.goal}</p>
+        </div>
+      </div>)}
     </div>
-    <div className="tks-detail" aria-live="polite">
-      <p className="tks-kicker">Representative examples — layer {layer.n}</p>
-      <div className="tks-flow" role="group" aria-label="Scope examples">
-        {layer.items.map(([t], i) => <button key={t} type="button" className="tks-node" aria-pressed={item === i} onClick={() => setItem(i)}><b>{t}</b></button>)}
-      </div>
-      <p style={{ margin: "8px 0 4px" }}><b>{layer.items[item][0]}</b> — {layer.items[item][1]}</p>
-      <p style={{ margin: 0, background: "#111", color: "#fff", borderRadius: 6, padding: "7px 10px" }}>{item === 0 && active === 0 ? "✓ " : "○ "}{layer.goal}</p>
-      <p style={{ margin: "8px 0 0", color: "#555" }}>How to read: 01 Implemented — Live and available to the public. → 02 Designed — Designed, prototyped, and ready for build. → 03 Proposed — Planned production services and integrations. Layers build on each other. Boundaries keep scope clear. Progress moves left to right.</p>
+    <div className="tks-detail" style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
+      <span className="tks-kicker">How to read</span>
+      <span><b>01 Implemented</b> — Live and available to the public.</span><span aria-hidden="true">→</span>
+      <span><b>02 Designed</b> — Designed, prototyped, and ready for build.</span><span aria-hidden="true">→</span>
+      <span><b>03 Proposed</b> — Planned production services and integrations.</span>
+      <span style={{ color: "#555" }}>Layers build on each other. Boundaries keep scope clear. Progress moves left to right.</span>
     </div>
     <Foot />
   </div>;
@@ -175,23 +218,60 @@ const CYCLE = ["1. List & Register AI Assets", "2. Verify & Attest Trust Signals
 export function TokentaUserRoles() {
   const [active, setActive] = useState(0);
   const role = ROLES[active];
+  const glyphs = ["🧑‍💼", "👩‍💻", "🧑", "👩", "🧑‍💻"];
+  const roleCard = (i: number, area: string) => {
+    const r = ROLES[i];
+    return <div key={r.n} style={{ gridArea: area }}><div className={`tks-card${i === active ? " is-on" : ""}`} style={{ height: "100%", cursor: "pointer", padding: "10px 12px" }} role="button" tabIndex={0} aria-pressed={i === active} onClick={() => setActive(i)} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActive(i); } }}>
+      <p style={{ margin: 0 }}><span className="tks-num">{r.n}</span> <span style={{ fontSize: 19 }} aria-hidden="true">{glyphs[i]}</span></p>
+      <p style={{ fontWeight: 700, margin: "5px 0 3px", fontSize: 13, lineHeight: 1.3 }}>{r.title}</p>
+      <p style={{ color: "#555", margin: "0 0 7px", fontSize: 10.8, lineHeight: 1.45 }}>{r.sub}</p>
+      <p className="tks-kicker" style={{ margin: "0 0 4px", fontSize: 9.5 }}>Job-to-be-done</p>
+      {r.jobs.map((j) => <p key={j} style={{ margin: "2px 0", fontSize: 10.6, lineHeight: 1.4 }}>✓ {j}</p>)}
+    </div></div>;
+  };
+  // Cycle node positions around the centre hub (percent of diagram box)
+  const nodePos = [{ x: 50, y: 5 }, { x: 89.5, y: 36 }, { x: 72, y: 90 }, { x: 28, y: 90 }, { x: 10.5, y: 36 }];
+  const nodeIcons = ["⬢", "🛡", "🔒", "📄", "📊"];
   return <div className="tks" role="region" aria-label="Tokenta user roles — interactive rebuild of Tokenta_09">
     <Head n="09." />
-    <h3>User roles.</h3>
-    <p className="tks-lede">Tokenta was modeled around the real people who verify, trade, attest, and build with AI assets—before we designed a single interface.</p>
-    <div className="tks-flow" role="group" aria-label="Asset lifecycle cycle" style={{ marginBottom: 10 }}>
-      {CYCLE.map((c, i) => <span key={c} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={role.step === c} onClick={() => setActive(ROLES.findIndex((r) => r.step === c))}><b>{c}</b></button></span>)}
+    <div style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
+      <h3 style={{ margin: "10px 0 4px" }}>User roles.</h3>
+      <p style={{ maxWidth: 330, fontSize: 12, lineHeight: 1.5, color: "#444", margin: "16px 0 0" }}>Tokenta was modeled around the real people who verify, trade, attest, and build with AI assets—before we designed a single interface.</p>
     </div>
-    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
-      {ROLES.map((r, i) => <button key={r.n} type="button" className={`tks-card${i === active ? " is-on" : ""}`} aria-pressed={i === active} onClick={() => setActive(i)}>
-        <span className="tks-num">{r.n}</span><p style={{ fontWeight: 700, margin: "7px 0 4px" }}>{r.title}</p><p style={{ color: "#555", margin: 0, fontSize: 11 }}>{r.sub}</p>
-      </button>)}
-    </div>
-    <div className="tks-detail" aria-live="polite">
-      <p className="tks-kicker">Job-to-be-done — {role.title} · cycle step: {role.step}</p>
-      <ul style={{ margin: "6px 0", columns: 2 }}>{role.jobs.map((j) => <li key={j}>✓ {j}</li>)}</ul>
-      <p style={{ margin: "4px 0 0" }}>Centre of the diagram as printed: <b>TOKENTA — The Verifiable AI Asset Exchange</b> (Verify · Attest · Escrow · Settle). Platform objects: Assets — Models, datasets, agents, tools · Trust Signals — Attestations, evaluations, proofs · Escrow — Secure execution with clear states · Settlement — On-chain records and receipts · Markets — Discovery, pricing, liquidity.</p>
-      <p style={{ margin: "6px 0 0", color: "#555" }}><b>Why roles first?</b> We started with the people, their goals, and their constraints. Every workflow, permission, and data model maps to a real responsibility in the AI asset economy—ensuring the platform is usable, trustworthy, and adoption-ready.</p>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1.02fr 1fr", gridTemplateAreas: '"r1 diag r2" "r3 diag r4" "why r5 objs"', gap: 10, marginTop: 8 }}>
+      {roleCard(0, "r1")}{roleCard(1, "r2")}{roleCard(2, "r3")}{roleCard(3, "r4")}{roleCard(4, "r5")}
+      <div style={{ gridArea: "diag", position: "relative", minHeight: 380 }} role="group" aria-label="Asset lifecycle cycle around the Tokenta hub">
+        <svg viewBox="0 0 300 380" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} aria-hidden="true">
+          <defs><marker id="tks-roles-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a8a84" /></marker></defs>
+          <circle cx="150" cy="190" r="128" fill="none" stroke="#b9b9b2" strokeWidth="1.4" />
+          <path d="M 205 84 A 128 128 0 0 1 262 140" fill="none" stroke="#8a8a84" strokeWidth="1.4" markerEnd="url(#tks-roles-arrow)" />
+          <path d="M 272 232 A 128 128 0 0 1 214 322" fill="none" stroke="#8a8a84" strokeWidth="1.4" markerEnd="url(#tks-roles-arrow)" />
+          <path d="M 152 318 A 128 128 0 0 1 88 324" fill="none" stroke="#8a8a84" strokeWidth="1.4" markerEnd="url(#tks-roles-arrow)" />
+          <path d="M 40 236 A 128 128 0 0 1 36 146" fill="none" stroke="#8a8a84" strokeWidth="1.4" markerEnd="url(#tks-roles-arrow)" />
+          <path d="M 88 76 A 128 128 0 0 1 140 64" fill="none" stroke="#8a8a84" strokeWidth="1.4" markerEnd="url(#tks-roles-arrow)" />
+        </svg>
+        <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: "56%", background: "#111", color: "#fff", borderRadius: 9, padding: "12px 10px", textAlign: "center", zIndex: 2 }}>
+          <p style={{ fontWeight: 800, letterSpacing: ".04em", margin: 0, fontSize: 15 }}>⌂ TOKENTA</p>
+          <p style={{ fontWeight: 700, fontSize: 12.5, lineHeight: 1.35, margin: "6px 0 8px" }}>The Verifiable AI<br />Asset Exchange</p>
+          <p style={{ margin: 0, display: "flex", gap: 4, justifyContent: "center" }}>{["Verify", "Attest", "Escrow", "Settle"].map((v) => <span key={v} style={{ border: "1px solid #3a3b3f", borderRadius: 5, padding: "2px 6px", fontSize: 9.5 }}>{v}</span>)}</p>
+        </div>
+        {CYCLE.map((c, i) => {
+          const ri = ROLES.findIndex((r) => r.step === c);
+          return <button key={c} type="button" aria-pressed={active === ri} onClick={() => setActive(ri)} style={{ position: "absolute", left: `${nodePos[i].x}%`, top: `${nodePos[i].y}%`, transform: "translate(-50%,-50%)", background: "none", border: "none", cursor: "pointer", font: "inherit", textAlign: "center", zIndex: 1, width: 80 }}>
+            <span style={{ display: "inline-flex", width: 32, height: 32, borderRadius: "50%", background: "#111", color: "#fff", alignItems: "center", justifyContent: "center", fontSize: 14, boxShadow: active === ri ? "0 0 0 3px #f6f6f4, 0 0 0 5px #111" : "0 0 0 3px #f6f6f4" }} aria-hidden="true">{nodeIcons[i]}</span>
+            <span style={{ display: "block", fontSize: 9.2, fontWeight: 700, lineHeight: 1.3, marginTop: 3 }}>{c}</span>
+          </button>;
+        })}
+      </div>
+      <div style={{ gridArea: "why" }} className="tks-card">
+        <p style={{ margin: "0 0 5px" }}><b>Why roles first?</b></p>
+        <p style={{ margin: 0, fontSize: 11, color: "#444", lineHeight: 1.5 }}>We started with the people, their goals, and their constraints. Every workflow, permission, and data model maps to a real responsibility in the AI asset economy—ensuring the platform is usable, trustworthy, and adoption-ready.</p>
+      </div>
+      <div style={{ gridArea: "objs" }} className="tks-card">
+        <p className="tks-kicker" style={{ margin: "0 0 6px" }}>Platform objects</p>
+        {[["⬢ Assets", "Models, datasets, agents, tools"], ["🛡 Trust Signals", "Attestations, evaluations, proofs"], ["🔒 Escrow", "Secure execution with clear states"], ["📄 Settlement", "On-chain records and receipts"], ["📊 Markets", "Discovery, pricing, liquidity"]].map(([t, b]) => <p key={t} style={{ margin: "3px 0", fontSize: 11 }}><b>{t}</b> — <span style={{ color: "#555" }}>{b}</span></p>)}
+        <p style={{ margin: "8px 0 0", fontSize: 11 }} aria-live="polite">In focus: <b>{role.title}</b> · cycle step: {role.step}</p>
+      </div>
     </div>
     <Foot />
   </div>;
@@ -231,27 +311,68 @@ const PRINCIPLES_10 = [
 
 export function TokentaObjectModel() {
   const [active, setActive] = useState(2);
-  const obj = OBJECTS[active];
+  const objCard = (o: (typeof OBJECTS)[number], i: number) => <button key={o.n} type="button" className={`tks-card${i === active ? " is-on" : ""}`} style={{ padding: "7px 8px", flex: "1 1 0", minWidth: 0 }} aria-pressed={i === active} onClick={() => setActive(i)}>
+    <span className="tks-num" style={{ width: 19, height: 19, fontSize: 10.5 }}>{o.n}</span>
+    <p style={{ fontWeight: 700, margin: "4px 0 3px", fontSize: 10.8, lineHeight: 1.3 }}>{o.name}</p>
+    <p style={{ color: "#555", margin: "0 0 5px", fontSize: 9.3, lineHeight: 1.4 }}>{o.body}</p>
+    <p className="tks-kicker" style={{ margin: 0, fontSize: 8.3, letterSpacing: ".02em", textTransform: "none", borderTop: "1px solid #e8e8e4", paddingTop: 4 }}>{o.fields}</p>
+  </button>;
+  const arrow = <span className="tks-arrow" style={{ fontSize: 13, padding: "0 1px" }} aria-hidden="true">→</span>;
+  const withArrows = (items: React.ReactNode[]) => items.flatMap((el, i) => (i === 0 ? [el] : [arrow, el]));
+  const foundations: Array<[string, string]> = [
+    ["Identity", "Decentralized identity and delegation for participants."],
+    ["Access & Permissions", "Role-based access and granular permissions across objects."],
+    ["Data Availability", "Evidence and metadata anchored for availability and integrity."],
+    ["Smart Contracts", "Battle-tested contracts for escrow, rules, and settlement."],
+    ["Audit Trail", "End-to-end traceability for compliance and assurance."],
+    ["Security", "Defense in depth across infrastructure, contracts, and operations."],
+  ];
   return <div className="tks" role="region" aria-label="Tokenta object model — interactive rebuild of Tokenta_10">
     <Head n="10." />
     <h3>Object model.</h3>
     <p className="tks-lede">How AI assets become tradable and trustworthy.</p>
-    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
-      {OBJECTS.map((o, i) => <button key={o.n} type="button" className={`tks-card${i === active ? " is-on" : ""}`} aria-pressed={i === active} onClick={() => setActive(i)}>
-        <span className="tks-num">{o.n}</span> <b>{o.name}</b>
-        <p style={{ color: "#555", margin: "5px 0", fontSize: 11 }}>{o.body}</p>
-        <p className="tks-kicker" style={{ margin: 0 }}>{o.fields}</p>
-      </button>)}
+    <div className="tks-grid" style={{ gridTemplateColumns: "1fr 168px", alignItems: "start" }}>
+      <div style={{ display: "grid", gap: 8 }}>
+        <div style={{ display: "flex", alignItems: "stretch" }}>{withArrows(OBJECTS.slice(0, 8).map((o, i) => objCard(o, i)))}</div>
+        <div style={{ display: "flex", alignItems: "stretch", gap: 6 }}>
+          <div style={{ display: "flex", alignItems: "stretch", flex: "4.2 1 0" }}>{withArrows(OBJECTS.slice(8).map((o, i) => objCard(o, i + 8)))}</div>
+          <div className="tks-card" style={{ flex: "1.9 1 0", padding: "8px 10px", display: "flex", gap: 8, alignItems: "center" }}>
+            <span style={{ fontSize: 19 }} aria-hidden="true">🛡</span>
+            <span><b style={{ fontSize: 11.5 }}>Trust at every step.</b><br /><span style={{ fontSize: 9.8, color: "#555", lineHeight: 1.45 }}>Every object is cryptographically signed, immutably recorded, and transparently auditable. Trust is built by design.</span></span>
+          </div>
+        </div>
+      </div>
+      <div className="tks-card" style={{ padding: "9px 11px" }}>
+        <p style={{ fontWeight: 700, margin: "0 0 6px", fontSize: 12 }}>Object principles.</p>
+        {PRINCIPLES_10.map(([n, b]) => <p key={n} style={{ margin: "0 0 7px", fontSize: 10, lineHeight: 1.45 }}><b>{n}</b><br /><span style={{ color: "#555" }}>{b}</span></p>)}
+      </div>
     </div>
-    <div className="tks-detail" aria-live="polite">
-      <b>{obj.n}. {obj.name}</b> — fields: <span style={{ fontFamily: "'IBM Plex Mono', monospace" }}>{obj.fields}</span>
-      <p style={{ margin: "6px 0" }}><b>Trust at every step.</b> Every object is cryptographically signed, immutably recorded, and transparently auditable. Trust is built by design.</p>
-      <p className="tks-kicker">Connected objects — supporting actors, services, and events that strengthen the core flow</p>
-      <p style={{ margin: "4px 0" }}>{CONNECTED.map(([n, b, f]) => <span key={n} style={{ display: "block", marginBottom: 3 }}><b>{n}</b> — {b} <span style={{ color: "#777" }}>({f})</span></span>)}</p>
-      <p className="tks-kicker">Object principles</p>
-      <p style={{ margin: "4px 0" }}>{PRINCIPLES_10.map(([n, b]) => <span key={n} style={{ display: "block", marginBottom: 3 }}><b>{n}</b> — {b}</span>)}</p>
-      <p style={{ margin: "4px 0 0", color: "#555" }}>Foundations: Identity — Decentralized identity and delegation for participants. · Access &amp; Permissions — Role-based access and granular permissions across objects. · Data Availability — Evidence and metadata anchored for availability and integrity. · Smart Contracts — Battle-tested contracts for escrow, rules, and settlement. · Audit Trail — End-to-end traceability for compliance and assurance. · Security — Defense in depth across infrastructure, contracts, and operations. Legend: solid arrow = Primary flow, dashed arrow = Supporting connection.</p>
+    <div style={{ display: "flex", alignItems: "stretch", gap: 6, marginTop: 8 }}>
+      <div className="tks-card" style={{ flex: "0 0 108px", padding: "8px 9px", borderStyle: "dashed" }}>
+        <b style={{ fontSize: 11 }}>Connected objects.</b>
+        <p style={{ fontSize: 9.5, color: "#555", margin: "4px 0 0", lineHeight: 1.45 }}>Supporting actors, services, and events that strengthen the core flow.</p>
+      </div>
+      {CONNECTED.map(([n, b, f]) => <div key={n} className="tks-card" style={{ flex: "1 1 0", padding: "8px 9px" }}>
+        <p style={{ fontWeight: 700, margin: "0 0 3px", fontSize: 10.8 }}>{n}</p>
+        <p style={{ color: "#555", margin: "0 0 5px", fontSize: 9.3, lineHeight: 1.4 }}>{b}</p>
+        <p className="tks-kicker" style={{ margin: 0, fontSize: 8.3, letterSpacing: ".02em", textTransform: "none", borderTop: "1px solid #e8e8e4", paddingTop: 4 }}>{f}</p>
+      </div>)}
     </div>
+    <div style={{ display: "flex", alignItems: "stretch", gap: 6, marginTop: 8 }}>
+      <div className="tks-card" style={{ flex: "0 0 108px", padding: "8px 9px", borderStyle: "dashed" }}>
+        <b style={{ fontSize: 11 }}>Foundations.</b>
+        <p style={{ fontSize: 9.5, color: "#555", margin: "4px 0 0", lineHeight: 1.45 }}>Cross-cutting capabilities that secure and scale the platform.</p>
+      </div>
+      {foundations.map(([n, b]) => <div key={n} style={{ flex: "1 1 0", padding: "2px 4px" }}>
+        <p style={{ fontWeight: 700, margin: "0 0 2px", fontSize: 10.5 }}>{n}</p>
+        <p style={{ color: "#555", margin: 0, fontSize: 9.3, lineHeight: 1.4 }}>{b}</p>
+      </div>)}
+      <div className="tks-card" style={{ flex: "0 0 128px", padding: "8px 9px" }}>
+        <b style={{ fontSize: 11 }}>Legend.</b>
+        <p style={{ fontSize: 9.5, margin: "4px 0 0" }}>⟶ Primary flow<br />┄⟶ Supporting connection<br />▭ Core object</p>
+      </div>
+    </div>
+    <p style={{ margin: "8px 0 0", fontSize: 11.5 }} aria-live="polite">Selected: <b>{OBJECTS[active].n}. {OBJECTS[active].name}</b> — fields: <span style={{ fontFamily: "'IBM Plex Mono', monospace" }}>{OBJECTS[active].fields}</span></p>
     <Foot />
   </div>;
 }
@@ -315,20 +436,29 @@ const BLUEPRINT_ROWS: Array<{ label: string; cells: Array<[string, string[]]> }>
 
 export function TokentaServiceBlueprint() {
   const [col, setCol] = useState(0);
+  const labelCell: React.CSSProperties = { fontWeight: 700, fontSize: 9.8, lineHeight: 1.35, padding: "7px 6px", borderTop: "1px dashed #c9c9c2", display: "flex", alignItems: "flex-start", gap: 4 };
+  const cell = (highlight: boolean): React.CSSProperties => ({ padding: "6px 6px", borderTop: "1px dashed #c9c9c2", fontSize: 9.2, lineHeight: 1.45, background: highlight ? "#ececea" : undefined, boxShadow: highlight ? "inset 0 0 0 1.4px #111" : undefined, borderRadius: highlight ? 5 : undefined });
   return <div className="tks" role="region" aria-label="Tokenta end-to-end service blueprint — interactive rebuild of Tokenta_12">
     <Head n="12" kicker="End-to-end service blueprint" />
-    <h3>End-to-end service blueprint.</h3>
-    <p className="tks-lede">From asset submission to settlement, each user action maps to services, records, and support operations. This blueprint spans provider, attestor, buyer, compliance, and developer roles.</p>
-    <div className="tks-flow" role="group" aria-label="User actions" style={{ marginBottom: 10 }}>
-      {BLUEPRINT_ACTIONS.map((a, i) => <button key={a} type="button" className="tks-node" style={{ flex: "1 1 9%" }} aria-pressed={col === i} onClick={() => setCol(i)}><span className="tks-num" style={{ marginRight: 4 }}>{i + 1}</span><b style={{ fontSize: 10.5 }}>{a}</b></button>)}
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24 }}>
+      <div><h3>End-to-end service blueprint.</h3>
+      <p className="tks-lede" style={{ margin: 0 }}>From asset submission to settlement, each user action maps to services, records, and support operations.</p></div>
+      <p style={{ maxWidth: 300, fontSize: 11.5, lineHeight: 1.5, color: "#444", margin: "16px 0 0" }}>◉◉ This blueprint spans provider, attestor, buyer, compliance, and developer roles.</p>
     </div>
-    <div style={{ overflowX: "auto" }}>
-      <table className="tks-table">
-        <thead><tr><th>Layer</th><th>Step {col + 1} — {BLUEPRINT_ACTIONS[col]}</th></tr></thead>
-        <tbody>{BLUEPRINT_ROWS.map((row) => <tr key={row.label}><td style={{ whiteSpace: "nowrap" }}><b>{row.label}</b></td><td><b>{row.cells[col][0]}</b> — {row.cells[col][1].join(" · ")}</td></tr>)}</tbody>
-      </table>
+    <div style={{ display: "grid", gridTemplateColumns: "86px repeat(10, 1fr)", gap: "3px 5px", marginTop: 14 }} role="group" aria-label="Full blueprint grid — 10 user actions by 4 layers">
+      <span style={{ ...labelCell, borderTop: "none" }}>👤 User actions</span>
+      {BLUEPRINT_ACTIONS.map((a, i) => <button key={a} type="button" aria-pressed={col === i} onClick={() => setCol(i)} style={{ ...cell(col === i), borderTop: "none", textAlign: "left", font: "inherit", cursor: "pointer", background: col === i ? "#111" : "#fff", color: col === i ? "#fff" : "#111", border: "1px solid #d0d0cb", borderRadius: 6 }}>
+        <span className="tks-num" style={{ width: 18, height: 18, fontSize: 10, marginBottom: 3, background: col === i ? "#fff" : "#111", color: col === i ? "#111" : "#fff" }}>{i + 1}</span><br /><b style={{ fontSize: 9.6, lineHeight: 1.3 }}>{a}</b>
+      </button>)}
+      {BLUEPRINT_ROWS.map((row) => <span key={row.label} style={{ display: "contents" }}>
+        <span style={labelCell}>{row.label === "Interface surfaces" ? "🖥" : row.label === "Platform services" ? "⬢" : row.label.startsWith("On-chain") ? "🔗" : "🎧"} {row.label}</span>
+        {row.cells.map(([title, items], i) => <span key={title} style={cell(col === i)}>
+          <b style={{ fontSize: 9.5, display: "block", marginBottom: 2 }}>{title}</b>
+          {items.map((it) => <span key={it} style={{ display: "block", color: "#444" }}>• {it}</span>)}
+        </span>)}
+      </span>)}
     </div>
-    <p style={{ color: "#555", margin: "8px 0 0" }}>Full grid as printed: 10 user actions × 4 layers (Interface surfaces, Platform services, On-chain events / records, Support / operations). Solid arrow = primary flow, dashed arrow = supporting connection. Select a step to read its column across every layer.</p>
+    <p style={{ color: "#555", margin: "9px 0 0", fontSize: 11 }}>Legend: ⟶ Primary flow · ┄⟶ Supporting connection · ▭ Touchpoint / service. Select a user action to highlight its full column across every layer.</p>
     <Foot />
   </div>;
 }
@@ -346,24 +476,41 @@ const ROUTE_FAMILIES = [
 
 export function TokentaRouteMap() {
   const [active, setActive] = useState(1);
-  const fam = ROUTE_FAMILIES[active];
+  const famCard = (f: (typeof ROUTE_FAMILIES)[number], i: number) => <div key={f.name} className="tks-card" style={{ padding: 0, overflow: "hidden", display: "flex", flexDirection: "column" }}>
+    <button type="button" aria-pressed={i === active} onClick={() => setActive(i)} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: i === active ? "#000" : "#111", color: "#fff", padding: "8px 9px", border: "none", cursor: "pointer", font: "inherit", textAlign: "left", boxShadow: i === active ? "inset 0 0 0 2px #fff" : undefined }}>
+      <b style={{ fontSize: 11.3, lineHeight: 1.25 }}>{f.name}</b><span style={{ fontWeight: 800 }}>{f.count}</span>
+    </button>
+    <div style={{ padding: "7px 8px", display: "grid", gap: 5, alignContent: "start", flex: 1 }}>
+      {f.routes.map(([r, n]) => <span key={r} style={{ display: "flex", justifyContent: "space-between", border: "1px solid #e2e2de", borderRadius: 5, padding: "4px 7px", fontSize: 10.8, background: "#fff" }}><span>{r}</span><span style={{ color: "#888" }}>{n}</span></span>)}
+    </div>
+    <p style={{ margin: 0, padding: "0 9px 9px", fontSize: 10.3, color: "#444", lineHeight: 1.4 }}><b>{f.audience.split(" — ")[0]}</b><br />{f.audience.split(" — ")[1]}</p>
+  </div>;
+  const careers = ROUTE_FAMILIES[4].careers!;
   return <div className="tks" role="region" aria-label="Tokenta route map — interactive rebuild of Tokenta_13">
     <Head n="13" kicker="Route map" />
-    <h3>Route map.</h3>
-    <p className="tks-lede">Thirty public routes were organized into clear families so different audiences could find the right depth quickly. This public case study emphasizes the core product flows while summarizing the broader site system.</p>
-    <p style={{ textAlign: "center", margin: "0 0 10px" }}><span className="tks-chip"><b>30 public routes</b></span></p>
-    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(6, 1fr)" }}>
-      {ROUTE_FAMILIES.map((f, i) => <button key={f.name} type="button" className={`tks-card${i === active ? " is-on" : ""}`} style={{ padding: 0, overflow: "hidden" }} aria-pressed={i === active} onClick={() => setActive(i)}>
-        <span style={{ display: "flex", justifyContent: "space-between", background: "#111", color: "#fff", padding: "8px 10px" }}><b>{f.name}</b><span>{f.count}</span></span>
-        <span style={{ display: "block", padding: "8px 10px", color: "#555", fontSize: 11 }}>{f.audience}</span>
-      </button>)}
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24 }}>
+      <div><h3>Route map.</h3>
+      <p className="tks-lede" style={{ margin: 0 }}>Thirty public routes were organized into clear families so different audiences could find the right depth quickly.</p></div>
+      <p style={{ maxWidth: 320, fontSize: 11.5, lineHeight: 1.5, color: "#444", margin: "16px 0 0", border: "1px solid #d9d9d4", borderRadius: 7, padding: "8px 11px" }}>ⓘ This public case study emphasizes the core product flows while summarizing the broader site system.</p>
     </div>
-    <div className="tks-detail" aria-live="polite">
-      <b>{fam.name}</b> — {fam.audience}
-      <div className="tks-flow" style={{ marginTop: 8 }}>{fam.routes.map(([r, n]) => <span key={r} className="tks-node"><b>{r}</b> <span style={{ float: "right", color: "#888" }}>{n}</span></span>)}</div>
-      {fam.careers && <p style={{ margin: "8px 0 0" }}><b>Careers detail</b> (expansion of Institution → Careers): {fam.careers.join(" · ")}</p>}
-      <p style={{ margin: "6px 0 0", color: "#555" }}>Legend: solid arrow = Primary grouping, dashed arrow = Supporting connection, dashed box = Detail expansion.</p>
+    <p style={{ textAlign: "center", margin: "12px 0 8px" }}><span className="tks-chip" style={{ borderColor: "#111", fontWeight: 700 }}>30 public routes</span></p>
+    <div style={{ borderTop: "1.4px solid #111", margin: "0 6px 10px", position: "relative" }} aria-hidden="true">
+      {[8, 22, 36, 50, 64, 92].map((x) => <span key={x} style={{ position: "absolute", left: `${x}%`, top: -1, width: 1.4, height: 8, background: "#111" }} />)}
     </div>
+    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(7, 1fr)", alignItems: "stretch", gap: 8 }}>
+      {famCard(ROUTE_FAMILIES[0], 0)}
+      {famCard(ROUTE_FAMILIES[1], 1)}
+      {famCard(ROUTE_FAMILIES[2], 2)}
+      {famCard(ROUTE_FAMILIES[3], 3)}
+      {famCard(ROUTE_FAMILIES[4], 4)}
+      <div className="tks-card" style={{ borderStyle: "dashed", padding: "9px 10px" }}>
+        <p style={{ fontWeight: 700, margin: "0 0 6px", fontSize: 12 }}>Careers detail</p>
+        {careers.map((c) => <p key={c} style={{ margin: "4px 0", fontSize: 10.6, lineHeight: 1.35 }}>◉ {c}</p>)}
+        <p style={{ color: "#777", fontSize: 9.8, margin: "7px 0 0" }}>Detail expansion of Institution → Careers.</p>
+      </div>
+      {famCard(ROUTE_FAMILIES[5], 5)}
+    </div>
+    <p style={{ margin: "9px 0 0", color: "#555", fontSize: 11 }}>Legend: ⟶ Primary grouping · ┄⟶ Supporting connection · dashed box = Detail expansion. <span aria-live="polite">Selected family: <b>{ROUTE_FAMILIES[active].name}</b> — {ROUTE_FAMILIES[active].audience}.</span></p>
     <Foot />
   </div>;
 }
@@ -391,59 +538,91 @@ export function TokentaNavigationPriorities() {
   const [crumb, setCrumb] = useState("Dispute resolution");
   const [toc, setToc] = useState("Overview");
   const crumbs = ["Docs", "Guides", "Escrow", "Lifecycle", "Dispute resolution"];
+  const panel: React.CSSProperties = { background: "#141416", border: "1px solid #2c2d30", borderRadius: 8, padding: "9px 12px" };
+  const cap: React.CSSProperties = { color: "#9a9aa0", fontSize: 10.3, lineHeight: 1.5, margin: 0 };
   return <div className="tks tks--dark" role="region" aria-label="Tokenta navigation priorities — interactive rebuild of Tokenta_14">
     <Head n="14." kicker="Navigation priorities" />
-    <h3>Navigation priorities.</h3>
-    <p className="tks-lede">The navigation system had to serve both broad public exploration and deep institutional reading. Sticky by design — primary (global) navigation is sticky across scroll and routes; local navigation (TOC) is sticky within content containers. Responsive behavior — Desktop ≥ 1024px shows the full global header; Mobile &lt; 1024px collapses to a menu.</p>
-    <div className="tks-grid" style={{ gridTemplateColumns: "220px 1fr" }}>
-      <div style={{ display: "grid", gap: 8, alignContent: "start" }}>
-        {NAV_PRIORITIES.map((p, i) => <button key={p.n} type="button" className={`tks-card${i === active ? " is-on" : ""}`} aria-pressed={i === active} onClick={() => setActive(i)}>
-          <span className="tks-num tks-num--light">{p.n}</span> <b>{p.name}</b>
-          <p style={{ color: "#b9b9be", margin: "5px 0 0", fontSize: 11 }}>{p.body}</p>
+    <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1.25fr", alignItems: "start" }}>
+      <div><h3 style={{ marginTop: 8 }}>Navigation priorities.</h3>
+      <p className="tks-lede" style={{ margin: 0 }}>The navigation system had to serve both broad public exploration and deep institutional reading.</p></div>
+      <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1fr", marginTop: 14 }}>
+        <div style={panel}><b style={{ fontSize: 12 }}>📌 Sticky by design.</b><p style={{ ...cap, marginTop: 4 }}>Primary (global) navigation is sticky across scroll and routes. Local navigation (TOC) is sticky within content containers.</p></div>
+        <div style={panel}><b style={{ fontSize: 12 }}>▯ Responsive behavior.</b><p style={{ ...cap, marginTop: 4 }}>Desktop ≥ 1024px shows the full global header. Mobile &lt; 1024px collapses to a menu.</p></div>
+      </div>
+    </div>
+    <div className="tks-grid" style={{ gridTemplateColumns: "178px 1fr", marginTop: 12 }}>
+      <div style={{ display: "grid", gap: 8, alignContent: "space-between" }}>
+        {NAV_PRIORITIES.map((p, i) => <button key={p.n} type="button" className={`tks-card${i === active ? " is-on" : ""}`} style={{ padding: "9px 11px" }} aria-pressed={i === active} onClick={() => setActive(i)}>
+          <span className="tks-num tks-num--light" style={{ width: 20, height: 20, fontSize: 11 }}>{p.n}</span> <b style={{ fontSize: 12.5 }}>{p.name}</b>
+          <p style={{ color: "#b9b9be", margin: "5px 0 0", fontSize: 10.3, lineHeight: 1.45 }}>{p.body}</p>
         </button>)}
       </div>
-      <div style={{ display: "grid", gap: 10, alignContent: "start" }}>
-        <div className="tks-card" aria-label="Desktop global header demo">
-          <p className="tks-kicker">Desktop global header — primary entry to all major sections. Persistent across the platform for context and continuity.</p>
-          <div style={{ display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap", border: "1px solid #333438", borderRadius: 8, padding: "8px 12px" }}>
-            <b>⌂ TOKENTA</b>
-            {Object.keys(NAV_GROUPS).map((g) => <button key={g} type="button" className="tks-chip" aria-pressed={openGroup === g} onClick={() => setOpenGroup(openGroup === g ? null : g)}>{g} ▾</button>)}
-            <span style={{ marginLeft: "auto" }}>⌕ <span className="tks-btn" style={{ padding: "3px 10px" }}>Launch app ↗</span></span>
-          </div>
-          {openGroup && <p style={{ margin: "8px 0 0", color: "#c9c9ce" }}>{openGroup}: {NAV_GROUPS[openGroup].join(" · ")}</p>}
-        </div>
-        <div className="tks-card" aria-label="Mobile menu demo">
-          <p className="tks-kicker">Mobile menu (collapsed) — stacked route groups with expandable sections. Back button preserves mental model and location.</p>
-          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-            <div style={{ border: "1px solid #333438", borderRadius: 8, padding: "8px 12px", minWidth: 190 }}>
-              {Object.keys(NAV_GROUPS).map((g) => <button key={g} type="button" className="tks-node" style={{ display: "block", width: "100%", marginBottom: 4 }} aria-pressed={mobileGroup === g} onClick={() => setMobileGroup(g)}>{g} ›</button>)}
-              <p style={{ margin: "4px 0 0" }}>Launch app ↗</p>
+      <div style={{ display: "grid", gap: 8, alignContent: "start" }}>
+        <div style={panel} aria-label="Desktop global header demo">
+          <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+            <div style={{ flex: 1 }}>
+              <p style={{ margin: "0 0 6px", fontWeight: 700, fontSize: 12.5 }}>Desktop global header</p>
+              <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", border: "1px solid #333438", borderRadius: 7, padding: "6px 11px" }}>
+                <b>⌂ TOKENTA</b>
+                {Object.keys(NAV_GROUPS).map((g) => <button key={g} type="button" className="tks-chip" style={{ padding: "2px 8px", fontSize: 11 }} aria-pressed={openGroup === g} onClick={() => setOpenGroup(openGroup === g ? null : g)}>{g} ▾</button>)}
+                <span style={{ marginLeft: "auto" }}>⌕ <span className="tks-btn" style={{ padding: "2px 9px", fontSize: 11 }}>Launch app ↗</span></span>
+              </div>
+              {openGroup && <p style={{ margin: "6px 0 0", color: "#c9c9ce", fontSize: 11 }}>{openGroup}: {NAV_GROUPS[openGroup].join(" · ")}</p>}
             </div>
-            {mobileGroup && <div style={{ border: "1px solid #333438", borderRadius: 8, padding: "8px 12px", minWidth: 200 }}>
-              <p style={{ margin: "0 0 6px" }}>‹ <b>{mobileGroup}</b></p>
-              {NAV_GROUPS[mobileGroup].map((r) => <p key={r} style={{ margin: "3px 0", color: "#c9c9ce" }}>{r}</p>)}
-              <p style={{ color: "#9a9aa0", fontSize: 11, margin: "6px 0 0" }}>Example as printed: Developers group — API Overview, SDKs &amp; Libraries, Guides, Reference, Status.</p>
+            <p style={{ ...cap, flex: "0 0 168px" }}>Primary entry to all major sections. Persistent across the platform for context and continuity.</p>
+          </div>
+        </div>
+        <div style={panel} aria-label="Mobile menu demo">
+          <p style={{ margin: "0 0 6px", fontWeight: 700, fontSize: 12.5 }}>Mobile menu (collapsed)</p>
+          <div style={{ display: "flex", gap: 14, alignItems: "flex-start", flexWrap: "wrap" }}>
+            <div style={{ border: "1px solid #333438", borderRadius: 7, padding: "6px 10px", display: "flex", gap: 26, alignItems: "center" }}><b>⌂ TOKENTA</b><span aria-hidden="true">☰</span></div>
+            <div style={{ border: "1px solid #333438", borderRadius: 7, padding: "6px 10px", minWidth: 168 }}>
+              {Object.keys(NAV_GROUPS).map((g) => <button key={g} type="button" className="tks-node" style={{ display: "flex", justifyContent: "space-between", width: "100%", marginBottom: 3, padding: "3px 7px", fontSize: 11 }} aria-pressed={mobileGroup === g} onClick={() => setMobileGroup(g)}><span>{g}</span><span>›</span></button>)}
+              <p style={{ margin: "3px 0 0", fontSize: 11 }}>Launch app ↗</p>
+            </div>
+            <p style={{ ...cap, flex: "1 1 130px" }}>Stacked route groups with expandable sections. Deep links appear within groups to guide discovery without overwhelming the user.</p>
+            {mobileGroup && <div style={{ border: "1px solid #333438", borderRadius: 7, padding: "6px 10px", minWidth: 168 }}>
+              <p style={{ margin: "0 0 4px", fontSize: 11 }}>‹ <b>Example: {mobileGroup} group</b></p>
+              {NAV_GROUPS[mobileGroup].map((r) => <p key={r} style={{ margin: "2px 0", color: "#c9c9ce", fontSize: 11 }}>{r}</p>)}
             </div>}
+            <p style={{ ...cap, flex: "1 1 130px" }}>Users drill into groups for contextual sub-routes. Back button preserves mental model and location.</p>
           </div>
         </div>
-        <div className="tks-card" aria-label="Breadcrumb and TOC demo">
-          <p className="tks-kicker">Breadcrumb pattern (deep routes) — shows location within the information architecture and provides quick paths back to higher levels.</p>
-          <p style={{ margin: "4px 0" }}>⌂ {crumbs.map((c) => <span key={c}> › <button type="button" className="tks-chip" aria-pressed={crumb === c} onClick={() => setCrumb(c)}>{c}</button></span>)}</p>
-          <p style={{ margin: "4px 0", color: "#c9c9ce" }}>Current: {crumb}</p>
-          <p className="tks-kicker" style={{ marginTop: 10 }}>Local table of contents (long-form docs &amp; legal) — sticky local TOC helps users scan, jump, and maintain context.</p>
-          <p style={{ margin: "4px 0" }}>{["Overview", "How it works", "Requirements", "Process", "Examples", "Related references"].map((t) => <button key={t} type="button" className="tks-chip" style={{ marginRight: 5 }} aria-pressed={toc === t} onClick={() => setToc(t)}>{t}</button>)}</p>
-          <p style={{ margin: "4px 0 0", color: "#c9c9ce" }}>Section: <b style={{ color: "#fff" }}>{toc}</b></p>
-        </div>
-        <div className="tks-card" aria-label="Footer taxonomy">
-          <p className="tks-kicker">Footer taxonomy</p>
-          <div className="tks-grid" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
-            {Object.entries(NAV_GROUPS).map(([g, items]) => <div key={g}><b>{g}</b>{items.map((it) => <p key={it} style={{ margin: "2px 0", color: "#b9b9be", fontSize: 11 }}>{it}</p>)}</div>)}
+        <div style={panel} aria-label="Breadcrumb pattern demo">
+          <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+            <div style={{ flex: 1 }}>
+              <p style={{ margin: "0 0 6px", fontWeight: 700, fontSize: 12.5 }}>Breadcrumb pattern (deep routes)</p>
+              <p style={{ margin: 0, border: "1px solid #333438", borderRadius: 7, padding: "5px 10px", fontSize: 11.5 }}>⌂ {crumbs.map((c) => <span key={c}> › <button type="button" className="tks-chip" style={{ padding: "1px 7px", fontSize: 11 }} aria-pressed={crumb === c} onClick={() => setCrumb(c)}>{c}</button></span>)}</p>
+            </div>
+            <p style={{ ...cap, flex: "0 0 190px" }}>Shows location within the information architecture and provides quick paths back to higher levels. Current: <b style={{ color: "#fff" }}>{crumb}</b></p>
           </div>
-          <p style={{ color: "#9a9aa0", margin: "8px 0 0" }}>⌂ TOKENTA · © 2025 Tokenta, Inc. All rights reserved.</p>
+        </div>
+        <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1.25fr" }}>
+          <div style={panel} aria-label="Local table of contents demo">
+            <p style={{ margin: "0 0 6px", fontWeight: 700, fontSize: 12.5 }}>Local table of contents (long-form docs &amp; legal)</p>
+            <div style={{ display: "flex", gap: 12 }}>
+              <div>
+                <p className="tks-kicker" style={{ fontSize: 9, margin: "0 0 4px" }}>On this page</p>
+                {["Overview", "How it works", "Requirements", "Process", "Examples", "Related references"].map((t) => <button key={t} type="button" className="tks-chip" style={{ display: "block", marginBottom: 3, padding: "1px 7px", fontSize: 10.5 }} aria-pressed={toc === t} onClick={() => setToc(t)}>{t}</button>)}
+              </div>
+              <div style={{ flex: 1 }}>
+                <p style={{ margin: "0 0 5px", fontWeight: 700, fontSize: 12 }}>{toc}</p>
+                {[92, 100, 78, 96, 60].map((w, i) => <span key={i} style={{ display: "block", height: 4, background: "#333438", borderRadius: 2, marginBottom: 5, width: `${w}%` }} />)}
+                <p style={{ ...cap, marginTop: 7 }}>Sticky local TOC helps users scan, jump, and maintain context in long-form content.</p>
+              </div>
+            </div>
+          </div>
+          <div style={panel} aria-label="Footer taxonomy">
+            <p style={{ margin: "0 0 6px", fontWeight: 700, fontSize: 12.5 }}>Footer taxonomy</p>
+            <div className="tks-grid" style={{ gridTemplateColumns: "repeat(5, 1fr) 0.9fr" }}>
+              {Object.entries(NAV_GROUPS).map(([g, items]) => <div key={g}><b style={{ fontSize: 11 }}>{g}</b>{items.map((it) => <p key={it} style={{ margin: "2px 0", color: "#b9b9be", fontSize: 9.8, lineHeight: 1.4 }}>{it}</p>)}</div>)}
+              <div><b style={{ fontSize: 11 }}>⌂ TOKENTA</b><p style={{ color: "#9a9aa0", fontSize: 9.5, margin: "4px 0 0", lineHeight: 1.5 }}>© 2025 Tokenta, Inc. All rights reserved.</p></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <p style={{ color: "#9a9aa0", margin: "10px 0 0" }} aria-live="polite">Priority in focus: <b style={{ color: "#fff" }}>{NAV_PRIORITIES[active].n}. {NAV_PRIORITIES[active].name}</b> — demonstrated by: {NAV_PRIORITIES[active].panel}.</p>
+    <p style={{ color: "#9a9aa0", margin: "9px 0 0", fontSize: 11.5 }} aria-live="polite">Priority in focus: <b style={{ color: "#fff" }}>{NAV_PRIORITIES[active].n}. {NAV_PRIORITIES[active].name}</b> — demonstrated by: {NAV_PRIORITIES[active].panel}.</p>
     <Foot />
   </div>;
 }
@@ -470,27 +649,49 @@ export function TokentaContentTemplates() {
   const [active, setActive] = useState(0);
   const [block, setBlock] = useState<string | null>(null);
   const t = TEMPLATES[active];
+  const lines = (n: number, w: number[] = [100, 92, 96, 70]) => <span>{Array.from({ length: n }, (_, i) => <span key={i} style={{ display: "block", height: 3.5, background: "#d8d8d2", borderRadius: 2, marginBottom: 3.5, width: `${w[i % w.length]}%` }} />)}</span>;
+  const blk = (label: string, children?: React.ReactNode, flex?: string) => <button type="button" aria-pressed={block === label} onClick={() => setBlock(label)} style={{ flex: flex ?? undefined, width: flex ? undefined : "100%", border: block === label ? "1.4px solid #111" : "1px solid #d8d8d2", borderRadius: 4, background: block === label ? "#ececea" : "#fbfbf9", padding: "4px 5px", font: "inherit", fontSize: 8.8, color: "#555", cursor: "pointer", textAlign: "center", minWidth: 0 }}>{label}{children}</button>;
+  const wireframe = (tp: (typeof TEMPLATES)[number]) => <div style={{ display: "grid", gap: 4 }}>
+    {blk("Page hero")}
+    {blk(tp.n === 3 ? "Summary (key facts)" : tp.n === 4 ? "Summary (role snapshot)" : "Summary")}
+    <span style={{ display: "flex", gap: 4, alignItems: "stretch" }}>
+      {tp.toc && <span style={{ flex: "0 0 21%", border: "1px solid #e2e2de", borderRadius: 4, padding: "3px 4px", fontSize: 8, color: "#777", textAlign: "left" }}>Local TOC<br />(on this page){lines(4, [90, 75, 85, 60])}</span>}
+      <span style={{ flex: 1, border: "1px solid #e2e2de", borderRadius: 4, padding: "4px 5px", minWidth: 0 }}>
+        <span style={{ display: "block", fontSize: 8.8, color: "#555", textAlign: "center", marginBottom: 3 }}>{tp.n === 2 ? "Body grid (docs/content)" : tp.n === 4 ? "Body grid (role details)" : tp.n === 5 ? "Body grid (legal content)" : "Body grid"}</span>
+        {tp.n === 3 ? <span style={{ display: "flex", gap: 3 }}>{["🛡", "🔒", "🏛"].map((g) => <span key={g} style={{ flex: 1, border: "1px solid #e2e2de", borderRadius: 3, padding: "2px 0", textAlign: "center", fontSize: 10 }}>{g}</span>)}</span> : tp.n === 4 ? <span style={{ textAlign: "left" }}>{"• • • •".split(" ").map((d, i) => <span key={i} style={{ display: "flex", gap: 4, alignItems: "center", marginBottom: 3 }}><span>•</span><span style={{ flex: 1, height: 3.5, background: "#d8d8d2", borderRadius: 2 }} /></span>)}</span> : lines(3)}
+      </span>
+      {tp.n !== 5 && <span style={{ flex: "0 0 27%", border: "1px solid #e2e2de", borderRadius: 4, padding: "3px 4px", fontSize: 8, color: "#777", textAlign: "left" }}>Data panel<br />{tp.n === 1 ? "(sticky)" : tp.n === 2 ? "(endpoints, params)" : tp.n === 3 ? "(verification, metrics)" : "(role facts)"}{lines(3, [85, 70, 80])}</span>}
+    </span>
+    {blk(tp.n === 4 ? "CTA / Actions (Apply / Refer)" : tp.n === 5 ? "CTA / Actions (Download / Contact)" : "CTA / Actions")}
+    {blk("Footer")}
+  </div>;
   return <div className="tks" role="region" aria-label="Tokenta content template system — interactive rebuild of Tokenta_15">
     <Head n="15" kicker="Content template system" />
     <h3>Content template system.</h3>
     <p className="tks-lede">Five reusable page templates created breadth without turning the site into one-off pages.</p>
     <p className="tks-kicker">Five content template archetypes</p>
-    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
-      {TEMPLATES.map((tp, i) => <button key={tp.n} type="button" className={`tks-card${i === active ? " is-on" : ""}`} aria-pressed={i === active} onClick={() => { setActive(i); setBlock(null); }}>
-        <span className="tks-num">{tp.n}</span> <b>{tp.name}</b>
-        <p style={{ color: "#555", fontSize: 11, margin: "5px 0" }}>{tp.sub}</p>
-        {tp.blocks.map((b) => <span key={b} style={{ display: "block", border: "1px solid #e2e2de", borderRadius: 4, padding: "3px 6px", marginBottom: 4, fontSize: 10.5, background: block === b && i === active ? "#111" : "#fafafa", color: block === b && i === active ? "#fff" : "#333" }}>{b}</span>)}
-        <span style={{ fontSize: 10.5, color: "#777" }}>Varies: {tp.varies}</span>
-      </button>)}
+    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(5, 1fr)", alignItems: "start" }}>
+      {TEMPLATES.map((tp, i) => <div key={tp.n} className={`tks-card${i === active ? " is-on" : ""}`} style={{ padding: "9px 9px", cursor: "pointer" }} role="button" tabIndex={0} aria-pressed={i === active} onClick={() => setActive(i)} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActive(i); } }}>
+        <p style={{ margin: "0 0 3px" }}><span className="tks-num" style={{ width: 20, height: 20, fontSize: 11 }}>{tp.n}</span> <b style={{ fontSize: 12.3 }}>{tp.name}</b></p>
+        <p style={{ color: "#555", fontSize: 9.8, margin: "0 0 7px", lineHeight: 1.4 }}>{tp.sub}</p>
+        {wireframe(tp)}
+        <p style={{ fontSize: 9.5, color: "#666", margin: "7px 0 0", lineHeight: 1.45 }}><b>Varies:</b> {tp.varies}</p>
+      </div>)}
     </div>
-    <div className="tks-detail" aria-live="polite">
-      <b>{t.n}. {t.name}</b>{t.toc ? " — includes Local TOC (on this page)" : ""}. Click a block name in the cards above after selecting a template, or:
-      <p style={{ margin: "6px 0" }}>{t.blocks.map((b) => <button key={b} type="button" className="tks-chip" style={{ marginRight: 5 }} aria-pressed={block === b} onClick={() => setBlock(b)}>{b}</button>)}</p>
-      {block && <p style={{ margin: 0 }}>Block: <b>{block}</b> — part of the {t.name} archetype.</p>}
-      <p className="tks-kicker" style={{ marginTop: 10 }}>Shared layer (consistent across all templates)</p>
-      <div className="tks-grid" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>{SHARED_LAYER.map(([n, b]) => <p key={n} style={{ margin: 0 }}><b>{n}</b> — {b}</p>)}</div>
-      <p style={{ margin: "8px 0 0", color: "#555" }}>What varies by template: Content structure, data modules, terminology, and actions tailored to the page's purpose and audience. · What stays shared: Navigation, layout system, components, tone, and trust signals ensure consistency and clarity across the platform. · Built for scale: Reusable templates speed up content creation while preserving a coherent experience across every page.</p>
+    <p className="tks-kicker" style={{ marginTop: 12 }}>Shared layer (consistent across all templates)</p>
+    <div className="tks-card" style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 10, padding: "10px 12px" }}>
+      {SHARED_LAYER.map(([n, b], i) => <div key={n} style={{ borderLeft: i === 0 ? undefined : "1px solid #e8e8e4", paddingLeft: i === 0 ? 0 : 10 }}>
+        <p style={{ fontSize: 15, margin: "0 0 3px" }} aria-hidden="true">{["☰", "▦", "⊞", "Aa", "➤", "☰"][i]}</p>
+        <p style={{ margin: 0, fontSize: 11 }}><b>{n}</b></p>
+        <p style={{ margin: "2px 0 0", fontSize: 9.8, color: "#555", lineHeight: 1.45 }}>{b}</p>
+      </div>)}
     </div>
+    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(3, 1fr)", marginTop: 9 }}>
+      <p style={{ margin: 0, fontSize: 11, lineHeight: 1.5 }}><b>What varies by template</b> — Content structure, data modules, terminology, and actions tailored to the page's purpose and audience.</p>
+      <p style={{ margin: 0, fontSize: 11, lineHeight: 1.5 }}><b>What stays shared</b> — Navigation, layout system, components, tone, and trust signals ensure consistency and clarity across the platform.</p>
+      <p style={{ margin: 0, fontSize: 11, lineHeight: 1.5 }}><b>Built for scale</b> — Reusable templates speed up content creation while preserving a coherent experience across every page.</p>
+    </div>
+    <p style={{ margin: "8px 0 0", fontSize: 11.5 }} aria-live="polite">Template in focus: <b>{t.n}. {t.name}</b>{t.toc ? " — includes Local TOC (on this page)" : ""}{block ? <> · Block: <b>{block}</b></> : ""}</p>
     <Foot />
   </div>;
 }
@@ -505,24 +706,66 @@ const DENSITY = [
 
 export function TokentaDensityStudy() {
   const [active, setActive] = useState(1);
-  const d = DENSITY[active];
+  const recent: Array<[string, string, string]> = [["Llama-3.1-70B-Instruct", "Model", "125,000"], ["CodeTrove-22M", "Dataset", "18,500"], ["VisionPro-Agent", "Agent", "42,000"], ["MathEval-1.0", "Eval Suite", "7,250"]];
+  const chart = (pts: string, h: number = 44) => <svg viewBox={`0 0 200 ${h}`} style={{ width: "100%", height: h, display: "block" }} aria-hidden="true"><polyline points={pts} fill="none" stroke="#555" strokeWidth="1.3" /></svg>;
+  const miniHead = <p style={{ margin: "0 0 6px", display: "flex", gap: 8, alignItems: "center", fontSize: 8.6, color: "#666", borderBottom: "1px solid #e8e8e4", paddingBottom: 5 }}><b style={{ color: "#111", fontSize: 9.5 }}>⌂ TOKENTA</b><span>Product · Developers · Institution ▾ · Docs ▾ · Legal ▾</span><span style={{ marginLeft: "auto", border: "1px solid #c9c9c4", borderRadius: 4, padding: "1px 6px" }}>Launch app ▾</span></p>;
+  const tiles = (dd: (typeof DENSITY)[number], max: number) => <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(dd.stats.length, max)}, 1fr)`, gap: 4 }}>
+    {dd.stats.slice(0, max).map(([k, v]) => <span key={k} style={{ border: "1px solid #e8e8e4", borderRadius: 4, padding: "3px 5px" }}><span style={{ display: "block", fontSize: 7.8, color: "#888", textTransform: "uppercase", letterSpacing: ".03em" }}>{k}</span><b style={{ fontSize: 10.5 }}>{v}</b></span>)}
+  </div>;
+  const recentTable = (dense: boolean) => <table className="tks-table tks-table--micro" style={{ fontSize: dense ? 8.4 : 9 }}>
+    <thead><tr><th>Asset</th><th>Type</th><th>Price (TKA)</th><th>Verified</th></tr></thead>
+    <tbody>{recent.map(([a, ty, p]) => <tr key={a}><td style={{ whiteSpace: "nowrap", overflow: "hidden" }}>{a}</td><td>{ty}</td><td>{p}</td><td>◎</td></tr>)}</tbody></table>;
+  const bodies: React.ReactNode[] = [
+    <div key="low">
+      <p style={{ fontSize: 15.5, fontWeight: 800, lineHeight: 1.25, margin: "8px 0 4px" }}>Institutional<br />data infrastructure.</p>
+      <p style={{ fontSize: 9.8, color: "#555", margin: "0 0 6px" }}>Trusted data. Clear access.<br />Built for institutions.</p>
+      <span className="tks-btn" style={{ padding: "3px 10px", fontSize: 10 }}>Explore platform</span>
+      <div style={{ marginTop: 8 }}>{chart("0,38 30,30 60,34 90,18 120,24 150,8 199,14", 42)}</div>
+      <div style={{ marginTop: 7 }}>{tiles(DENSITY[0], 4)}</div>
+      <p style={{ fontSize: 9, color: "#666", margin: "7px 0 0" }}><b style={{ color: "#111" }}>Recent activity</b> — Asset “Llama-3.1-70B-Instruct” listed · 2m ago · Escrow deal_01H8Z…7G9P1 locked · 5m ago · Attestation created for CodeTrove-22M · 18m ago</p>
+    </div>,
+    <div key="bal">
+      <div style={{ marginTop: 2 }}>{tiles(DENSITY[1], 5)}</div>
+      <div style={{ display: "grid", gridTemplateColumns: "1.15fr 1fr 0.85fr", gap: 6, marginTop: 7 }}>
+        <span><b style={{ fontSize: 9 }}>Activity feed</b>{["Asset “Llama-3.1-70B-Instruct” listed · 2m ago", "Escrow deal_01H8Z…7G9P1 locked · 5m ago", "Quorum completed · 12m ago", "Dispute opened · 18m ago", "Attestation created for CodeTrove-22M · 22m ago"].map((a) => <span key={a} style={{ display: "block", fontSize: 8.4, color: "#555", marginTop: 2.5 }}>○ {a}</span>)}</span>
+        <span><b style={{ fontSize: 9 }}>Volume over time</b> <span style={{ fontSize: 7.8, color: "#888" }}>7D 30D 90D 1Y</span>{chart("0,36 25,30 50,33 75,22 100,26 125,14 150,18 175,8 199,11", 40)}<span style={{ fontSize: 8.4, color: "#555" }}>Trading volume <b style={{ color: "#111" }}>2.41M TKA</b> ↑ 12.4% · Escrow volume <b style={{ color: "#111" }}>18.50B TKA</b> ↑ 9.6%</span></span>
+        <span style={{ textAlign: "center" }}><b style={{ fontSize: 9 }}>Top asset types</b><svg viewBox="0 0 40 40" style={{ width: 52, height: 52, display: "block", margin: "3px auto" }} aria-hidden="true"><circle cx="20" cy="20" r="14" fill="none" stroke="#d8d8d2" strokeWidth="6" /><circle cx="20" cy="20" r="14" fill="none" stroke="#555" strokeWidth="6" strokeDasharray="43 88" transform="rotate(-90 20 20)" /></svg><span style={{ fontSize: 8.2, color: "#555" }}>Models 49% · Datasets 22% · Agents 15% · Tools 8% · Eval Suites 6%</span></span>
+      </div>
+      <p style={{ fontSize: 9, margin: "7px 0 3px" }}><b>Recent assets</b></p>
+      {recentTable(false)}
+    </div>,
+    <div key="high">
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 4, marginTop: 2 }}>
+        {DENSITY[2].stats.map(([k, v]) => <span key={k} style={{ border: "1px solid #e8e8e4", borderRadius: 4, padding: "3px 5px", minWidth: 0 }}><span style={{ display: "block", fontSize: 7.4, color: "#888", textTransform: "uppercase", letterSpacing: ".02em" }}>{k}</span><b style={{ fontSize: 10 }}>{v}</b></span>)}
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6, marginTop: 7 }}>
+        <span><b style={{ fontSize: 8.8 }}>Activity feed</b>{["Asset listed · 2m", "Escrow locked · 5m", "Quorum completed · 12m", "Dispute opened · 18m", "Attestation created · 22m"].map((a) => <span key={a} style={{ display: "block", fontSize: 8.2, color: "#555", marginTop: 2 }}>○ {a}</span>)}<b style={{ fontSize: 8.8, display: "block", marginTop: 5 }}>Top asset types</b><span style={{ fontSize: 8.2, color: "#555" }}>Models 49% · Datasets 22% · Agents 15% · Tools 8% · Eval Suites 6%</span></span>
+        <span><b style={{ fontSize: 8.8 }}>Volume over time</b>{chart("0,34 20,28 40,31 60,20 80,24 100,15 120,19 140,10 160,13 180,7 199,9", 38)}<b style={{ fontSize: 8.8, display: "block", marginTop: 4 }}>Geography (buyers)</b><span style={{ fontSize: 8.2, color: "#555" }}>US 32% · SG 18% · GB 11% · DE 7% · Other 32%</span></span>
+        <span><b style={{ fontSize: 8.8 }}>Markets snapshot</b>{[["Floor price (TKA)", "65,200 ↑ 2.2%"], ["Median price (TKA)", "18,750 ↑ 1.7%"], ["Daily volume (TKA)", "2.41M ↑ 12.4%"], ["Sales (T/D)", "1,642 ↑ 9.1%"], ["Buyers (T/D)", "241 ↑ 11.3%"]].map(([k, v]) => <span key={k} style={{ display: "flex", justifyContent: "space-between", fontSize: 8.2, color: "#555", marginTop: 2 }}><span>{k}</span><b style={{ color: "#111" }}>{v}</b></span>)}<b style={{ fontSize: 8.8, display: "block", marginTop: 5 }}>Verification</b><span style={{ fontSize: 8.2, color: "#555" }}>Verified 1,642 · Verified by Tokenta Verifiers 982 · Verified on May 13, 2025 · Attestations 5 of 7</span></span>
+      </div>
+      <p style={{ fontSize: 8.8, margin: "7px 0 3px" }}><b>Recent assets</b> <span style={{ color: "#888" }}>Showing 1–5 of 359 assets</span></p>
+      {recentTable(true)}
+    </div>,
+  ];
   return <div className="tks" role="region" aria-label="Tokenta density study — interactive rebuild of Tokenta_21">
     <Head n="21" kicker="Density study" />
     <h3>Density study.</h3>
     <p className="tks-lede">Three information-density directions were tested before selecting the institutional balance.</p>
-    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
-      {DENSITY.map((dd, i) => <button key={dd.n} type="button" className={`tks-card${i === active ? " is-on" : ""}`} aria-pressed={i === active} onClick={() => setActive(i)}>
-        <span className="tks-num">{dd.n}</span> <b>{dd.name}</b>{dd.selected ? <span className="tks-tag" style={{ marginLeft: 6 }}>Selected direction</span> : null}
-        <p style={{ color: "#555", margin: "4px 0 8px" }}>{dd.sub}</p>
-        <span style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5 }}>
-          {dd.stats.map(([k, v]) => <span key={k} style={{ border: "1px solid #e2e2de", borderRadius: 5, padding: "4px 7px" }}><span className="tks-kicker" style={{ display: "block" }}>{k}</span><b>{v}</b></span>)}
-        </span>
-      </button>)}
+    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(3, 1fr)", alignItems: "start" }}>
+      {DENSITY.map((dd, i) => <div key={dd.n} className={`tks-card${i === active ? " is-on" : ""}`} style={{ padding: "10px 11px", cursor: "pointer" }} role="button" tabIndex={0} aria-pressed={i === active} onClick={() => setActive(i)} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActive(i); } }}>
+        <p style={{ margin: 0 }}><span className="tks-num" style={{ width: 20, height: 20, fontSize: 11 }}>{dd.n}</span> <b style={{ fontSize: 13 }}>{dd.name}</b>{dd.selected ? <span className="tks-tag" style={{ marginLeft: 6, fontSize: 9.5 }}>Selected direction</span> : null}</p>
+        <p style={{ color: "#555", margin: "3px 0 8px", fontSize: 10.8 }}>{dd.sub}</p>
+        <div style={{ border: "1px solid #e2e2de", borderRadius: 6, padding: "7px 8px" }}>{miniHead}{bodies[i]}</div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3px 10px", marginTop: 8 }}>
+          {dd.scores.map(([k, v]) => <p key={k} style={{ margin: 0, fontSize: 9.6, lineHeight: 1.45 }}><b>{k}</b><br /><span style={{ color: "#555" }}>{v}</span></p>)}
+        </div>
+      </div>)}
     </div>
-    <div className="tks-detail" aria-live="polite">
-      <b>{d.name}</b> — {d.hero}
-      <p style={{ margin: "6px 0 0" }}>{d.scores.map(([k, v]) => <span key={k} style={{ display: "block" }}><b>{k}</b> — {v}</span>)}</p>
-      <p style={{ margin: "8px 0 0", color: "#555" }}>Synthesis — principles: <b>Data first</b> — Lead with verified metrics and activity, not marketing statements. · <b>Legible hierarchy</b> — Every screen has a clear reading order and visual weight. · <b>Evidence visible</b> — Trust signals and provenance are always one glance away. · <b>Density changes by context</b> — Desktop, mobile, and task depth dictate the right level of density.</p>
+    <div className="tks-detail" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14 }}>
+      <span><b>Data first</b> — Lead with verified metrics and activity, not marketing statements.</span>
+      <span><b>Legible hierarchy</b> — Every screen has a clear reading order and visual weight.</span>
+      <span><b>Evidence visible</b> — Trust signals and provenance are always one glance away.</span>
+      <span><b>Density changes by context</b> — Desktop, mobile, and task depth dictate the right level of density.</span>
     </div>
     <Foot />
   </div>;
@@ -549,22 +792,28 @@ const MACHINE_VERIFIABLE = [
 export function TokentaVerificationSixStages() {
   const [active, setActive] = useState(0);
   const [submitted, setSubmitted] = useState(false);
-  const s = SIX_STAGES[active];
   return <div className="tks" role="region" aria-label="Tokenta verification six stages — interactive rebuild of Tokenta_22">
     <Head n="30" kicker="Verification six stages" />
     <h3>Verification six stages.</h3>
     <p className="tks-lede">The moat becomes legible when verification is visualized as a structured pipeline.</p>
-    <div className="tks-flow" role="group" aria-label="Verification stages">
-      {SIX_STAGES.map((st, i) => <span key={st.n} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={active === i} onClick={() => setActive(i)}><span className="tks-num" style={{ marginRight: 4 }}>{st.n}</span><b>{st.name}</b><br /><span style={{ color: "#555", fontSize: 10.5 }}>{st.sub}</span></button></span>)}
+    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(6, 1fr) 0.92fr", gap: 7, alignItems: "stretch" }} role="group" aria-label="All six verification stage panels">
+      {SIX_STAGES.map((st, i) => <div key={st.n} className={`tks-card${i === active ? " is-on" : ""}`} style={{ padding: "9px 9px", cursor: "pointer", display: "flex", flexDirection: "column" }} role="button" tabIndex={0} aria-pressed={i === active} onClick={() => setActive(i)} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActive(i); } }}>
+        <p style={{ margin: 0 }}><span className="tks-num" style={{ width: 20, height: 20, fontSize: 11 }}>{st.n}</span> <b style={{ fontSize: 11.8, lineHeight: 1.3 }}>{st.name}</b></p>
+        <p style={{ color: "#555", fontSize: 9.6, margin: "4px 0 7px", lineHeight: 1.45 }}>{st.sub}</p>
+        <div style={{ border: "1px solid #e2e2de", borderRadius: 6, padding: "6px 7px", fontFamily: "'IBM Plex Mono', monospace", fontSize: 8.6, lineHeight: 1.55, whiteSpace: "pre-wrap", flex: 1 }}>{st.panel}</div>
+        {i === 0 && <button type="button" className="tks-btn" style={{ marginTop: 6, padding: "3px 8px", fontSize: 10.5 }} aria-pressed={submitted} onClick={(e) => { e.stopPropagation(); setSubmitted((v) => !v); }}>{submitted ? "Submitted ✓" : "Submit for verification"}</button>}
+        <p style={{ margin: "7px 0 0", fontSize: 9.6, lineHeight: 1.45, borderTop: "1px solid #e8e8e4", paddingTop: 6 }}><b>Output</b> — {st.output}</p>
+      </div>)}
+      <div className="tks-card" style={{ padding: "9px 10px", borderStyle: "dashed" }}>
+        <p style={{ fontWeight: 700, margin: "0 0 7px", fontSize: 12, lineHeight: 1.35 }}>What makes each stage machine-verifiable.</p>
+        {MACHINE_VERIFIABLE.map(([n, b]) => <p key={n} style={{ margin: "0 0 8px", fontSize: 10, lineHeight: 1.45 }}><b>{n}</b><br /><span style={{ color: "#555" }}>{b}</span></p>)}
+      </div>
     </div>
-    <div className="tks-detail" aria-live="polite">
-      <b>Stage {s.n} — {s.name}.</b>
-      <p style={{ margin: "6px 0", fontFamily: "'IBM Plex Mono', monospace", fontSize: 11.5 }}>{s.panel}</p>
-      {active === 0 && <p style={{ margin: "0 0 6px" }}><button type="button" className="tks-btn" aria-pressed={submitted} onClick={() => setSubmitted((v) => !v)}>{submitted ? "Submitted ✓ — submission recorded" : "Submit for verification"}</button></p>}
-      <p style={{ margin: 0 }}><b>Output</b> — {s.output}</p>
-      <p className="tks-kicker" style={{ marginTop: 10 }}>What makes each stage machine-verifiable</p>
-      <p style={{ margin: "4px 0" }}>{MACHINE_VERIFIABLE.map(([n, b]) => <span key={n} style={{ display: "block" }}><b>{n}</b> — {b}</span>)}</p>
-      <p style={{ margin: "6px 0 0", color: "#555" }}>Why this matters: <b>Verification is reproducible</b> — Anyone can re-run checks and confirm the same outcome from the same inputs. · <b>Evidence persists across the trade</b> — Proof, results, and signatures stay with the artifact wherever it goes. · <b>Listings inherit trust context</b> — Buyers and integrators see verified facts, not marketing claims.</p>
+    <div className="tks-note" style={{ marginTop: 10 }}>
+      <span style={{ fontWeight: 800, fontSize: 14 }}>Why this<br />matters</span>
+      <span><b>Verification is reproducible</b> — Anyone can re-run checks and confirm the same outcome from the same inputs.</span>
+      <span><b>Evidence persists across the trade</b> — Proof, results, and signatures stay with the artifact wherever it goes.</span>
+      <span><b>Listings inherit trust context</b> — Buyers and integrators see verified facts, not marketing claims.</span>
     </div>
     <Foot />
   </div>;
@@ -655,37 +904,63 @@ const GRID_RULES = [
 
 export function TokentaResponsiveGrid() {
   const [bp, setBp] = useState<"Desktop" | "Tablet" | "Mobile">("Desktop");
-  const [shell, setShell] = useState<"terminal" | "longform">("terminal");
   const shown = bp === "Mobile" ? TERMINAL_ROWS.slice(0, 3) : TERMINAL_ROWS;
+  const deviceLabel = (label: string, cols: string) => <p className="tks-kicker" style={{ margin: "0 0 4px", fontSize: 9 }}><b style={{ color: "#111" }}>{label}</b> · {cols}</p>;
+  const termPanel = (kind: "Desktop" | "Tablet" | "Mobile") => <div className={`tks-card${bp === kind ? " is-on" : ""}`} style={{ padding: "7px 8px", cursor: "pointer", minWidth: 0 }} role="button" tabIndex={0} aria-pressed={bp === kind} onClick={() => setBp(kind)} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setBp(kind); } }}>
+    {deviceLabel(kind.toUpperCase(), kind === "Desktop" ? "≥ 1280px · 12-COL" : kind === "Tablet" ? "768–1279px · 8-COL" : "< 768px · 4-COL")}
+    <p style={{ margin: "0 0 5px", fontSize: 9.5, display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}><b>⌂ TOKENTA</b>{kind !== "Mobile" && <span style={{ color: "#777" }}>{kind === "Desktop" ? "Product ▾ · Developers ▾ · Institution ▾ · Docs ▾ · Legal ▾ · ⌕" : "⌕"} · Launch app ↗</span>}{kind === "Mobile" && <span style={{ color: "#777" }}>☰ · Launch app ↗</span>}</p>
+    {kind === "Desktop" && <p style={{ margin: "0 0 5px", fontSize: 8.8, color: "#555" }}>Sidebar: Overview / Accounts / Transfers / Disputes / Reports / Settings</p>}
+    <div className="tks-grid" style={{ gridTemplateColumns: kind === "Desktop" ? "repeat(4, 1fr)" : "1fr 1fr", gap: 4, margin: "5px 0" }}>
+      {GRID_METRICS.map(([k, v, d]) => <span key={k} style={{ border: "1px solid #e8e8e4", borderRadius: 4, padding: "3px 5px", minWidth: 0, overflow: "hidden" }}><span style={{ display: "block", fontSize: 7.8, color: "#888", textTransform: "uppercase" }}>{k}</span><b style={{ fontSize: 9.6 }}>{v}</b> <span style={{ color: "#137a3f", fontSize: 8.6 }}>{d}</span></span>)}
+    </div>
+    {kind === "Mobile" ? <div>
+      {TERMINAL_ROWS.slice(0, 3).map((r) => <p key={r[0]} style={{ margin: "0 0 4px", fontSize: 8.6, lineHeight: 1.45, borderTop: "1px solid #e8e8e4", paddingTop: 3 }}><b>{r[0]}</b> · {r[2]}<br /><b>{r[3]}</b> · {r[4]}</p>)}
+      <p style={{ margin: "2px 0 0", fontSize: 8.4, color: "#777", textAlign: "center" }}>View more</p>
+    </div> : <div style={{ overflowX: "auto" }}><table className="tks-table tks-table--micro" style={{ fontSize: 8.4 }}>
+      <thead><tr><th>ID</th><th>Type</th><th>Status</th><th>Amount</th>{kind === "Desktop" && <th>Channel</th>}</tr></thead>
+      <tbody>{TERMINAL_ROWS.map((r) => <tr key={r[0]}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}</td><td>{r[3]}</td>{kind === "Desktop" && <td>{r[5]}</td>}</tr>)}</tbody>
+    </table></div>}
+    {kind === "Desktop" && <p style={{ color: "#555", margin: "5px 0 0", fontSize: 8.8 }}>Activity by channel: API 52%, Web 28%, Portal 20% · Quick actions: New transfer · Search disputes · Download report</p>}
+  </div>;
+  const longPanel = (kind: "Desktop" | "Tablet" | "Mobile") => <div className={`tks-card${bp === kind ? " is-on" : ""}`} style={{ padding: "7px 8px", cursor: "pointer", minWidth: 0 }} role="button" tabIndex={0} aria-pressed={bp === kind} onClick={() => setBp(kind)} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setBp(kind); } }}>
+    {deviceLabel(kind.toUpperCase(), kind === "Desktop" ? "≥ 1280px · 12-COL" : kind === "Tablet" ? "768–1279px · 8-COL" : "< 768px · 4-COL")}
+    <p style={{ margin: "0 0 4px", fontSize: 9.5 }}><b>⌂ TOKENTA</b> <span style={{ color: "#777" }}>{kind === "Mobile" ? "☰" : "Product ▾ · Developers ▾ · Institution ▾ · Docs ▾ · Legal ▾ · ⌕ · Launch app ↗"}</span></p>
+    {kind === "Desktop" && <p style={{ margin: "0 0 4px", fontSize: 8.6, color: "#555" }}>On this page: 1. Introduction · 2. Scope · 3. Definitions · 4. Responsibilities · 5. Acceptable use · 6. Data handling · 7. Enforcement · 8. Contact</p>}
+    {kind === "Tablet" && <p style={{ margin: "0 0 4px", fontSize: 8.6, color: "#555" }}>On this page ▾</p>}
+    {kind === "Mobile" && <p style={{ margin: "0 0 4px", fontSize: 8.6, color: "#555" }}>Contents ▾</p>}
+    <p style={{ margin: "2px 0", fontSize: 11.5 }}><b>Terms of Use</b></p>
+    <p style={{ margin: "0 0 4px", fontSize: 8.6, color: "#777" }}>Last updated May 10, 2025</p>
+    <p style={{ margin: "3px 0", fontSize: 9, lineHeight: 1.5 }}><b>1. Introduction</b> — These Terms of Use govern your access to and use of the Tokenta platform and related services.</p>
+    <p style={{ margin: "3px 0", fontSize: 9, lineHeight: 1.5 }}><b>2. Scope</b> — These Terms apply to all users, including developers, institutions, and their end users.</p>
+    {kind === "Desktop" && <p style={{ color: "#555", margin: "4px 0 0", fontSize: 8.6 }}>Related: Privacy Policy, Security Overview, Data Handling Guide, Legal Notices · Need help? Contact our legal team. [Contact us]</p>}
+    <p style={{ color: "#777", margin: "5px 0 0", fontSize: 8.4, borderTop: "1px solid #e8e8e4", paddingTop: 4 }}>© 2025 Tokenta, Inc. · Terms of Use · Privacy Policy · Security{kind === "Desktop" ? " · Disclosures · Legal Notices" : ""}</p>
+  </div>;
+  const sectionLabel = (title: string, body: string, points: string[]) => <div>
+    <p style={{ fontWeight: 800, fontSize: 11.5, margin: "0 0 5px", textTransform: "uppercase", letterSpacing: ".03em" }}>{title}</p>
+    <p style={{ fontSize: 10.3, color: "#444", lineHeight: 1.5, margin: "0 0 8px" }}>{body}</p>
+    {points.map((p, i) => <p key={p} style={{ fontSize: 10.3, margin: "5px 0" }}><span className="tks-num" style={{ width: 17, height: 17, fontSize: 9.5, marginRight: 5 }}>{i + 1}</span>{p}</p>)}
+  </div>;
   return <div className="tks" role="region" aria-label="Tokenta responsive grid — interactive rebuild of Tokenta_24">
     <Head n="23" kicker="Responsive grid" />
     <h3>Responsive grid.</h3>
     <p className="tks-lede">The same public system had to support dense terminal layouts and long-form institutional pages across desktop, tablet, and mobile.</p>
-    <p style={{ margin: "0 0 10px" }}>
-      {["Desktop", "Tablet", "Mobile"].map((b) => <button key={b} type="button" className="tks-chip" style={{ marginRight: 6 }} aria-pressed={bp === b} onClick={() => setBp(b as typeof bp)}>{b === "Desktop" ? "Desktop ≥ 1280px · 12-COL" : b === "Tablet" ? "Tablet 768–1279px · 8-COL" : "Mobile < 768px · 4-COL"}</button>)}
-      <button type="button" className="tks-chip" aria-pressed={shell === "longform"} onClick={() => setShell(shell === "terminal" ? "longform" : "terminal")}>{shell === "terminal" ? "1. Terminal shell" : "2. Long-form pages"}</button>
-    </p>
-    <div className="tks-card" aria-live="polite">
-      {shell === "terminal" ? <div>
-        <p style={{ margin: "0 0 6px" }}><b>⌂ TOKENTA</b> <span style={{ color: "#777" }}>{bp !== "Mobile" ? "Product ▾ · Developers ▾ · Institution ▾ · Docs ▾ · Legal ▾ · ⌕ · Launch app ↗" : "☰ · Launch app ↗"}</span></p>
-        <p className="tks-kicker">Overview {bp === "Desktop" ? "· Sidebar: Overview / Accounts / Transfers / Disputes / Reports / Settings" : bp === "Tablet" ? "· Icon rail navigation" : "· Collapsed menu"}</p>
-        <div className="tks-grid" style={{ gridTemplateColumns: bp === "Mobile" ? "1fr 1fr" : "repeat(4, 1fr)", margin: "8px 0" }}>
-          {GRID_METRICS.map(([k, v, d]) => <span key={k} className="tks-card" style={{ padding: "7px 9px" }}><span className="tks-kicker" style={{ display: "block" }}>{k}</span><b>{v}</b> <span style={{ color: "#137a3f" }}>{d}</span></span>)}
-        </div>
-        <div style={{ overflowX: "auto" }}><table className="tks-table"><thead><tr><th>ID</th><th>Type</th><th>Status</th><th>Amount</th><th>Date</th>{bp === "Desktop" && <th>Channel</th>}</tr></thead>
-          <tbody>{shown.map((r) => <tr key={r[0]}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}</td><td>{r[3]}</td><td>{r[4]}</td>{bp === "Desktop" && <td>{r[5]}</td>}</tr>)}</tbody></table></div>
-        <p style={{ color: "#555", margin: "6px 0 0" }}>Terminal shell behaviours printed: 1 Sidebar collapse · 2 Table overflow handling · 3 Panel reprioritization. Activity by channel: API 52%, Web 28%, Portal 20%.</p>
-      </div> : <div>
-        <p style={{ margin: "0 0 6px" }}><b>Terms of Use</b> — Last updated May 10, 2025</p>
-        <p className="tks-kicker">On this page: 1. Introduction · 2. Scope · 3. Definitions · 4. Responsibilities · 5. Acceptable use · 6. Data handling · 7. Enforcement · 8. Contact</p>
-        <p style={{ margin: "6px 0" }}><b>1. Introduction</b> — These Terms of Use govern your access to and use of the Tokenta platform and related services.</p>
-        <p style={{ margin: "6px 0" }}><b>2. Scope</b> — These Terms apply to all users, including developers, institutions, and their end users.</p>
-        <p style={{ color: "#555", margin: 0 }}>Long-form behaviours printed: 1 TOC behavior · 2 Content width · 3 Footer changes. Related: Privacy Policy, Security Overview, Data Handling Guide, Legal Notices. Footer: © 2025 Tokenta, Inc. · Terms of Use · Privacy Policy · Security · Disclosures · Legal Notices.</p>
-      </div>}
-    </div>
-    <div className="tks-note" style={{ marginTop: 10 }}>
-      <span><b>Design rules</b></span>
-      {GRID_RULES.map(([n, b]) => <span key={n}><b>{n}</b> — {b}</span>)}
+    <div className="tks-grid" style={{ gridTemplateColumns: "138px 1fr 168px", alignItems: "start" }}>
+      <div style={{ display: "grid", gap: 26 }}>
+        {sectionLabel("1. Terminal shell", "Data-heavy workspace needs to scale without losing clarity or control.", ["Sidebar collapse", "Table overflow handling", "Panel reprioritization"])}
+        {sectionLabel("2. Long-form pages", "Content-first pages adapt reading width, TOC behavior, and footer density.", ["TOC behavior", "Content width", "Footer changes"])}
+      </div>
+      <div style={{ display: "grid", gap: 10 }}>
+        <div className="tks-grid" style={{ gridTemplateColumns: "1.9fr 1.35fr 0.85fr" }}>{termPanel("Desktop")}{termPanel("Tablet")}{termPanel("Mobile")}</div>
+        <div className="tks-grid" style={{ gridTemplateColumns: "1.9fr 1.35fr 0.85fr" }}>{longPanel("Desktop")}{longPanel("Tablet")}{longPanel("Mobile")}</div>
+      </div>
+      <div className="tks-card" style={{ padding: "10px 12px" }} aria-label="Design rules rail">
+        <p className="tks-kicker" style={{ margin: "0 0 8px", color: "#111" }}>Design rules</p>
+        {GRID_RULES.map(([n, b]) => <div key={n} style={{ marginBottom: 12 }}>
+          <p style={{ margin: 0 }}><span style={{ display: "inline-flex", width: 24, height: 24, borderRadius: "50%", background: "#111", color: "#fff", alignItems: "center", justifyContent: "center", fontSize: 12, marginRight: 6 }} aria-hidden="true">◎</span><b style={{ fontSize: 11.5 }}>{n}</b></p>
+          <p style={{ margin: "4px 0 0", fontSize: 10.3, color: "#555", lineHeight: 1.5 }}>{b}</p>
+        </div>)}
+        <p style={{ margin: 0, fontSize: 10, color: "#777" }} aria-live="polite">Breakpoint in focus: <b style={{ color: "#111" }}>{bp}</b> — {bp === "Desktop" ? "≥ 1280px · 12-COL" : bp === "Tablet" ? "768–1279px · 8-COL" : "< 768px · 4-COL"}. Terminal rows shown at this breakpoint: {shown.length}.</p>
+      </div>
     </div>
     <Foot />
   </div>;
@@ -783,11 +1058,16 @@ export function TokentaTerminalOverview() {
     <Head n="25" kicker="Terminal overview" />
     <h3>Terminal overview.</h3>
     <p className="tks-lede">The public terminal compresses the exchange thesis into one information-dense demonstration surface.</p>
-    <div className="tks-flow" role="group" aria-label="Terminal annotations" style={{ marginBottom: 10 }}>
-      {TERMINAL_CALLOUTS.map(([n], i) => <button key={n} type="button" className="tks-chip" aria-pressed={callout === i} onClick={() => setCallout(i)}>{i + 1} {n}</button>)}
-    </div>
-    <p style={{ margin: "0 0 10px" }} aria-live="polite"><b>{callout + 1}. {TERMINAL_CALLOUTS[callout][0]}</b> — {TERMINAL_CALLOUTS[callout][1]}</p>
-    <div style={{ background: "#0b0b0c", color: "#f5f5f5", borderRadius: 10, padding: "12px 14px" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "138px minmax(0,1fr) 138px", gap: 11, alignItems: "start" }}>
+      <div style={{ display: "grid", gap: 16, paddingTop: 92 }} role="group" aria-label="Terminal callouts 1 to 4">
+        {TERMINAL_CALLOUTS.slice(0, 4).map(([n, b], i) => <button key={n} type="button" aria-pressed={callout === i} onClick={() => setCallout(i)} style={{ background: "none", border: "none", borderTop: "1px dashed #b9b9b2", padding: "7px 0 0", textAlign: "left", font: "inherit", cursor: "pointer", width: "100%" }}>
+            <span className="tks-num" style={{ width: 21, height: 21, fontSize: 11.5, marginBottom: 4 }}>{i + 1}</span>
+            <b style={{ display: "block", fontSize: 12.5 }}>{n}</b>
+            <span style={{ display: "block", color: "#555", fontSize: 10.3, lineHeight: 1.5, marginTop: 2 }}>{b}</span>
+          </button>)}
+      </div>
+      <div style={{ minWidth: 0 }} className="tks-terminal-slim">
+      <div style={{ background: "#0b0b0c", color: "#f5f5f5", borderRadius: 10, padding: "12px 14px", zoom: 0.88 }}>
       <p style={{ margin: "0 0 10px", display: "flex", gap: 13, flexWrap: "wrap", alignItems: "center" }}><b>⌂ TOKENTA</b><span style={{ color: "#b9b9be" }}>Market · <u>Terminal</u> · Docs · Developers ▾ · Institution ▾ · Legal ▾</span><span style={{ marginLeft: "auto", color: "#7ee787" }}>● Mainnet</span><span className="tks-btn" style={{ padding: "3px 11px" }}>Connect</span></p>
       <div className="tks-grid" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
         <div className="tks-card" style={{ background: "#141416", borderColor: "#2c2d30", color: "#eee" }}><span className="tks-kicker">Balance · Total balance (USD)</span><p style={{ fontSize: 16, fontWeight: 800, margin: "4px 0" }}>$24,812,430.21</p><p style={{ margin: 0, color: "#b9b9be" }}>Available $18,642,113.77 · Locked $6,170,316.44</p></div>
@@ -795,7 +1075,7 @@ export function TokentaTerminalOverview() {
         <div className="tks-card" style={{ background: "#141416", borderColor: "#2c2d30", color: "#eee" }}><span className="tks-kicker">Counterparties · Active counterparties</span><p style={{ fontSize: 16, fontWeight: 800, margin: "4px 0" }}>34</p><p style={{ margin: 0, color: "#b9b9be" }}>Top exposure $6.12M · Concentration 12.4%</p></div>
         <div className="tks-card" style={{ background: "#141416", borderColor: "#2c2d30", color: "#eee" }}><span className="tks-kicker">Settlements · Settled (30D)</span><p style={{ fontSize: 16, fontWeight: 800, margin: "4px 0" }}>$312,845,993.11</p><p style={{ margin: 0, color: "#b9b9be" }}>Tx count 4,782 · Success rate 99.82%</p></div>
       </div>
-      <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1.2fr 1fr", marginTop: 10 }}>
+      <div className="tks-grid" style={{ gridTemplateColumns: "1.25fr 1.15fr 1fr", marginTop: 10 }}>
         <div className="tks-card" style={{ background: "#141416", borderColor: "#2c2d30", color: "#eee" }}>
           <b>Marketplace</b>
           <p style={{ margin: "6px 0" }}>{["All markets", "Stablecoin", "RWAs", "Credit", "FX"].map((t) => <button key={t} type="button" className="tks-chip" style={{ marginRight: 4, background: marketTab === t ? "#fff" : "#1d1e20", color: marketTab === t ? "#111" : "#ddd", borderColor: "#333438" }} aria-pressed={marketTab === t} onClick={() => setMarketTab(t)}>{t}</button>)}</p>
@@ -824,11 +1104,21 @@ export function TokentaTerminalOverview() {
           <tbody>{EXEC_LOG.map((r) => <tr key={r[0] + r[1]}><td style={{ borderBottomColor: "#232426" }}>{r[0]}</td><td style={{ borderBottomColor: "#232426" }}>{r[1]}</td><td style={{ borderBottomColor: "#232426", color: r[2] === "Buy" ? "#4ade80" : "#f87171" }}>{r[2]}</td><td style={{ borderBottomColor: "#232426" }}>{r[3]}</td><td style={{ borderBottomColor: "#232426" }}>{r[4]}</td><td style={{ borderBottomColor: "#232426" }}>{r[5]}</td><td style={{ borderBottomColor: "#232426" }}>{r[6]}</td><td style={{ borderBottomColor: "#232426" }}><span className="tks-ver">● Settled</span></td></tr>)}</tbody></table></div>
       </div>
     </div>
+      </div>
+      <div style={{ display: "grid", gap: 16, paddingTop: 92 }} role="group" aria-label="Terminal callouts 5 to 8">
+        {TERMINAL_CALLOUTS.slice(4).map(([n, b], i) => <button key={n} type="button" aria-pressed={callout === i + 4} onClick={() => setCallout(i + 4)} style={{ background: "none", border: "none", borderTop: "1px dashed #b9b9b2", padding: "7px 0 0", textAlign: "left", font: "inherit", cursor: "pointer", width: "100%" }}>
+            <span className="tks-num" style={{ width: 21, height: 21, fontSize: 11.5, marginBottom: 4 }}>{i + 5}</span>
+            <b style={{ display: "block", fontSize: 12.5 }}>{n}</b>
+            <span style={{ display: "block", color: "#555", fontSize: 10.3, lineHeight: 1.5, marginTop: 2 }}>{b}</span>
+          </button>)}
+      </div>
+    </div>
     <div className="tks-note" style={{ marginTop: 10 }}>
       <span><b>Evidence replaces illustration</b> — Every metric is live, verifiable, and tied to on-chain and operational sources—not static claims.</span>
       <span><b>Multiple trust surfaces in one view</b> — Liquidity, counterparty, pricing, and settlement data coexist to build confidence across stakeholders.</span>
       <span><b>Dense but scannable hierarchy</b> — Information is structured for speed: summaries first, detail on demand, proof always visible.</span>
     </div>
+    <p style={{ margin: "9px 0 0", fontSize: 11.5 }} aria-live="polite">Callout in focus: <b>{callout + 1}. {TERMINAL_CALLOUTS[callout][0]}</b> — {TERMINAL_CALLOUTS[callout][1]}</p>
     <Foot />
   </div>;
 }
@@ -945,31 +1235,36 @@ const INVENTORY = [
 export function TokentaBuyerSellerViews() {
   const [view, setView] = useState<"buyer" | "seller">("buyer");
   const [added, setAdded] = useState(false);
+  const tableStyle: React.CSSProperties = { fontSize: 9.2 };
+  const buyerPanel = <div className={`tks-card${view === "buyer" ? " is-on" : ""}`} style={{ padding: "9px 10px", minWidth: 0, cursor: "pointer" }} role="button" tabIndex={0} aria-pressed={view === "buyer"} onClick={() => setView("buyer")} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setView("buyer"); } }}>
+    <p style={{ margin: "0 0 7px", display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}><b style={{ fontSize: 13 }}>👁 Buyer watchlist</b><span style={{ marginLeft: "auto", border: "1px solid #c9c9c4", borderRadius: 5, padding: "2px 8px", fontSize: 9.5, color: "#777" }}>Search assets ⌕</span><span style={{ border: "1px solid #c9c9c4", borderRadius: 5, padding: "2px 8px", fontSize: 9.5 }}>Filters ≣</span></p>
+    <p style={{ margin: "0 0 7px", fontSize: 10, color: "#555" }}>Saved assets, insights, and decisions at a glance.</p>
+    <div style={{ overflowX: "auto" }}><table className="tks-table tks-table--micro tks-table--tight" style={tableStyle}><thead><tr><th>Asset</th><th>Key facts</th><th>Verification</th><th>Compare</th><th>Decision aids</th><th>Last updated</th></tr></thead>
+      <tbody>{WATCHLIST.map((a) => <tr key={a.name}><td><b>{a.name}</b><br />{a.loc}<br /><span className="tks-tag">{a.tag}</span></td>
+        <td style={{ whiteSpace: "nowrap" }}>Price {a.price}<br />NOI {a.noi}<br />Cap rate {a.cap}<br />Year built {a.year}</td>
+        <td><b style={{ fontSize: 13 }}>{a.ver}%</b><br /><span className={a.status === "Verified" ? "tks-ver" : undefined}>{a.status}</span><br />{a.checks}<br />See details →</td>
+        <td>{a.compare.map((c) => <span key={c} style={{ display: "block" }}>{c}</span>)}</td>
+        <td style={{ whiteSpace: "nowrap" }}>Cash flow model<br />Comp set<br />Risk summary</td><td style={{ whiteSpace: "nowrap" }}>{a.updated}</td></tr>)}</tbody></table></div>
+    <p style={{ margin: "8px 0 0", fontSize: 10.3 }}><b>Watchlist summary</b> — 3 Assets · $234.5M Total price · 5.2% Avg. cap rate · 85% Avg. verification <span style={{ float: "right" }} className="tks-btn tks-btn--ghost">⭳ Export watchlist</span></p>
+  </div>;
+  const sellerPanel = <div className={`tks-card${view === "seller" ? " is-on" : ""}`} style={{ padding: "9px 10px", minWidth: 0, cursor: "pointer" }} role="button" tabIndex={0} aria-pressed={view === "seller"} onClick={() => setView("seller")} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setView("seller"); } }}>
+    <p style={{ margin: "0 0 7px", display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}><b style={{ fontSize: 13 }}>⬢ Seller inventory</b><button type="button" className="tks-btn" style={{ marginLeft: "auto", padding: "2px 9px", fontSize: 10 }} aria-pressed={added} onClick={(e) => { e.stopPropagation(); setAdded((v) => !v); }}>{added ? "Asset draft added ✓" : "+ Add asset"}</button><span style={{ border: "1px solid #c9c9c4", borderRadius: 5, padding: "2px 8px", fontSize: 9.5, color: "#777" }}>Search inventory ⌕</span><span style={{ border: "1px solid #c9c9c4", borderRadius: 5, padding: "2px 8px", fontSize: 9.5 }}>Filters ≣</span></p>
+    <p style={{ margin: "0 0 7px", fontSize: 10, color: "#555" }}>Listed assets, verification, and performance overview.</p>
+    <div style={{ overflowX: "auto" }}><table className="tks-table tks-table--micro tks-table--tight" style={{ fontSize: 8 }}><thead><tr><th>Asset</th><th>Status</th><th>Verification</th><th>Volume</th><th>Performance (30D)</th><th>Last updated</th></tr></thead>
+      <tbody>{INVENTORY.map((a) => <tr key={a.name}><td><b>{a.name}</b><br />{a.loc}<br /><span className="tks-tag">{a.tag}</span></td>
+        <td style={{ whiteSpace: "nowrap" }}><b>{a.state === "Live" ? "● Live" : a.state === "Draft" ? "● Draft" : "● Paused"}</b><br />{a.listed}</td>
+        <td><b style={{ fontSize: 13 }}>{a.ver}%</b><br /><span className={a.status === "Verified" ? "tks-ver" : undefined}>{a.status}</span><br />{a.checks}<br />See details →</td>
+        <td style={{ whiteSpace: "nowrap" }}>Views {a.views}<br />Engaged {a.engaged}<br />Inquiries {a.inquiries}</td>
+        <td>Watch adds {a.watch}<br />Avg. time on page {a.time}<br />Saves {a.saves}</td><td style={{ whiteSpace: "nowrap" }}>{a.updated}</td></tr>)}</tbody></table></div>
+  </div>;
   return <div className="tks" role="region" aria-label="Tokenta buyer and seller views — interactive rebuild of Tokenta_29">
     <Head n="28" kicker="Buyer and seller views" />
     <h3>Buyer and seller views.</h3>
     <p className="tks-lede">The same marketplace system serves asset discovery for buyers and inventory management for sellers.</p>
-    <p style={{ margin: "0 0 10px" }}>
-      <button type="button" className="tks-chip" aria-pressed={view === "buyer"} onClick={() => setView("buyer")}>👁 Buyer watchlist — Saved assets, insights, and decisions at a glance.</button>{" "}
-      <button type="button" className="tks-chip" aria-pressed={view === "seller"} onClick={() => setView("seller")}>⬢ Seller inventory — Listed assets, verification, and performance overview.</button>
-      {view === "seller" && <button type="button" className="tks-btn" style={{ marginLeft: 8 }} aria-pressed={added} onClick={() => setAdded((v) => !v)}>{added ? "Asset draft added ✓" : "+ Add asset"}</button>}
-    </p>
-    {view === "buyer" ? <div className="tks-card">
-      <div style={{ overflowX: "auto" }}><table className="tks-table"><thead><tr><th>Asset</th><th>Key facts</th><th>Verification</th><th>Compare</th><th>Decision aids</th><th>Last updated</th></tr></thead>
-        <tbody>{WATCHLIST.map((a) => <tr key={a.name}><td style={{ whiteSpace: "nowrap" }}><b>{a.name}</b><br />{a.loc}<br /><span className="tks-tag">{a.tag}</span></td>
-          <td>Price {a.price}<br />NOI {a.noi}<br />Cap rate {a.cap}<br />Year built {a.year}</td>
-          <td><b style={{ fontSize: 15 }}>{a.ver}%</b><br /><span className={a.status === "Verified" ? "tks-ver" : undefined}>{a.status}</span><br />{a.checks}<br />See details →</td>
-          <td>{a.compare.map((c) => <span key={c} style={{ display: "block" }}>{c}</span>)}</td>
-          <td>Cash flow model<br />Comp set<br />Risk summary</td><td>{a.updated}</td></tr>)}</tbody></table></div>
-      <p style={{ margin: "8px 0 0" }}><b>Watchlist summary</b> — 3 Assets · $234.5M Total price · 5.2% Avg. cap rate · 85% Avg. verification <span style={{ float: "right" }} className="tks-btn tks-btn--ghost">⭳ Export watchlist</span></p>
-    </div> : <div className="tks-card">
-      <div style={{ overflowX: "auto" }}><table className="tks-table"><thead><tr><th>Asset</th><th>Status</th><th>Verification</th><th>Volume</th><th>Performance (30D)</th><th>Last updated</th></tr></thead>
-        <tbody>{INVENTORY.map((a) => <tr key={a.name}><td style={{ whiteSpace: "nowrap" }}><b>{a.name}</b><br />{a.loc}<br /><span className="tks-tag">{a.tag}</span></td>
-          <td><b>{a.state === "Live" ? "● Live" : a.state === "Draft" ? "● Draft" : "● Paused"}</b><br />{a.listed}</td>
-          <td><b style={{ fontSize: 15 }}>{a.ver}%</b><br /><span className={a.status === "Verified" ? "tks-ver" : undefined}>{a.status}</span><br />{a.checks}<br />See details →</td>
-          <td>Views {a.views}<br />Engaged {a.engaged}<br />Inquiries {a.inquiries}</td>
-          <td>Watch adds {a.watch}<br />Avg. time on page {a.time}<br />Saves {a.saves}</td><td>{a.updated}</td></tr>)}</tbody></table></div>
-    </div>}
+    <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1fr", alignItems: "start" }}>
+      {buyerPanel}
+      {sellerPanel}
+    </div>
     <div className="tks-note" style={{ marginTop: 10 }}>
       <span><b>What stays consistent across both views</b> — A unified marketplace experience ensures clarity, trust, and comparability for every stakeholder.</span>
       <span><b>Shared table language</b> — Common columns and metrics make it easy to interpret and compare across roles.</span>

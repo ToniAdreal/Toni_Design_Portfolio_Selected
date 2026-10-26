@@ -14,9 +14,9 @@ import "./nextcard-app.css";
 
 const ORANGE = "#ff4b1f";
 
-export function NcShell({ n, title, label, children }: { n: string; title: string; label: string; children: ReactNode }) {
+export function NcShell({ title, label, children }: { n: string; title: string; label: string; children: ReactNode }) {
   return <div className="nc" role="region" aria-label={label}>
-    <p style={{ margin: 0, letterSpacing: ".14em", fontWeight: 700, display: "flex", justifyContent: "space-between" }}><span>NEXT <span className="nc-acc">CARD</span></span><span style={{ color: "#9a9aa0", fontWeight: 400 }}>IMAGE {n}</span></p>
+    <p style={{ margin: 0, letterSpacing: ".14em", fontWeight: 700 }}><span>NEXT <span className="nc-acc">CARD</span></span></p>
     <h3 style={{ fontSize: 40 }}>{title}</h3>
     {children}
     <div className="nc-foot"><span>Next Card Project</span><span>Product Design Portfolio</span><span>Confidential · For portfolio use only</span></div>
@@ -107,7 +107,7 @@ export function NextCardApplicationShowcase() {
   const [step, setStep] = useState(0);
   return <NcShell n="43" title="Application Sequence" label="Next Card application sequence — phone showcase rebuild of Next_Card_Image_43">
     <p className="ncp-mut" style={{ marginTop: 0 }}>A credit card designed for China Gen Z. <b style={{ color: "#fff" }}>🛡 Private by design</b> — your data is encrypted and protected · <b style={{ color: "#fff" }}>🔒 You&apos;re in control</b> — save and return anytime at every step · <b style={{ color: "#fff" }}>◷ Takes minutes</b> — simple steps, mobile-first.</p>
-    <div className="ncp-row" style={{ flexWrap: "wrap" }}>
+    <div className="ncp-row eq" style={{ flexWrap: "wrap" }}>
       {A43.map((p, i) => <div key={p.cap} style={{ width: 142, flex: "none" }}>
         <Cap n={String(i + 1).padStart(2, "0")} t={p.cap} />
         <Ph w={142} light sel={step === i} onClick={() => setStep(i)} label={`Application step ${i + 1}: ${p.cap}`}>

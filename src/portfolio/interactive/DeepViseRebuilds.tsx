@@ -38,16 +38,18 @@ function Shell({ n, label, children, dark, foot }: { n: string; label: string; c
 export function DeepViseDashboardHero() {
   const [tab, setTab] = useState(0);
   const tabs = ["Overview", "Health", "Vibration", "Events", "Maintenance", "Data", "Credit Review", "Audit"];
-  const [decision, setDecision] = useState<string | null>(null);
   return <Shell n="01" label="DeepVise executive platform dashboard — rebuild of DeepVise_01" dark foot="Reconstructed · Demo data">
-    <div style={{ display: "grid", gridTemplateColumns: "212px 1fr", gap: 14, alignItems: "stretch" }}>
-      <div style={{ background: "linear-gradient(160deg,#132030,#0B1726)", border: "1px solid #22344d", borderRadius: 13, padding: "16px 15px", display: "flex", flexDirection: "column" }}>
-        <div style={{ fontSize: 21, fontWeight: 800 }}>DeepVise</div>
-        <span style={{ width: 34, height: 3, background: CYAN, borderRadius: 2, margin: "7px 0 14px" }} />
-        <p style={{ fontSize: 16.5, fontWeight: 700, lineHeight: 1.45, margin: 0 }}>Private machine intelligence for predictive maintenance and explainable credit review.</p>
-        <img src="/projects/crops/deepvise/press-hero.jpg" alt="Servo press photograph from the original slide (crop, no text)" style={{ marginTop: "auto", paddingTop: 14, width: "100%", height: 148, objectFit: "cover", borderRadius: 9, display: "block" }} />
+    <div style={{ display: "grid", gridTemplateColumns: "252px 1fr", gap: 0, alignItems: "stretch" }}>
+      <div style={{ position: "relative", borderRadius: "13px 0 0 13px", overflow: "hidden", minHeight: 380 }}>
+        <img src="/projects/crops/deepvise/press-hero.jpg" alt="Servo press photograph from the original slide (crop, no text)" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(5,10,16,0.78) 0%,rgba(5,10,16,0.28) 46%,rgba(5,10,16,0) 72%)" }} />
+        <div style={{ position: "relative", padding: "16px 15px" }}>
+          <div style={{ fontSize: 21, fontWeight: 800, color: "#fff" }}>DeepVise</div>
+          <span style={{ display: "block", width: 34, height: 3, background: CYAN, borderRadius: 2, margin: "7px 0 14px" }} />
+          <p style={{ fontSize: 17, fontWeight: 700, lineHeight: 1.45, margin: 0, color: "#fff" }}>Private machine intelligence for predictive maintenance and explainable credit review.</p>
+        </div>
       </div>
-      <div style={{ background: "#0e1c2e", border: "1px solid #22344d", borderRadius: 13, overflow: "hidden", fontSize: 11 }}>
+      <div style={{ background: "#0e1c2e", border: "1px solid #22344d", borderRadius: 13, overflow: "hidden", fontSize: 11, position: "relative", marginLeft: -16, alignSelf: "center" }}>
         <div style={{ display: "flex", justifyContent: "space-between", padding: "7px 13px", borderBottom: "1px solid #22344d", color: "#c6d2e0" }}>
           <span>Machines &nbsp;›&nbsp; <b style={{ color: "#fff" }}>P-01-042</b></span>
           <span style={{ color: "#8fa5bd" }}>Reconstructed · Demo data ⓘ</span>
@@ -102,10 +104,6 @@ export function DeepViseDashboardHero() {
                 <div style={{ border: "1px solid #2c4258", borderRadius: 8, padding: "7px 9px", marginTop: 9, display: "flex", gap: 8, alignItems: "center" }}>
                   <span style={{ fontSize: 15 }}>👤</span><span><b style={{ color: "#fff" }}>Human approval required</b><br /><span style={{ color: "#9fb2c8" }}>No automated decision</span></span>
                 </div>
-                <div style={{ display: "flex", gap: 5, marginTop: 9 }}>
-                  {["Approve", "Modify", "Reject"].map((d) => <button key={d} type="button" onClick={() => setDecision(d)} aria-pressed={decision === d} style={{ flex: 1, background: decision === d ? CYAN : "transparent", color: decision === d ? INK : "#c6d2e0", border: `1px solid ${CYAN}`, borderRadius: 6, padding: "3px 0", cursor: "pointer", font: "inherit", fontSize: 10.5, fontWeight: 700 }}>{d}</button>)}
-                </div>
-                {decision ? <p aria-live="polite" style={{ margin: "6px 0 0", fontSize: 10, color: "#9fb2c8" }}>{decision} recorded for human review — no automated decision is made.</p> : null}
               </div>
             </div>
             <p style={{ margin: "9px 0 0", color: "#8fa5bd", fontSize: 10 }}>🛡 Privacy first &nbsp;·&nbsp; Data stays with you &nbsp;·&nbsp; Access controlled &nbsp;·&nbsp; Fully auditable <span style={{ float: "right" }}>All times UTC</span></p>

@@ -35,7 +35,7 @@ export const allweb3: Project = {
       number: '02',
       title: 'Creator & Project Portals',
       images: [
-        { file: '3.png', title: 'Role and Scope Card', caption: 'IMAGE 03 — Role and Scope Card: Solo Product Designer and Full-Stack Builder.', rationale: 'Scope honesty: one person, named roles.', tags: ['UI'] },
+        { file: '3.png', title: 'Role and Scope Card', caption: 'Role and Scope Card: Solo Product Designer and Full-Stack Builder.', rationale: 'Scope honesty: one person, named roles.', tags: ['UI'] },
         { file: '4.png', title: 'One Platform. Every Role.', caption: 'Creator, Project, and Admin portals plus the public website — one platform, every role, total alignment.', rationale: 'Three portals introduced as one system, not three products.', tags: ['UI'] },
         { file: '5.png', title: 'The Opaque Campaign Workflow', caption: 'The legacy campaign chain as printed: Brief → Agency → Outreach → Content → Screenshots → Spreadsheets → Disputed metrics → Manual payment — every handoff disconnected, with gaps, rework, and dispute risk.', rationale: 'The problem slide: a fragmented process with no single source of truth.', tags: ['Process'] },
         { file: '6.png', title: 'Stakeholder Pain Map', caption: 'Pain map across Creators, Projects, and Platform operators — converging on one problem: no shared source of truth.', rationale: 'The pain map is the marketplace’s requirements document.', tags: ['UI'] },

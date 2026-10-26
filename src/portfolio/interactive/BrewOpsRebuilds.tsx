@@ -213,14 +213,29 @@ const PANELS16: Array<{ t: string; time: string; cap: string; body: ReactNode }>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 5 }}>
       {[["Overall Risk", "High", "#e0483e"], ["Service Risk", "22%", "#e0483e"], ["Supply Risk", "High", "#e0483e"], ["Logistics Risk", "Medium", "#f5a800"], ["Inventory Risk", "Low", "#18a957"], ["At Risk SKUs", "128", "#e0483e"]].map(([k, v, c]) => <span key={k} style={{ border: "1px solid #2a3a4d", borderRadius: 7, padding: "4px 7px" }}><span style={{ color: "#8fa5bd", fontSize: 9 }}>{k}</span><br /><b style={{ color: c, fontSize: 13 }}>{v}</b></span>)}
     </div>
-    <p style={{ margin: "5px 0 0", color: "#8fa5bd", fontSize: 9.8 }}>$2.7M revenue exposure · Demand vs Supply Forecast chart and 5×5 Risk Heatmap (circled “7”) sit below the risk cards on the panel, as in the hero slide.</p>
+    <p style={{ margin: "5px 0 1px", color: "#8fa5bd", fontSize: 9.3 }}>Demand vs Supply Forecast</p>
+    <svg viewBox="0 0 200 40" style={{ width: "100%", display: "block" }} role="img" aria-label="Demand versus supply forecast mini chart with projected shortfall">
+      <path d="M4,26 L44,23 L84,19 L124,14 L164,10 L196,8 L196,20 L164,22 L124,25 L84,28 L44,30 L4,32 Z" fill="#2F80ED" opacity="0.2" />
+      <polyline points="4,20 44,18 84,16 124,12 164,9 196,7" fill="none" stroke="#7db3f5" strokeWidth="1.4" strokeDasharray="3 2" />
+      <polyline points="4,29 44,27 84,25 124,21 164,18 196,16" fill="none" stroke="#f5a800" strokeWidth="1.6" />
+      <text x="128" y="36" fontSize="6.5" fill="#ff8d84">Projected Shortfall 12.4 KHL</text>
+    </svg>
+    <p style={{ margin: "3px 0 1px", color: "#8fa5bd", fontSize: 9.3 }}>Risk Heatmap — $2.7M revenue exposure · 128 SKUs at risk</p>
+    <span style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 2 }}>
+      {[4, 3, 2, 1, 0].map((row) => [0, 1, 2, 3, 4].map((col) => { const sev = Math.min(4, Math.max(0, Math.round((row + col) / 1.7))); const hotCell = row === 3 && col === 3; return <span key={`${row}-${col}`} style={{ height: 11, borderRadius: 2, background: ["#1f9d66", "#57b25e", "#e8c33a", "#e07b1f", "#d93a2b"][sev], display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 7.5, fontWeight: 800, boxShadow: hotCell ? "0 0 0 1.5px #fff" : undefined }}>{hotCell ? "7" : ""}</span>; }))}
+    </span>
   </> },
   { t: "COMPARE MITIGATION SCENARIOS", time: "7:45 AM", cap: "She compares AI-recommended mitigation scenarios across service level, shortfall reduction, revenue, and cost.", body: <>
     <p style={{ margin: "0 0 4px" }}><b style={{ color: "#fff" }}>Recommended Actions</b> — Scenario A – Optimize Service</p>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 5, textAlign: "center" }}>
       {[["Service Level", "+6.2pp", "#18a957"], ["Shortfall Reduction", "12.4 KHL", "#fff"], ["Revenue Impact", "+$1.8M", "#18a957"], ["Cost Impact", "+$320K", "#e0483e"]].map(([k, v, c]) => <span key={k} style={{ border: "1px solid #2a3a4d", borderRadius: 7, padding: "4px 3px" }}><span style={{ color: "#8fa5bd", fontSize: 8.8 }}>{k}</span><br /><b style={{ color: c, fontSize: 11.5 }}>{v}</b></span>)}
     </div>
-    <p style={{ margin: "5px 0 0", fontSize: 10.3, lineHeight: 1.6 }}>Top Actions — 1 Expedite inbound from Cartersville <span style={{ color: "#f5a800" }}>Primary</span> · 2 Reroute Midwest demand to Fairfield <span style={{ color: "#8fa5bd" }}>Secondary</span> · 3 Prioritize production: 12oz Cans <span style={{ color: "#8fa5bd" }}>Tertiary</span><br />Scenario Comparison: A – Optimize Service +6.2pp / 12.4 KHL / +$1.8M / +$320K · B – Max Production +3.1pp / 8.7 KHL / +$1.1M / +$510K · C – Demand Rebalance +4.0pp / 9.6 KHL / +$1.3M / +$210K</p>
+    <p style={{ margin: "5px 0 0", fontSize: 10.3, lineHeight: 1.6 }}>Top Actions — 1 Expedite inbound from Cartersville <span style={{ color: "#f5a800" }}>Primary</span> · 2 Reroute Midwest demand to Fairfield <span style={{ color: "#8fa5bd" }}>Secondary</span> · 3 Prioritize production: 12oz Cans <span style={{ color: "#8fa5bd" }}>Tertiary</span></p>
+    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 8.4, marginTop: 5, tableLayout: "fixed" }}>
+      <colgroup><col style={{ width: "27%" }} /><col style={{ width: "18%" }} /><col style={{ width: "19%" }} /><col style={{ width: "18%" }} /><col style={{ width: "18%" }} /></colgroup>
+      <thead><tr style={{ color: "#8fa5bd", textAlign: "left" }}>{["Scenario", "Service Level", "Shortfall Reduction", "Revenue Impact", "Cost Impact"].map((h) => <th key={h} style={{ padding: "2px 3px", borderBottom: "1px solid #2a3a4d", fontSize: 7.9, lineHeight: 1.3 }}>{h}</th>)}</tr></thead>
+      <tbody>{[["A – Optimize Service", "+6.2pp", "12.4 KHL", "+$1.8M", "+$320K"], ["B – Max Production", "+3.1pp", "8.7 KHL", "+$1.1M", "+$510K"], ["C – Demand Rebalance", "+4.0pp", "9.6 KHL", "+$1.3M", "+$210K"]].map((r2, ri) => <tr key={r2[0]} style={{ background: ri === 0 ? "rgba(47,128,237,0.16)" : "transparent" }}>{r2.map((c, ci) => <td key={ci} style={{ padding: "2.5px 3px", borderBottom: "1px solid #22344d", color: ci === 0 ? "#fff" : "#c6d2e0", fontWeight: ci === 0 ? 700 : 400, wordBreak: "break-word" }}>{c}</td>)}</tr>)}</tbody>
+    </table>
   </> },
   { t: "INSPECT EVIDENCE & ASSUMPTIONS", time: "8:05 AM", cap: "She drills into the evidence and assumptions behind the recommended scenario to validate confidence.", body: <>
     <p style={{ margin: "0 0 3px" }}><b style={{ color: "#fff" }}>Evidence &amp; Ownership</b></p>
@@ -250,16 +265,22 @@ const PANELS16: Array<{ t: string; time: string; cap: string; body: ReactNode }>
 export function BrewOpsStoryboard() {
   const [sel, setSel] = useState(0);
   return <BoX n="16" title="A Planner's Shift: From Alert to Execution" sub="bw-14-shift-storyboard · Hypothesis-Based Proto-Role Storyboard for the BrewOps Supply Planner. Hypothesis: An AI copilot empowers planners to anticipate, decide, and act—faster and with confidence." label="BrewOps planner storyboard — rebuild of Budweiser_16">
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 9 }}>
-      {PANELS16.map((p, i) => <button key={p.t} type="button" onClick={() => setSel(i)} aria-pressed={i === sel} style={{ textAlign: "left", background: "#0e1c2c", border: `1.5px solid ${i === sel ? AMBER : "#22344d"}`, borderRadius: 11, padding: "8px 10px", cursor: "pointer", font: "inherit", color: "#c6d2e0" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 9 }}>
+      {PANELS16.map((p, i) => <button key={p.t} type="button" onClick={() => setSel(i)} aria-pressed={i === sel} style={{ textAlign: "left", background: "#0e1c2c", border: `1.5px solid ${i === sel ? AMBER : "#22344d"}`, borderRadius: 11, padding: "8px 10px", cursor: "pointer", font: "inherit", color: "#c6d2e0", minWidth: 0, overflow: "hidden" }}>
         <span style={{ display: "flex", alignItems: "center", gap: 7 }}>
           <span style={{ width: 19, height: 19, borderRadius: "50%", border: "1.5px solid #2F80ED", color: "#7db3f5", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 11, flex: "none" }}>{i + 1}</span>
           <b style={{ color: "#fff", fontSize: 11, letterSpacing: "0.02em", flex: 1 }}>{p.t}</b>
           <span style={{ color: "#8fa5bd", fontSize: 10.5 }}>{p.time}</span>
         </span>
         <span style={{ display: "flex", gap: 7, margin: "7px 0", alignItems: "stretch" }}>
-          <img src={`/projects/crops/brewops/panel-${i + 1}.webp`} alt="" style={{ width: 42, flex: "none", objectFit: "cover", borderRadius: 7, border: "1px solid #22344d" }} />
-          <span style={{ flex: 1, minWidth: 0, display: "block", background: "#0a141f", border: "1px solid #22344d", borderRadius: 8, padding: "7px 9px", fontSize: 10.5, lineHeight: 1.5 }}>{p.body}</span>
+          <img src={`/projects/crops/brewops/panel-${i + 1}.webp`} alt="" style={{ width: 54, flex: "none", objectFit: "cover", borderRadius: 7, border: "1px solid #22344d" }} />
+          {/* Pass 7 (16): the dashboard half of each panel reads as a
+              miniature screenshot — dark chrome bar over the DOM mini
+              (alert queue, forecast + heatmap, scenario table…). */}
+          <span style={{ flex: 1, minWidth: 0, display: "block", background: "#0a141f", border: "1px solid #22344d", borderRadius: 8, overflow: "hidden" }}>
+            <span style={{ display: "flex", gap: 6, alignItems: "center", background: "#0e1c2c", borderBottom: "1px solid #22344d", padding: "3px 8px", fontSize: 8.3, color: "#8fa5bd", whiteSpace: "nowrap", overflow: "hidden" }}><b style={{ color: "#fff" }}>BrewOps Intelligence</b><span>Control Tower</span><span>Demand</span><span>Supply</span><span style={{ marginLeft: "auto", color: "#e0483e", fontStyle: "italic" }}>Budweiser</span></span>
+            <span style={{ display: "block", padding: "7px 9px", fontSize: 10.5, lineHeight: 1.5 }}>{p.body}</span>
+          </span>
         </span>
         <span style={{ display: "block", fontSize: 10.8, lineHeight: 1.5, color: "#a9bccd" }}>{p.cap}</span>
       </button>)}

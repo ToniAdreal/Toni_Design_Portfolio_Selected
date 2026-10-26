@@ -31,26 +31,36 @@ const ROLES = [
 
 export function TokentaSoloOwnership() {
   const [active, setActive] = useState(0);
-  const r = ROLES[active];
+  const card = (i: number, area: string) => {
+    const role = ROLES[i];
+    return <div key={role.n} style={{ gridArea: area }}><button type="button" className={`tks-card${i === active ? " is-on" : ""}`} style={{ background: "#111", color: "#fff", borderColor: "#111", position: "relative", zIndex: 1, padding: "10px 12px", width: "100%", height: "100%" }} aria-pressed={i === active} onClick={() => setActive(i)}>
+      <span aria-hidden="true" style={{ fontSize: 15 }}>{role.icon}</span> <span className="tks-num tks-num--light">{role.n}</span>
+      <p style={{ fontWeight: 700, margin: "5px 0 3px", fontSize: 12.5 }}>{role.title}</p>
+      <p style={{ color: "#c9c9ce", fontSize: 10.8, margin: "0 0 4px", lineHeight: 1.45 }}>{role.body}</p>
+      <p style={{ fontFamily: '"IBM Plex Mono",monospace', color: "#c9c9ce", fontSize: 10, margin: 0 }}>$ {role.tags}</p>
+    </button></div>;
+  };
   return <div className="tks" role="region" aria-label="Solo ownership — interactive rebuild of Tokenta_02">
     <Head n="02" kicker="Solo ownership" />
     <h3>Solo ownership</h3>
     <p className="tks-lede">End-to-end ownership across strategy, design, and engineering—from first principles to production.</p>
-    <div className="tks-card" style={{ background: "#111", color: "#fff", textAlign: "center", marginBottom: 10 }}>
-      <div style={{ fontSize: 22 }} aria-hidden="true">👤</div>
-      <p style={{ fontSize: 18, fontWeight: 800, margin: "4px 0 0" }}>Independent<br />product builder</p>
-      <p className="tks-kicker" style={{ color: "#b9b9be" }}>end-to-end owner</p>
-      <p style={{ fontFamily: '"IBM Plex Mono",monospace', fontSize: 11, margin: "8px 0 2px" }}>$&nbsp; I define, design, build, document, test, and ship secure products end-to-end.</p>
-      <p style={{ fontFamily: '"IBM Plex Mono",monospace', fontSize: 11, margin: 0 }}>&gt;&nbsp; One owner. Full accountability.</p>
+    <div style={{ position: "relative" }}>
+      <svg viewBox="0 0 920 640" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} aria-hidden="true">
+        {[[460, 60], [150, 165], [770, 165], [150, 320], [770, 320], [150, 475], [770, 475], [150, 590], [770, 590], [460, 590]].map(([x, y], i) => <g key={i}><line x1="460" y1="320" x2={x} y2={y} stroke="#a9a9a2" strokeWidth="1" strokeDasharray="3 3" /><circle cx={x} cy={y} r="3.5" fill="#f6f6f4" stroke="#555" strokeWidth="1.4" /></g>)}
+      </svg>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.08fr 1fr", gridTemplateAreas: '". r01 ." "r02 hub r06" "r03 hub r07" "r04 hub r08" "r05 r10 r09"', gap: 12, position: "relative" }}>
+        {card(0, "r01")}{card(1, "r02")}{card(2, "r03")}{card(3, "r04")}{card(4, "r05")}
+        {card(5, "r06")}{card(6, "r07")}{card(7, "r08")}{card(8, "r09")}{card(9, "r10")}
+        <div className="tks-card" style={{ gridArea: "hub", background: "#111", color: "#fff", textAlign: "center", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", zIndex: 1 }}>
+          <div style={{ fontSize: 24 }} aria-hidden="true">👤</div>
+          <p style={{ fontSize: 19, fontWeight: 800, margin: "4px 0 0", lineHeight: 1.2 }}>Independent<br />product builder</p>
+          <p className="tks-kicker" style={{ color: "#b9b9be" }}>end-to-end owner</p>
+          <p style={{ fontFamily: '"IBM Plex Mono",monospace', fontSize: 11, margin: "8px 0 2px" }}>$&nbsp; I define, design, build, document, test, and ship secure products end-to-end.</p>
+          <p style={{ fontFamily: '"IBM Plex Mono",monospace', fontSize: 11, margin: 0 }}>&gt;&nbsp; One owner. Full accountability.</p>
+        </div>
+      </div>
     </div>
-    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(5, 1fr)" }} role="group" aria-label="Ownership disciplines">
-      {ROLES.map((role, i) => <button key={role.n} type="button" className={`tks-card${i === active ? " is-on" : ""}`} style={{ background: "#111", color: "#fff", borderColor: "#111" }} aria-pressed={i === active} onClick={() => setActive(i)}>
-        <span aria-hidden="true">{role.icon}</span> <span className="tks-num tks-num--light">{role.n}</span>
-        <p style={{ fontWeight: 700, margin: "6px 0 4px", fontSize: 12 }}>{role.title}</p>
-        <p style={{ color: "#c9c9ce", fontSize: 10.5, margin: 0 }}>$ {role.tags}</p>
-      </button>)}
-    </div>
-    <div className="tks-detail" aria-live="polite"><b>{r.n} · {r.title}</b><p style={{ margin: "5px 0 0" }}>{r.body}</p><p style={{ margin: "4px 0 0" }} className="tks-kicker">$ {r.tags}</p></div>
+    <div className="tks-detail" aria-live="polite"><b>{ROLES[active].n} · {ROLES[active].title}</b> — {ROLES[active].body} <span className="tks-kicker">$ {ROLES[active].tags}</span></div>
     <Foot />
   </div>;
 }
@@ -77,19 +87,26 @@ const RESULT_METRICS = [["5–14", "days", "Average time to first token"], ["6�
 
 export function TokentaFragmentedMarket() {
   const [active, setActive] = useState(0);
-  const s = STAGES[active];
   return <div className="tks" role="region" aria-label="The fragmented market — interactive rebuild of Tokenta_03">
     <Head n="03" kicker="The market trust problem" />
-    <h3>The fragmented market.</h3>
-    <p className="tks-lede">Today, AI access rights are traded in pieces. Access to AI assets moves across private channels, spreadsheets, email threads, API keys, invoices, and bank wires. Every step is manual, disconnected, and hard to trust.</p>
-    <div className="tks-flow" role="group" aria-label="Fragmented deal stages">
-      {STAGES.map((st, i) => <span key={st.n} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">⇢</span>}<button type="button" className="tks-node" style={{ background: "#111", color: "#fff" }} aria-pressed={i === active} onClick={() => setActive(i)}><span className="tks-num tks-num--light">{st.n}</span> <b>{st.title}</b><br /><span style={{ color: "#b9b9be", fontSize: 10.5 }}>{st.sub}</span></button></span>)}
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24 }}>
+      <div><h3>The fragmented market.</h3>
+      <p className="tks-lede" style={{ margin: 0 }}>Today, AI access rights are traded in pieces.</p></div>
+      <p style={{ maxWidth: 330, fontSize: 11.5, lineHeight: 1.5, color: "#444", margin: "16px 0 0" }}>Access to AI assets moves across private channels, spreadsheets, email threads, API keys, invoices, and bank wires. Every step is manual, disconnected, and hard to trust.</p>
     </div>
-    <div className="tks-detail" aria-live="polite">
-      <div className="tks-grid" style={{ gridTemplateColumns: "1.2fr 1fr" }}>
-        <div>{s.artifact}</div>
-        <div><p style={{ margin: "0 0 8px" }}>{s.note}</p><div className="tks-note"><span aria-hidden="true">⚠</span><span><b>{s.risk}</b><br />{s.riskBody}</span></div></div>
-      </div>
+    <div className="tks-grid" style={{ gridTemplateColumns: "repeat(7, 1fr)", gap: 7, marginTop: 14 }} role="group" aria-label="Fragmented deal stages — all seven printed artifact columns">
+      {STAGES.map((st, i) => <div key={st.n} className={`tks-card${i === active ? " is-on" : ""}`} style={{ padding: 0, overflow: "hidden", cursor: "pointer" }} role="button" tabIndex={0} aria-pressed={i === active} onClick={() => setActive(i)} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActive(i); } }}>
+        <div style={{ background: "#111", color: "#fff", padding: "7px 8px" }}>
+          <span className="tks-num tks-num--light" style={{ width: 19, height: 19, fontSize: 10.5 }}>{st.n}</span>
+          <p style={{ fontWeight: 700, fontSize: 11.5, margin: "4px 0 1px", lineHeight: 1.25 }}>{st.title}</p>
+          <p style={{ color: "#b9b9be", fontSize: 9.5, margin: 0 }}>{st.sub}</p>
+        </div>
+        <div style={{ padding: "7px 8px", fontSize: 9.3, lineHeight: 1.45 }} className="tks-artifact">{st.artifact}</div>
+        <p style={{ padding: "0 8px", fontSize: 9.8, color: "#444", margin: "2px 0 8px", lineHeight: 1.45 }}>{st.note}</p>
+        <div style={{ margin: "0 8px 9px", border: "1px solid #d9d9d4", borderRadius: 6, padding: "6px 7px", fontSize: 9.8, lineHeight: 1.4 }}>
+          <span aria-hidden="true">⚠</span> <b>{st.risk}</b><br />{st.riskBody}
+        </div>
+      </div>)}
     </div>
     <div className="tks-card" style={{ marginTop: 10 }}>
       <p style={{ fontWeight: 700, margin: "0 0 8px" }}>The result: fragmented, slow, and hard to trust.</p>
@@ -154,18 +171,53 @@ export function TokentaTrustLoop() {
   const [cycles, setCycles] = useState(0);
   const advance = () => { if (step >= LOOP.length - 1) { setStep(0); setCycles((c) => c + 1); } else setStep((s) => s + 1); };
   const cur = LOOP[step];
+  // Node + label positions (percent of the diagram box), print order:
+  // 1 Proof top, 2 Liquidity right, 3 Settlement bottom-right,
+  // 4 Reputation bottom-left, 5 Better Liquidity left. Labels sit
+  // outside the ring, as printed.
+  const POS: Array<{ x: number; y: number; tx: number; ty: number; w: number; align: "left" | "right" }> = [
+    { x: 49.3, y: 18, tx: 63, ty: 12, w: 180, align: "left" },
+    { x: 69.5, y: 40, tx: 78, ty: 35, w: 150, align: "left" },
+    { x: 61.7, y: 76, tx: 70, ty: 71, w: 165, align: "left" },
+    { x: 36.9, y: 76, tx: 28, ty: 71, w: 165, align: "right" },
+    { x: 29.2, y: 40, tx: 21, ty: 35, w: 150, align: "right" },
+  ];
   return <div className="tks" role="region" aria-label="The closed trust loop — interactive rebuild of Tokenta_05">
     <Head n="05" kicker="Opportunity loop" />
     <h3>The closed trust loop.</h3>
-    <p className="tks-lede">Better reputation creates better liquidity. Tokenta aligns verification, liquidity, settlement, and reputation in a self-reinforcing loop—unlocking more capital for verified AI assets.</p>
-    <div className="tks-flow" role="group" aria-label="Trust loop stages">
-      {LOOP.map((node, i) => <span key={node.n} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" style={{ textAlign: "center", borderRadius: 999, aspectRatio: "1", maxWidth: 130, margin: "0 auto" }} aria-pressed={i === step} onClick={() => setStep(i)}><span className="tks-num">{node.n}</span><br /><span style={{ fontSize: 18 }} aria-hidden="true">{node.icon}</span><br /><b style={{ fontSize: 11 }}>{node.title}</b></button></span>)}
+    <p className="tks-lede">Better reputation creates better liquidity.</p>
+    <div className="tks-grid" style={{ gridTemplateColumns: "200px 1fr" }}>
+      <p style={{ fontSize: 13, lineHeight: 1.55, color: "#333", margin: "6px 0 0" }}>Tokenta aligns verification, liquidity, settlement, and reputation in a self-reinforcing loop—unlocking more capital for verified AI assets.</p>
+      <div style={{ position: "relative", height: 470 }} role="group" aria-label="Closed trust loop diagram">
+        <svg viewBox="0 0 700 470" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} aria-hidden="true">
+          <defs><marker id="tks-loop-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111" /></marker></defs>
+          <circle cx="350" cy="235" r="150" fill="none" stroke="#111" strokeWidth="1.6" />
+          <path d="M 415 108 A 150 150 0 0 1 486 182" fill="none" stroke="#111" strokeWidth="1.6" markerEnd="url(#tks-loop-arrow)" />
+          <path d="M 500 268 A 150 150 0 0 1 440 352" fill="none" stroke="#111" strokeWidth="1.6" markerEnd="url(#tks-loop-arrow)" />
+          <path d="M 345 385 A 150 150 0 0 1 262 358" fill="none" stroke="#111" strokeWidth="1.6" markerEnd="url(#tks-loop-arrow)" />
+          <path d="M 214 288 A 150 150 0 0 1 202 190" fill="none" stroke="#111" strokeWidth="1.6" markerEnd="url(#tks-loop-arrow)" />
+          <path d="M 232 122 A 150 150 0 0 1 338 88" fill="none" stroke="#111" strokeWidth="1.6" markerEnd="url(#tks-loop-arrow)" />
+          <circle cx="350" cy="235" r="86" fill="none" stroke="#b9b9b2" strokeWidth="1.2" strokeDasharray="2 4" />
+        </svg>
+        <div style={{ position: "absolute", left: "49.3%", top: "50%", transform: "translate(-50%,-50%)", width: 150, textAlign: "center" }}>
+          <p style={{ fontSize: 22, margin: 0 }} aria-hidden="true">⌂</p>
+          <p style={{ fontSize: 11, lineHeight: 1.45, margin: "4px 0 0" }}>A virtuous cycle of trust that compounds value across the ecosystem.</p>
+        </div>
+        {LOOP.map((node, i) => <span key={node.n} style={{ display: "contents" }}>
+          <button type="button" aria-pressed={i === step} onClick={() => setStep(i)} style={{ position: "absolute", left: `${POS[i].x}%`, top: `${POS[i].y}%`, transform: "translate(-50%,-50%)", width: 88, height: 88, borderRadius: "50%", background: "#fff", border: i === step ? "2.4px solid #111" : "1.6px solid #111", boxShadow: i === step ? "0 0 0 5px #ececea" : "0 0 0 4px #f6f6f4", cursor: "pointer", textAlign: "center", font: "inherit", zIndex: 2 }}>
+            <span className="tks-num" style={{ position: "absolute", top: -7, left: "50%", transform: "translateX(-50%)", width: 21, height: 21, fontSize: 11 }}>{node.n}</span>
+            <span style={{ fontSize: 24, display: "block", marginTop: 8 }} aria-hidden="true">{node.icon}</span>
+          </button>
+          <span style={{ position: "absolute", left: `${POS[i].tx}%`, top: `${POS[i].ty}%`, transform: POS[i].align === "right" ? "translateX(-100%)" : undefined, width: POS[i].w, textAlign: POS[i].align, zIndex: 1 }}>
+            <b style={{ fontSize: 13.5, display: "block", borderBottom: "1px solid #c9c9c2", paddingBottom: 3, marginBottom: 4 }}>{node.title}</b>
+            <span style={{ fontSize: 10.3, color: "#444", lineHeight: 1.45, display: "block" }}>{node.body}</span>
+          </span>
+        </span>)}
+      </div>
     </div>
     <div className="tks-detail" aria-live="polite" style={{ textAlign: "center" }}>
-      <p style={{ margin: "0 0 4px" }}><b>⌂ TOKENTA</b></p>
-      <p style={{ margin: "0 0 8px" }}>A virtuous cycle of trust that compounds value across the ecosystem.</p>
-      <p style={{ margin: "0 0 8px" }}><b>{cur.n}. {cur.title}</b> — {cur.body}</p>
-      <button type="button" className="tks-btn" onClick={advance}>{step >= LOOP.length - 1 ? "Complete the loop ↺" : `Advance to ${LOOP[step + 1].title} →`}</button>
+      <b>{cur.n}. {cur.title}</b> — {cur.body}{" "}
+      <button type="button" className="tks-btn" style={{ marginLeft: 10 }} onClick={advance}>{step >= LOOP.length - 1 ? "Complete the loop ↺" : `Advance to ${LOOP[step + 1].title} →`}</button>
       {cycles > 0 && <span className="tks-kicker" style={{ marginLeft: 10 }}>Loops completed: {cycles} — reputation compounds each cycle</span>}
     </div>
     <Foot />

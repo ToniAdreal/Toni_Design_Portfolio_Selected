@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import "./nextcard-app.css";
 
 /**
@@ -42,80 +42,52 @@ const GROWTH = [
 
 export function NextCardHeroApp() {
   const [phone, setPhone] = useState<(typeof PHONES)[number]>("Home Dashboard");
-  const [txn, setTxn] = useState(0);
-  const [rewardTab, setRewardTab] = useState("All");
-  const [perkTab, setPerkTab] = useState("All");
-  const [growth, setGrowth] = useState(0);
-  const perks = PERKS.filter((p) => perkTab === "All" || p.cat === perkTab);
+  const pi = PHONES.indexOf(phone);
+  const mini = (label: string, body: ReactNode) => (
+    <button type="button" onClick={() => setPhone(label as (typeof PHONES)[number])} aria-pressed={phone === label} aria-label={`Phone: ${label}`} style={{ background: "#0a0a0c", border: `1.5px solid ${phone === label ? "#ff4b1f" : "#34353b"}`, borderRadius: 17, padding: "6px 6px 8px", color: "#f5f5f5", fontSize: 8.8, lineHeight: 1.4, cursor: "pointer", fontFamily: "Inter, Arial, sans-serif", textAlign: "left", width: "100%", height: "100%" }}>
+      <span style={{ display: "flex", justifyContent: "space-between", color: "#9a9aa0", fontSize: 7.5, fontFamily: "\"IBM Plex Mono\", monospace" }}><span>9:41</span><span>▂▄▆</span></span>
+      <span style={{ display: "block", letterSpacing: ".08em", fontSize: 7.8, color: "#9a9aa0", margin: "2px 0 4px" }}>NEXT CARD</span>
+      {body}
+    </button>
+  );
   return <div className="nc" role="region" aria-label="Next Card hero and app suite — interactive rebuild of Next_Card_Image_01">
     <p style={{ margin: 0, letterSpacing: ".14em", fontWeight: 700 }}>NEXT <span className="nc-acc">CARD</span></p>
-    <h3>Designing a<br />Gen Z Credit Card<br />Growth System for <span className="nc-acc">China</span></h3>
-    <p style={{ color: "#c9c9ce", maxWidth: "58ch" }}>A solo strategy, product design and engineering project connecting market selection, card proposition, acquisition and long-term engagement.</p>
-    <p style={{ color: "#c9c9ce" }}><b style={{ color: "#ff4b1f" }}>SHENZHEN</b> — Tech Innovation Hub · Young Population · High Consumption · Strong Fintech Adoption &nbsp;→&nbsp; <b style={{ color: "#ff9a66" }}>GUANGZHOU</b> — Commercial Capital · Large Student Base · Retail &amp; Lifestyle · High Growth Potential. <span style={{ color: "#9a9aa0" }}>Pearl River Delta Connected Opportunity. The physical card as printed: black metal, chip, NEXT CARD, orange dot-matrix edge.</span></p>
-    <div style={{ display: "flex", gap: 6, flexWrap: "wrap", margin: "10px 0" }} role="group" aria-label="Application flow and app screens">
-      {PHONES.map((p) => <button key={p} type="button" className="nc-tab" aria-pressed={phone === p} onClick={() => setPhone(p)}>{p}</button>)}
-    </div>
-    <div className="nc-phone" aria-live="polite">
-      <p style={{ margin: "0 0 8px", display: "flex", justifyContent: "space-between" }}><span style={{ letterSpacing: ".1em", fontSize: 10.5 }}>NEXT CARD</span><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>9:41</span></p>
-      {phone === "Landing" && <div>
-        <p style={{ fontSize: 19, fontWeight: 800, lineHeight: 1.25, margin: "6px 0" }}>The credit card<br />built for what<br /><span className="nc-acc">matters now.</span></p>
-        <p style={{ color: "#b9b9be" }}>Smart rewards, local perks and financial freedom for Gen Z.</p>
-        <button type="button" className="nc-cta" onClick={() => setPhone("Verify Identity")}>Apply Now ›</button>
-        <p style={{ display: "flex", justifyContent: "space-between", margin: "12px 0 0", color: "#b9b9be" }}><span><b style={{ color: "#fff", fontSize: 14 }}>0</b><br />Annual Fee</span><span><b style={{ color: "#fff", fontSize: 14 }}>Up to 20%</b><br />Rewards</span><span><b style={{ color: "#fff", fontSize: 14 }}>60s</b><br />Instant Decision</span></p>
-      </div>}
-      {phone === "Verify Identity" && <div>
-        <p style={{ margin: "4px 0" }}><b className="nc-acc">1.</b> <b>Verify Identity</b><br /><span style={{ color: "#b9b9be" }}>Secure and fast.</span></p>
-        {["ID Card", "Face Recognition", "Basic Information"].map((s) => <p key={s} className="nc-row"><span>◉ {s}</span><span className="nc-acc">✓</span></p>)}
-        <button type="button" className="nc-cta" style={{ marginTop: 10 }} onClick={() => setPhone("Your Info")}>Continue</button>
-      </div>}
-      {phone === "Your Info" && <div>
-        <p style={{ margin: "4px 0" }}><b className="nc-acc">2.</b> <b>Your Info</b><br /><span style={{ color: "#b9b9be" }}>Tell us a bit about you.</span></p>
-        {[["Education", "University Student"], ["Monthly Income", "3,000 – 8,000 CNY"], ["Employment", "Part-time"], ["City", "Shenzhen"]].map(([k, v]) => <p key={k} className="nc-row"><span style={{ color: "#9a9aa0" }}>{k}</span><b>{v} ›</b></p>)}
-        <button type="button" className="nc-cta" style={{ marginTop: 10 }} onClick={() => setPhone("Instant Decision")}>Continue</button>
-      </div>}
-      {phone === "Instant Decision" && <div style={{ textAlign: "center" }}>
-        <p style={{ margin: "4px 0", textAlign: "left" }}><b className="nc-acc">3.</b> <b>Instant Decision</b><br /><span style={{ color: "#b9b9be" }}>Congratulations!</span></p>
-        <p style={{ fontSize: 34, color: "#ff4b1f", margin: "10px 0 2px" }}>✓</p>
-        <p style={{ margin: "2px 0" }}>You're approved for<br />NEXT CARD.</p>
-        <p style={{ color: "#b9b9be", margin: "8px 0" }}>Credit Limit<br /><b style={{ color: "#fff", fontSize: 16 }}>¥ 20,000</b></p>
-        <button type="button" className="nc-cta" onClick={() => setPhone("Home Dashboard")}>Activate Now</button>
-      </div>}
-      {phone === "Home Dashboard" && <div>
-        <p style={{ color: "#9a9aa0", margin: "4px 0 0" }}>Available Credit</p>
-        <p style={{ margin: "0", display: "flex", justifyContent: "space-between", alignItems: "center" }}><b style={{ fontSize: 19 }}>¥ 14,520.00</b><span className="nc-acc" style={{ fontWeight: 800 }}>72%</span></p>
-        <p style={{ color: "#9a9aa0", margin: "0 0 6px" }}>Credit Limit ¥ 20,000.00</p>
-        <p style={{ margin: "6px 0 2px", display: "flex", justifyContent: "space-between" }}><b>Recent Transactions</b><span className="nc-acc">View All</span></p>
-        {TXNS.map((t, i) => <button key={t.merchant} type="button" onClick={() => setTxn(i)} aria-pressed={txn === i} style={{ display: "flex", justifyContent: "space-between", width: "100%", background: txn === i ? "#1d1e20" : "transparent", color: "#eee", border: "none", borderBottom: "1px solid #232426", padding: "6px 2px", cursor: "pointer", font: "inherit", textAlign: "left" }}><span><b>{t.merchant}</b><br /><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>{t.when}</span></span><span>{t.amount}</span></button>)}
-        <p style={{ color: "#b9b9be", margin: "8px 0 0" }} aria-live="polite">Selected: {TXNS[txn].merchant} · {TXNS[txn].when} · {TXNS[txn].amount}</p>
-        <p style={{ display: "flex", justifyContent: "space-around", color: "#9a9aa0", margin: "10px 0 0" }}><span className="nc-acc">⌂ Home</span><span>♡ Rewards</span><span>▣ Pay</span><span>◉ Profile</span></p>
-      </div>}
-      {phone === "Rewards" && <div>
-        <p style={{ margin: "4px 0" }}><b style={{ fontSize: 15 }}>Rewards</b></p>
-        <p style={{ color: "#9a9aa0", margin: 0 }}>Your points</p>
-        <p style={{ margin: "0 0 8px" }}><span className="nc-acc">⬢</span> <b style={{ fontSize: 19 }}>2,850</b> <span style={{ color: "#9a9aa0" }}>= ¥ 28.50</span></p>
-        <p style={{ display: "flex", gap: 6 }}>{["All", "Earn", "Redeem"].map((t) => <button key={t} type="button" className="nc-tab" aria-pressed={rewardTab === t} onClick={() => setRewardTab(t)}>{t}</button>)}</p>
-        {rewardTab !== "Redeem" && <div>
-          <p style={{ margin: "8px 0 4px" }}><b>Earn More</b></p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>{EARN.map(([n, v]) => <span key={n} style={{ background: "#1a1214", border: "1px solid #33202a", borderRadius: 10, padding: "8px" }}><b>{n}</b><br /><span style={{ color: "#b9b9be" }}>{v}</span></span>)}</div>
-        </div>}
-        {rewardTab !== "Earn" && <p style={{ background: "#1a1214", border: "1px solid #33202a", borderRadius: 10, padding: "8px", margin: "8px 0 0" }}><b>Points Booster</b><br /><span style={{ color: "#b9b9be" }}>Double points this weekend!</span></p>}
-        <p style={{ display: "flex", justifyContent: "space-around", color: "#9a9aa0", margin: "10px 0 0" }}><span>⌂ Home</span><span className="nc-acc">♡ Rewards</span><span>▣ Pay</span><span>◉ Profile</span></p>
-      </div>}
-      {phone === "Local Perks" && <div>
-        <p style={{ margin: "4px 0" }}><b style={{ fontSize: 15 }}>Local Perks</b><br /><span style={{ color: "#9a9aa0" }}>Shenzhen ▾</span></p>
-        <p style={{ background: "linear-gradient(120deg,#3d0f0a,#7a1d10)", borderRadius: 10, padding: "9px" }}><b>Shenzhen Exclusive</b><br />Up to 50% off</p>
-        <p style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>{["All", "Dining", "Lifestyle", "Transport"].map((t) => <button key={t} type="button" className="nc-tab" aria-pressed={perkTab === t} onClick={() => setPerkTab(t)}>{t}</button>)}</p>
-        {perks.map((p) => <p key={p.name} className="nc-row"><span><b>{p.name}</b><br /><span style={{ color: "#9a9aa0", fontSize: 10.5 }}>{p.area}</span></span><span className="nc-acc">{p.off}</span></p>)}
-        {perks.length === 0 && <p style={{ color: "#9a9aa0" }}>No perks in this category on the printed screen.</p>}
-        <p className="nc-acc" style={{ margin: "8px 0 0" }}>View All Perks</p>
-      </div>}
-    </div>
-    <div style={{ marginTop: 12 }}>
-      <p style={{ margin: "0 0 6px", letterSpacing: ".1em", color: "#9a9aa0" }}>GROWTH SYSTEM STRATEGY</p>
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }} role="group" aria-label="Growth system strategy">
-        {GROWTH.map(([n], i) => <button key={n} type="button" className="nc-tab" aria-pressed={growth === i} onClick={() => setGrowth(i)}>{n}</button>)}
+    <div style={{ display: "grid", gridTemplateColumns: "1.25fr 150px 1fr", gap: 14, alignItems: "start", marginTop: 6 }}>
+      <div>
+        <h3 style={{ marginTop: 2 }}>Designing a<br />Gen Z Credit Card<br />Growth System for <span className="nc-acc">China</span></h3>
+        <p style={{ color: "#c9c9ce", margin: 0 }}>A solo strategy, product design and engineering project connecting market selection, card proposition, acquisition and long-term engagement.</p>
       </div>
-      <p style={{ margin: "8px 0 0" }} aria-live="polite"><b>{GROWTH[growth][0]}</b> — {GROWTH[growth][1]}</p>
+      <div style={{ background: "linear-gradient(155deg,#1e1f23,#060607 68%)", border: "1px solid #4a1e10", borderRadius: 13, height: 218, padding: "13px 12px", transform: "rotate(2.5deg)", boxShadow: "0 16px 30px rgba(0,0,0,.55), 0 0 34px rgba(255,75,31,.16)", position: "relative", overflow: "hidden" }} role="img" aria-label="Physical Next Card: black metal, chip, orange dot-matrix edge">
+        <span style={{ display: "block", width: 27, height: 20, borderRadius: 4, background: "linear-gradient(135deg,#e8e8ea,#8a8d93)" }} />
+        <span style={{ display: "block", marginTop: 66, letterSpacing: ".18em", fontWeight: 700, fontSize: 13 }}>NEXT CARD</span>
+        <span style={{ position: "absolute", right: 10, top: "46%", color: "#ff4b1f", fontSize: 17 }}>›</span>
+        <span style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 52, backgroundImage: "radial-gradient(rgba(255,90,31,.85) 1.4px, transparent 1.8px)", backgroundSize: "7px 7px", opacity: 0.75 }} />
+      </div>
+      <div>
+        <svg viewBox="0 0 260 168" style={{ width: "100%", display: "block" }} role="img" aria-label="China map with the Shenzhen to Guangzhou route — Pearl River Delta Connected Opportunity">
+          <path d="M52,30 L96,16 L138,24 L176,13 L214,32 L233,60 L219,86 L233,110 L196,127 L168,114 L142,136 L112,118 L82,131 L58,106 L38,78 L40,50 Z" fill="#0c0c0e" stroke="#3f4046" strokeWidth="1.2" />
+          <path d="M196,96 Q168,64 128,66" fill="none" stroke="#ff4b1f" strokeWidth="2" />
+          <circle cx="196" cy="96" r="6" fill="#fff" stroke="#ff4b1f" strokeWidth="3" />
+          <circle cx="128" cy="66" r="6" fill="#fff" stroke="#ff9a66" strokeWidth="3" />
+          <text x="196" y="82" fill="#ff4b1f" fontSize="11.5" fontWeight="800" textAnchor="middle">SHENZHEN</text>
+          <text x="128" y="50" fill="#ff9a66" fontSize="11.5" fontWeight="800" textAnchor="middle">GUANGZHOU</text>
+        </svg>
+        <p style={{ color: "#c9c9ce", margin: "2px 0 0", fontSize: 12.3, lineHeight: 1.5 }}><b style={{ color: "#ff4b1f" }}>SHENZHEN</b> — Tech Innovation Hub · Young Population · High Consumption · Strong Fintech Adoption<br /><b style={{ color: "#ff9a66" }}>GUANGZHOU</b> — Commercial Capital · Large Student Base · Retail &amp; Lifestyle · High Growth Potential<br /><span style={{ color: "#9a9aa0" }}>Pearl River Delta Connected Opportunity.</span></p>
+      </div>
+    </div>
+    <p style={{ margin: "14px 0 6px", letterSpacing: ".1em", color: "#9a9aa0", fontSize: 11 }}>APPLICATION FLOW — SEVEN PHONES, AS PRINTED · SELECTED: <b style={{ color: "#fff" }}>{phone.toUpperCase()}</b> ({pi + 1} OF 7)</p>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 7 }} role="group" aria-label="Application flow and app screens — seven phones">
+      <div>{mini("Landing", <><b style={{ display: "block", fontSize: 11.5, lineHeight: 1.3 }}>The credit card built for what <span className="nc-acc">matters now.</span></b><span style={{ display: "block", color: "#b9b9be", margin: "4px 0" }}>Smart rewards, local perks and financial freedom for Gen Z.</span><span className="ncp-cta" style={{ fontSize: 9, padding: "5px 6px" }}>Apply Now ›</span><span style={{ display: "flex", justifyContent: "space-between", marginTop: 7, color: "#b9b9be", fontSize: 8 }}><span><b style={{ color: "#fff", fontSize: 10 }}>0</b> Fee</span><span><b style={{ color: "#fff", fontSize: 10 }}>20%</b> Rewards</span><span><b style={{ color: "#fff", fontSize: 10 }}>60s</b> Decision</span></span></>)}</div>
+      <div>{mini("Verify Identity", <><b style={{ display: "block" }}><span className="nc-acc">1.</span> Verify Identity</b><span style={{ display: "block", color: "#b9b9be" }}>Secure and fast.</span>{["ID Card", "Face Recognition", "Basic Information"].map((s) => <span key={s} style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #232426", padding: "3.5px 0" }}><span>◉ {s}</span><span className="nc-acc">✓</span></span>)}<span className="ncp-cta" style={{ marginTop: 6, fontSize: 9, padding: "5px 6px" }}>Continue</span></>)}</div>
+      <div>{mini("Your Info", <><b style={{ display: "block" }}><span className="nc-acc">2.</span> Your Info</b><span style={{ display: "block", color: "#b9b9be" }}>Tell us a bit about you.</span>{[["Education", "University Student"], ["Monthly Income", "3,000 – 8,000 CNY"], ["Employment", "Part-time"], ["City", "Shenzhen"]].map(([k, v]) => <span key={k} style={{ display: "block", borderBottom: "1px solid #232426", padding: "3.5px 0" }}><span style={{ color: "#9a9aa0" }}>{k}</span><br /><b>{v} ›</b></span>)}<span className="ncp-cta" style={{ marginTop: 6, fontSize: 9, padding: "5px 6px" }}>Continue</span></>)}</div>
+      <div>{mini("Instant Decision", <><b style={{ display: "block" }}><span className="nc-acc">3.</span> Instant Decision</b><span style={{ display: "block", color: "#b9b9be" }}>Congratulations!</span><span style={{ display: "block", textAlign: "center", fontSize: 27, color: "#ff4b1f", margin: "5px 0 0" }}>✓</span><span style={{ display: "block", textAlign: "center" }}>You're approved for NEXT CARD.</span><span style={{ display: "block", textAlign: "center", color: "#b9b9be", marginTop: 5 }}>Credit Limit<br /><b style={{ color: "#fff", fontSize: 13 }}>¥ 20,000</b></span><span className="ncp-cta" style={{ marginTop: 6, fontSize: 9, padding: "5px 6px" }}>Activate Now</span></>)}</div>
+      <div>{mini("Home Dashboard", <><span style={{ color: "#9a9aa0" }}>Available Credit</span><b style={{ display: "block", fontSize: 13.5 }}>¥ 14,520.00 <span className="nc-acc" style={{ float: "right" }}>72%</span></b><span style={{ color: "#9a9aa0" }}>Credit Limit ¥ 20,000.00</span><b style={{ display: "block", margin: "5px 0 2px" }}>Recent Transactions</b>{TXNS.map((t) => <span key={t.merchant} style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #232426", padding: "3px 0" }}><span><b>{t.merchant}</b><br /><span style={{ color: "#9a9aa0", fontSize: 7.8 }}>{t.when}</span></span><span>{t.amount}</span></span>)}<span style={{ display: "flex", justifyContent: "space-around", color: "#9a9aa0", marginTop: 6 }}><span className="nc-acc">⌂ Home</span><span>♡ Rewards</span><span>▣ Pay</span><span>◉ Profile</span></span></>)}</div>
+      <div>{mini("Rewards", <><b style={{ display: "block", fontSize: 11 }}>Rewards</b><span style={{ color: "#9a9aa0" }}>Your points</span><b style={{ display: "block", fontSize: 14.5 }}><span className="nc-acc">⬢</span> 2,850 <span style={{ color: "#9a9aa0", fontSize: 9 }}>= ¥ 28.50</span></b><b style={{ display: "block", margin: "4px 0" }}>Earn More</b><span style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4 }}>{EARN.map(([n, v]) => <span key={n} style={{ background: "#1a1214", border: "1px solid #33202a", borderRadius: 7, padding: "4px 5px" }}><b>{n}</b><br /><span style={{ color: "#b9b9be" }}>{v}</span></span>)}</span><span style={{ display: "block", background: "#1a1214", border: "1px solid #33202a", borderRadius: 7, padding: "5px", marginTop: 5 }}><b>Points Booster</b><br /><span style={{ color: "#b9b9be" }}>Double points this weekend!</span></span></>)}</div>
+      <div>{mini("Local Perks", <><b style={{ display: "block", fontSize: 11 }}>Local Perks</b><span style={{ color: "#9a9aa0" }}>Shenzhen ▾</span><span style={{ display: "block", background: "linear-gradient(120deg,#3d0f0a,#7a1d10)", borderRadius: 8, padding: "6px", margin: "4px 0" }}><b>Shenzhen Exclusive</b><br />Up to 50% off</span>{PERKS.map((p) => <span key={p.name} style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #232426", padding: "3.5px 0" }}><span><b>{p.name}</b><br /><span style={{ color: "#9a9aa0", fontSize: 7.8 }}>{p.area}</span></span><span className="nc-acc">{p.off}</span></span>)}<span className="nc-acc" style={{ display: "block", marginTop: 5 }}>View All Perks</span></>)}</div>
+    </div>
+    <div style={{ marginTop: 14, background: "#f6f5f2", color: "#141414", borderRadius: 10, padding: "10px 13px", display: "grid", gridTemplateColumns: "118px repeat(6,1fr)", gap: 10, alignItems: "start" }}>
+      <p style={{ margin: 0, fontWeight: 800, letterSpacing: ".06em", fontSize: 11.5 }}>GROWTH SYSTEM STRATEGY</p>
+      {GROWTH.map(([n, d], i) => <p key={n} style={{ margin: 0, fontSize: 11.3, lineHeight: 1.45 }}><b>{n}</b>{i < 5 && <span style={{ color: "#c9330d", float: "right" }}>→</span>}<br /><span style={{ color: "#4a4a48" }}>{d}</span></p>)}
     </div>
     <div className="nc-foot"><span>Next Card Project</span><span>Product Design Portfolio</span><span>Confidential · For portfolio use only</span></div>
   </div>;
@@ -146,7 +118,7 @@ export function NextCardWireframeWall() {
   const s = WALL_STEPS[step];
   return <div className="nc" role="region" aria-label="Next Card low-fidelity wireframe wall — interactive rebuild of Next_Card_Image_34">
     <p style={{ margin: 0, color: "#ff4b1f", letterSpacing: ".1em" }}>END-TO-END USER JOURNEY</p>
-    <h3>Image 34 — Low-Fidelity Wireframe Wall</h3>
+    <h3>Low-Fidelity Wireframe Wall</h3>
     <p style={{ color: "#c9c9ce" }}>Next Card · China Gen Z credit-card concept. Journey-first. Mobile-first. Simple, transparent, empowering.</p>
     <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }} role="group" aria-label="Journey steps">
       {WALL_STEPS.map((w, i) => <button key={w.n} type="button" className="nc-tab" aria-pressed={step === i} onClick={() => setStep(i)}>{w.n} {w.name}</button>)}

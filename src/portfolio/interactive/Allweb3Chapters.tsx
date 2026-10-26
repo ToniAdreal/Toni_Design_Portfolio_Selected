@@ -222,7 +222,7 @@ const RESPONSIBILITIES = ["Product strategy", "UX architecture", "UI design", "P
 export function Allweb3RoleScope() {
   const [node, setNode] = useState(0);
   const [resp, setResp] = useState<boolean[]>(RESPONSIBILITIES.map(() => true));
-  return <Aw n="03" title="Solo Product Designer and Full-Stack Builder" sub="IMAGE 03 — ROLE AND SCOPE CARD · Campaign ID CMP-2026-042 · Campaign Name: Meridian Protocol: Creator Growth Sprint · Status ACTIVE · Settlement Asset USDC" label="ALLWEB3 role and scope card — interactive rebuild of 3.webp" foot="ALLWEB3 — Role and Scope">
+  return <Aw n="03" title="Solo Product Designer and Full-Stack Builder" sub="ROLE AND SCOPE CARD · Campaign ID CMP-2026-042 · Campaign Name: Meridian Protocol: Creator Growth Sprint · Status ACTIVE · Settlement Asset USDC" label="ALLWEB3 role and scope card — interactive rebuild of 3.webp" foot="ALLWEB3 — Role and Scope">
     <div className="tks-flow" role="group" aria-label="Delivery diagram, strategy to deployment">{ORG_NODES.map(([t], i) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<button type="button" className="tks-node" aria-pressed={i === node} onClick={() => setNode(i)}><b>{t}</b></button></span>)}</div>
     <div className="tks-detail" aria-live="polite"><b>{ORG_NODES[node][0]}</b> — {ORG_NODES[node][1]}</div>
     <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1fr 1.4fr 1fr", marginTop: 10 }}>
@@ -581,19 +581,16 @@ export function Allweb3Management() {
         </tr>)}</tbody>
       </table>
     </div>
-    <div className="tks-detail" aria-live="polite">
-      {r[0] === "Maya Chen" && <><p className="tks-kicker" style={{ marginTop: 0 }}>1 · Creator Profile: Maya Chen — Identity, reputation, performance, and risk</p>
+    <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1fr 1.15fr", marginTop: 10, alignItems: "start" }}>
+      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>1 · Creator Profile: Maya Chen</p>
         <p style={{ margin: 0 }}>MC · Maya Chen ● Active · @mayachen ✓ maya.eth · Tier S Elite · Wallet 0x7a3b…c9d1 · Joined Feb 14, 2024 · Country Singapore</p>
         <Stats items={[["Reputation Score", "4.82 / 5", "↑ 12.4% (30d)"], ["Campaigns", "23", "Completed"], ["Success Rate", "95.7%", "22 / 23"], ["Total Earnings", "$184,750.32", "↑ 12.4% (30d)"]]} />
-        <p style={{ margin: "8px 0 0" }}>Campaign History (Recent): Meridian Protocol – Q2 Growth Campaign · Apr 28, 2025 · $24,500 · Meridian Protocol – DevNet Launch · Mar 15, 2025 · $18,000 · Meridian Protocol – Staking Campaign · Feb 02, 2025 · $15,750</p></>}
-      {r[0] === "Meridian Protocol" && <><p className="tks-kicker" style={{ marginTop: 0 }}>2 · Project Profile: Meridian Protocol — Project overview, spend, and risk status</p>
+        <p style={{ margin: "8px 0 0" }}>Campaign History (Recent): Meridian Protocol – Q2 Growth Campaign · Apr 28, 2025 · $24,500 · Meridian Protocol – DevNet Launch · Mar 15, 2025 · $18,000 · Meridian Protocol – Staking Campaign · Feb 02, 2025 · $15,750</p></div>
+      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>2 · Project Profile: Meridian Protocol</p>
         <p style={{ margin: 0 }}>Meridian Protocol ● Active · @meridian ✓ meridianprotocol.eth · Tier S Elite · Wallet 0x3e6a…19f7 · Joined Jan 10, 2024 · Category DeFi Infrastructure</p>
         <Stats items={[["Total Spend", "$1,248,560.75", "↑ 15.6% (30d)"], ["Campaigns", "41", "Completed"], ["Avg. ROI", "3.21x", "Across campaigns"], ["Risk Score", "18 / 100", "Low Risk"]]} />
-        <p style={{ margin: "8px 0 0" }}>Recent Campaigns: Q2 Growth Campaign · Apr 28, 2025 · $125,000 · DevNet Incentive Program · Mar 15, 2025 · $200,000 · Staking Season Campaign · Feb 02, 2025 · $150,000</p></>}
-      {r[0] !== "Maya Chen" && r[0] !== "Meridian Protocol" && <><p className="tks-kicker" style={{ marginTop: 0 }}>Selected row — as printed in the table</p>
-        <p style={{ margin: 0 }}><b>{r[0]}</b> {r[1]} · Wallet {r[2]} · {r[3]} ✓ · Reputation {r[4]} · Tier {r[5]} · Status {r[6]} · Total Earnings {r[7]} ({r[8]}) · Risk {r[9]}. Full profile panels are printed on this slide for Maya Chen and Meridian Protocol only.</p></>}
-    </div>
-    <div className="tks-card" style={{ marginTop: 10 }}>
+        <p style={{ margin: "8px 0 0" }}>Recent Campaigns: Q2 Growth Campaign · Apr 28, 2025 · $125,000 · DevNet Incentive Program · Mar 15, 2025 · $200,000 · Staking Season Campaign · Feb 02, 2025 · $150,000</p></div>
+<div className="tks-card">
       <p className="tks-kicker" style={{ marginTop: 0 }}>3 · Administrative Action — Role check, action drawer, and reason requirement → 4 · Confirmation &amp; Audit Trail</p>
       {stage === "drawer" && <div aria-live="polite">
         <p style={{ margin: 0 }}>Target <b>Maya Chen (@mayachen)</b> · Wallet 0x7a3b…c9d1 · Current Status ● Active · Reputation 4.82 · Risk Level Low</p>
@@ -619,7 +616,9 @@ export function Allweb3Management() {
         <button type="button" className="tks-btn tks-btn--ghost" style={{ marginTop: 8 }} onClick={() => setStage("drawer")}>Back to action drawer</button>
       </div>}
     </div>
-    <div className="tks-card" style={{ marginTop: 10 }}>
+        </div>
+    <p className="aw3-dim" aria-live="polite" style={{ margin: "8px 0 0" }}>Selected table row: <b style={{ color: "#e8f5e8" }}>{r[0]}</b> {r[1]} · Wallet {r[2]} · {r[3]} ✓ · Reputation {r[4]} · Tier {r[5]} · Status {r[6]} · Total Earnings {r[7]} ({r[8]}) · Risk {r[9]}. Full profile panels are printed on this slide for Maya Chen and Meridian Protocol.</p>
+<div className="tks-card" style={{ marginTop: 10 }}>
       <p className="tks-kicker" style={{ marginTop: 0 }}>4 · Confirmation &amp; Audit Trail — always on record (View Full Log)</p>
       {AUDIT_TRAIL.map(([when, what, meta]) => <p key={when} style={{ margin: "4px 0" }}><span className="aw3-dim">{when}</span> · {what} · <span className="aw3-dim">{meta}</span></p>)}
     </div>
@@ -728,6 +727,8 @@ export function Allweb3DisputeResolution() {
   const [confirmed, setConfirmed] = useState(false);
   return <Aw n="18" title="Dispute Resolution" sub="← Back to All Cases · All Cases 12 · Open 5 · In Review 4 · Escalated 1 · Resolved 2 · Closed 0 · Workspace: My Queue 3 · Assigned to Me 2 · SLA Watch 1" label="ALLWEB3 dispute resolution — interactive rebuild of 18.webp" foot="All decisions are recorded on-chain for transparency and auditability · Policy Ref: DRP-2.3 · Evidence Standards v1.4 · Last Updated: May 10, 2025">
     <Stats items={[["Case ID", "DR-2025-0518"], ["Campaign", "Nebula AI – Beta Launch"], ["Amount in Dispute", "$6,250.00 USDC"], ["Initiated", "May 18, 2025 14:32 UTC"], ["Last Updated", "May 21, 2025 09:41 UTC"]]} />
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 292px", gap: 12, alignItems: "start" }}>
+    <div>
     <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1fr", marginTop: 10 }}>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Project Position — <span style={{ color: "#ffb84d" }}>Disputing</span></p>
         <p style={{ margin: 0 }}>“Deliverables incomplete and KPIs not met per campaign brief.”</p>
@@ -746,7 +747,7 @@ export function Allweb3DisputeResolution() {
         {st ? <span style={{ display: "block", marginTop: 4, fontWeight: 700, color: st === "Verified" ? "#2fbf71" : st === "Rejected" ? "#ff8a8a" : "#c9c9ce" }}>{st === "Verified" ? "✓ Verified" : st === "Rejected" ? "✗ Rejected" : "◌ Pending"}</span> : null}
       </button>)}
     </div>
-    <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1.2fr 1fr", marginTop: 10 }}>
+    <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1fr", marginTop: 10 }}>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Validator Vote Distribution — 7 of 9 validators submitted · 7 Votes</p>
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
           <div style={{ width: 74, height: 74, flex: "none", borderRadius: "50%", background: "conic-gradient(#2fbf71 0 57%, #ffb020 57% 86%, #ff4d4f 86% 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ width: 48, height: 48, borderRadius: "50%", background: "#0a120a", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 10.5, textAlign: "center" }}>7 Votes</span></div>
@@ -762,7 +763,8 @@ export function Allweb3DisputeResolution() {
         <p style={{ margin: "5px 0" }}><b>Tier 2: Senior Review Panel</b> <span className="tks-tag" style={{ color: "#ffb84d" }}>Escalates in 1d 14h</span><br /><span className="aw3-dim">Re-review and decision override</span></p>
         <p style={{ margin: "5px 0" }}><b>Tier 3: Arbitration Committee</b> <span className="tks-tag">Final escalation</span><br /><span className="aw3-dim">Final and binding decision</span></p></div>
     </div>
-    <div className="tks-grid" style={{ gridTemplateColumns: "1fr 1.6fr", marginTop: 10 }}>
+        </div>
+    <div style={{ display: "grid", gap: 10 }}>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Case Status — In Review · Submitted ✓ → Under Review → Decision Pending → Resolved</p>
         <p className="tks-kicker" style={{ margin: "8px 0 4px" }}>SLA Summary — 71%</p>
         <Bar pct={71} label="SLA elapsed, 71 percent" />
@@ -776,6 +778,8 @@ export function Allweb3DisputeResolution() {
           <button type="button" className="tks-btn" style={decision === null || rationale.trim().length === 0 ? { background: "#3a403a", borderColor: "#3a403a", color: "#9a9aa0" } : undefined} disabled={decision === null || rationale.trim().length === 0} onClick={() => setConfirmed(true)}>🔒 Confirm Decision</button>
           <span aria-live="polite">{confirmed && decision !== null ? `Decision staged in this rebuild: ${DECISIONS[decision][0]} — as printed, all decisions are recorded on-chain for transparency and auditability.` : "The printed Confirm Decision stays locked until a decision and a rationale are both present."}</span>
         </p></div>
+    
+    </div>
     </div>
   </Aw>;
 }
