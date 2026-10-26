@@ -758,6 +758,8 @@ export const nextCardZh: Record<string, string> = {
   "Broader lifestyle and retail ecosystem": "更广的生活方式与零售生态",
   "Campus and local merchant activation": "校园与本地商户激活",
   "COMPLEMENTARY STRENGTHS": "互补优势",
+  "COMPLEMENTARY": "互补",
+  "STRENGTHS": "优势",
   "Different strengths. Stronger together. One card. Two engines. Infinite possibilities.": "不同的优势。合在一起更强。一张卡。两台引擎。无限可能。",
   "Shenzhen provides digital and professional density;": "深圳提供数字与职场密度；",
   "Guangzhou provides consumer scale and lifestyle reach.": "广州提供消费规模与生活方式触达。",
