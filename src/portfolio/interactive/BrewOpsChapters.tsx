@@ -1753,8 +1753,10 @@ export function BrewOpsControlTowerExplained() {
   return <BoX n="33" title="Control Tower Explained" sub="Five ways the Control Tower turns data into confident, timely decisions — the numbered points sit in the left column and their markers 1–5 sit on the dashboard itself, as printed." dark={false} label="BrewOps control tower explained - interactive rebuild of Budweiser_33">
     {/* Pass 7 (33): the explainer is restored to the print's narrow
         numbered rail (~126px, number + title + one-line lead; the
-        detail line sits under the selected item only) and the
-        dashboard runs compact, without the added bottom row. */}
+        detail line sits under the selected item only). The dashboard
+        runs the FULL CTDash (pass-7 integrator correction — the print
+        shows the Next Actions + Drill bottom row, and marker 5
+        anchors to the Next Actions panel inside it). */}
     <div style={{ display: "grid", gridTemplateColumns: "126px minmax(0,1fr)", gap: 10, alignItems: "start" }}>
       <div style={{ display: "grid", gap: 5 }}>
         <p style={{ margin: 0, fontSize: 10, color: "#5b6470", lineHeight: 1.4 }}><span style={{ color: "#c8102e", fontStyle: "italic", fontWeight: 800 }}>Budweiser</span><br /><b style={{ letterSpacing: "0.08em", color: "#141a21", fontSize: 9.3 }}>BREWOPS INTELLIGENCE</b></p>

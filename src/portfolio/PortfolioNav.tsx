@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { useMotionSetting, type MotionMode } from "../motion/MotionContext";
 import { useMotionKernel } from "../motion/MotionKernel";
 import { Magnetic } from "../motion/Magnetic";
+import { LanguageToggle } from "../i18n/LanguageContext";
 
 const navItems = [
   { label: "Atlas", href: "/portfolio#atlas" },
@@ -191,6 +192,7 @@ export function PortfolioNav({ caseCtx }: { caseCtx?: CaseCtx }) {
                 <MotionToggle />
               </div>
             )}
+            <LanguageToggle />
             <a
               href="https://toni.tokenta.space/"
               target="_blank"
