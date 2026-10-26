@@ -15,8 +15,8 @@ const VIOLET = "#6C3BFF";
 const GRAD = "linear-gradient(92deg,#6C3BFF 10%,#2563EB 90%)";
 
 function Shell({ n, label, children, foot }: { n: string; label: string; children: ReactNode; foot?: string }) {
-  return <div className="tks" role="region" aria-label={label} style={{ background: "#f7f6ff" }}>
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+  return <div className="tks" role="region" aria-label={label} style={{ background: "#f7f6ff", padding: "20px 24px 12px" }}>
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
       <span style={{ fontWeight: 800, fontSize: 13, color: "#191423" }}><span style={{ color: VIOLET }}>⬡</span> CyberOrigin</span>
       <span style={{ fontSize: 10.5, color: "#8a86a3", fontFamily: "ui-monospace,Menlo,monospace" }}>{n} / 40 · DataQuest</span>
     </div>
@@ -62,21 +62,20 @@ const CATS15: Array<[string, string, string, string, string]> = [
 ];
 export function DataQuestMarketplace() {
   const [pick, setPick] = useState(0);
-  return <Shell n="15" label="DataQuest marketplace V0 — rebuild of CyberOrigin_15" foot="V0 prototype window, as printed — category medallion colours and price colours follow the original slide.">
+  return <Shell n="15" label="DataQuest marketplace V0 — rebuild of CyberOrigin_15">
     <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginBottom: 8 }}>{pill("Historical")}{pill("V0")}</div>
     <Browser>
       <div style={{ fontSize: 24, fontWeight: 800, color: "#14101f" }}>Marketplace</div>
       <p style={{ margin: "3px 0 12px", color: "#55506e" }}>Browse data collection tasks and earn rewards.</p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10 }}>
-        {CATS15.map(([icon, name, body, price, c], i) => <button key={name} type="button" onClick={() => setPick(i)} aria-pressed={i === pick} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === pick ? c : "#e7e4f6"}`, borderRadius: 12, padding: "12px 13px", cursor: "pointer", font: "inherit" }}>
+        {CATS15.map(([icon, name, body, price, c], i) => <button key={name} type="button" onClick={() => setPick(i)} aria-pressed={i === pick} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === pick ? c : "#e7e4f6"}`, borderRadius: 12, padding: "15px 14px", cursor: "pointer", font: "inherit" }}>
           <span style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-            <span style={{ width: 42, height: 42, flex: "none", borderRadius: "50%", background: `${c}1f`, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 19 }}>{icon}</span>
+            <span style={{ width: 48, height: 48, flex: "none", borderRadius: "50%", background: `${c}1f`, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 21 }}>{icon}</span>
             <span><b style={{ fontSize: 13.5, color: "#14101f" }}>{name}</b><br /><span style={{ color: "#55506e", fontSize: 11.5, lineHeight: 1.45, display: "inline-block", marginTop: 2 }}>{body}</span></span>
           </span>
-          <span style={{ display: "block", marginTop: 9, fontWeight: 800, color: c, fontSize: 13 }}>{price}</span>
+          <span style={{ display: "block", marginTop: 13, fontWeight: 800, color: c, fontSize: 13 }}>{price}</span>
         </button>)}
       </div>
-      <p aria-live="polite" style={{ margin: "10px 0 0", fontSize: 11.5, color: "#6d6884" }}>Selected category: <b style={{ color: CATS15[pick][4] }}>{CATS15[pick][1]}</b> — {CATS15[pick][3]}.</p>
     </Browser>
   </Shell>;
 }
@@ -88,7 +87,7 @@ const RECENT16: Array<[string, string, string, string, string]> = [["Jamie L.", 
 export function DataQuestTaskDetailV0() {
   const [done, setDone] = useState<number[]>([0, 1, 2, 3, 4]);
   const [file, setFile] = useState(false);
-  return <Shell n="16" label="DataQuest Urban Street Scene task detail V0 — rebuild of CyberOrigin_16" foot="V0 prototype window, as printed — leaderboard and recent submissions transcribed from the original slide.">
+  return <Shell n="16" label="DataQuest Urban Street Scene task detail V0 — rebuild of CyberOrigin_16">
     <Browser>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
         <span style={{ color: VIOLET, fontWeight: 600 }}>← Back to marketplace</span>{pill("Historical")}{pill("V0")}
@@ -105,11 +104,7 @@ export function DataQuestTaskDetailV0() {
                   {REQ16.map((r, i) => <button key={r} type="button" onClick={() => setDone((d) => d.includes(i) ? d.filter((x) => x !== i) : [...d, i])} aria-pressed={done.includes(i)} style={{ textAlign: "left", background: "none", border: "none", cursor: "pointer", font: "inherit", padding: 0, color: "#33304a" }}><span style={{ color: VIOLET, marginRight: 6 }}>{done.includes(i) ? "☑" : "☐"}</span>{r}</button>)}
                 </div>
               </div>
-              <div aria-hidden="true" style={{ borderRadius: 10, minHeight: 170, background: "linear-gradient(180deg,#a8c6e8 0%,#d9c9a8 34%,#8a6f52 35%,#5d5148 100%)", position: "relative", overflow: "hidden" }}>
-                <span style={{ position: "absolute", left: 0, right: 0, top: "58%", height: 3, background: "repeating-linear-gradient(90deg,#e8c95a 0 14px,transparent 14px 26px)" }} />
-                <span style={{ position: "absolute", left: "8%", bottom: "8%", fontSize: 16 }}>🚶 🚗 🚶‍♀️</span>
-                <span style={{ position: "absolute", right: "6%", top: "38%", background: "rgba(20,16,31,0.55)", color: "#fff", fontSize: 9.5, padding: "2px 7px", borderRadius: 4 }}>Street photo (as printed)</span>
-              </div>
+              <img src="/projects/crops/dataquest/street-scene.jpg" alt="Street photo from the original slide (crop, no text)" style={{ width: "100%", height: 196, objectFit: "cover", borderRadius: 10, display: "block" }} />
             </div>
           </div>
           <div style={{ border: "1px solid #e7e4f6", borderRadius: 12, padding: "12px 15px", marginTop: 12 }}>
@@ -120,7 +115,6 @@ export function DataQuestTaskDetailV0() {
               <span style={{ color: VIOLET, fontWeight: 600 }}>{file ? "Click to clear" : "or click to browse"}</span><br />
               <span style={{ color: "#8a86a3", fontSize: 11 }}>JPG or PNG, up to 10MB</span>
             </button>
-            <p aria-live="polite" style={{ margin: "7px 0 0", fontSize: 11.5, color: "#6d6884" }}>{done.length} of 5 requirements confirmed{file ? " · file attached" : ""}.</p>
           </div>
         </div>
         <div style={{ display: "grid", gap: 12, alignContent: "start" }}>
@@ -170,8 +164,8 @@ function StateCard({ s, hot, onPick }: { s: St; hot: boolean; onPick: () => void
   return <button type="button" onClick={onPick} aria-pressed={hot} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${hot ? c : "#e0dcf3"}`, borderRadius: 11, padding: "9px 10px", cursor: "pointer", font: "inherit", boxShadow: hot ? `0 0 0 3px ${c}22` : "none" }}>
     <span style={{ display: "flex", gap: 7, alignItems: "center" }}><span style={{ width: 26, height: 26, flex: "none", borderRadius: "50%", background: c, color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800 }}>{num}</span><b style={{ color: c, fontSize: 12.5 }}>{name}</b></span>
     <span style={{ display: "block", color: "#6d6884", fontSize: 10.5, margin: "4px 0 7px" }}>{msg}</span>
-    <span style={{ display: "block", borderTop: "1px solid #eeeaf9", paddingTop: 5, fontSize: 10.5 }}><span style={{ color: c, fontWeight: 700 }}>Next action</span>&nbsp;&nbsp;{next}</span>
-    <span style={{ display: "block", fontSize: 10.5, marginTop: 2 }}><span style={{ color: c, fontWeight: 700 }}>Reward</span>&nbsp;&nbsp;{reward}</span>
+    <span style={{ display: "flex", gap: 6, borderTop: "1px solid #eeeaf9", paddingTop: 5, fontSize: 10, lineHeight: 1.35 }}><span style={{ color: c, fontWeight: 700, flex: "none" }}>Next action</span><span>{next}</span></span>
+    <span style={{ display: "flex", gap: 6, fontSize: 10, marginTop: 2, lineHeight: 1.35 }}><span style={{ color: c, fontWeight: 700, flex: "none" }}>Reward</span><span>{reward}</span></span>
   </button>;
 }
 const OWNERS26: Array<[string, string, string]> = [
@@ -182,8 +176,6 @@ const OWNERS26: Array<[string, string, string]> = [
 ];
 export function DataQuestStateMachine() {
   const [sel, setSel] = useState("7");
-  const all = [...ROW26A, NEEDS26, ...ROW26B];
-  const cur = all.find((s) => s[0] === sel) ?? NEEDS26;
   return <Shell n="26" label="DataQuest submission state machine — rebuild of CyberOrigin_26">
     <GradTitle>Submission state machine</GradTitle>
     <p style={{ margin: "5px 0 14px", color: "#33304a" }}>Every visible state should have an owner, a message, a next action, and a reward consequence.</p>
@@ -191,17 +183,16 @@ export function DataQuestStateMachine() {
       {ROW26A.map((s) => <StateCard key={s[0]} s={s} hot={sel === s[0]} onPick={() => setSel(s[0])} />)}
     </div>
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 14, margin: "10px 0" }}>
-      <span style={{ fontSize: 10.5, color: "#8a6d1d" }}>┄ dashed = rework / appeal paths ┄</span>
-      <div style={{ width: 190 }}><StateCard s={NEEDS26} hot={sel === "7"} onPick={() => setSel("7")} /></div>
-      <span style={{ fontSize: 10.5, color: "#8a6d1d" }}>┄ 6 Processing drops to review ┄</span>
+      <span aria-hidden="true" style={{ fontSize: 13, color: "#e07b16", letterSpacing: 2 }}>◀ ┄┄┄</span>
+      <div style={{ width: 210 }}><StateCard s={NEEDS26} hot={sel === "7"} onPick={() => setSel("7")} /></div>
+      <span aria-hidden="true" style={{ fontSize: 13, color: "#e07b16", letterSpacing: 2 }}>┄┄┄ ▶</span>
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 8 }}>
       {ROW26B.map((s) => <StateCard key={s[0]} s={s} hot={sel === s[0]} onPick={() => setSel(s[0])} />)}
     </div>
-    <p aria-live="polite" style={{ margin: "10px 0 0", fontSize: 11.5, color: "#6d6884" }}>State <b style={{ color: cur[5] }}>{cur[0]} {cur[1]}</b> — {cur[2]} · Next action: {cur[3]} · Reward: {cur[4]}.</p>
     <div style={{ marginTop: 12, border: "1px solid #e0dcf3", borderRadius: 12, padding: "10px 14px", display: "grid", gridTemplateColumns: "1.1fr 1.3fr 1.3fr 1.3fr 1.2fr 1.2fr", gap: 12, background: "#fff" }}>
       <div><b style={{ fontSize: 12 }}>Owner legend</b><br /><span style={{ fontSize: 10.5, color: "#6d6884" }}>Each state has a clear owner.</span></div>
-      {OWNERS26.map(([n, b, c]) => <div key={n} style={{ borderLeft: "1px solid #eeeaf9", paddingLeft: 10 }}><b style={{ color: c, fontSize: 12 }}>{n}</b><br /><span style={{ fontSize: 10.5, color: "#6d6884" }}>{b}</span></div>)}
+      {OWNERS26.map(([n, b, c], oi) => <div key={n} style={{ borderLeft: "1px solid #eeeaf9", paddingLeft: 10, display: "flex", gap: 8 }}><span style={{ flex: "none", width: 26, height: 26, borderRadius: "50%", background: `${c}1f`, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>{["👤", "🗄", "👤", "💲"][oi]}</span><span><b style={{ color: c, fontSize: 12 }}>{n}</b><br /><span style={{ fontSize: 10.5, color: "#6d6884" }}>{b}</span></span></div>)}
       <div style={{ borderLeft: "1px solid #eeeaf9", paddingLeft: 10, fontSize: 10.5, color: "#6d6884" }}>
         <span style={{ color: "#6C3BFF" }}>━━▶</span> Forward progress<br />
         <span style={{ color: "#e07b16" }}>┄┄▶</span> Contributor rework<br />

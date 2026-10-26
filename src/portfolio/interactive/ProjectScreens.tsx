@@ -165,14 +165,17 @@ export function AurionXSceneRecall() {
   // the jump target in panel 6.
   const bar = (pct: number) => <span style={{ display: "block", height: 3.5, background: "#26262b", borderRadius: 2, marginTop: 5 }}><span style={{ display: "block", width: `${pct}%`, height: "100%", background: "linear-gradient(90deg,#00E5FF,#7B61FF)", borderRadius: 2 }} /></span>;
   const panel = (i: number, children: React.ReactNode) => <div onClick={() => setActive(i)} style={{ cursor: "pointer" }}>
-    <div style={{ background: "linear-gradient(160deg,#141a28,#05070c)", border: `1.5px solid ${active === i ? "#7B61FF" : "#26262b"}`, borderRadius: 8, padding: "8px 9px", minHeight: 118, fontSize: 10.3, lineHeight: 1.55 }}>{children}</div>
+    {/* Pass 3: every printed panel shows the same kitchen scene — the
+        real crop (screen interior, no overlay text) now sits under a
+        dark veil in all six states; each state's overlay stays DOM. */}
+    <div style={{ background: "linear-gradient(rgba(6,8,14,0.8), rgba(6,8,14,0.88)), url(/projects/crops/aurionx/f21-scene.jpg) center/cover", border: `1.5px solid ${active === i ? "#7B61FF" : "#26262b"}`, borderRadius: 8, padding: "8px 9px", minHeight: 104, fontSize: 10.3, lineHeight: 1.55 }}>{children}</div>
     <p style={{ margin: "6px 0 0", fontSize: 10.6 }}><b>{AX_STATES[i].n} · {AX_STATES[i].name}</b></p>
     <p style={{ margin: "2px 0 0", fontSize: 9.8, color: "#a1a1aa", lineHeight: 1.5 }}>{AX_STATES[i].line}</p>
   </div>;
   return <div className="ix" role="region" aria-label="AurionX — Scene Recall interaction sequence (interactive)" style={{ background: "#060607", color: "#f5f5f5" }}>
     <Head n="21" kicker="Scene Recall — High-Fidelity Interaction Sequence" brand="AURIONX" />
-    <div className="ix-title"><h3 style={{ color: "#fff" }}>One continuous moment. Six distinct states.<span style={{ color: "#a1a1aa" }}>All six states of one request, side by side — pick a candidate in panel 5 and panel 6 jumps to it.</span></h3></div>
-    <div className="ix-body">
+    <div className="ix-title" style={{ padding: "10px 14px 6px" }}><h3 style={{ color: "#fff", fontSize: 30 }}>One continuous moment. Six distinct states.<span style={{ color: "#a1a1aa" }}>All six states of one request, side by side — pick a candidate in panel 5 and panel 6 jumps to it.</span></h3></div>
+    <div className="ix-body" style={{ padding: "0 10px 8px" }}>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 8 }}>
         {panel(0, <><span style={{ color: "#8fb7ff" }}>▶ Playback</span>{bar(38)}<p className="ix-mono" style={{ margin: "6px 0 0", fontSize: 9.6 }}>32:14 / 84:07</p><p style={{ margin: "4px 0 0", color: "#a1a1aa" }}>The same film scene plays underneath every state.</p></>)}
         {panel(1, <><span style={{ fontSize: 19, color: "#00E5FF" }}>◉</span><p style={{ margin: "4px 0 0" }}>AurionX activation ring — <b>listening</b></p></>)}
@@ -202,7 +205,7 @@ export function AurionXHighlightConfig() {
   // Pass 2: the printed slide is a 2×2 storyboard — all four steps at
   // once, each over the same film backdrop, each with its voice-shortcut
   // pill. Selections stay live in every panel.
-  const stepPanel = (si: number) => { const s = AX_HL_STEPS[si]; return <div key={s.title} onClick={() => setFocus(si)} style={{ background: "linear-gradient(165deg,#131a28,#05070c)", border: `1.5px solid ${focus === si ? "#7B61FF" : "#26262b"}`, borderRadius: 10, padding: "10px 12px", cursor: "pointer" }}>
+  const stepPanel = (si: number) => { const s = AX_HL_STEPS[si]; return <div key={s.title} onClick={() => setFocus(si)} style={{ background: "linear-gradient(rgba(5,7,12,0.79), rgba(5,7,12,0.87)), url(/projects/crops/aurionx/f26-backdrop.jpg) center right/cover", border: `1.5px solid ${focus === si ? "#7B61FF" : "#26262b"}`, borderRadius: 10, padding: "9px 11px", cursor: "pointer" }}>
     <p className="ix-mono" style={{ fontSize: 9.6, color: "#8fb7ff", margin: "0 0 3px" }}>STEP {si + 1} OF 4</p>
     <h4 style={{ margin: "0 0 2px", fontSize: 15.5 }}>{s.title}</h4>
     <p style={{ margin: "0 0 9px", color: "#a1a1aa", fontSize: 11 }}>{s.q}</p>
@@ -214,8 +217,8 @@ export function AurionXHighlightConfig() {
   </div>; };
   return <div className="ix" role="region" aria-label="AurionX — Highlight Configuration (interactive)" style={{ background: "#060607", color: "#f5f5f5" }}>
     <Head n="26" kicker="5-Minute Intelligent Cut — Highlight Configuration" brand="AURIONX" />
-    <div className="ix-title"><h3 style={{ color: "#fff" }}>Create a personalized highlight.<span style={{ color: "#a1a1aa" }}>All four steps at once, as printed — set each panel, then generate the preview.</span></h3></div>
-    <div className="ix-body">
+    <div className="ix-title" style={{ padding: "10px 14px 6px" }}><h3 style={{ color: "#fff", fontSize: 30 }}>Create a personalized highlight.<span style={{ color: "#a1a1aa" }}>All four steps at once, as printed — set each panel, then generate the preview.</span></h3></div>
+    <div className="ix-body" style={{ padding: "0 10px 8px" }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9 }}>{AX_HL_STEPS.map((_, si) => stepPanel(si))}</div>
       {done ? <p style={{ margin: "10px 0 0", fontSize: 12 }} aria-live="polite"><b>Preview ready</b> — {AX_HL_STEPS.map((x, i) => x.options[choices[i]].split(" — ")[0]).join(" · ")}</p> : null}
       <p style={{ margin: "12px 0 0", display: "flex", justifyContent: "space-between", gap: 14, fontSize: 10.6, color: "#8e8e96" }}>

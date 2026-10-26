@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import "./tokenta-slides.css";
-import { BoX, CTDash, HiFi, Side31, Spark, BrewOpsAnnotatedShell, BrewOpsCopilotFull, BrewOpsStoryboard } from "./BrewOpsRebuilds";
+import { BoX, BO3_CSS, CTDash, HiFi, Side31, Spark, BrewOpsAnnotatedShell, BrewOpsCopilotFull, BrewOpsStoryboard } from "./BrewOpsRebuilds";
 
 /**
  * Bespoke rebuilds of the 47 remaining BrewOps / Budweiser gallery
@@ -133,11 +133,12 @@ import { BoX, CTDash, HiFi, Side31, Spark, BrewOpsAnnotatedShell, BrewOpsCopilot
 const AMBER = "#f5a800";
 const RED = "#e0483e";
 
-function Bo({ n, title, sub, children, label, dark = true, foot }: { n: string; title: ReactNode; sub?: string; children: ReactNode; label: string; dark?: boolean; foot?: string }) {
-  return <div className={`tks${dark ? " tks--dark" : ""}`} style={dark ? { background: "#0a141f" } : undefined} role="region" aria-label={label}>
+function Bo({ n, title, sub, children, label, dark = true, foot, serif = false, center = false }: { n: string; title: ReactNode; sub?: string; children: ReactNode; label: string; dark?: boolean; foot?: string; serif?: boolean; center?: boolean }) {
+  return <div className={`tks bo3${dark ? " tks--dark" : ""}`} style={{ ...(dark ? { background: "#0a141f" } : {}), padding: "16px 20px 10px", fontSize: 12.6, lineHeight: 1.45 }} role="region" aria-label={label}>
+    <style>{BO3_CSS}</style>
     <div className="tks-head"><span><b>BrewOps <span style={{ color: AMBER }}>Intelligence</span></b>&nbsp;&nbsp;|&nbsp;&nbsp;{n} of 50</span><span className="tks-brand" style={{ fontSize: 12, color: "#c8102e", fontStyle: "italic" }}>Budweiser</span></div>
-    <h3 style={{ fontSize: 44 }}>{title}</h3>
-    {sub ? <p className="tks-lede">{sub}</p> : null}
+    <h3 style={{ fontSize: 30, ...(serif ? { fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: 600 } : {}), ...(center ? { textAlign: "center" } : {}) }}>{title}</h3>
+    {sub ? <p className="tks-lede" style={center ? { textAlign: "center", marginLeft: "auto", marginRight: "auto" } : undefined}>{sub}</p> : null}
     {children}
     <div className="tks-foot"><span>{foot ?? "BrewOps Intelligence - as printed on the slide"}</span><span>Data-informed. Human-led. Outcome-driven.</span></div>
   </div>;
@@ -179,15 +180,22 @@ export function BrewOpsCover() {
   const [approved, setApproved] = useState(false);
   const riskRow: Array<[string, string, string, string]> = [["Overall Risk", "High", "↑ vs prior 7 days", "#e0483e"], ["Service Risk", "22%", "↑ 8pp vs prior 7 days", "#e0483e"], ["Supply Risk", "High", "↑ vs prior 7 days", "#e0483e"], ["Logistics Risk", "Medium", "— no change", "#f5a800"], ["Inventory Risk", "Low", "↓ vs prior 7 days", "#18a957"], ["At Risk SKUs", "128", "$2.7M revenue", "#e0483e"]];
   const sevC = (s: string) => s === "CRITICAL" ? "#e0483e" : s === "WARNING" ? "#f5a800" : "#2F80ED";
-  return <Bo n="01" title="Designing a Beverage Supply-Chain Intelligence Copilot" sub="BrewOps Intelligence - Independent Budweiser Supply-Chain Intelligence Demonstrator. From a 2023 AI blueprint to an independently built operational demonstrator. The monitor shows the Control Tower for Fairfield Brewery, date range May 19 - Jun 1, 2024. Top nav as printed: Control Tower - Demand - Supply - Logistics - Inventory - Quality - Reports." label="BrewOps cover showcase - interactive rebuild of Budweiser_01">
-    <div style={{ background: "#0e1c2c", border: "1px solid #22344d", borderRadius: 13, padding: "12px 14px" }}>
+  return <Bo n="01" title="Designing a Beverage Supply-Chain Intelligence Copilot" sub="BrewOps Intelligence — Independent Budweiser Supply-Chain Intelligence Demonstrator." label="BrewOps cover showcase - interactive rebuild of Budweiser_01">
+    <div style={{ display: "grid", gridTemplateColumns: "238px minmax(0,1fr)", gap: 12, alignItems: "start" }}>
+    <div>
+      <p style={{ margin: 0, fontSize: 12.3, lineHeight: 1.55, color: "#dbe5f0" }}>From a 2023 AI blueprint to an <b style={{ color: AMBER }}>independently built operational demonstrator</b>.</p>
+      <img src="/projects/crops/brewops/hero-warehouse.webp" alt="Warehouse aisle of the printed cover photograph" style={{ width: "100%", height: 92, objectFit: "cover", borderRadius: 9, border: "1px solid #22344d", display: "block", margin: "10px 0" }} />
+      <p style={{ margin: 0, fontSize: 11, lineHeight: 1.65, color: "#a9bccd" }}>The monitor shows the <b style={{ color: "#fff" }}>Control Tower</b> for <b style={{ color: "#fff" }}>Fairfield Brewery</b>, date range <b style={{ color: "#fff" }}>May 19 – Jun 1, 2024</b>.</p>
+      <p style={{ margin: "8px 0 0", fontSize: 10.5, lineHeight: 1.6, color: "#8fa5bd" }}>Top nav as printed: Control Tower · Demand · Supply · Logistics · Inventory · Quality · Reports</p>
+    </div>
+    <div style={{ background: "#0e1c2c", border: "1px solid #22344d", borderRadius: 13, padding: "10px 12px", minWidth: 0 }}>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 7 }}>
         {riskRow.map(([k, v, d, c]) => <div key={k} style={{ border: "1px solid #22344d", borderRadius: 9, padding: "6px 9px" }}><span style={{ color: "#8fa5bd", fontSize: 10 }}>{k}</span><div style={{ color: c, fontWeight: 800, fontSize: 17 }}>{v}</div><span style={{ color: "#8fa5bd", fontSize: 9.5 }}>{d}</span></div>)}
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1.35fr 0.85fr 1.1fr", gap: 9, marginTop: 9 }}>
         <div style={{ border: "1px solid #22344d", borderRadius: 10, padding: "8px 11px" }}>
           <p className="tks-kicker" style={{ marginTop: 0 }}>Demand vs Supply Forecast</p>
-          <svg viewBox="0 0 300 108" width="100%" height="108" role="img" aria-label="Forecast demand versus supply plan with P10 P90 bands, May 19 to Jun 1; projected shortfall 12.4 KHL May 27 to Jun 1">
+          <svg viewBox="0 0 300 108" width="100%" height="88" role="img" aria-label="Forecast demand versus supply plan with P10 P90 bands, May 19 to Jun 1; projected shortfall 12.4 KHL May 27 to Jun 1">
             <path d="M8,66 L60,60 L112,54 L164,44 L216,34 L292,22 L292,52 L216,58 L164,64 L112,70 L60,74 L8,78 Z" fill="#2F80ED" opacity="0.18" />
             <polyline points="8,44 60,42 112,40 164,34 216,28 292,20" fill="none" stroke="#7db3f5" strokeWidth="1.6" strokeDasharray="4 3" />
             <polyline points="8,72 60,67 112,62 164,54 216,45 292,37" fill="none" stroke="#f5a800" strokeWidth="2" />
@@ -221,7 +229,7 @@ export function BrewOpsCover() {
           <p style={{ margin: "6px 0 0", color: "#8fa5bd", fontSize: 10.5 }}>Last updated: May 19, 2024 8:15 AM CDT — Data sources: All systems operational.</p></div>
       </div>
     </div>
-    <p style={{ margin: "8px 0 0", fontSize: 11, color: "#8fa5bd" }}>The hero photograph of the planner at the monitor is represented structurally; the monitor's dashboard is rebuilt above.</p>
+    </div>
   </Bo>;
 }
 
@@ -283,14 +291,14 @@ export function BrewOpsTimeline() {
   return <Bo n="03" title="Project Timeline" sub="From concept to independently built demonstrator." dark={false} label="BrewOps project timeline - interactive rebuild of Budweiser_03">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12 }}>
       {TIMELINE03.map(([y, t, d], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "center", background: "transparent", border: "none", cursor: "pointer", font: "inherit", color: "#141a21", padding: 0 }}>
-        <span style={{ display: "inline-flex", width: 62, height: 62, borderRadius: "50%", border: `2px solid ${cols03[i]}`, alignItems: "center", justifyContent: "center", fontSize: 21, background: "#fff" }}>{icons03[i]}</span>
-        <span style={{ display: "block", fontSize: 21, fontWeight: 800, color: cols03[i], marginTop: 6 }}>{y}</span>
+        <span style={{ display: "inline-flex", width: 54, height: 54, borderRadius: "50%", border: `2px solid ${cols03[i]}`, alignItems: "center", justifyContent: "center", fontSize: 19, background: "#fff" }}>{icons03[i]}</span>
+        <span style={{ display: "block", fontSize: 19, fontWeight: 800, color: cols03[i], marginTop: 6 }}>{y}</span>
         <span style={{ display: "block", borderTop: `2.5px solid ${cols03[i]}`, margin: "6px 12px", paddingTop: 7, fontWeight: 700, fontSize: 13.5 }}>{t}</span>
         <span style={{ display: "block", fontSize: 11.5, lineHeight: 1.55, color: "#4a5462", marginTop: 3 }}>{d}</span>
       </button>)}
     </div>
     <div aria-hidden="true" style={{ display: "flex", alignItems: "center", margin: "12px 30px 0" }}><span style={{ flex: 1, height: 2.5, background: "#f5a800" }} /><span style={{ width: 10, height: 10, borderRadius: "50%", background: "#f5a800" }} /><span style={{ flex: 1, height: 2.5, background: "#e0483e" }} /><span style={{ width: 10, height: 10, borderRadius: "50%", background: "#e0483e" }} /><span style={{ flex: 1, height: 2.5, background: "#a31621" }} /><span style={{ width: 10, height: 10, borderRadius: "50%", background: "#a31621" }} /></div>
-    <p style={{ margin: "12px 0 0", background: "#141a21", color: "#f3ead2", borderRadius: 10, padding: "9px 14px", fontSize: 12.5 }}>🎯 <b>Outcome:</b> An independently built, AI-powered supply-chain intelligence demonstrator delivering measurable value.</p>
+    <p style={{ margin: "12px 0 0", background: "#fff", color: "#141a21", border: "1.5px solid #a31621", borderRadius: 10, padding: "8px 14px", fontSize: 12.5 }}>🎯 <b>Outcome:</b> An independently built, AI-powered supply-chain intelligence demonstrator delivering measurable value.</p>
   </Bo>;
 }
 
@@ -307,19 +315,21 @@ export function BrewOpsPanorama() {
   const [s, setS] = useState(0);
   const icons04 = ["🌾", "🏭", "🏬", "🚚", "🛒", "📱"];
   const cols04 = ["#e8a13a", "#2F80ED", "#6C5CE7", "#0e7c86", "#e0483e", "#18a957"];
-  return <Bo n="04" title="Beverage Supply Chain Panorama" sub="End-to-end visibility. Proactive risk detection. Smarter decisions. The isometric stage illustrations are represented by their icons; each stage's risk block sits beneath it, as printed." label="BrewOps supply chain panorama - interactive rebuild of Budweiser_04">
+  return <Bo n="04" title="Beverage Supply Chain Panorama" sub="End-to-end visibility. Proactive risk detection. Smarter decisions." label="BrewOps supply chain panorama - interactive rebuild of Budweiser_04">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 7 }}>
-      {PANORAMA04.map(([t, d, risk, riskBody], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#0e1c2c", border: `1.5px solid ${i === s ? cols04[i] : "#22344d"}`, borderRadius: 11, padding: "9px 10px", cursor: "pointer", font: "inherit", color: "#dbe5f0" }}>
-        <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><span style={{ fontSize: 19 }}>{icons04[i]}</span>{i < 5 ? <span aria-hidden="true" style={{ color: "#5b7a99" }}>- -›</span> : null}</span>
+      {PANORAMA04.map(([t, d], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "transparent", border: `1.5px solid ${i === s ? cols04[i] : "transparent"}`, borderRadius: 11, padding: "6px 8px", cursor: "pointer", font: "inherit", color: "#dbe5f0" }}>
+        <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><span style={{ fontSize: 20 }}>{icons04[i]}</span>{i < 5 ? <span aria-hidden="true" style={{ color: "#5b7a99" }}>- -›</span> : null}</span>
         <b style={{ display: "block", color: "#fff", fontSize: 11.8, margin: "4px 0 3px", lineHeight: 1.35 }}>{t}</b>
         <span style={{ display: "block", fontSize: 10.3, lineHeight: 1.5, color: "#a9bccd" }}>{d}</span>
-        <span style={{ display: "block", borderTop: "1px solid #22344d", marginTop: 8, paddingTop: 7 }}>
-          <span style={{ display: "inline-flex", width: 17, height: 17, borderRadius: "50%", background: cols04[i], color: "#fff", fontWeight: 800, fontSize: 10, alignItems: "center", justifyContent: "center", marginRight: 5 }}>{i + 1}</span>
-          <b style={{ fontSize: 10.8, color: "#ffb3ab" }}>⚠ RISK {i + 1} — {risk}</b>
-          <span style={{ display: "block", fontSize: 10, lineHeight: 1.5, color: "#a9bccd", marginTop: 3 }}>{riskBody}</span>
-          {i === 5 ? <span style={{ display: "block", marginTop: 5, fontSize: 10.3 }}>📱 Consumer Sentiment <b style={{ color: "#4ade80" }}>+18%</b> vs prior 7 days · 12.4K signals</span> : null}
-        </span>
+        {i === 5 ? <span style={{ display: "block", marginTop: 5, fontSize: 10.3 }}>📱 Consumer Sentiment <b style={{ color: "#4ade80" }}>+18%</b> vs prior 7 days · 12.4K signals</span> : null}
       </button>)}
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 7, marginTop: 4 }}>
+      {PANORAMA04.map(([, , risk, riskBody], i) => <div key={risk} style={{ borderTop: `2px solid ${cols04[i]}`, padding: "7px 8px 0" }}>
+        <span style={{ display: "inline-flex", width: 17, height: 17, borderRadius: "50%", background: cols04[i], color: "#fff", fontWeight: 800, fontSize: 10, alignItems: "center", justifyContent: "center", marginRight: 5 }}>{i + 1}</span>
+        <b style={{ fontSize: 10.8, color: "#ffb3ab" }}>⚠ RISK {i + 1} — {risk}</b>
+        <span style={{ display: "block", fontSize: 10, lineHeight: 1.5, color: "#a9bccd", marginTop: 3 }}>{riskBody}</span>
+      </div>)}
     </div>
     <p style={{ margin: "10px 0 0", background: "#132a42", border: "1px solid #22344d", borderRadius: 10, padding: "9px 14px", fontSize: 12.5 }}>BrewOps Intelligence unifies data across the supply chain to <b style={{ color: "#fff" }}>detect risks early, optimize operations</b>, and <b style={{ color: "#fff" }}>drive resilient growth</b>.</p>
   </Bo>;
@@ -348,7 +358,7 @@ export function BrewOpsLatency() {
     </div>
     <p className="tks-kicker" style={{ marginTop: 12 }}>The Cost of Latency — every hour of delay compounds impact across the supply chain</p>
     <Stats items={[["Average decision lag", "24-48 hrs", "across disruptions"], ["Average expedite & adjustment cost", "$132K+"], ["Average fill rate degradation", "4.2 pts"], ["Average increase in inventory imbalance", "8.7%"], ["Teams impacted", "Multiple", "across the chain"]]} />
-    <p style={{ margin: "8px 0 0", fontSize: 11, color: "#8fa5bd" }}>Legend (as printed): stage cards carry the disruption, the four systems (TMS / WMS / Demand Planning / Inventory), the timed handoffs (45m / 30m / 90m / 20m), the five role cards (DP / LP / SP / FM / DC) and the impact table. <b style={{ color: "#fff" }}>BrewOps Intelligence Impact:</b> Connected data. Automated insights. Faster decisions. Better outcomes.</p>
+    <p style={{ margin: "9px 0 0", background: "rgba(24,169,87,0.13)", border: "1px solid #18a957", borderRadius: 9, padding: "7px 13px", fontSize: 12 }}><b style={{ color: "#4ade80" }}>BrewOps Intelligence Impact:</b> Connected data. Automated insights. Faster decisions. Better outcomes.</p>
   </Bo>;
 }
 
@@ -373,7 +383,7 @@ export function BrewOpsAudit() {
   const icons06 = ["🗺", "🧠", "🔗", "🧭"];
   const gapIcons = ["👤", "🗃", "🧱", "⚠", "🖥", "🧪", "🚀"];
   const rowBtn = (t: string, d: string, ic: string, c: string) => (
-    <button key={t} type="button" onClick={() => setRow(t)} aria-pressed={row === t} style={{ display: "flex", gap: 9, width: "100%", textAlign: "left", background: row === t ? "rgba(255,255,255,0.07)" : "transparent", border: `1px solid ${row === t ? c : "transparent"}`, borderRadius: 8, padding: "6px 8px", cursor: "pointer", font: "inherit", color: "#dbe5f0" }}>
+    <button key={t} type="button" onClick={() => setRow(t)} aria-pressed={row === t} style={{ display: "flex", gap: 9, width: "100%", textAlign: "left", background: row === t ? "rgba(255,255,255,0.07)" : "transparent", border: `1px solid ${row === t ? c : "transparent"}`, borderRadius: 8, padding: "4px 8px", cursor: "pointer", font: "inherit", color: "#dbe5f0" }}>
       <span style={{ fontSize: 17, color: c }} aria-hidden="true">{ic}</span>
       <span><b style={{ color: "#fff", fontSize: 12 }}>{t}</b><br /><span style={{ fontSize: 10.8, lineHeight: 1.5, color: "#a9bccd" }}>{d}</span></span>
     </button>
@@ -382,11 +392,11 @@ export function BrewOpsAudit() {
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1.35fr", gap: 10 }}>
       <div style={{ border: "1.5px solid #2F80ED", borderRadius: 12, padding: "10px 12px", background: "rgba(47,128,237,0.06)" }}>
         <p style={{ margin: 0, fontWeight: 800, color: "#7db3f5", letterSpacing: "0.06em", fontSize: 12.5 }}>✓ STRENGTHS</p>
-        <div style={{ display: "grid", gap: 4, marginTop: 7 }}>{STRENGTHS06.map(([t, d], i) => rowBtn(t, d, icons06[i], "#2F80ED"))}</div>
+        <div style={{ display: "grid", gap: 3, marginTop: 7 }}>{STRENGTHS06.map(([t, d], i) => rowBtn(t, d, icons06[i], "#2F80ED"))}</div>
       </div>
       <div style={{ border: "1.5px solid #e0483e", borderRadius: 12, padding: "10px 12px", background: "rgba(224,72,62,0.05)" }}>
         <p style={{ margin: 0, fontWeight: 800, color: "#ff9d94", letterSpacing: "0.06em", fontSize: 12.5 }}>✕ GAPS</p>
-        <div style={{ display: "grid", gap: 4, marginTop: 7 }}>{GAPS06.map(([t, d], i) => rowBtn(t, d, gapIcons[i], "#e0483e"))}</div>
+        <div style={{ display: "grid", gap: 3, marginTop: 7 }}>{GAPS06.map(([t, d], i) => rowBtn(t, d, gapIcons[i], "#e0483e"))}</div>
       </div>
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, marginTop: 10, borderRadius: 10, overflow: "hidden", fontSize: 12 }}>
@@ -419,10 +429,11 @@ export function BrewOpsOwnership() {
         </span>
       </button>)}
     </div>
-    <div style={{ display: "grid", gridTemplateColumns: "1.3fr 1.3fr 1fr", gap: 10, marginTop: 10, fontSize: 11.3 }}>
-      <p style={{ margin: 0 }}><b>Purpose:</b> This map clarifies ownership and evidence across the lifecycle of BrewOps Intelligence, ensuring transparency of contributions and independent reconstruction.</p>
-      <p style={{ margin: 0 }}><b>Evidence Legend:</b> <span style={{ color: "#2563eb" }}>■</span> Historical artifact · <span style={{ color: "#7c4dff" }}>■</span> Documented contribution · <span style={{ color: "#18a957" }}>■</span> Demonstrator / Reconstruction / Validated result. <b>Key Takeaway:</b> {"Toni's 2026 work is an independent reconstruction and enhancement, built upon foundational ideas and contributions from 2023."}</p>
-      <p style={{ margin: 0, display: "flex", alignItems: "center", gap: 6 }}><b>Timeline:</b> <span style={{ background: "#2563eb", color: "#fff", borderRadius: 5, padding: "1px 7px", fontSize: 10 }}>2023 Team</span>→<span style={{ background: "#7c4dff", color: "#fff", borderRadius: 5, padding: "1px 7px", fontSize: 10 }}>2023 Toni</span>→<span style={{ background: "#18a957", color: "#fff", borderRadius: 5, padding: "1px 7px", fontSize: 10 }}>2026 Solo</span></p>
+    <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1.25fr 1.25fr 0.95fr", gap: 9, marginTop: 10, fontSize: 11 }}>
+      <p style={{ margin: 0, border: "1px solid #e7e2d9", borderRadius: 9, padding: "7px 10px" }}><b>Purpose:</b> This map clarifies ownership and evidence across the lifecycle of BrewOps Intelligence, ensuring transparency of contributions and independent reconstruction.</p>
+      <p style={{ margin: 0, border: "1px solid #e7e2d9", borderRadius: 9, padding: "7px 10px" }}><b>Evidence Legend:</b> <span style={{ color: "#2563eb" }}>■</span> Historical artifact · <span style={{ color: "#7c4dff" }}>■</span> Documented contribution · <span style={{ color: "#18a957" }}>■</span> Demonstrator / Reconstruction / Validated result.</p>
+      <p style={{ margin: 0, border: "1px solid #e7e2d9", borderRadius: 9, padding: "7px 10px" }}><b>Key Takeaway:</b> {"Toni's 2026 work is an independent reconstruction and enhancement, built upon foundational ideas and contributions from 2023."}</p>
+      <p style={{ margin: 0, border: "1px solid #e7e2d9", borderRadius: 9, padding: "7px 10px", display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}><b>Timeline:</b> <span style={{ background: "#2563eb", color: "#fff", borderRadius: 5, padding: "1px 7px", fontSize: 10 }}>2023 Team</span>→<span style={{ background: "#7c4dff", color: "#fff", borderRadius: 5, padding: "1px 7px", fontSize: 10 }}>2023 Toni</span>→<span style={{ background: "#18a957", color: "#fff", borderRadius: 5, padding: "1px 7px", fontSize: 10 }}>2026 Solo</span></p>
     </div>
   </Bo>;
 }
@@ -444,7 +455,7 @@ export function BrewOpsPainMatrix() {
     <div style={{ overflowX: "auto" }}><table className="tks-table tks-table--micro" style={{ minWidth: 860 }}>
       <thead><tr>{heads.map((h) => <th key={h} style={{ background: "#102A43", color: "#fff", fontSize: 10.5 }}>{h}</th>)}</tr></thead>
       <tbody>{PAIN08.map((row, i) => <tr key={row[0]} onClick={() => setR(i)} style={{ cursor: "pointer", background: i === r ? "rgba(245,168,0,0.16)" : undefined }}>
-        <td style={{ borderLeft: `4px solid ${rowCols[i]}`, width: "19%" }}><span style={{ fontSize: 15, color: rowCols[i] }}>{rowIcons[i]}</span> <b>{row[0]}</b><br /><span style={{ color: "#55606e" }}>{row[1]}</span></td>
+        <td style={{ borderLeft: `4px solid ${rowCols[i]}`, width: "19%" }}><span style={{ fontSize: 15, color: rowCols[i] }}>{rowIcons[i]}</span> <b>{row[0]}</b><br /><span style={{ color: "#8fa5bd" }}>{row[1]}</span></td>
         <td style={{ width: "22%" }}><ul style={{ margin: 0, paddingLeft: 13 }}>{row[2].map((x) => <li key={x}>{x}</li>)}</ul></td>
         <td style={{ width: "21%" }}>{row[3]}</td>
         <td style={{ width: "19%" }}><ul style={{ margin: 0, paddingLeft: 13 }}>{row[4].map((x) => <li key={x}>{x}</li>)}</ul></td>
@@ -463,23 +474,19 @@ const OPPS09: Array<[string, string, number[], number, string]> = [
   ["Consumer Insight", "Demand sensing & consumer trends", [3, 4, 3, 4, 3], 17, "SECONDARY"],
   ["Quality Intelligence", "Quality prediction & root cause analysis", [3, 4, 4, 4, 3], 18, "SECONDARY"],
 ];
+const CRIT_EXP09 = ["How often the decision is made", "Impact on cost, service, risk or revenue", "Quality, accessibility and recency of data", "Degree of judgment required", "Speed and ease to build a compelling demo"];
 export function BrewOpsOpportunities() {
   const [r, setR] = useState(0);
-  const [scores, setScores] = useState<number[]>([...OPPS09[0][2]]);
-  const pick = (i: number) => { setR(i); setScores([...OPPS09[i][2]]); };
-  const sandboxTotal = scores.reduce((x, y) => x + y, 0);
-  return <Bo n="09" title="Prioritizing the Highest-Impact AI Demonstrator Opportunities" sub="Opportunity Prioritization - each candidate product area scored 1-5 across five decision criteria (Total out of 25). Criteria: Decision Frequency (how often the decision is made) - Business Criticality (impact on cost, service, risk or revenue) - Data Availability (quality, accessibility and recency) - Human-Review Need (degree of judgment required) - Demonstrator Feasibility (speed and ease to build a compelling demo)." label="BrewOps opportunity prioritization - interactive rebuild of Budweiser_09">
-    <table className="tks-table"><thead><tr><th>#</th><th>Candidate Product Area</th>{CRITERIA09.map((c, j) => <th key={c} style={{ color: ["#18a957", "#e07b1f", "#2563eb", "#7c4dff", "#0e7c86"][j] }}>{["📅", "⚠", "🗃", "👤", "🛠"][j]} {c}</th>)}<th>Total</th><th>Band</th></tr></thead>
-      <tbody>{OPPS09.map(([name, d, sc, total, band], i) => <tr key={name} onClick={() => pick(i)} style={{ cursor: "pointer", background: i === r ? "rgba(245,168,0,.14)" : undefined, boxShadow: i < 3 ? "inset 0 0 0 1.5px #d4af37" : undefined }}><td>{i + 1}{i < 3 ? " ★" : ""}</td><td><b>{name}</b><br />{d}</td>{sc.map((v, j) => <td key={j} style={{ color: ["#18a957", "#e07b1f", "#2563eb", "#7c4dff", "#0e7c86"][j], fontWeight: 800, fontSize: 14 }}>{v}</td>)}<td><b>{total}</b></td><td>{band}</td></tr>)}</tbody></table>
+  const pick = (i: number) => { setR(i); };
+  return <Bo n="09" title="Prioritizing the Highest-Impact AI Demonstrator Opportunities" sub="Opportunity Prioritization — each candidate product area scored 1–5 across five decision criteria (Total out of 25)." label="BrewOps opportunity prioritization - interactive rebuild of Budweiser_09">
+    <table className="tks-table"><thead><tr><th>#</th><th>Candidate Product Area</th>{CRITERIA09.map((c, j) => <th key={c} style={{ color: ["#18a957", "#e07b1f", "#2563eb", "#7c4dff", "#0e7c86"][j] }}>{["📅", "⚠", "🗃", "👤", "🛠"][j]} {c}<span style={{ display: "block", fontFamily: "Inter, Arial, sans-serif", fontSize: 8.8, fontWeight: 500, letterSpacing: 0, textTransform: "none", color: "#8fa5bd", lineHeight: 1.4, marginTop: 2 }}>{CRIT_EXP09[j]} (Score 1–5)</span></th>)}<th>Total</th><th>Band</th></tr></thead>
+      <tbody>{OPPS09.map(([name, d, sc, total, band], i) => <tr key={name} onClick={() => pick(i)} style={{ cursor: "pointer", background: i === r ? "rgba(245,168,0,.14)" : undefined, boxShadow: i < 3 ? "inset 0 0 0 1.5px #d4af37" : undefined }}><td>{i + 1}{i < 3 ? " ★" : ""}</td><td style={{ whiteSpace: "nowrap" }}><b>{name}</b><br />{d}</td>{sc.map((v, j) => <td key={j} style={{ color: ["#18a957", "#e07b1f", "#2563eb", "#7c4dff", "#0e7c86"][j], fontWeight: 800, fontSize: 14 }}>{v}</td>)}<td><b>{total}</b></td><td>{band}</td></tr>)}</tbody></table>
     <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 1.2fr", gap: 9, marginTop: 10 }}>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>🎯 Why these three?</p><p style={{ margin: 0 }}>These opportunities combine high business impact with strong data foundation and demonstrator feasibility — driving early wins and stakeholder confidence.</p></div>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Scoring Guide</p><span style={{ display: "flex", gap: 3 }}>{[1, 2, 3, 4, 5].map((v) => <span key={v} style={{ flex: 1, textAlign: "center", background: `linear-gradient(90deg,#e0483e,#f5a800,#18a957)`, opacity: 0.35 + v * 0.13, borderRadius: 4, padding: "2px 0", fontWeight: 800, color: "#fff" }}>{v}</span>)}</span><p style={{ margin: "5px 0 0", fontSize: 11 }}>1 = Low · 5 = High, per criterion.</p></div>
       <div className="tks-card" style={{ borderColor: "#d4af37" }}><p className="tks-kicker" style={{ marginTop: 0 }}>🏆 Recommended Prioritized Scope</p><p style={{ margin: 0 }}><b>Control-Tower Risk · Logistics Scenarios · Predictive Maintenance</b></p></div>
     </div>
-    <div className="tks-detail" aria-live="polite"><b>{OPPS09[r][0]}</b> - printed total <b>{OPPS09[r][3]} / 25 - {OPPS09[r][4]}</b>. Note as printed: rank 4 Consumer Insight totals 17, below rank 5 Quality Intelligence at 18.
-      <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Sandbox - adjust this row's scores (your inputs only; printed scores stay in the table)</p>
-      {CRITERIA09.map((c, j) => <label key={c} style={{ display: "flex", gap: 8, alignItems: "center", margin: "3px 0" }}><span style={{ minWidth: 170 }}>{c}: {scores[j]}</span><input type="range" min={1} max={5} value={scores[j]} aria-label={`Sandbox score for ${c}`} onChange={(e) => setScores((v) => v.map((x, k) => (k === j ? Number(e.target.value) : x)))} /></label>)}
-      <p style={{ margin: "6px 0 0" }}>Sandbox total: <b>{sandboxTotal} / 25</b> (printed: {OPPS09[r][3]}).</p></div>
+    <p className="tks-detail" aria-live="polite" style={{ marginTop: 8 }}><b>{OPPS09[r][0]}</b> — printed total <b>{OPPS09[r][3]} / 25 · {OPPS09[r][4]}</b>. Note as printed: rank 4 Consumer Insight totals 17, below rank 5 Quality Intelligence at 18.</p>
   </Bo>;
 }
 
@@ -500,11 +507,11 @@ export function BrewOpsRoleMap() {
     <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 7, alignItems: "start" }}>
       {ROLES10.map(([t, mission, dec, sig, auth], i) => <button key={t} type="button" onClick={() => setR(i)} aria-pressed={i === r} style={{ textAlign: "left", background: "#0e1c2c", border: `1.5px solid ${i === r ? cols10[i] : "#22344d"}`, borderTop: `5px solid ${cols10[i]}`, borderRadius: 11, padding: "8px 9px", cursor: "pointer", font: "inherit", color: "#dbe5f0" }}>
         <span style={{ display: "inline-flex", width: 26, height: 26, borderRadius: "50%", border: `1.5px solid ${cols10[i]}`, alignItems: "center", justifyContent: "center", fontSize: 13 }}>{icons10[i]}</span>
-        <b style={{ display: "block", color: "#fff", fontSize: 11.8, margin: "4px 0 2px", lineHeight: 1.3 }}>{t}</b>
+        <b style={{ display: "block", color: "#fff", fontSize: 11, margin: "4px 0 2px", lineHeight: 1.3 }}>{t}</b>
         <span style={{ display: "block", fontSize: 9.8, lineHeight: 1.45, color: "#a9bccd", fontStyle: "italic" }}>{mission}</span>
-        {[["Recurring Decisions", dec], ["Key Input Signals", sig], ["Approval Authority", auth]].map(([h, list]) => <span key={h as string} style={{ display: "block", marginTop: 7 }}>
+        {[["Recurring Decisions", dec], ["Key Input Signals", sig], ["Approval Authority", auth]].map(([h, list]) => <span key={h as string} style={{ display: "block", marginTop: 6 }}>
           <span style={{ display: "block", fontSize: 8.8, fontWeight: 800, letterSpacing: "0.08em", color: cols10[i] }}>{(h as string).toUpperCase()}</span>
-          <ul style={{ margin: "2px 0 0", paddingLeft: 12, fontSize: 9.4, lineHeight: 1.5, color: "#c6d2e0" }}>{(list as string[]).map((x) => <li key={x}>{x}</li>)}</ul>
+          <ul style={{ margin: "2px 0 0", paddingLeft: 12, fontSize: 8.8, lineHeight: 1.42, color: "#c6d2e0" }}>{(list as string[]).map((x) => <li key={x}>{x}</li>)}</ul>
         </span>)}
       </button>)}
     </div>
@@ -530,15 +537,18 @@ const DECK11: Array<[string, string]> = [
 ];
 export function BrewOpsContactSheet() {
   const [s, setS] = useState(7);
-  return <Bo n="11" title="BW-05 Original Deck Contact Sheet" sub="Generative AI Application of Logistics and Supply Chain in Beverage Industry - Historical artifact, 2023. Budweiser Business Challenge Deck - June 2023." dark={false} label="BrewOps original deck contact sheet - interactive rebuild of Budweiser_11">
+  return <Bo n="11" center title="BW-05 Original Deck Contact Sheet" sub="Generative AI Application of Logistics and Supply Chain in Beverage Industry - Historical artifact, 2023. Budweiser Business Challenge Deck - June 2023." dark={false} label="BrewOps original deck contact sheet - interactive rebuild of Budweiser_11">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 8 }}>
-      {DECK11.map(([t, body], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? "#c8102e" : "#ddd6c9"}`, borderRadius: 8, padding: 0, overflow: "hidden", cursor: "pointer", font: "inherit", color: "#141a21" }}>
-        <span style={{ display: "block", background: "#102A43", color: "#fff", fontSize: 9.8, fontWeight: 700, padding: "5px 8px", lineHeight: 1.35 }}>{t}</span>
-        <span style={{ display: "block", padding: "6px 8px", fontSize: 8.8, lineHeight: 1.5, color: "#4a5462" }}>{body.length > 210 ? `${body.slice(0, 210)}…` : body}</span>
-        <span style={{ display: "block", borderTop: "2.5px solid #c8102e", margin: "0 8px 6px" }} />
+      {DECK11.map(([t, body], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "transparent", border: "none", padding: 0, cursor: "pointer", font: "inherit", color: "#141a21" }}>
+        <span style={{ display: "block", background: "#fff", border: `1.5px solid ${i === s ? "#c8102e" : "#ddd6c9"}`, borderRadius: 7, overflow: "hidden" }}>
+          <span style={{ display: "block", background: "#102A43", height: 12 }} />
+          <span style={{ display: "block", padding: "5px 7px", fontSize: 8.4, lineHeight: 1.45, color: "#4a5462", height: 74, overflow: "hidden" }}>{body}</span>
+          <span style={{ display: "block", borderTop: "2.5px solid #c8102e", margin: "0 7px 5px" }} />
+        </span>
+        <span style={{ display: "block", fontSize: 9.8, fontWeight: 700, marginTop: 4, lineHeight: 1.35 }}><span style={{ color: "#c8102e" }}>{i + 1}.</span> {t.replace(/^\d+\.\s*/, "")}</span>
       </button>)}
     </div>
-    <div className="tks-detail" aria-live="polite" style={{ marginTop: 10 }}><b>{DECK11[s][0]}</b><p style={{ margin: "5px 0 0" }}>{DECK11[s][1]}</p></div>
+    <div className="tks-detail" aria-live="polite" style={{ marginTop: 9, fontSize: 11.3, lineHeight: 1.5 }}><b>{DECK11[s][0]}</b><p style={{ margin: "4px 0 0" }}>{DECK11[s][1]}</p></div>
     <p style={{ margin: "9px 0 0", fontSize: 11, color: "#5b6470" }}>CONFIDENTIAL &amp; PROPRIETARY — as printed on the original sheet's footer.</p>
   </Bo>;
 }
@@ -559,7 +569,7 @@ export function BrewOpsObjectModel() {
   const cols12 = ["#e0483e", "#e07b1f", "#f5a800", "#18a957", "#0e7c86", "#2563eb", "#7c4dff", "#a31621"];
   const icons12 = ["⚠", "🔮", "💡", "🗃", "⚖", "👤", "🛠", "🎯"];
   return <Bo n="12" title="BrewOps Intelligence Object Model" sub="Core entities and relationships that power intelligent decisions across the beverage supply chain. (bw-20-object-model)" label="BrewOps object model - interactive rebuild of Budweiser_12">
-    <div style={{ border: "1px dashed #5b7a99", borderRadius: 10, padding: "7px 12px", fontSize: 11, marginBottom: 10 }}>
+    <div style={{ border: "1px dashed #5b7a99", borderRadius: 10, padding: "5px 10px", fontSize: 10.3, marginBottom: 8 }}>
       <b>Relationship Key:</b> {"Triggers → · Generates → · Supported By ⤴ · Made By ⤴ · Creates → · Leads To → · References ⤴"} — six arrow styles as printed (solid = creates/triggers, dashed = generates, dotted = supported-by/made-by/references).
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(8,1fr)", gap: 6, alignItems: "start" }}>
@@ -568,7 +578,7 @@ export function BrewOpsObjectModel() {
         <span style={{ display: "inline-flex", width: 24, height: 24, borderRadius: "50%", background: cols12[i], alignItems: "center", justifyContent: "center", fontSize: 12 }}>{icons12[i]}</span>
         <b style={{ display: "block", color: "#fff", fontSize: 11.5, margin: "3px 0 0", lineHeight: 1.3 }}>{t}</b>
         <span style={{ display: "block", fontSize: 9.3, color: "#8fa5bd", fontStyle: "italic" }}>{sub2}</span>
-        <ul style={{ margin: "5px 0 0", paddingLeft: 11, fontSize: 8.9, lineHeight: 1.5, color: "#c6d2e0" }}>{attrs.map((f) => <li key={f}>{f}</li>)}</ul>
+        <ul style={{ margin: "5px 0 0", paddingLeft: 11, fontSize: 8.5, lineHeight: 1.45, color: "#c6d2e0" }}>{attrs.map((f) => <li key={f}>{f}</li>)}</ul>
         <span style={{ display: "block", marginTop: 6, fontSize: 9, fontWeight: 800, color: cols12[i] }}>{rel}</span>
       </button>)}
     </div>
@@ -594,16 +604,16 @@ const MODULES13: Array<[string, string]> = [
 export function BrewOpsFramework2023() {
   const [m, setM] = useState(0);
   const HOW = ["Data flows from consumers and operations into the system", "AI analyzes patterns and predicts outcomes", "Insights drive decisions across functions", "Actions improve outcomes and create a learning loop"];
-  const modBox = (i: number) => <button key={i} type="button" onClick={() => setM(i)} aria-pressed={i === m} style={{ background: "#7a1f1f", color: "#fff", border: `1.5px solid ${i === m ? "#102A43" : "#7a1f1f"}`, borderRadius: 8, padding: "7px 9px", cursor: "pointer", font: "inherit", textAlign: "left" }}><b style={{ fontSize: 11.5 }}>{MODULES13[i][0]}</b><br /><span style={{ fontSize: 9.8, opacity: 0.85, lineHeight: 1.4 }}>{MODULES13[i][1]}</span></button>;
+  const modBox = (i: number) => <button key={i} type="button" onClick={() => setM(i)} aria-pressed={i === m} style={{ background: "#fff", color: "#141a21", border: `1.5px solid ${i === m ? "#102A43" : "#7a1f1f"}`, borderRadius: 8, padding: "7px 9px", cursor: "pointer", font: "inherit", textAlign: "left" }}><b style={{ fontSize: 11.5, color: "#7a1f1f" }}>{MODULES13[i][0]}</b><br /><span style={{ fontSize: 9.8, color: "#4a5462", lineHeight: 1.4 }}>{MODULES13[i][1]}</span></button>;
   return <Bo n="13" title={<span style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontStyle: "italic" }}>AI-Enabled Decision Support Framework</span>} sub="Connecting Consumers, Operations & Intelligence - Historical artifact, 2023 (Busch Futures 2023 - AI for a Smarter Supply Chain, p.6)." dark={false} label="BrewOps decision support framework 2023 - interactive rebuild of Budweiser_13">
     <div style={{ background: "#f4ead8", border: "1px solid #d9c9a8", borderRadius: 10, padding: "8px 13px", fontSize: 11.5, marginBottom: 10 }}>
       <b>OUR VISION:</b> Leverage data and AI to create an interconnected system that enables smarter decisions across the value chain and delivers value to consumers, customers, and the business.
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "150px 1fr 150px", gap: 10, alignItems: "stretch" }}>
-      <div style={{ background: "#2e7d32", color: "#fff", borderRadius: 10, padding: "10px 12px" }}>
-        <b style={{ fontSize: 12.5 }}>Consumer Preferences</b>
+      <div style={{ background: "#fff", color: "#141a21", border: "1.5px solid #2e7d32", borderRadius: 10, padding: "10px 12px" }}>
+        <b style={{ fontSize: 12.5, color: "#2e7d32" }}>Consumer Preferences</b>
         <ul style={{ margin: "6px 0 0", paddingLeft: 14, fontSize: 10.8, lineHeight: 1.6 }}><li>Taste &amp; flavor trends</li><li>Brand perception</li><li>Occasions &amp; moments</li><li>Price sensitivity</li><li>Channel preferences</li><li>Social &amp; digital signals</li></ul>
-        <p style={{ fontSize: 10, opacity: 0.85, margin: "7px 0 0" }}>Signals flow in from the market →</p>
+        <p style={{ fontSize: 10, color: "#5b6470", margin: "7px 0 0" }}>Signals flow in from the market →</p>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 7 }}>
         {modBox(0)}{modBox(1)}{modBox(2)}
@@ -616,10 +626,10 @@ export function BrewOpsFramework2023() {
         {modBox(4)}
         {modBox(5)}{modBox(6)}{modBox(7)}
       </div>
-      <div style={{ background: "#c9a227", color: "#231d05", borderRadius: 10, padding: "10px 12px" }}>
-        <b style={{ fontSize: 12.5 }}>Production Process</b>
+      <div style={{ background: "#fff", color: "#141a21", border: "1.5px solid #c9a227", borderRadius: 10, padding: "10px 12px" }}>
+        <b style={{ fontSize: 12.5, color: "#8a6d1f" }}>Production Process</b>
         <ul style={{ margin: "6px 0 0", paddingLeft: 14, fontSize: 10.8, lineHeight: 1.6 }}><li>Brewing &amp; fermentation</li><li>Packaging</li><li>Line performance</li><li>Yield &amp; waste</li><li>Energy &amp; utilities</li><li>Supplier performance</li></ul>
-        <p style={{ fontSize: 10, opacity: 0.85, margin: "7px 0 0" }}>← Operations data feeds the hub</p>
+        <p style={{ fontSize: 10, color: "#5b6470", margin: "7px 0 0" }}>← Operations data feeds the hub</p>
       </div>
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: 10, marginTop: 10 }}>
@@ -654,39 +664,41 @@ export function BrewOpsChatbot2023() {
   const [q, setQ] = useState(0);
   const answered = CHAT14.filter(([, a]) => a !== null);
   return <Bo n="14" title="Supply Chain Insights Chatbot - Early Concept" sub="Conversational interface as the primary way users explore data and get answers. Historical artifact, 2023 (p.07)." dark={false} label="BrewOps insights chatbot early concept - interactive rebuild of Budweiser_14">
-    <div style={{ display: "grid", gridTemplateColumns: "262px 1fr", gap: 12, alignItems: "start" }}>
-      <div>
-        <p style={{ margin: 0, color: "#c8102e", fontStyle: "italic", fontWeight: 800, fontSize: 15 }}>Budweiser</p>
-        <p style={{ margin: "2px 0 0", fontSize: 10, letterSpacing: "0.14em", color: "#b97a0c", fontWeight: 700 }}>SUPPLY CHAIN CHALLENGE</p>
-        <div style={{ background: "#fdf3e0", border: "1px solid #e8d9ae", borderRadius: 9, padding: "8px 11px", marginTop: 9 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 262px", gap: 12, alignItems: "start" }}>
+      <div style={{ minWidth: 0 }}>
+        <div style={{ background: "#fdf3e0", border: "1px solid #e8d9ae", borderRadius: 9, padding: "8px 11px", marginBottom: 9 }}>
           <b style={{ fontSize: 11.5 }}>INITIAL IDEA: CHAT AS THE PRODUCT ENTRY POINT</b>
           <p style={{ margin: "3px 0 0", fontSize: 10.8, lineHeight: 1.55 }}>Internal teams ask questions about our supply chain and get instant, actionable insights.</p>
         </div>
+        <div style={{ border: "1px solid #d8d2c4", borderRadius: 12, overflow: "hidden", background: "#f7f4ec" }}>
+          <div style={{ display: "flex", gap: 8, alignItems: "center", background: "#7a1f1f", padding: "7px 12px", fontSize: 11.5, color: "#fff" }}>
+            <span style={{ width: 20, height: 20, borderRadius: "50%", background: "#c8102e", border: "1.5px solid #fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 11, flex: "none" }}>B</span>
+            <b>Budweiser Supply Chain Assistant</b> <span style={{ opacity: 0.85, fontSize: 10.5 }}>(Early Concept)</span>
+            <span style={{ marginLeft: "auto" }} aria-hidden="true">ⓘ</span>
+          </div>
+          <div style={{ padding: "10px 12px" }}>
+            {answered.map(([question, answer, time], i) => <div key={question} style={{ marginBottom: 9, opacity: q < 4 && CHAT14[q][0] !== question ? 0.55 : 1 }}>
+              <p style={{ margin: 0, textAlign: "right" }}><span style={{ display: "inline-block", background: "#e8ebef", color: "#141a21", borderRadius: "12px 12px 3px 12px", padding: "6px 11px", fontSize: 11, maxWidth: "78%", textAlign: "left" }}>{question} <span style={{ color: "#8a93a0", fontSize: 9.5 }}>· {time}</span></span></p>
+              <p style={{ margin: "5px 0 0", display: "flex", gap: 7, alignItems: "flex-start" }}><span aria-hidden="true" style={{ width: 19, height: 19, borderRadius: "50%", background: "#c8102e", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 10, flex: "none", marginTop: 2 }}>B</span><span style={{ display: "inline-block", background: "#fff", border: "1px solid #e2ddd0", borderRadius: "12px 12px 12px 3px", padding: "6px 11px", fontSize: 11, lineHeight: 1.55, maxWidth: "86%" }}>{answer}</span></p>
+              <span style={{ display: "none" }}>{i}</span>
+            </div>)}
+            <div style={{ display: "flex", gap: 7, alignItems: "center", background: "#fff", border: "1px solid #ddd6c9", borderRadius: 999, padding: "6px 12px", fontSize: 11, color: "#8a93a0" }}>
+              <span style={{ flex: 1 }}>Ask a question about your supply chain…</span><span aria-hidden="true">➤</span>
+            </div>
+            <p style={{ margin: "7px 0 0", fontSize: 10, color: "#8a93a0" }}>Mock interface for concept exploration only. Not a final product design.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p style={{ margin: 0, color: "#c8102e", fontStyle: "italic", fontWeight: 800, fontSize: 15 }}>Budweiser</p>
+        <p style={{ margin: "2px 0 0", fontSize: 10, letterSpacing: "0.14em", color: "#b97a0c", fontWeight: 700 }}>SUPPLY CHAIN CHALLENGE</p>
         <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Example prompts we imagined</p>
         <div style={{ display: "grid", gap: 4 }}>
           {CHAT14.map(([t], i) => <button key={t} type="button" onClick={() => setQ(i)} aria-pressed={i === q} style={{ textAlign: "left", background: i === q ? "#102A43" : "#fff", color: i === q ? "#fff" : "#141a21", border: `1px solid ${i === q ? "#102A43" : "#ddd6c9"}`, borderRadius: 8, padding: "5px 9px", cursor: "pointer", font: "inherit", fontSize: 10.8, lineHeight: 1.45 }}><b style={{ color: "#c8102e" }}>{i + 1}.</b> {t}</button>)}
         </div>
-        <div style={{ border: "1px solid #ddd6c9", borderRadius: 9, padding: "8px 11px", marginTop: 9 }}>
+        <div style={{ background: "#fdf0f3", border: "1px solid #f0c6d4", borderRadius: 9, padding: "8px 11px", marginTop: 9 }}>
           <b style={{ fontSize: 11.5 }}>Early Concept Note</b>
           <p style={{ margin: "3px 0 0", fontSize: 10.8, lineHeight: 1.55 }}>We proposed treating chat as the primary entry point — making it easy for users to ask natural questions and get data-driven answers in real time.</p>
-        </div>
-      </div>
-      <div style={{ border: "1px solid #d8d2c4", borderRadius: 12, overflow: "hidden", background: "#f7f4ec" }}>
-        <div style={{ display: "flex", gap: 5, alignItems: "center", background: "#ece7da", padding: "6px 10px", fontSize: 10.5, color: "#5b6470" }}>
-          <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#e0483e" }} /><span style={{ width: 8, height: 8, borderRadius: "50%", background: "#f5a800" }} /><span style={{ width: 8, height: 8, borderRadius: "50%", background: "#18a957" }} />
-          <span style={{ marginLeft: 6 }}>budweiser.supplychain.assistant — mock</span>
-        </div>
-        <div style={{ padding: "10px 12px" }}>
-          <p style={{ margin: "0 0 8px", fontWeight: 800, fontSize: 12.5 }}>🤖 Budweiser Supply Chain Assistant <span style={{ fontWeight: 500, color: "#5b6470", fontSize: 10.5 }}>(Early Concept)</span></p>
-          {answered.map(([question, answer, time], i) => <div key={question} style={{ marginBottom: 9, opacity: q < 4 && CHAT14[q][0] !== question ? 0.55 : 1 }}>
-            <p style={{ margin: 0, textAlign: "right" }}><span style={{ display: "inline-block", background: "#2563eb", color: "#fff", borderRadius: "12px 12px 3px 12px", padding: "6px 11px", fontSize: 11, maxWidth: "78%", textAlign: "left" }}>{question} <span style={{ opacity: 0.75, fontSize: 9.5 }}>· {time}</span></span></p>
-            <p style={{ margin: "5px 0 0" }}><span style={{ display: "inline-block", background: "#fff", border: "1px solid #e2ddd0", borderRadius: "12px 12px 12px 3px", padding: "6px 11px", fontSize: 11, lineHeight: 1.55, maxWidth: "86%" }}>{answer}</span></p>
-            <span style={{ display: "none" }}>{i}</span>
-          </div>)}
-          <div style={{ display: "flex", gap: 7, alignItems: "center", background: "#fff", border: "1px solid #ddd6c9", borderRadius: 999, padding: "6px 12px", fontSize: 11, color: "#8a93a0" }}>
-            <span style={{ flex: 1 }}>Ask a question about your supply chain…</span><span aria-hidden="true">➤</span>
-          </div>
-          <p style={{ margin: "7px 0 0", fontSize: 10, color: "#8a93a0" }}>Mock interface for concept exploration only. Not a final product design.</p>
         </div>
       </div>
     </div>
@@ -710,14 +722,16 @@ export function BrewOpsResearch() {
   return <Bo n="15" title={<span style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>Research Synthesis</span>} sub="Seven Supporting Sources — a curated set of academic and industry sources that inform our understanding of AI and automation opportunities across beverage supply chains." dark={false} label="BrewOps research synthesis - interactive rebuild of Budweiser_15">
     <p style={{ margin: "0 0 9px", fontSize: 10.5, letterSpacing: "0.16em", color: "#b97a0c", fontWeight: 700 }}>RESEARCH SYNTHESIS · EVIDENCE. INSIGHT. IMPACT.</p>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 9 }}>
-      {SOURCES15.map(([t, y, insight], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? "#c8102e" : "#ddd6c9"}`, borderRadius: 10, padding: 0, overflow: "hidden", cursor: "pointer", font: "inherit", color: "#141a21" }}>
-        <span style={{ display: "block", background: `linear-gradient(135deg, ${coverCols[i]}, #141a21)`, borderTop: "4px solid #c8102e", color: "#fff", padding: "10px 11px", minHeight: 58 }}>
-          <span style={{ fontFamily: "Georgia, serif", fontSize: 21, opacity: 0.9 }}>{t.charAt(0)}</span>
-          <span style={{ display: "block", fontSize: 8.8, letterSpacing: "0.12em", opacity: 0.8, marginTop: 2 }}>SOURCE {String(i + 1).padStart(2, "0")} · {y}</span>
+      {SOURCES15.map(([t, y, insight], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? "#c8102e" : "#ddd6c9"}`, borderRadius: 10, padding: 0, overflow: "hidden", cursor: "pointer", font: "inherit", color: "#141a21", display: "flex" }}>
+        <span style={{ display: "block", background: `linear-gradient(160deg, ${coverCols[i]}, #141a21)`, borderLeft: "4px solid #c8102e", color: "#fff", padding: "8px 8px", width: 58, flex: "none" }}>
+          <span style={{ width: 17, height: 17, borderRadius: "50%", background: "#c8102e", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 10 }}>{i + 1}</span>
+          <span style={{ fontFamily: "Georgia, serif", fontSize: 19, opacity: 0.9, display: "block", marginTop: 5 }}>{t.charAt(0)}</span>
+          <span style={{ display: "block", fontSize: 8.3, letterSpacing: "0.1em", opacity: 0.8, marginTop: 2 }}>SOURCE {String(i + 1).padStart(2, "0")}</span>
         </span>
-        <span style={{ display: "block", padding: "8px 11px" }}>
+        <span style={{ display: "block", padding: "8px 10px", flex: 1, minWidth: 0 }}>
           <b style={{ display: "block", fontSize: 11.3, lineHeight: 1.4 }}>{t}</b>
-          <span style={{ display: "block", fontSize: 10.3, lineHeight: 1.55, color: "#4a5462", marginTop: 5 }}><b style={{ color: "#b97a0c", fontSize: 9, letterSpacing: "0.1em" }}>INSIGHT</b><br />{insight}</span>
+          <span style={{ display: "block", fontSize: 9.6, color: "#c8102e", fontWeight: 700, marginTop: 2 }}>{y}</span>
+          <span style={{ display: "block", fontSize: 10.3, lineHeight: 1.55, color: "#4a5462", marginTop: 4 }}><b style={{ color: "#b97a0c", fontSize: 9, letterSpacing: "0.1em" }}>INSIGHT</b><br />{insight}</span>
         </span>
       </button>)}
     </div>
@@ -740,10 +754,10 @@ export function BrewOpsHandoff() {
   return <Bo n="17" title="Hypothesis-Based Operational Handoff" sub="bw-15 - CROSS-FUNCTIONAL HANDOFF. From alert to execution - aligned, evaluated, and ready for impact. Hypothesis-Driven Approach: We operate on informed hypotheses, continuously validated with data and outcomes." label="BrewOps operational handoff - interactive rebuild of Budweiser_17">
     <div style={{ display: "grid", gridTemplateColumns: "118px repeat(5,1fr)", gap: 5 }}>
       <span />
-      {STAGES17.map((st, si) => <span key={st} style={{ background: "#102A43", color: "#fff", borderRadius: 8, padding: "6px 8px", fontSize: 10, lineHeight: 1.4 }}><b>{st.split(" - ")[0]}</b><br /><span style={{ opacity: 0.8 }}>{st.split(" - ")[1]}</span>{si < 4 ? <span aria-hidden="true" style={{ float: "right" }}>→</span> : null}</span>)}
+      {STAGES17.map((st, si) => <span key={st} style={{ background: "#102A43", color: "#fff", borderRadius: 8, padding: "5px 7px", fontSize: 9.6, lineHeight: 1.4 }}><b>{st.split(" - ")[0]}</b><br /><span style={{ opacity: 0.8 }}>{st.split(" - ")[1]}</span>{si < 4 ? <span aria-hidden="true" style={{ float: "right" }}>→</span> : null}</span>)}
       {LANES17.map(([role, focus, cells], li) => [
-        <span key={`${role}-h`} style={{ background: laneCols[li], color: "#fff", borderRadius: 8, padding: "7px 8px", fontSize: 10.3, lineHeight: 1.4 }}><b>{role}</b><br /><span style={{ opacity: 0.85, fontSize: 9.3 }}>{focus}</span></span>,
-        ...cells.map((txt, si) => { const f = flag(txt); return <button key={`${role}-${si}`} type="button" onClick={() => setSel([li, si])} aria-pressed={sel[0] === li && sel[1] === si} style={{ textAlign: "left", background: sel[0] === li && sel[1] === si ? "#fdf3e0" : "#fff", border: `1.5px solid ${sel[0] === li && sel[1] === si ? laneCols[li] : "#e3ddcf"}`, borderRadius: 8, padding: "6px 8px", cursor: "pointer", font: "inherit", color: "#141a21", fontSize: 9.6, lineHeight: 1.5 }}>{txt.replace(/ (HANDOFF|APPROVED|APPROVAL)$/, "")}{f ? <span style={{ display: "inline-block", marginLeft: 4, background: f === "✓ COMPLETE" ? "#18a957" : "#d4af37", color: "#fff", borderRadius: 4, padding: "0 5px", fontSize: 8.3, fontWeight: 800 }}>{f}</span> : null}</button>; }),
+        <span key={`${role}-h`} style={{ background: "#102A43", borderLeft: `4px solid ${laneCols[li]}`, color: "#fff", borderRadius: 8, padding: "7px 8px", fontSize: 10.3, lineHeight: 1.4 }}><b>{role}</b><br /><span style={{ opacity: 0.85, fontSize: 9.3 }}>{focus}</span></span>,
+        ...cells.map((txt, si) => { const f = flag(txt); return <button key={`${role}-${si}`} type="button" onClick={() => setSel([li, si])} aria-pressed={sel[0] === li && sel[1] === si} style={{ textAlign: "left", background: sel[0] === li && sel[1] === si ? "#16324f" : "#0e1c2c", border: `1.5px solid ${sel[0] === li && sel[1] === si ? laneCols[li] : "#22344d"}`, borderRadius: 8, padding: "6px 8px", cursor: "pointer", font: "inherit", color: "#dbe5f0", fontSize: 9.6, lineHeight: 1.5 }}>{txt.replace(/ (HANDOFF|APPROVED|APPROVAL)$/, "")}{f ? <span style={{ display: "inline-block", marginLeft: 4, background: f === "✓ COMPLETE" ? "#18a957" : "#d4af37", color: "#fff", borderRadius: 4, padding: "0 5px", fontSize: 8.3, fontWeight: 800 }}>{f}</span> : null}</button>; }),
       ])}
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 8, marginTop: 10, fontSize: 10.8 }}>
@@ -765,11 +779,11 @@ const PRINCIPLES18: Array<[string, string]> = [
 export function BrewOpsPrinciples() {
   const [p, setP] = useState(0);
   const icons18 = ["🎯", "🧭", "✋", "👤"];
-  return <Bo n="18" title="Our principles guide every experience we design." sub="Product Principles - Built for trust. Designed for impact. Proven in operations." label="BrewOps product principles - interactive rebuild of Budweiser_18">
+  return <Bo n="18" center title="Our principles guide every experience we design." sub="Product Principles - Built for trust. Designed for impact. Proven in operations." label="BrewOps product principles - interactive rebuild of Budweiser_18">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10 }}>
-      {PRINCIPLES18.map(([t, d], i) => <button key={t} type="button" onClick={() => setP(i)} aria-pressed={i === p} style={{ textAlign: "center", background: "#0e1c2c", border: `1.5px solid ${i === p ? AMBER : "#22344d"}`, borderRadius: 13, padding: "20px 14px 16px", cursor: "pointer", font: "inherit", color: "#dbe5f0", minHeight: 190 }}>
-        <span style={{ display: "inline-flex", width: 46, height: 46, borderRadius: "50%", border: `1.5px solid ${AMBER}`, alignItems: "center", justifyContent: "center", fontSize: 20 }}>{icons18[i]}</span>
-        <span style={{ display: "block", color: AMBER, fontWeight: 800, fontSize: 15, marginTop: 10 }}>{String(i + 1).padStart(2, "0")}</span>
+      {PRINCIPLES18.map(([t, d], i) => <button key={t} type="button" onClick={() => setP(i)} aria-pressed={i === p} style={{ textAlign: "center", background: "#0e1c2c", border: `1.5px solid ${i === p ? AMBER : "#22344d"}`, borderRadius: 13, padding: "16px 12px 13px", cursor: "pointer", font: "inherit", color: "#dbe5f0", minHeight: 168 }}>
+        <span style={{ display: "inline-flex", width: 52, height: 52, borderRadius: "50%", border: `1.5px solid ${AMBER}`, alignItems: "center", justifyContent: "center", fontSize: 22 }}>{icons18[i]}</span>
+        <span style={{ display: "block", color: AMBER, fontWeight: 800, fontSize: 19, marginTop: 9 }}>{String(i + 1).padStart(2, "0")}</span>
         <span style={{ display: "block", width: 34, height: 2, background: AMBER, margin: "6px auto" }} />
         <b style={{ display: "block", color: "#fff", fontSize: 13.5, lineHeight: 1.4 }}>{t}</b>
         <span style={{ display: "block", fontSize: 11, lineHeight: 1.55, color: "#a9bccd", marginTop: 5 }}>{d}</span>
@@ -788,20 +802,30 @@ const SCOPE19: Array<[string, string, Array<[string, string]>]> = [
 ];
 export function BrewOpsScopeMap() {
   const [sel, setSel] = useState<[number, number]>([0, 0]);
-  const tierCols = ["#18a957", "#2563eb", "#f5a800", "#8a93a0"];
+  const tierCols = ["#f5a800", "#18a957", "#2563eb", "#e0483e"];
   const tierIcons = ["●", "◐", "○", "⊘"];
+  const tierBox = (ti: number) => { const [tier, tag, mods] = SCOPE19[ti]; return <div key={tier} style={{ background: "#0e1c2c", border: "1px solid #22344d", borderTop: `5px solid ${tierCols[ti]}`, borderRadius: 11, padding: "9px 10px" }}>
+    <b style={{ color: "#fff", fontSize: 12.8 }}>{tierIcons[ti]} {tier}</b>
+    <p style={{ margin: "3px 0 8px", fontSize: 10.3, lineHeight: 1.5, color: "#a9bccd" }}>{tag}</p>
+    <div style={{ display: "grid", gap: 6 }}>
+      {mods.map(([name, desc], mi) => <button key={name} type="button" onClick={() => setSel([ti, mi])} aria-pressed={sel[0] === ti && sel[1] === mi} style={{ textAlign: "left", background: sel[0] === ti && sel[1] === mi ? "rgba(255,255,255,0.08)" : "transparent", border: `1px solid ${sel[0] === ti && sel[1] === mi ? tierCols[ti] : "#2c4258"}`, borderRadius: 8, padding: "6px 8px", cursor: "pointer", font: "inherit", color: "#dbe5f0" }}>
+        <b style={{ display: "block", fontSize: 11.3, lineHeight: 1.35, color: "#fff" }}>{name}</b>
+        <span style={{ display: "block", fontSize: 9.9, lineHeight: 1.5, color: "#a9bccd", marginTop: 2 }}>{desc}</span>
+      </button>)}
+    </div>
+  </div>; };
   return <Bo n="19" title="Feature Scope Map" sub="Delivering focused intelligence where it matters today - and expanding tomorrow. Focused. Integrated. Actionable." label="BrewOps feature scope map - interactive rebuild of Budweiser_19">
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 9, alignItems: "start" }}>
-      {SCOPE19.map(([tier, tag, mods], ti) => <div key={tier} style={{ background: "#0e1c2c", border: "1px solid #22344d", borderTop: `5px solid ${tierCols[ti]}`, borderRadius: 11, padding: "9px 10px" }}>
-        <b style={{ color: "#fff", fontSize: 12.8 }}>{tierIcons[ti]} {tier}</b>
-        <p style={{ margin: "3px 0 8px", fontSize: 10.3, lineHeight: 1.5, color: "#a9bccd" }}>{tag}</p>
-        <div style={{ display: "grid", gap: 6 }}>
-          {mods.map(([name, desc], mi) => <button key={name} type="button" onClick={() => setSel([ti, mi])} aria-pressed={sel[0] === ti && sel[1] === mi} style={{ textAlign: "left", background: sel[0] === ti && sel[1] === mi ? "rgba(255,255,255,0.08)" : "transparent", border: `1px solid ${sel[0] === ti && sel[1] === mi ? tierCols[ti] : "#2c4258"}`, borderRadius: 8, padding: "6px 8px", cursor: "pointer", font: "inherit", color: "#dbe5f0" }}>
-            <b style={{ display: "block", fontSize: 11.3, lineHeight: 1.35, color: "#fff" }}>{name}</b>
-            <span style={{ display: "block", fontSize: 9.9, lineHeight: 1.5, color: "#a9bccd", marginTop: 2 }}>{desc}</span>
-          </button>)}
-        </div>
-      </div>)}
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 9, alignItems: "start" }}>
+      {tierBox(0)}{tierBox(1)}{tierBox(2)}
+    </div>
+    <div style={{ background: "#0e1c2c", border: "1px solid #22344d", borderTop: "5px solid #e0483e", borderRadius: 11, padding: "9px 12px", marginTop: 9 }}>
+      <p style={{ margin: 0, display: "flex", gap: 10, alignItems: "baseline", flexWrap: "wrap" }}><b style={{ color: "#fff", fontSize: 12.8 }}>⊘ {SCOPE19[3][0]}</b><span style={{ fontSize: 10.3, color: "#a9bccd" }}>{SCOPE19[3][1]}</span></p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 6, marginTop: 7 }}>
+        {SCOPE19[3][2].map(([name, desc], mi) => <button key={name} type="button" onClick={() => setSel([3, mi])} aria-pressed={sel[0] === 3 && sel[1] === mi} style={{ textAlign: "left", background: sel[0] === 3 && sel[1] === mi ? "rgba(255,255,255,0.08)" : "transparent", border: `1px solid ${sel[0] === 3 && sel[1] === mi ? "#e0483e" : "#2c4258"}`, borderRadius: 8, padding: "6px 8px", cursor: "pointer", font: "inherit", color: "#dbe5f0" }}>
+          <b style={{ display: "block", fontSize: 11, lineHeight: 1.35, color: "#fff" }}>{name}</b>
+          <span style={{ display: "block", fontSize: 9.7, lineHeight: 1.5, color: "#a9bccd", marginTop: 2 }}>{desc}</span>
+        </button>)}
+      </div>
     </div>
     <p style={{ margin: "10px 0 0" }}>BrewOps Intelligence delivers the right capabilities today — with a clear path to tomorrow.</p>
   </Bo>;
@@ -824,7 +848,7 @@ export function BrewOpsIA() {
   const secCols = ["#2563eb", "#e07b1f", "#18a957", "#0e7c86", "#7c4dff", "#c2185b", "#5b7a1e", "#8a5a00", "#455a64"];
   const secIcons = ["🏠", "⚖", "📈", "🚚", "🔧", "🛡", "💡", "🗃", "⚙"];
   return <Bo n="20" title="BrewOps Intelligence - Information Architecture" sub="A role-based intelligence platform that connects data, decisions, and actions across the beverage supply chain. Intelligence. Outcomes. Impact. (bw-19-information-architecture)" label="BrewOps information architecture - interactive rebuild of Budweiser_20">
-    <div style={{ background: "#102A43", color: "#fff", borderRadius: 10, padding: "8px 13px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <div style={{ background: "#102A43", color: "#fff", borderRadius: 10, padding: "7px 22px", display: "flex", gap: 12, alignItems: "center", width: "fit-content", margin: "0 auto" }}>
       <b style={{ fontSize: 13 }}>🌾 BrewOps Intelligence</b><span style={{ fontSize: 10.8, opacity: 0.85 }}>Root — 9 sections · 36 child pages, as printed</span>
     </div>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(9,1fr)", gap: 6, marginTop: 8, alignItems: "start" }}>
@@ -840,7 +864,7 @@ export function BrewOpsIA() {
         </div>
       </div>)}
     </div>
-    <p style={{ margin: "10px 0 0" }}><b>Role-Based Experience</b> — Tailored views and actions for every role across the organization.</p>
+    <p style={{ margin: "10px 0 0", textAlign: "center" }}><span style={{ display: "inline-block", border: "1.5px solid #2F80ED", borderRadius: 999, padding: "5px 18px", background: "#0e1c2c" }}><b>Role-Based Experience</b> — Tailored views and actions for every role across the organization.</span></p>
   </Bo>;
 }
 
@@ -878,15 +902,17 @@ export function BrewOpsDecisionFlow() {
       <div style={{ background: "#fff", border: "1.5px solid #102A43", borderRadius: 12, padding: "11px 13px" }}>
         <b style={{ fontSize: 13, color: "#102A43" }}>AFTER — Accountable Decision Flow</b>
         <p style={{ margin: "3px 0 8px", fontSize: 11, color: "#5b6470" }}>Structured workflow. Clear ownership. Faster, higher-confidence decisions.</p>
-        <div style={{ display: "grid", gap: 5 }}>
-          {FLOW21.map(([t, d, cap, owner], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: i === s ? "#eef4fb" : "#faf8f5", border: `1.5px solid ${i === s ? "#2563eb" : "#e2ddd0"}`, borderRadius: 8, padding: "6px 10px", cursor: "pointer", font: "inherit", color: "#141a21" }}>
-            <b style={{ fontSize: 11.5 }}>{t}</b> <span style={{ fontSize: 10.3, color: "#5b6470" }}>{d}</span>
-            <span style={{ display: "block", fontSize: 9.8, color: "#5b6470", marginTop: 2 }}>Captured: {cap} · <b>Owner: {owner}</b></span>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 5, alignItems: "stretch" }}>
+          {FLOW21.map(([t, d, cap, owner], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: i === s ? "#eef4fb" : "#faf8f5", border: `1.5px solid ${i === s ? "#2563eb" : "#e2ddd0"}`, borderRadius: 8, padding: "6px 7px", cursor: "pointer", font: "inherit", color: "#141a21", display: "flex", flexDirection: "column" }}>
+            <b style={{ fontSize: 10.4, lineHeight: 1.3 }}>{t}</b>
+            <span style={{ fontSize: 9.3, color: "#5b6470", lineHeight: 1.45, marginTop: 3 }}>{d}</span>
+            <span style={{ display: "block", fontSize: 8.9, color: "#5b6470", lineHeight: 1.45, marginTop: 4, flex: 1 }}>{cap}</span>
+            <span style={{ display: "block", borderTop: "1px solid #e2ddd0", marginTop: 5, paddingTop: 4, fontSize: 8.9 }}><b>Owner: {owner}</b></span>
           </button>)}
         </div>
         <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Measurable Outcomes (as printed)</p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 6 }}>
-          {[["Faster decision cycle time", "30–50%"], ["Higher forecast accuracy", "+15%"], ["Reduction in decision risk", "−20%"], ["Annualized impact (example)", "+$5–10M"]].map(([l, v]) => <span key={l} style={{ background: "#102A43", color: "#fff", borderRadius: 8, padding: "6px 10px" }}><b style={{ fontSize: 15 }}>{v}</b><br /><span style={{ fontSize: 9.8, opacity: 0.85 }}>{l}</span></span>)}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 6 }}>
+          {[["Faster decision cycle time", "30–50%"], ["Higher forecast accuracy", "+15%"], ["Reduction in decision risk", "−20%"], ["Annualized impact (example)", "+$5–10M"]].map(([l, v]) => <span key={l} style={{ background: "#eef7f0", border: "1px solid #bfe3cc", color: "#141a21", borderRadius: 8, padding: "6px 9px" }}><b style={{ fontSize: 14.5, color: "#137a3f" }}>{v}</b><br /><span style={{ fontSize: 9.6, color: "#4a5462" }}>{l}</span></span>)}
         </div>
       </div>
     </div>
@@ -931,27 +957,26 @@ export function BrewOpsTokens() {
     "};",
   ];
   return <Bo n="22" title="Design tokens: design and code alignment" sub="One source of truth. Consistent experiences across every touchpoint. Collection: Budweiser Core. All tokens are platform agnostic and available to design and code." dark={false} label="BrewOps design tokens - interactive rebuild of Budweiser_22">
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 268px", gap: 11, alignItems: "start" }}>
-      <div>
+    <div style={{ display: "grid", gridTemplateColumns: "148px minmax(0,1fr) 262px", gap: 10, alignItems: "start" }}>
+      <div style={{ background: "#fff", border: "1px solid #e2ddd0", borderRadius: 10, padding: "9px 11px" }}>
+        <p className="tks-kicker" style={{ marginTop: 0 }}>Collection</p>
+        <p style={{ margin: "0 0 8px", fontSize: 11.5 }}><b>Budweiser Core</b></p>
+        <p className="tks-kicker" style={{ margin: "0 0 3px" }}>Groups</p>
+        <ul style={{ margin: 0, paddingLeft: 15, fontSize: 10.6, lineHeight: 1.7, color: "#4a5462" }}>
+          <li>Color — brand / neutral</li><li>Spacing — scale 0–8</li><li>Typography — heading / body / caption</li><li>Radius — xs–full</li><li>Shadow — sm / md / lg</li><li>Status — success / warning / error / info</li>
+        </ul>
+      </div>
+      <div style={{ minWidth: 0 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9 }}>
           {groupTable(0)}{groupTable(1)}{groupTable(2)}{groupTable(3)}{groupTable(4)}{groupTable(5)}
         </div>
         <p style={{ margin: "10px 0 0", fontSize: 11.5 }}><b>Shared language. Fewer handoffs. Stronger brand.</b> Consistent by design. Built in code. This is Bud.</p>
       </div>
-      <div>
-        <div style={{ background: "#fff", border: "1px solid #e2ddd0", borderRadius: 10, padding: "9px 11px", marginBottom: 9 }}>
-          <p className="tks-kicker" style={{ marginTop: 0 }}>Variables — Budweiser Core</p>
-          <ul style={{ margin: 0, paddingLeft: 15, fontSize: 10.8, lineHeight: 1.7, color: "#4a5462" }}>
-            <li>color.brand / color.neutral</li><li>space scale 0–8</li><li>type.heading / type.body / caption</li><li>radius xs–full</li><li>shadow sm / md / lg</li><li>status success / warning / error / info</li>
-          </ul>
-          <p style={{ margin: "6px 0 0", fontSize: 10.3, color: "#8a93a0" }}>Select a table row to mark its group.</p>
-        </div>
-        <div style={{ background: "#0d1117", borderRadius: 10, padding: "10px 0", overflow: "hidden" }}>
-          <p style={{ margin: "0 12px 6px", fontSize: 10.3, color: "#8b949e", fontFamily: "ui-monospace, monospace" }}>tokens.theme.ts — TypeScript</p>
-          <ol style={{ margin: 0, padding: "0 12px 0 34px", fontFamily: "ui-monospace, monospace", fontSize: 9.6, lineHeight: 1.65, color: "#c9d1d9" }}>
-            {code22.map((ln, i) => <li key={i} style={{ whiteSpace: "pre" }}>{ln}</li>)}
-          </ol>
-        </div>
+      <div style={{ background: "#0d1117", borderRadius: 10, padding: "0 0 10px", overflow: "hidden" }}>
+        <p style={{ margin: "0 0 7px", background: "#f5a800", color: "#141a21", fontSize: 10.5, fontWeight: 700, fontFamily: "ui-monospace, monospace", padding: "5px 12px" }}>tokens.theme.ts — TypeScript</p>
+        <ol style={{ margin: 0, padding: "0 12px 0 34px", fontFamily: "ui-monospace, monospace", fontSize: 9.2, lineHeight: 1.65, color: "#c9d1d9" }}>
+          {code22.map((ln, i) => <li key={i} style={{ whiteSpace: "pre" }}>{ln}</li>)}
+        </ol>
       </div>
     </div>
   </Bo>;
@@ -983,14 +1008,15 @@ export function BrewOpsWireframeWall() {
   const catOf = [0, 1, 2, 3, 4, 2, 2, 5, 6, 6, 6, 0, 3, 4, 6, 5, 7];
   return <Bo n="24" title="Wireframe exploration wall" sub="BrewOps Intelligence - Low-fidelity exploration. v1.0 - May 2024." dark={false} label="BrewOps wireframe exploration wall - interactive rebuild of Budweiser_24">
     <p style={{ margin: "0 0 9px", display: "flex", gap: 12, flexWrap: "wrap", fontSize: 10.8 }}>{cats24.map(([n, c]) => <span key={n}><span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 2, background: c, marginRight: 4 }} />{n}</span>)}</p>
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 8 }}>
-      {WIREFRAMES24.map(([t, body], i) => <button key={t} type="button" onClick={() => setW(i)} aria-pressed={i === w} style={{ textAlign: "left", background: "#fdfcf9", border: `1.5px solid ${i === w ? "#102A43" : "#ddd8cc"}`, borderTop: `4px solid ${cats24[catOf[i]][1]}`, borderRadius: 8, padding: "7px 9px", cursor: "pointer", font: "inherit", color: "#141a21" }}>
+    {(() => { const card24 = (t: string, body: string, i: number) => <button key={t} type="button" onClick={() => setW(i)} aria-pressed={i === w} style={{ textAlign: "left", background: "#fdfcf9", border: `1.5px solid ${i === w ? "#102A43" : "#ddd8cc"}`, borderTop: `4px solid ${cats24[catOf[i]][1]}`, borderRadius: 8, padding: "7px 9px", cursor: "pointer", font: "inherit", color: "#141a21" }}>
         <b style={{ display: "block", fontSize: 10.6, lineHeight: 1.35 }}>{t}</b>
         <span aria-hidden="true" style={{ display: "block", margin: "6px 0" }}><span style={{ display: "block", height: 5, background: "#e3ded2", borderRadius: 3, marginBottom: 3 }} /><span style={{ display: "block", height: 5, background: "#e3ded2", borderRadius: 3, width: "72%", marginBottom: 3 }} /><span style={{ display: "block", height: 5, background: "#e3ded2", borderRadius: 3, width: "55%" }} /></span>
-        <span style={{ display: "block", fontSize: 9.2, lineHeight: 1.5, color: "#5b6470" }}>{body.length > 168 ? `${body.slice(0, 168)}…` : body}</span>
-      </button>)}
-    </div>
-    <div className="tks-detail" aria-live="polite" style={{ marginTop: 10 }}><b>{WIREFRAMES24[w][0]}</b><p style={{ margin: "5px 0 0" }}>{WIREFRAMES24[w][1]}</p></div>
+        <span style={{ display: "block", fontSize: 9.2, lineHeight: 1.5, color: "#5b6470" }}>{body.length > 118 ? `${body.slice(0, 118)}…` : body}</span>
+      </button>;
+      return <>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 8 }}>{WIREFRAMES24.slice(0, 5).map(([t, body], i) => card24(t, body, i))}</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 8, marginTop: 8 }}>{WIREFRAMES24.slice(5).map(([t, body], j) => card24(t, body, j + 5))}</div>
+      </>; })()}
   </Bo>;
 }
 
@@ -1021,15 +1047,23 @@ export function BrewOpsDashboardComparison() {
         <b style={{ fontSize: 12.5 }}>LEFT — Executive Summary Dashboard</b>
         <p style={{ margin: "2px 0 8px", fontSize: 9.8, color: "#8a93a0" }}>Nav: Overview · Performance · Sales · Supply Chain · Markets · Finance · Alerts · Reports · Settings</p>
         {kpiRow([["Total Volume", "2.45M", "up 8.6%"], ["Net Revenue", "$186.7M", "up 6.3%"], ["Gross Margin", "31.4%", "up 1.2pp"], ["Cases Shipped", "2.31M", "up 7.4%"], ["On-Time Delivery", "92.1%", "down 1.6pp"]])}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7, marginTop: 8 }}>
+        <div style={{ border: "1px solid #eee9dc", borderRadius: 8, padding: "6px 8px", marginTop: 8 }}>
+          <p className="tks-kicker" style={{ marginTop: 0, fontSize: 9 }}>Volume Over Time — May 8–14</p>
+          <svg viewBox="0 0 260 54" style={{ width: "100%", display: "block" }} role="img" aria-label="Volume over time by region, May 8 to 14">
+            <polyline points="6,38 44,32 82,34 120,26 158,28 196,20 234,16 254,18" fill="none" stroke="#2563eb" strokeWidth="1.8" />
+            <polyline points="6,44 44,40 82,42 120,36 158,38 196,32 234,30 254,28" fill="none" stroke="#f5a800" strokeWidth="1.5" />
+            <polyline points="6,48 44,46 82,47 120,44 158,45 196,42 234,40 254,41" fill="none" stroke="#8a93a0" strokeWidth="1.3" strokeDasharray="3 2" />
+          </svg>
+          <p style={{ margin: "2px 0 0", fontSize: 9, color: "#8a93a0" }}>By Region: <span style={{ color: "#2563eb" }}>— West</span> · <span style={{ color: "#b97a0c" }}>— Central</span> · South · Northeast</p>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7, marginTop: 7 }}>
           <div style={{ border: "1px solid #eee9dc", borderRadius: 8, padding: "6px 8px" }}>
             <p className="tks-kicker" style={{ marginTop: 0, fontSize: 9 }}>Top Markets by Volume</p>
             {[["California", 100], ["Texas", 84], ["Florida", 66], ["New York", 52], ["Illinois", 38]].map(([m, v]) => <p key={m as string} style={{ margin: "2.5px 0", fontSize: 9.3, display: "flex", gap: 5, alignItems: "center" }}><span style={{ width: 52 }}>{m}</span><span style={{ flex: 1, height: 6, background: "#eee9dc", borderRadius: 3 }}><span style={{ display: "block", height: 6, width: `${v}%`, background: "#2563eb", borderRadius: 3 }} /></span></p>)}
-            <p style={{ margin: "4px 0 0", fontSize: 9, color: "#8a93a0" }}>Volume Over Time May 8–14 · by Region: West · Central · South · Northeast</p>
           </div>
           <div style={{ border: "1px solid #eee9dc", borderRadius: 8, padding: "6px 8px" }}>
             <p className="tks-kicker" style={{ marginTop: 0, fontSize: 9 }}>Channel Mix</p>
-            <span style={{ display: "block", width: 62, height: 62, borderRadius: "50%", margin: "2px auto", background: "conic-gradient(#2563eb 0 62%, #f5a800 62% 90%, #c9cfd8 90% 100%)" }} />
+            <span style={{ display: "block", width: 48, height: 48, borderRadius: "50%", margin: "2px auto", background: "conic-gradient(#2563eb 0 62%, #f5a800 62% 90%, #c9cfd8 90% 100%)" }} />
             <p style={{ margin: "3px 0 0", fontSize: 9.3, textAlign: "center" }}>Off Premise 62% · On Premise 28% · Other 10%</p>
             <p style={{ margin: "3px 0 0", fontSize: 9.3, background: "#fdf3e0", borderRadius: 6, padding: "4px 6px" }}>💡 Off Premise volume is up 8.6% driven by growth in Texas and Florida markets.</p>
           </div>
@@ -1046,8 +1080,8 @@ export function BrewOpsDashboardComparison() {
         <p style={{ margin: "2px 0 8px", fontSize: 9.8, color: "#8a93a0" }}>Nav: Queue · Orders · Shipments · Exceptions · Tasks (12) · Messages (5) · Reports</p>
         {kpiRow([["Total in Queue", "128", "up 18"], ["High Priority", "27", "up 6"], ["Past Due", "14", "up 3"], ["At Risk", "22", "down 5"], ["Ready to Ship", "65", "down 4"]])}
         <p style={{ margin: "7px 0 4px", fontSize: 9.6, color: "#5b6470" }}>Tabs: All (128) · High Priority (27) · Past Due (14) · At Risk (22) · Ready to Ship (65)</p>
-        <table className="tks-table tks-table--micro"><thead><tr><th></th><th>Priority</th><th>Order / PO</th><th>Customer</th><th>Status</th><th>Due</th><th>Age</th></tr></thead>
-          <tbody>{QUEUE25.map(([p, po, cust, st, due, age], i) => <tr key={po} onClick={() => setRow(i)} style={{ cursor: "pointer", background: i === row ? "#f3ead2" : undefined }}><td><input type="checkbox" checked={checked[i]} aria-label={`Select order ${po}`} onChange={() => setChecked((v) => v.map((x, j) => (j === i ? !x : x)))} onClick={(e) => e.stopPropagation()} /></td><td style={{ color: p === "High" ? "#c8102e" : p === "Medium" ? "#b97a0c" : "#5b6470", fontWeight: 700 }}>{p}</td><td>{po}</td><td>{cust}</td><td>{st}</td><td>{due.replace(", 2025", "")}</td><td>{age}</td></tr>)}</tbody></table>
+        <table className="tks-table tks-table--micro" style={{ fontSize: 10 }}><thead><tr><th></th><th>Priority</th><th>Order / PO</th><th>Customer</th><th>Status</th><th>Due</th><th>Age</th></tr></thead>
+          <tbody>{QUEUE25.map(([p, po, cust, st, due, age], i) => <tr key={po} onClick={() => setRow(i)} style={{ cursor: "pointer", background: i === row ? "#f3ead2" : undefined }}><td><input type="checkbox" checked={checked[i]} aria-label={`Select order ${po}`} onChange={() => setChecked((v) => v.map((x, j) => (j === i ? !x : x)))} onClick={(e) => e.stopPropagation()} /></td><td style={{ color: p === "High" ? "#c8102e" : p === "Medium" ? "#b97a0c" : "#5b6470", fontWeight: 700 }}>{p}</td><td style={{ whiteSpace: "nowrap" }}>{po}</td><td>{cust}</td><td style={{ whiteSpace: "nowrap" }}>{st}</td><td style={{ whiteSpace: "nowrap" }}>{due.replace(", 2025", "")}</td><td>{age}</td></tr>)}</tbody></table>
         <p aria-live="polite" style={{ margin: "6px 0 0", fontSize: 9.8 }}>{checked.filter(Boolean).length} items selected — Bulk actions: Assign Task · Send Message · Escalate · Update Status</p>
         <p style={{ margin: "6px 0 0", fontSize: 9.8, lineHeight: 1.55 }}><b>Strengths:</b> Clear prioritization of urgent work · Actionable list with quick status cues · Designed for speed and throughput · Short path from insight to action. <b>Tradeoffs:</b> Narrower view, less strategic context · Focused on execution, not analysis · May hide broader trends · Context switching for big-picture needs.</p>
       </div>
@@ -1073,12 +1107,11 @@ const STEPS26: Array<[string, string, string, string]> = [
 export function BrewOpsScenarioWireflow() {
   const [s, setS] = useState(2);
   const [sc, setSc] = useState(2);
-  const [sent, setSent] = useState(false);
   const colHeads = ["1 · Home / Trigger", "2 · Scenario Builder", "3 · Compare Scenarios", "4 · Inspect Evidence", "5 · Request Approval"];
   const colBody: React.ReactNode[] = [
     <p key="c0" style={{ margin: 0 }}>Good morning, Alex. How can I help you today?<br /><b>Supply signal: Glass capacity constraint forecasted in {"Q3'24"}</b> — Impact: High · Confidence: 72%.<br />Start a scenario: Explore impact of glass constraint · Assess alternative suppliers · View all signals (8)</p>,
     <p key="c1" style={{ margin: 0 }}><b>Levers:</b> Glass capacity −20% · Window Jul–Sep 2024 · Allocation: Cost priority · Freight +8% · Service target 95%.<br /><b>Constraints:</b> Do not exceed OTIF &lt; 95% · Inventory turns &gt; 6.<br />Copilot: Simulation ready. Run scenarios.</p>,
-    <table key="c2" className="tks-table tks-table--micro" style={{ fontSize: 9 }}><thead><tr><th>Scenario</th><th>Cost Δ</th><th>OTIF</th><th>Risk</th></tr></thead><tbody>{SCEN26.map(([name, , cells], i) => <tr key={name} onClick={() => setSc(i)} style={{ cursor: "pointer", background: i === sc ? "#f3ead2" : undefined }}><td><b>{name}</b></td><td>{cells[0]}</td><td>{cells[1]}</td><td>{cells[5]}</td></tr>)}</tbody></table>,
+    <table key="c2" style={{ width: "100%", borderCollapse: "collapse", fontSize: 8.6 }}><thead><tr>{["Scenario", "Cost Δ", "OTIF", "Risk"].map((h) => <th key={h} style={{ textAlign: "left", padding: "2px 3px", color: "#5b6470", borderBottom: "1px solid #e2ddd0", whiteSpace: "nowrap" }}>{h}</th>)}</tr></thead><tbody>{SCEN26.map(([name, , cells], i) => <tr key={name} onClick={() => setSc(i)} style={{ cursor: "pointer", background: i === sc ? "#f3ead2" : undefined }}>{[<b key="n">{name}</b>, cells[0], cells[1], cells[5]].map((c, j) => <td key={j} style={{ padding: "2px 3px", borderBottom: "1px solid #f0ead9", whiteSpace: "nowrap" }}>{c}</td>)}</tr>)}</tbody></table>,
     <p key="c3" style={{ margin: 0 }}><b>S2 Alt. supplier</b> — Tabs: Drivers · Risks · Impact map · Assumptions.<br /><b>Top cost drivers:</b> Freight +$0.8M · Raw materials +$0.6M · Packaging −$0.4M · Production −$0.3M · Inventory carrying +$0.2M.<br />Impact map (US): Increase / Decrease / No change. Evidence sources (12).</p>,
     <p key="c4" style={{ margin: 0 }}><b>Recommended: S2 Alt. supplier — +1.4% cost · 95.6% OTIF</b> (approval card figure; the compare table prints 94.7% — both as printed).<br />Approvers: Maria Gomez, Supply Chain Director — Pending · James Lee, Finance Director — Pending · Aaron Chen, Commercial Director — Pending.</p>,
   ];
@@ -1092,12 +1125,7 @@ export function BrewOpsScenarioWireflow() {
         </span>
       </button>)}
     </div>
-    <div style={{ marginTop: 10 }}>
-      <table className="tks-table"><thead><tr><th>Scenario</th><th>Total landed cost (delta vs baseline)</th><th>Service level (OTIF)</th><th>Fill rate</th><th>Inventory (days)</th><th>CO2e (tons)</th><th>Risk score</th></tr></thead>
-        <tbody>{SCEN26.map(([name, tag, cells], i) => <tr key={name} onClick={() => setSc(i)} style={{ cursor: "pointer", background: i === sc ? "#f3ead2" : undefined }}><td><b>{name}</b>{tag ? ` (${tag})` : ""}</td>{cells.map((cell, j) => <td key={j}>{cell}</td>)}</tr>)}</tbody></table>
-      <p aria-live="polite" style={{ margin: "6px 0 0", display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}><span>Selected: <b>{SCEN26[sc][0]}</b> — Total landed cost over time chart as printed (Baseline / S1 / S2 / S3 lines). Save scenario set · Inspect evidence.</span>
-      <button type="button" className="tks-btn" aria-pressed={sent} onClick={() => setSent((v) => !v)}>{sent ? "✓ Sent for approval" : "Send S2 for approval"}</button></p>
-    </div>
+    <p style={{ margin: "10px 0 0", background: "#102A43", color: "#fff", borderRadius: 9, padding: "7px 13px", fontSize: 11, display: "flex", gap: 16, flexWrap: "wrap" }}><span>🔒 <b>Secure</b></span><span>👤 <b>Role-based access</b></span><span>🧾 <b>Audit trail</b></span><span style={{ opacity: 0.85 }}>Governed and auditable — all scenarios, assumptions, and approvals are tracked for transparency and accountability.</span></p>
   </Bo>;
 }
 
@@ -1120,8 +1148,8 @@ export function BrewOpsDecisionLog() {
         </span>
       </button>)}
     </div>
-    <div style={{ border: "1.5px solid #18a957", background: "#f2faf4", borderRadius: 11, padding: "11px 13px", marginTop: 10 }}>
-      <p style={{ margin: 0, display: "flex", gap: 8, alignItems: "center" }}><span style={{ background: "#18a957", color: "#fff", borderRadius: 5, padding: "1px 7px", fontSize: 9.3, fontWeight: 800 }}>✓ CHOSEN DIRECTION</span><b style={{ fontSize: 14.5 }}>Action-first, focused workspace</b></p>
+    <div style={{ border: "1.5px solid #c8102e", background: "#fff", borderRadius: 11, padding: "11px 13px", marginTop: 10 }}>
+      <p style={{ margin: 0, display: "flex", gap: 8, alignItems: "center" }}><span style={{ background: "#c8102e", color: "#fff", borderRadius: "50%", width: 19, height: 19, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, flex: "none" }}>✓</span><span style={{ background: "#c8102e", color: "#fff", borderRadius: 5, padding: "1px 7px", fontSize: 9.3, fontWeight: 800 }}>CHOSEN DIRECTION</span><b style={{ fontSize: 14.5 }}>Action-first, focused workspace</b></p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 9, marginTop: 8, fontSize: 10.8, lineHeight: 1.55 }}>
         <p style={{ margin: 0 }}><b>Built for the job</b> — Centers on approvals and decisions, not conversations or vanity metrics.</p>
         <p style={{ margin: 0 }}><b>Clear priorities</b> — Highlights what needs attention so users can act without hunting.</p>
@@ -1150,15 +1178,21 @@ export function BrewOpsVisualFoundations() {
   return <Bo n="28" title={<span style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>Visual foundations</span>} sub="BrewOps Intelligence Design System v1.0 - May 2025. A consistent visual language that drives clarity, speed, and confident decisions." dark={false} label="BrewOps visual foundations - interactive rebuild of Budweiser_28">
     <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginBottom: 9 }}>
       {[["CLARITY", "Insights at a glance"], ["FOCUS", "Designed for what matters"], ["TRUST", "Governed, secure and reliable"], ["SPEED", "Faster decisions, better outcomes"]].map(([t, d]) => <span key={t} style={{ border: "1px solid #ddd6c9", borderRadius: 999, padding: "3px 11px", fontSize: 10.5 }}><b>{t}</b> · {d}</span>)}
-      <span style={{ fontSize: 10.5, color: "#5b6470", alignSelf: "center" }}>Grid: 12-col · 24px gutter · 1280px max · Spacing 4–128px · Elevation L0–L4 · Radius 4/8/12/16/24px</span>
     </div>
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1.25fr 1.15fr", gap: 10, alignItems: "start" }}>
-      <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 12px" }}>
-        <p className="tks-kicker" style={{ marginTop: 0 }}>Typography Scale</p>
-        {TYPE28.map(([a, b, c], i) => <p key={a} style={{ margin: "5px 0", borderBottom: "1px dashed #eee9dc", paddingBottom: 4 }}>
-          <span style={{ fontSize: specSize[i], fontWeight: i < 4 ? 800 : 500, lineHeight: 1.15 }}>{a.split(" ").slice(1).join(" ") || a}</span>
-          <span style={{ display: "block", fontSize: 9.3, color: "#8a93a0" }}>{a} · {b} · tracking {c}</span>
-        </p>)}
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr 0.92fr 1.08fr", gap: 9, alignItems: "start" }}>
+      <div>
+        <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 12px" }}>
+          <p className="tks-kicker" style={{ marginTop: 0 }}>Typography Scale</p>
+          {TYPE28.map(([a, b, c], i) => <p key={a} style={{ margin: "5px 0", borderBottom: "1px dashed #eee9dc", paddingBottom: 4 }}>
+            <span style={{ fontSize: specSize[i], fontWeight: i < 4 ? 800 : 500, lineHeight: 1.15 }}>{a.split(" ").slice(1).join(" ") || a}</span>
+            <span style={{ display: "block", fontSize: 9.3, color: "#8a93a0" }}>{a} · {b} · tracking {c}</span>
+          </p>)}
+        </div>
+        <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 12px", marginTop: 9 }}>
+          <p className="tks-kicker" style={{ marginTop: 0 }}>Grid System</p>
+          <div aria-hidden="true" style={{ display: "grid", gridTemplateColumns: "repeat(12,1fr)", gap: 3, height: 44 }}>{Array.from({ length: 12 }, (_, i) => <span key={i} style={{ background: "#f9d7de", borderRadius: 2 }} />)}</div>
+          <p style={{ margin: "5px 0 0", fontSize: 9.6, color: "#5b6470", lineHeight: 1.55 }}>12-column grid · 24px gutter · 1280px max width · 16px page margin (mobile)</p>
+        </div>
       </div>
       <div>
         <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 12px" }}>
@@ -1172,17 +1206,25 @@ export function BrewOpsVisualFoundations() {
           <table className="tks-table tks-table--micro"><thead><tr><th>Token</th><th>Light</th><th>Dark</th><th>Usage</th></tr></thead><tbody>{SEMANTIC28.map(([a, b, c, d]) => <tr key={a}><td style={{ fontFamily: "ui-monospace, monospace", fontSize: 9.3 }}>{a}</td><td>{b}</td><td>{c}</td><td>{d}</td></tr>)}</tbody></table>
         </div>
       </div>
-      <div style={{ background: "#0F1114", color: "#F2F4F7", borderRadius: 11, padding: "10px 12px" }}>
-        <p className="tks-kicker" style={{ marginTop: 0, color: "#FFB000" }}>Foundations in Use — Brewery Overview</p>
+      <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 12px" }}>
+        <p className="tks-kicker" style={{ marginTop: 0 }}>Spacing Scale</p>
+        {[4, 8, 16, 24, 32, 48, 64, 96, 128].map((v) => <p key={v} style={{ margin: "2.5px 0", display: "flex", gap: 6, alignItems: "center", fontSize: 9.3 }}><span style={{ width: 34, color: "#5b6470" }}>{v}px</span><span style={{ display: "block", height: 7, width: `${Math.max(3, v / 1.6)}%`, background: "#f5a800", borderRadius: 2 }} /></p>)}
+        <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Elevation</p>
+        <div style={{ display: "flex", gap: 5 }}>{["L0", "L1", "L2", "L3", "L4"].map((l, i) => <span key={l} style={{ flex: 1, textAlign: "center", background: "#fff", border: "1px solid #e7e2d9", borderRadius: 6, padding: "5px 0", fontSize: 9.3, boxShadow: ["none", "0 1px 2px rgba(17,17,17,.08)", "0 4px 12px rgba(17,17,17,.12)", "0 8px 20px rgba(17,17,17,.14)", "0 12px 24px rgba(17,17,17,.16)"][i] }}>{l}</span>)}</div>
+        <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Radius</p>
+        <div style={{ display: "flex", gap: 5 }}>{[4, 8, 12, 16, 24].map((v) => <span key={v} style={{ flex: 1, textAlign: "center", background: "#faf8f5", border: "1px solid #111419", borderRadius: v, padding: "5px 0", fontSize: 9.3 }}>{v}</span>)}</div>
+      </div>
+      <div style={{ background: "#fff", border: "1px solid #e7e2d9", color: "#141a21", borderRadius: 11, padding: "10px 12px" }}>
+        <p className="tks-kicker" style={{ marginTop: 0 }}>Foundations in Use — Brewery Overview</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 6 }}>
-          {[["Production HL", "24,560", "▲ 8.4%"], ["OEE", "87.3%", "▲ 3.1%"], ["Energy / HL", "3.21 kWh", "▼ 2.7%"], ["Critical Alerts", "3", "▲ 2"]].map(([l, v, d]) => <span key={l} style={{ background: "#171A1F", border: "1px solid #2A2F36", borderRadius: 8, padding: "6px 8px" }}><span style={{ display: "block", fontSize: 9, color: "#A1A7B3" }}>{l}</span><b style={{ fontSize: 15 }}>{v}</b> <span style={{ fontSize: 9, color: "#2DC16E" }}>{d}</span></span>)}
+          {[["Production HL", "24,560", "▲ 8.4%"], ["OEE", "87.3%", "▲ 3.1%"], ["Energy / HL", "3.21 kWh", "▼ 2.7%"], ["Critical Alerts", "3", "▲ 2"]].map(([l, v, d]) => <span key={l} style={{ background: "#faf8f5", border: "1px solid #e7e2d9", borderRadius: 8, padding: "6px 8px" }}><span style={{ display: "block", fontSize: 9, color: "#6b7280" }}>{l}</span><b style={{ fontSize: 15 }}>{v}</b> <span style={{ fontSize: 9, color: "#137a3f" }}>{d}</span></span>)}
         </div>
         <p style={{ margin: "8px 0 3px", fontSize: 10.3, fontWeight: 700 }}>Top Alerts</p>
-        <p style={{ margin: 0, fontSize: 9.8, lineHeight: 1.6, color: "#c6cdd6" }}>🔴 Fill level high on Brite Tank 4 — Brite Area — 2 min ago — CRITICAL<br />🟠 CO2 usage above target — Utility — 15 min ago — WARNING<br />🔵 CIP cycle over target time — Brew House — 45 min ago — INFO</p>
+        <p style={{ margin: 0, fontSize: 9.8, lineHeight: 1.6, color: "#4a5462" }}>🔴 Fill level high on Brite Tank 4 — Brite Area — 2 min ago — CRITICAL<br />🟠 CO2 usage above target — Utility — 15 min ago — WARNING<br />🔵 CIP cycle over target time — Brew House — 45 min ago — INFO</p>
         <p style={{ margin: "8px 0 3px", fontSize: 10.3, fontWeight: 700 }}>Asset Performance</p>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>{ASSETS28.map(([n], i) => <button key={n} type="button" onClick={() => setAsset(i)} aria-pressed={i === asset} style={{ background: i === asset ? "#FFB000" : "#171A1F", color: i === asset ? "#111" : "#F2F4F7", border: "1px solid #2A2F36", borderRadius: 999, padding: "2px 9px", fontSize: 9.5, cursor: "pointer", font: "inherit" }}>{n}</button>)}</div>
-        <p aria-live="polite" style={{ margin: "6px 0 0", fontSize: 10 }}><b>{ASSETS28[asset][0]}</b> — <span style={{ color: ASSETS28[asset][1] === "Healthy" ? "#2DC16E" : ASSETS28[asset][1] === "Warning" ? "#FFB224" : "#F87171" }}>{ASSETS28[asset][1]}</span> — OEE {ASSETS28[asset][2]} — Alerts {ASSETS28[asset][3]}</p>
-        <p style={{ margin: "6px 0 0", fontSize: 9.3, color: "#A1A7B3" }}>Filters: All Sites · Brew House · Fermentation · Packaging — Buttons: Primary · Secondary · Tertiary · Healthy · Warning · Critical · Info</p>
+        <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>{ASSETS28.map(([n], i) => <button key={n} type="button" onClick={() => setAsset(i)} aria-pressed={i === asset} style={{ background: i === asset ? "#FFB000" : "#faf8f5", color: "#141a21", border: "1px solid #ddd6c9", borderRadius: 999, padding: "2px 9px", fontSize: 9.5, cursor: "pointer", font: "inherit" }}>{n}</button>)}</div>
+        <p aria-live="polite" style={{ margin: "6px 0 0", fontSize: 10 }}><b>{ASSETS28[asset][0]}</b> — <span style={{ color: ASSETS28[asset][1] === "Healthy" ? "#137a3f" : ASSETS28[asset][1] === "Warning" ? "#b97a0c" : "#c8102e" }}>{ASSETS28[asset][1]}</span> — OEE {ASSETS28[asset][2]} — Alerts {ASSETS28[asset][3]}</p>
+        <p style={{ margin: "6px 0 0", fontSize: 9.3, color: "#8a93a0" }}>Filters: All Sites · Brew House · Fermentation · Packaging — Buttons: Primary · Secondary · Tertiary · Healthy · Warning · Critical · Info</p>
       </div>
     </div>
     <p style={{ margin: "10px 0 0", fontSize: 11.5 }}>Consistent by design. Built for performance. — BrewOps Intelligence Design System — v1.0 — May 2025.</p>
@@ -1205,34 +1247,34 @@ export function BrewOpsComponentLibrary() {
   const [dismissed, setDismissed] = useState<boolean[]>([false, false, false, false]);
   const sec: React.CSSProperties = { background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 12px", marginBottom: 9 };
   return <Bo n="29" title="Component library" sub="Reusable components for BrewOps Intelligence. BrewOps Intelligence Design System v1.0." dark={false} label="BrewOps component library - interactive rebuild of Budweiser_29">
-    <div style={{ display: "grid", gridTemplateColumns: "118px 1fr", gap: 11, alignItems: "start" }}>
-      <div style={{ background: "#102A43", borderRadius: 11, padding: "10px 8px", display: "grid", gap: 2 }}>
-        {["Overview", "Insights", "Investigations", "Data", "Approvals", "Settings"].map((nv, i) => <span key={nv} style={{ color: i === 2 ? "#fff" : "#a9bccd", background: i === 2 ? "rgba(255,255,255,0.12)" : "transparent", borderRadius: 7, padding: "5px 9px", fontSize: 10.8, fontWeight: i === 2 ? 700 : 500 }}>{nv}</span>)}
-        <p style={{ margin: "8px 4px 0", fontSize: 8.8, color: "#7e93ab", lineHeight: 1.5 }}>© 2024 Anheuser-Busch (as printed)</p>
+    <div style={{ display: "grid", gridTemplateColumns: "118px minmax(0,1fr)", gap: 11, alignItems: "start" }}>
+      <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "10px 8px", display: "grid", gap: 2 }}>
+        {["Overview", "Insights", "Investigations", "Data", "Approvals", "Settings"].map((nv, i) => <span key={nv} style={{ color: i === 2 ? "#8a5c00" : "#3c4652", background: i === 2 ? "#fdf3e0" : "transparent", borderRadius: 7, padding: "5px 9px", fontSize: 10.8, fontWeight: i === 2 ? 700 : 500 }}>{nv}</span>)}
+        <p style={{ margin: "8px 4px 0", fontSize: 8.8, color: "#8a8f98", lineHeight: 1.5 }}>© 2024 Anheuser-Busch (as printed)</p>
       </div>
-      <div>
-        <div style={sec}><p className="tks-kicker" style={{ marginTop: 0 }}>Cards</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 7 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(12,1fr)", gap: 9, alignItems: "start", minWidth: 0 }}>
+        <div style={{ ...sec, marginBottom: 0, gridColumn: "span 5" }}><p className="tks-kicker" style={{ marginTop: 0 }}>Cards</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 7 }}>
             <div style={{ border: "1px solid #eee9dc", borderRadius: 9, padding: "7px 9px" }}><p className="tks-kicker" style={{ marginTop: 0, fontSize: 9 }}>Fermentation Temp — Bright Beer Tank 12</p><b style={{ fontSize: 18 }}>33.8 °F</b><p style={{ margin: "2px 0 0", fontSize: 9.8 }}>Target: 34.0 °F · Within Range · Updated 5m ago</p></div>
             <div style={{ border: "1px solid #eee9dc", borderRadius: 9, padding: "7px 9px" }}><p className="tks-kicker" style={{ marginTop: 0, fontSize: 9 }}>Investigation — O2 Spike — Line 3</p><span className="tks-tag" style={{ color: "#c8102e" }}>High Priority</span><p style={{ margin: "3px 0 0", fontSize: 9.8 }}>Opened May 17, 2024 8:42 AM · Owner Alex R.</p></div>
             <div style={{ border: "1px solid #eee9dc", borderRadius: 9, padding: "7px 9px" }}><p className="tks-kicker" style={{ marginTop: 0, fontSize: 9 }}>Insight</p><p style={{ margin: 0, fontSize: 9.8 }}>Elevated O2 levels detected during packaging run. Likely Cause: Seal Failure — Confidence <b>78%</b></p></div>
             <div style={{ border: "1px solid #eee9dc", borderRadius: 9, padding: "7px 9px" }}><p className="tks-kicker" style={{ marginTop: 0, fontSize: 9 }}>KPI — Line Yield (7D)</p><b style={{ fontSize: 18 }}>97.6%</b><p style={{ margin: "2px 0 0", fontSize: 9.8 }}>vs prior 7D up 2.1% · Updated 1h ago</p></div>
           </div>
         </div>
-        <div style={sec}><p className="tks-kicker" style={{ marginTop: 0 }}>Alerts</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+        <div style={{ ...sec, marginBottom: 0, gridColumn: "span 4" }}><p className="tks-kicker" style={{ marginTop: 0 }}>Alerts</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 6 }}>
             {[["High Priority", "O2 levels above control limit on Line 3.", "#c8102e"], ["Investigation Needed", "Unusual CO2 usage detected.", "#b97a0c"], ["FYI", "New data available for Packaging Line 2.", "#2563eb"], ["Resolved", "Seal failure investigation closed.", "#18a957"]].map(([t, d, col], i) => !dismissed[i] ? <div key={t} style={{ border: `1px solid ${col}`, borderRadius: 8, padding: "6px 9px", display: "flex", justifyContent: "space-between", gap: 6, fontSize: 10.3 }}><span><b style={{ color: col }}>{t}</b> — {d}</span><button type="button" className="tks-chip" aria-label={`Dismiss alert: ${t}`} onClick={() => setDismissed((v) => v.map((x, j) => (j === i ? true : x)))}>✕</button></div> : <p key={t} style={{ margin: 0, fontSize: 10.3, color: "#8a93a0" }}>{t} dismissed.</p>)}
           </div>
         </div>
-        <div style={sec}><p className="tks-kicker" style={{ marginTop: 0 }}>Filters</p>
-          <p style={{ margin: 0, fontSize: 10.5 }}>Date range: May 10 – May 17, 2024 · Brewery: All Breweries · Area: Packaging · Line: Line 3 · Event type: All · Status: All — <b>Clear filters / Apply filters</b></p>
+        <div style={{ ...sec, marginBottom: 0, gridColumn: "span 3" }}><p className="tks-kicker" style={{ marginTop: 0 }}>Filters</p>
+          <p style={{ margin: 0, fontSize: 10.5 }}>Date range: May 10 – May 17, 2024 · Brewery: All Breweries · Area: Packaging · Line: Line 3 · Event type: All · Status: All — <b>Clear filters / <span style={{ background: "#c8102e", color: "#fff", borderRadius: 5, padding: "1px 8px" }}>Apply filters</span></b></p>
         </div>
-        <div style={sec}><p className="tks-kicker" style={{ marginTop: 0 }}>Data Table</p>
+        <div style={{ ...sec, marginBottom: 0, gridColumn: "span 8" }}><p className="tks-kicker" style={{ marginTop: 0 }}>Data Table</p>
           <table className="tks-table tks-table--micro"><thead><tr><th>Event ID</th><th>Title</th><th>Area</th><th>Line</th><th>Detected</th><th>Status</th><th>Priority</th><th>Confidence</th><th>Owner</th></tr></thead>
             <tbody>{EVENTS29.map((r2, i) => <tr key={r2[0]} onClick={() => setRow(i)} style={{ cursor: "pointer", background: i === row ? "#f3ead2" : undefined }}>{r2.map((cell2, j) => <td key={j}>{cell2}</td>)}</tr>)}</tbody></table>
           <p aria-live="polite" style={{ margin: "5px 0 0", fontSize: 10.3 }}>Selected: <b>{EVENTS29[row][1]}</b> ({EVENTS29[row][0]}) — Showing 1 to 5 of 24 results · 5 per page · pages 1–5 as printed.</p>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 9, gridColumn: "span 4" }}>
           <div style={{ ...sec, marginBottom: 0 }}><p className="tks-kicker" style={{ marginTop: 0 }}>Evidence Citations</p>
             <p style={{ margin: "3px 0", fontSize: 10.5 }}><b>Historian Trend</b> — O2 Sensor — Line 3 — May 17, 8:35–8:45 AM</p>
             <p style={{ margin: "3px 0", fontSize: 10.5 }}><b>Work Order</b> — WO-2024-0517-0892 — Seal replacement — Line 3</p>
@@ -1245,7 +1287,7 @@ export function BrewOpsComponentLibrary() {
             <Bar pct={Number(CONF29[conf][0].replace("%", ""))} label={`Confidence ${CONF29[conf][0]}`} />
           </div>
         </div>
-        <div style={{ ...sec, marginTop: 9, marginBottom: 0 }}><p className="tks-kicker" style={{ marginTop: 0 }}>States &amp; Approvals</p>
+        <div style={{ ...sec, marginBottom: 0, gridColumn: "span 12" }}><p className="tks-kicker" style={{ marginTop: 0 }}>States &amp; Approvals</p>
           <div className="tks-flow" role="group">{["Request", "Review", "Approve", "Complete"].map((t2, i) => <span key={t2} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">-&gt;</span>}<button type="button" className="tks-node" aria-pressed={i === step} onClick={() => setStep(i)}><b>{t2}</b></button></span>)}</div>
           <p style={{ margin: "6px 0 0", fontSize: 10.5 }}>Buttons as printed: Approve · Request changes · Reject · Add a comment (optional)…</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 7, marginTop: 7 }}>
@@ -1272,15 +1314,15 @@ const DELTA30: Array<[string, string]> = [["High demand", "-6.2pp"], ["Ingredien
 const FALLS30: Array<[string, number]> = [["Base forecast", 180], ["Price", 18], ["Promo", 24], ["Weather", -15], ["Mix shift", -7], ["Other", 6], ["Actual", 206]];
 export function BrewOpsDataViz() {
   const [cell, setCell] = useState<[number, number]>([0, 4]);
-  const [tank, setTank] = useState(28);
+  const [tank] = useState(28);
   const [fall, setFall] = useState(6);
   const tankState = tank < 15 ? "LOW (< 15%)" : tank <= 30 ? "CAUTION (15% – 30%)" : tank <= 70 ? "HEALTHY (30% – 70%)" : "HIGH (> 70%)";
   const panel30: React.CSSProperties = { background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 11px" };
   const head30 = (n: string, t: string, use: string) => <p style={{ margin: "0 0 6px" }}><b style={{ fontSize: 11.8 }}><span style={{ color: "#c8102e" }}>{n}</span> {t}</b><br /><span style={{ fontSize: 9.6, color: "#8a93a0" }}>When to use: {use}</span></p>;
   const cum: number[] = []; { let run = 0; FALLS30.forEach(([, v], i) => { run = i === 0 ? v : run + v; cum.push(run); }); }
   return <Bo n="30" title="Data visualization system" sub="BrewOps Intelligence - Our visual system turns complex brewing and supply chain data into clear, actionable insight. Consistent patterns, accessible colors, and purposeful emphasis help every user make confident decisions." dark={false} label="BrewOps data visualization system - interactive rebuild of Budweiser_30">
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 196px", gap: 11, alignItems: "start" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 176px", gap: 9, alignItems: "start" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>
         <div style={panel30}>{head30("1", "Forecast Bands", "Show expected future range and uncertainty.")}
           <svg viewBox="0 0 260 108" style={{ width: "100%", display: "block" }} role="img" aria-label="Demand forecast with 80 and 95 percent prediction bands">
             <polygon points="60,44 95,38 130,33 165,28 200,24 230,20 230,48 200,52 165,56 130,61 95,66 60,72" fill="#2563eb" opacity="0.13" />
@@ -1320,7 +1362,6 @@ export function BrewOpsDataViz() {
             <span style={{ width: 52, height: 74, border: "2px solid #8a93a0", borderRadius: "8px 8px 12px 12px", position: "relative", overflow: "hidden", flex: "none" }}><span style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: `${tank}%`, background: tank <= 30 ? "#f5a800" : "#18a957" }} /><span style={{ position: "absolute", left: 0, right: 0, top: "30%", borderTop: "1.5px dashed #e0483e" }} /></span>
             <span style={{ fontSize: 10, lineHeight: 1.55 }}><b style={{ fontSize: 16 }}>{tank}%</b> — Tank inventory, total network (printed example: 28% · 52 kHL)<br /><b>{tankState}</b><br /><span style={{ color: "#5b6470" }}>Caution: inventory below healthy range; projected to reach healthy range in 6 days.</span></span>
           </div>
-          <label style={{ display: "block", marginTop: 7, fontSize: 9.6 }}>Sandbox — drag to test the printed thresholds<input type="range" min={0} max={100} value={tank} onChange={(e) => setTank(Number(e.target.value))} aria-label="Sandbox tank inventory percent" style={{ width: "100%" }} /></label>
         </div>
         <div style={panel30}>{head30("6", "Composition & Contribution", "Show how parts build to a total.")}
           <div style={{ display: "flex", alignItems: "flex-end", gap: 5, height: 86, borderBottom: "1.5px solid #c9cfd8", padding: "0 2px" }}>
@@ -1334,10 +1375,6 @@ export function BrewOpsDataViz() {
         </div>
       </div>
       <div style={{ display: "grid", gap: 9 }}>
-        <div style={{ background: "#102A43", color: "#fff", borderRadius: 11, padding: "10px 12px" }}>
-          <p className="tks-kicker" style={{ marginTop: 0, color: "#f5c86b" }}>Built for Every Brewer</p>
-          <p style={{ margin: 0, fontSize: 10.8, lineHeight: 1.6 }}><b>Accessible. Consistent. Actionable.</b><br />From brewhouse to boardroom.<br /><b>ONE SYSTEM. EVERY DECISION.</b></p>
-        </div>
         <div style={panel30}>
           <p className="tks-kicker" style={{ marginTop: 0 }}>Accessible Color Rules</p>
           <p style={{ margin: 0, fontSize: 10.3, lineHeight: 1.6 }}>Purposeful color with redundant cues. Semantic palette: <b>Critical</b> (Action needed) · <b>Elevated</b> (At risk) · <b>Caution</b> (Monitor) · <b>Healthy</b> (On track) · <b>Informational</b> (For context) · <b>Neutral</b> (Structure &amp; text). WCAG 2.1 AA compliant — color is not the only means of communication.</p>
@@ -1349,6 +1386,10 @@ export function BrewOpsDataViz() {
         <div style={panel30}>
           <p className="tks-kicker" style={{ marginTop: 0 }}>Typography &amp; Principles</p>
           <p style={{ margin: 0, fontSize: 10.3, lineHeight: 1.6 }}><b>Inter UI</b> — for clarity at every size.<br />Principles: <b>Clarity · Consistency · Inclusivity · Actionability</b></p>
+        </div>
+        <div style={{ background: "#102A43", color: "#fff", borderRadius: 11, padding: "10px 12px" }}>
+          <p className="tks-kicker" style={{ marginTop: 0, color: "#f5c86b" }}>Built for Every Brewer</p>
+          <p style={{ margin: 0, fontSize: 10.8, lineHeight: 1.6 }}><b>Accessible. Consistent. Actionable.</b><br />From brewhouse to boardroom.<br /><b>ONE SYSTEM. EVERY DECISION.</b></p>
         </div>
       </div>
     </div>
@@ -1364,17 +1405,22 @@ function ControlTowerStats() {
 export function BrewOpsControlTower() {
   return <BoX n="31" title="Control Tower" sub="Real-time operational overview across the brewing supply chain — the flagship hi-fi dashboard, with the design-system sidebar as printed." dark={false} label="BrewOps control tower hi-fi - interactive rebuild of Budweiser_31">
     <HiFi active="Control Tower">
-      <CTDash />
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 8, fontSize: 11, color: "#141a21" }}>
-        <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 11px" }}>
-          <p className="tks-kicker" style={{ marginTop: 0 }}>Alert / Risk Queue (right rail, as printed)</p>
-          <p style={{ margin: "3px 0" }}>🔴 <b>High Priority</b> — CO2 levels (CRITICAL, 2 min ago) · 🟠 <b>Investigation Needed</b> — CO2 usage (WARNING, 15 min ago) · 🔵 <b>FYI</b> — Packaging Line 2 data (INFO, 45 min ago) · 🟢 <b>Resolved</b> — seal failure (1 hr ago) · View all (7)</p>
-        </div>
-        <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 11px" }}>
-          <p className="tks-kicker" style={{ marginTop: 0 }}>Evidence &amp; Insights</p>
-          <p style={{ margin: "3px 0" }}><b>Insight:</b> Elevated CO2 levels detected during packaging run. May 17, 8:42 AM — Confidence 78%.</p>
-          <p style={{ margin: "3px 0" }}><b>Work Order:</b> WO-2024-0517-0892 — Seal replacement — Line 3 — May 17, 8:50 AM — Completed.</p>
-          <p style={{ margin: "3px 0" }}><b>Historian Trend:</b> O2 Sensor — Line 3 — May 17, 8:35–8:45 AM.</p>
+      <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 184px", gap: 8, alignItems: "start" }}>
+        <div style={{ minWidth: 0 }}><CTDash /></div>
+        <div style={{ display: "grid", gap: 8, fontSize: 10.4, color: "#141a21" }}>
+          <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "8px 10px" }}>
+            <p className="tks-kicker" style={{ marginTop: 0 }}>Alert / Risk Queue</p>
+            <p style={{ margin: "3px 0", lineHeight: 1.55 }}>🔴 <b>High Priority</b> — CO2 levels (CRITICAL, 2 min ago)</p>
+            <p style={{ margin: "3px 0", lineHeight: 1.55 }}>🟠 <b>Investigation Needed</b> — CO2 usage (WARNING, 15 min ago)</p>
+            <p style={{ margin: "3px 0", lineHeight: 1.55 }}>🔵 <b>FYI</b> — Packaging Line 2 data (INFO, 45 min ago)</p>
+            <p style={{ margin: "3px 0", lineHeight: 1.55 }}>🟢 <b>Resolved</b> — seal failure (1 hr ago) · View all (7)</p>
+          </div>
+          <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "8px 10px" }}>
+            <p className="tks-kicker" style={{ marginTop: 0 }}>Evidence &amp; Insights</p>
+            <p style={{ margin: "3px 0", lineHeight: 1.55 }}><b>Insight:</b> Elevated CO2 levels detected during packaging run. May 17, 8:42 AM — Confidence 78%.</p>
+            <p style={{ margin: "3px 0", lineHeight: 1.55 }}><b>Work Order:</b> WO-2024-0517-0892 — Seal replacement — Line 3 — May 17, 8:50 AM — Completed.</p>
+            <p style={{ margin: "3px 0", lineHeight: 1.55 }}><b>Historian Trend:</b> O2 Sensor — Line 3 — May 17, 8:35–8:45 AM.</p>
+          </div>
         </div>
       </div>
     </HiFi>
@@ -1383,20 +1429,20 @@ export function BrewOpsControlTower() {
 
 /* ---------------- 33 - Control Tower Explained ---------------- */
 const EXPLAIN33: Array<[string, string, string]> = [
-  ["Decision priority", "Instantly see what needs your attention first.", "The Operational KPIs row (marker 1 points at Total Production): 24,560 HL - OEE 87.3% - On-Time Delivery 92.1% - Inventory Health 78% - Critical Alerts 3."],
-  ["Risk exposure", "Understand where risk is concentrated and what's at stake.", "The Inventory Risk Summary (marker 2): 152 At Risk SKUs - High 18 (12%) - Medium 46 (30%) - Low 88 (58%) - drivers: elevated demand vs forecast, supply delay risk, packaging constraints."],
-  ["Evidence", "Explore the data and insights that back every alert.", "The Alert / Risk Queue and Evidence & Insights rail (marker 3): Insight with Confidence 78% - Work Order WO-2024-0517-0892 - Historian Trend O2 Sensor Line 3."],
-  ["Ownership", "Know who owns it and how it's progressing.", "The Facility Overview and Next Actions owners (marker 4): facilities Columbus / Cartersville / Fort Collins / Newark / Los Angeles with OEE and status; action owners Jamie D., Morgan S., Taylor R."],
-  ["Action", "Take the right action, right from the dashboard.", "The Next Actions strip (marker 5): CRITICAL Address CO2 levels on Line 3 - Take Action (Due in 45m) - WARNING Review delayed raw materials - INFO Validate packaging data update."],
+  ["Decision priority", "Instantly see what needs your attention first.", "Operational KPIs (marker 1): 24,560 HL · OEE 87.3% · On-Time Delivery 92.1% · Inventory Health 78% · Critical Alerts 3."],
+  ["Risk exposure", "Understand where risk is concentrated and what's at stake.", "Inventory Risk Summary (marker 2): 152 At Risk SKUs — High 18 (12%) · Medium 46 (30%) · Low 88 (58%)."],
+  ["Evidence", "Explore the data and insights that back every alert.", "Alert / Risk Queue + Evidence rail (marker 3): Insight, Confidence 78% · WO-2024-0517-0892 · O2 Sensor Line 3 trend."],
+  ["Ownership", "Know who owns it and how it's progressing.", "Facility Overview + Next Actions owners (marker 4): Jamie D. · Morgan S. · Taylor R."],
+  ["Action", "Take the right action, right from the dashboard.", "Next Actions (marker 5): Address CO2 levels on Line 3 — Take Action, due in 45m."],
 ];
 export function BrewOpsControlTowerExplained() {
   const [s, setS] = useState(0);
   const cols = ["#f5a800", "#e07b1f", "#2563eb", "#18a957", "#7c4dff"];
   return <BoX n="33" title="Control Tower Explained" sub="Five ways the Control Tower turns data into confident, timely decisions — the numbered points sit in the left column and their markers 1–5 sit on the dashboard itself, as printed." dark={false} label="BrewOps control tower explained - interactive rebuild of Budweiser_33">
-    <div style={{ display: "grid", gridTemplateColumns: "196px 1fr", gap: 11, alignItems: "start" }}>
-      <div style={{ display: "grid", gap: 7 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "172px minmax(0,1fr)", gap: 10, alignItems: "start" }}>
+      <div style={{ display: "grid", gap: 6 }}>
         <p style={{ margin: 0, fontSize: 11, color: "#5b6470" }}><span style={{ color: "#c8102e", fontStyle: "italic", fontWeight: 800 }}>Budweiser</span> · <b style={{ letterSpacing: "0.1em", color: "#141a21" }}>BREWOPS INTELLIGENCE</b></p>
-        {EXPLAIN33.map(([t, lead, body], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: i === s ? "#fff" : "transparent", border: `1.5px solid ${i === s ? cols[i] : "#e0d9c8"}`, borderRadius: 10, padding: "8px 10px", cursor: "pointer", font: "inherit", color: "#141a21" }}>
+        {EXPLAIN33.map(([t, lead, body], i) => <button key={t} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: i === s ? "#fff" : "transparent", border: `1.5px solid ${i === s ? cols[i] : "#e0d9c8"}`, borderRadius: 10, padding: "7px 9px", cursor: "pointer", font: "inherit", color: "#141a21" }}>
           <span style={{ display: "flex", gap: 7, alignItems: "center" }}><span style={{ width: 19, height: 19, borderRadius: "50%", background: cols[i], color: "#fff", fontWeight: 800, fontSize: 11, display: "inline-flex", alignItems: "center", justifyContent: "center", flex: "none" }}>{i + 1}</span><b style={{ fontSize: 12.3 }}>{t}</b></span>
           <span style={{ display: "block", fontSize: 10.8, lineHeight: 1.5, marginTop: 4 }}>{lead}</span>
           <span style={{ display: "block", fontSize: 10, lineHeight: 1.5, color: "#5b6470", marginTop: 3 }}>{body}</span>
@@ -1442,22 +1488,22 @@ export function BrewOpsDemandRisk() {
         <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 12px" }}>
           <p className="tks-kicker" style={{ marginTop: 0 }}>Forecast vs Actual Demand — May 10 – May 17</p>
           <svg viewBox="0 0 300 104" style={{ width: "100%", display: "block" }} role="img" aria-label="Forecast versus actual demand chart with confidence range">
-            <polygon points="10,30 60,28 110,26 160,25 210,24 260,23 290,22 290,44 260,45 210,46 160,47 110,48 60,50 10,52" fill="#f5a800" opacity="0.16" />
-            <polyline points="10,41 60,39 110,37 160,36 210,35 260,34 290,33" fill="none" stroke="#8a93a0" strokeWidth="1.8" strokeDasharray="5 3" />
-            <polyline points="10,42 60,40 110,44 160,58 210,66 260,62 290,64" fill="none" stroke="#f5a800" strokeWidth="2.4" />
+            <polygon points="10,28 60,26 110,25 160,24 210,23 260,22 290,21 290,50 260,52 210,53 160,54 110,55 60,57 10,59" fill="#f5a800" opacity="0.16" />
+            <polyline points="10,40 45,37 80,39 115,36 150,38 185,35 220,37 255,34 290,33" fill="none" stroke="#8a93a0" strokeWidth="1.8" strokeDasharray="5 3" />
+            <polyline points="10,41 40,37 70,42 100,38 130,47 160,57 190,52 220,63 250,58 290,65" fill="none" stroke="#f5a800" strokeWidth="2.4" />
             <line x1="110" y1="10" x2="110" y2="88" stroke="#c8102e" strokeDasharray="2 3" />
             <text x="114" y="18" fontSize="7.5" fill="#c8102e">Investigation opened May 13, 8:42 AM</text>
             <text x="10" y="100" fontSize="7.5" fill="#8a93a0">— Actual Demand (amber) · - - Forecast · band Confidence Range (78%)</text>
           </svg>
           <p className="tks-kicker" style={{ margin: "8px 0 4px" }}>Affected SKUs (8) — showing 1 to 5 of 8 · pages 1–2</p>
           <table className="tks-table tks-table--micro"><thead><tr><th>SKU</th><th>Package</th><th>Actual (7D)</th><th>Forecast (7D)</th><th>Variance</th><th>%</th><th>Severity</th><th>Conf.</th></tr></thead>
-            <tbody>{SKUS34.map((r2, i) => <tr key={r2[0]} onClick={() => setSku(i)} style={{ cursor: "pointer", background: i === sku ? "#f3ead2" : undefined }}><td>{r2[0]}</td><td>{r2[1]}</td><td>{r2[2]}</td><td>{r2[3]}</td><td style={{ color: "#c8102e" }}>{r2[4]}</td><td>{r2[5]}</td><td style={{ color: r2[6] === "High" ? "#c8102e" : "#b97a0c", fontWeight: 700 }}>{r2[6]}</td><td>{r2[7]}</td></tr>)}</tbody></table>
+            <tbody>{SKUS34.map((r2, i) => <tr key={r2[0]} onClick={() => setSku(i)} style={{ cursor: "pointer", background: i === sku ? "#f3ead2" : undefined }}><td>{r2[0]}</td><td style={{ whiteSpace: "nowrap" }}>{r2[1]}</td><td>{r2[2]}</td><td>{r2[3]}</td><td style={{ color: "#c8102e" }}>{r2[4]}</td><td>{r2[5]}</td><td style={{ color: r2[6] === "High" ? "#c8102e" : "#b97a0c", fontWeight: 700 }}>{r2[6]}</td><td>{r2[7]}</td></tr>)}</tbody></table>
           <p aria-live="polite" style={{ margin: "5px 0 0", fontSize: 10.3 }}>Selected SKU {SKUS34[sku][0]} ({SKUS34[sku][1]}): variance {SKUS34[sku][4]} HL ({SKUS34[sku][5]}), confidence {SKUS34[sku][7]}. Product: Budweiser.</p>
         </div>
         <div style={{ display: "grid", gap: 9, alignContent: "start" }}>
           <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 12px" }}>
             <p className="tks-kicker" style={{ marginTop: 0 }}>Evidence &amp; Contributing Signals — View all (7)</p>
-            {SIGNALS34.map(([t, d, sev]) => <p key={t} style={{ margin: "6px 0", fontSize: 10.6, lineHeight: 1.5, borderLeft: `3.5px solid ${sevCol(sev)}`, paddingLeft: 8 }}><b>{t}</b> <span style={{ color: sevCol(sev), fontWeight: 800, fontSize: 9 }}>{sev}</span><br /><span style={{ color: "#5b6470" }}>{d}</span></p>)}
+            {SIGNALS34.map(([t, d, sev], si) => <p key={t} style={{ margin: "6px 0", fontSize: 10.6, lineHeight: 1.5, borderLeft: `3.5px solid ${sevCol(sev)}`, paddingLeft: 8 }}><b>{t}</b> <span style={{ color: sevCol(sev), fontWeight: 800, fontSize: 9 }}>{sev}</span><br /><span style={{ color: "#5b6470" }}>{d}</span><Spark points={["0,4 12,6 24,5 36,9 48,12 60,15 72,17", "0,6 12,5 24,8 36,7 48,11 60,10 72,13", "0,8 12,7 24,9 36,8 48,10 60,9 72,11", "0,14 12,12 24,13 36,10 48,9 60,7 72,6"][si]} color={sevCol(sev)} w={72} h={18} /></p>)}
           </div>
           <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 12px" }}>
             <p className="tks-kicker" style={{ marginTop: 0 }}>Recommended Next Steps</p>
@@ -1484,20 +1530,11 @@ export function BrewOpsLogisticsScenarios() {
   const [adopted, setAdopted] = useState(false);
   const scenCols = ["#5b6470", "#b97a0c", "#18a957"];
   return <BoX n="35" serif title="Logistics scenario comparison" sub="Control Tower — Logistics — Scenario Compare. Compare tradeoffs across logistics scenarios to make the best end-to-end decision. Scenarios last updated May 17, 2024 8:45 AM." dark={false} label="BrewOps logistics scenario comparison - interactive rebuild of Budweiser_35">
-    <div style={{ display: "grid", gridTemplateColumns: "178px repeat(3,1fr)", gap: 9, alignItems: "start" }}>
-      <div style={{ display: "grid", gap: 9 }}>
-        <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 11px" }}>
-          <p className="tks-kicker" style={{ marginTop: 0 }}>Scenario Inputs</p>
-          <p style={{ margin: 0, fontSize: 10.5, lineHeight: 1.65 }}>Time horizon: May 10 – May 17, 2024 (7D)<br />Facilities: All (12)<br />Products: All (24 SKUs)<br />Lanes: All (42)<br />Demand forecast: Latest forecast v3<br />Starting inventory: As of May 10, 2024<br /><b>Edit assumptions</b></p>
-        </div>
-        <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 11px" }}>
-          <p className="tks-kicker" style={{ marginTop: 0 }}>Scenario Assumptions</p>
-          <p style={{ margin: 0, fontSize: 10.5, lineHeight: 1.65 }}>Fuel price $3.85 / gal (+0.05)<br />Carrier capacity: Constrained<br />Demand volatility: Medium<br />Transit time variance: Normal<br />Inventory policy: Service-focused</p>
-        </div>
-        <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 11px" }}>
-          <p className="tks-kicker" style={{ marginTop: 0 }}>Comparison — Best / Range</p>
-          <p style={{ margin: 0, fontSize: 10.5, lineHeight: 1.65 }}>Service level <b>96.3%</b> / 89.1–96.3%<br />Landed cost <b>$2.21M</b> / $2.21–2.63M<br />Delayed deliveries <b>9</b> / 9–38<br />Inventory impact <b>+2.6%</b> / −0.8–+2.6%<br />Risk score <b>Low</b> / Low–High</p>
-        </div>
+    <HiFi active="Logistics">
+    <div style={{ display: "grid", gridTemplateColumns: "138px repeat(3,minmax(0,1fr)) 162px", gap: 8, alignItems: "start" }}>
+      <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 11px" }}>
+        <p className="tks-kicker" style={{ marginTop: 0 }}>Scenario Inputs</p>
+        <p style={{ margin: 0, fontSize: 10.5, lineHeight: 1.65 }}>Time horizon: May 10 – May 17, 2024 (7D)<br />Facilities: All (12)<br />Products: All (24 SKUs)<br />Lanes: All (42)<br />Demand forecast: Latest forecast v3<br />Starting inventory: As of May 10, 2024<br /><b>Edit assumptions</b></p>
       </div>
       {SCEN35.map(([name, tag, desc, metrics, drivers], i) => <button key={name} type="button" onClick={() => setS(i)} aria-pressed={i === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? scenCols[i] : "#e7e2d9"}`, borderTop: `5px solid ${scenCols[i]}`, borderRadius: 11, padding: "9px 11px", cursor: "pointer", font: "inherit", color: "#141a21" }}>
         <span style={{ display: "flex", justifyContent: "space-between", gap: 5, alignItems: "center" }}><b style={{ fontSize: 12.5 }}>{name}</b><span style={{ background: scenCols[i], color: "#fff", borderRadius: 5, padding: "1px 7px", fontSize: 9, fontWeight: 800 }}>{tag}</span></span>
@@ -1507,20 +1544,30 @@ export function BrewOpsLogisticsScenarios() {
           <span style={{ display: "block", fontSize: 9, fontWeight: 800, letterSpacing: "0.09em", color: "#8a93a0" }}>TOP DRIVERS</span>
           <ul style={{ margin: "3px 0 0", paddingLeft: 13, fontSize: 10.2, lineHeight: 1.55 }}>{drivers.map((x) => <li key={x}>{x}</li>)}</ul>
         </span>
-        <span style={{ display: "block", fontSize: 9.3, color: "#8a93a0", marginTop: 6 }}>Metric trends (7D) printed as sparklines per scenario.</span>
+        <span style={{ display: "block", marginTop: 7 }}>
+          <span style={{ display: "block", fontSize: 9, fontWeight: 800, letterSpacing: "0.09em", color: "#8a93a0", marginBottom: 3 }}>METRIC TRENDS (7D)</span>
+          <Spark points={["0,15 12,11 24,13 36,9 48,11 60,7 74,8", "0,9 12,12 24,10 36,13 48,11 60,14 74,13", "0,16 12,13 24,14 36,10 48,8 60,9 74,5"][i]} color={scenCols[i]} />
+        </span>
       </button>)}
-    </div>
-    <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: 9, marginTop: 9 }}>
-      <div style={{ border: "1.5px solid #18a957", background: "#f2faf4", borderRadius: 11, padding: "10px 13px" }}>
-        <p className="tks-kicker" style={{ marginTop: 0 }}>Recommendation</p>
-        <p style={{ margin: 0, fontSize: 11.3, lineHeight: 1.6 }}><b>Service-optimized scenario</b> — Best balance of service and risk with manageable cost increase. Meets 95%+ service target · Minimizes supply risk · Acceptable cost increase (+6%).</p>
-        <p style={{ margin: "8px 0 0", display: "flex", gap: 8, alignItems: "center" }}><button type="button" className="tks-btn" aria-pressed={adopted} onClick={() => setAdopted((v) => !v)} style={{ background: "#18a957", borderColor: "#18a957" }}>{adopted ? "✓ Recommended scenario adopted" : "Adopt recommended scenario"}</button><span style={{ fontSize: 10.5 }}>Export comparison</span></p>
+      <div style={{ display: "grid", gap: 8 }}>
+        <div style={{ border: "1.5px solid #18a957", background: "#f2faf4", borderRadius: 11, padding: "9px 11px" }}>
+          <p className="tks-kicker" style={{ marginTop: 0 }}>Recommendation</p>
+          <p style={{ margin: 0, fontSize: 10.8, lineHeight: 1.6 }}><b>Service-optimized scenario</b> — Best balance of service and risk with manageable cost increase. Meets 95%+ service target · Minimizes supply risk · Acceptable cost increase (+6%).</p>
+          <p style={{ margin: "7px 0 0" }}><button type="button" className="tks-btn" aria-pressed={adopted} onClick={() => setAdopted((v) => !v)} style={{ background: "#18a957", borderColor: "#18a957", fontSize: 11.5 }}>{adopted ? "✓ Adopted" : "Adopt recommended scenario"}</button></p>
+          <p style={{ margin: "5px 0 0", fontSize: 10.3 }}>Export comparison</p>
+        </div>
+        <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 11px" }}>
+          <p className="tks-kicker" style={{ marginTop: 0 }}>Scenario Assumptions</p>
+          <p style={{ margin: 0, fontSize: 10.4, lineHeight: 1.65 }}>Fuel price $3.85 / gal (+0.05)<br />Carrier capacity: Constrained<br />Demand volatility: Medium<br />Transit time variance: Normal<br />Inventory policy: Service-focused</p>
+        </div>
+        <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 11px" }}>
+          <p className="tks-kicker" style={{ marginTop: 0 }}>Comparison — Best / Range</p>
+          <p style={{ margin: 0, fontSize: 10.4, lineHeight: 1.65 }}>Service level <b>96.3%</b> / 89.1–96.3%<br />Landed cost <b>$2.21M</b> / $2.21–2.63M<br />Delayed deliveries <b>9</b> / 9–38<br />Inventory impact <b>+2.6%</b> / −0.8–+2.6%<br />Risk score <b>Low</b> / Low–High</p>
+        </div>
       </div>
-      <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "10px 13px", fontSize: 10.6, lineHeight: 1.6 }}>
-        <p className="tks-kicker" style={{ marginTop: 0 }}>{"What's included in each scenario"}</p>
-        <p style={{ margin: 0 }}>Transportation plan (Carrier assignments) · Inventory plan (Allocation &amp; positioning) · Capacity plan (Facility &amp; carrier capacity) · Service plan (SLAs &amp; priorities) · Risk evaluation (Disruption &amp; constraints).<br /><span style={{ color: "#5b6470" }}>About scenario modeling: Scenarios are generated using AI optimization and historical performance.</span></p>
-      </div>
     </div>
+    <p style={{ margin: "9px 0 0", fontSize: 10.6, lineHeight: 1.6, background: "#fff", border: "1px solid #e7e2d9", borderRadius: 10, padding: "7px 12px" }}><b>{"What's included in each scenario:"}</b> Transportation plan (Carrier assignments) · Inventory plan (Allocation &amp; positioning) · Capacity plan (Facility &amp; carrier capacity) · Service plan (SLAs &amp; priorities) · Risk evaluation (Disruption &amp; constraints). <span style={{ color: "#5b6470" }}>About scenario modeling: Scenarios are generated using AI optimization and historical performance.</span></p>
+    </HiFi>
   </BoX>;
 }
 
@@ -1539,7 +1586,8 @@ export function BrewOpsRecommendation() {
     <div style={{ display: "flex", gap: 3 }}>{blocks.map(([t, flex, col]) => <span key={t} style={{ flex, background: col, borderRadius: 6, padding: "5px 8px", fontSize: 9.4, lineHeight: 1.45, color: col === "#f5a800" ? "#231d05" : "#fff" }}>{t}</span>)}</div>
   </div>;
   return <Bo n="36" title="Recommendation: Optimize Packaging Line 3 Schedule" sub="Back to Approvals — REC-2024-0517-0892 — Packaging — Line 3 — Brew House — May 17, 2024, 9:15 AM — High Priority — Status: Pending Approval. Adjust sequence and changeover window to reduce CO2 usage and improve throughput." dark={false} label="BrewOps recommendation approval - interactive rebuild of Budweiser_36">
-    <div style={{ display: "grid", gridTemplateColumns: "1.25fr 1fr", gap: 10, alignItems: "start" }}>
+    <HiFi active="Approvals">
+    <div style={{ display: "grid", gridTemplateColumns: "1.05fr 1fr 0.95fr", gap: 9, alignItems: "start" }}>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Recommendation Summary</p>
         <p style={{ margin: 0 }}>Reschedule Packaging Line 3 to run Brew House — Tank 12 first, followed by Fermentation — Tank 12.</p>
         <p style={{ margin: "6px 0 0", display: "flex", gap: 5, flexWrap: "wrap" }}>{["Reduces CO2 usage", "Improves throughput", "Minimal changeover impact", "No quality impact"].map((t) => <span key={t} className="tks-tag">{t}</span>)}</p>
@@ -1550,17 +1598,14 @@ export function BrewOpsRecommendation() {
         <ul style={{ margin: 0 }}><li>Demand forecast remains within ±5% for next 24 hours</li><li>No unplanned maintenance on Line 3</li><li>Raw material availability is as planned</li><li>Changeover teams available at scheduled times</li></ul>
         <p style={{ margin: "4px 0 0", fontSize: 11 }}>Assumptions are conditions not guaranteed. Monitor and adjust as needed.</p></div>
       <div>
-        <Stats items={[["CO2 Usage", "-2,360 kg", "down 7.8%"], ["Total Production (HL)", "+1,250 HL", "up 5.4%"], ["Changeover Time", "-15 min", "down 20%"], ["OEE", "+2.3 pts", "up 2.6%"]]} />
-        <div className="tks-card" style={{ marginTop: 10 }}><p className="tks-kicker" style={{ marginTop: 0 }}>Confidence Level — 78% High</p><Bar pct={78} label="Recommendation confidence 78 percent" />
+        <p className="tks-kicker" style={{ marginTop: 0 }}>Expected Impact</p>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
+          {[["CO2 Usage", "-2,360 kg", "down 7.8%", "#18a957", "0,5 12,8 24,7 36,11 48,13 60,16 74,18"], ["Total Production (HL)", "+1,250 HL", "up 5.4%", "#18a957", "0,17 12,14 24,15 36,11 48,9 60,7 74,4"], ["Changeover Time", "-15 min", "down 20%", "#18a957", "0,4 12,7 24,6 36,10 48,12 60,15 74,17"], ["OEE", "+2.3 pts", "up 2.6%", "#18a957", "0,16 12,13 24,14 36,10 48,11 60,7 74,5"]].map(([k, v, d, c, pts]) => <div key={k as string} className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>{k}</p><b style={{ fontSize: 15, whiteSpace: "nowrap" }}>{v}</b><p style={{ margin: "2px 0 3px", fontSize: 10.3, color: "#137a3f" }}>{d}</p><Spark points={pts as string} color={c as string} /></div>)}
+        </div>
+        <div className="tks-card" style={{ marginTop: 9 }}><p className="tks-kicker" style={{ marginTop: 0 }}>Confidence Level — 78% High</p><Bar pct={78} label="Recommendation confidence 78 percent" />
           <p style={{ margin: "4px 0 0", fontSize: 11 }}>Based on historical performance and similar runs (as printed).</p>
           <p className="tks-kicker" style={{ margin: "8px 0 2px" }}>Risks &amp; Considerations</p>
           <p style={{ margin: 0, lineHeight: 1.6 }}><b style={{ color: "#c8102e" }}>High</b> — Changeover delay could impact downstream schedule<br /><b style={{ color: "#b97a0c" }}>Medium</b> — CO2 savings dependent on equipment efficiency<br /><b style={{ color: "#5b6470" }}>Low</b> — Minor quality variation possible during first hour<br />Mitigations are in place. Monitoring recommended during execution.</p></div>
-      </div>
-    </div>
-    <div style={{ display: "grid", gridTemplateColumns: "1.25fr 1fr", gap: 10, marginTop: 10, alignItems: "start" }}>
-      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Activity Log — View full audit trail</p>
-        <table className="tks-table tks-table--micro"><thead><tr><th>Time</th><th>Event</th><th>Who</th><th>Role</th><th>Note</th></tr></thead>
-          <tbody>{LOG36.map(([t, ev, who, role, note], i) => <tr key={t} onClick={() => setLogRow(i)} style={{ cursor: "pointer", background: i === logRow ? "#f3ead2" : undefined }}><td>{t}</td><td><b>{ev}</b></td><td>{who}</td><td>{role}</td><td>{note}</td></tr>)}</tbody></table>
       </div>
       <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Ownership &amp; Approval</p>
         <p style={{ margin: "4px 0" }}>Recommendation Owner: <b>Jamie D.</b>, Process Engineer, Brew House<br />Business Owner: <b>Morgan S.</b>, Operations Manager, Brew House</p>
@@ -1571,6 +1616,11 @@ export function BrewOpsRecommendation() {
           <button type="button" className="tks-btn tks-btn--ghost" aria-pressed={decision === "reject"} onClick={() => setDecision("reject")} style={{ color: "#c8102e", borderColor: "#c8102e" }}>Reject</button></p>
         <p aria-live="polite" style={{ margin: "6px 0 0" }}>{decision === "approve" ? "Decision staged: Approve — Submit Decision (with Notify stakeholders on decision checked, as printed) records it in the audit trail." : decision === "changes" ? "Decision staged: Request Changes — a comment is required for changes or rejection, as printed." : decision === "reject" ? "Decision staged: Reject — a comment is required for changes or rejection, as printed." : "No decision staged yet — the slide's status is Pending Approval."}</p></div>
     </div>
+    <div className="tks-card" style={{ marginTop: 9 }}><p className="tks-kicker" style={{ marginTop: 0 }}>Activity Log — View full audit trail</p>
+      <table className="tks-table tks-table--micro"><thead><tr><th>Time</th><th>Event</th><th>Who</th><th>Role</th><th>Note</th></tr></thead>
+        <tbody>{LOG36.map(([t, ev, who, role, note], i) => <tr key={t} onClick={() => setLogRow(i)} style={{ cursor: "pointer", background: i === logRow ? "#f3ead2" : undefined }}><td style={{ whiteSpace: "nowrap" }}>{t}</td><td><b>{ev}</b></td><td style={{ whiteSpace: "nowrap" }}>{who}</td><td>{role}</td><td>{note}</td></tr>)}</tbody></table>
+    </div>
+    </HiFi>
   </Bo>;
 }
 
@@ -1591,6 +1641,7 @@ export function BrewOpsMaintenanceFleet() {
   const [row, setRow] = useState(9);
   const pill37 = (h: number) => h >= 90 ? "#18a957" : h >= 70 ? "#5da85f" : h >= 50 ? "#f5a800" : h >= 30 ? "#e07b1f" : "#e0483e";
   return <Bo n="37" title="Predictive Maintenance - Fleet View" sub="Rank and monitor equipment health across all breweries, sites, and production lines. May 10 - May 17, 2024 (7D) - All Facilities. User as printed: Alex R., Maintenance Lead. Footer as printed: v1.0 - May 2025." dark={false} label="BrewOps predictive maintenance fleet view - interactive rebuild of Budweiser_37">
+    <HiFi active="Production">
     <Stats items={[["Overall Fleet Health", "78%", "up 5% vs prior 7D"], ["Healthy Assets", "142", "up 12 vs prior 7D"], ["At Risk Assets", "38", "up 4 vs prior 7D"], ["Critical Assets", "7", "down 2 vs prior 7D"], ["MTBF (Hours)", "412", "up 18 vs prior 7D"], ["Open Work Orders", "52", "up 6 vs prior 7D"]]} />
     <div style={{ display: "grid", gridTemplateColumns: "1fr 218px", gap: 10, marginTop: 10, alignItems: "start" }}>
       <div>
@@ -1601,21 +1652,28 @@ export function BrewOpsMaintenanceFleet() {
             <td><svg viewBox="0 0 44 14" style={{ width: 44, display: "block" }} aria-hidden="true"><polyline points={r2[6].includes("down") ? "1,3 12,5 22,6 32,9 43,12" : r2[6].includes("up") ? "1,11 12,9 22,8 32,5 43,2" : "1,7 12,7 22,6 32,7 43,7"} fill="none" stroke={pill37(h)} strokeWidth="1.8" /></svg><span style={{ fontSize: 8.8, color: "#8a93a0" }}>{r2[6]}</span></td>
             <td>{r2[4]}</td><td>{r2[5]}</td><td style={{ color: r2[7] === "None" ? "#8a93a0" : "#c8102e", fontWeight: r2[7] === "None" ? 400 : 700 }}>{r2[7]}</td></tr>; })}</tbody></table>
         <p aria-live="polite" style={{ margin: "6px 0 0", fontSize: 10.8 }}>Selected: <b>{FLEET37[row][0]}</b> — health {FLEET37[row][3]} — Showing 1 to 10 of 126 assets · 10 per page · pages 1–5 … 13 as printed.</p>
-        <div className="tks-card" style={{ marginTop: 8 }}><p className="tks-kicker" style={{ marginTop: 0 }}>Health Distribution</p>
-          {[["Healthy (90–100%)", 22, "#18a957"], ["Good (70–89%)", 36, "#5da85f"], ["Fair (50–69%)", 28, "#f5a800"], ["Poor (30–49%)", 10, "#e07b1f"], ["Critical (0–29%)", 4, "#e0483e"]].map(([l, v, c]) => <p key={l as string} style={{ margin: "3px 0", display: "flex", gap: 7, alignItems: "center", fontSize: 10.5 }}><span style={{ width: 128 }}>{l}</span><span style={{ flex: 1, height: 8, background: "#eee9dc", borderRadius: 4 }}><span style={{ display: "block", height: 8, width: `${v}%`, background: c as string, borderRadius: 4 }} /></span><b>{v}%</b></p>)}
-        </div>
       </div>
       <div style={{ display: "grid", gap: 9 }}>
-        <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Maintenance Risk Summary — 45 At Risk Assets</p>
-          <p style={{ margin: "3px 0", fontSize: 10.8, lineHeight: 1.6 }}><b style={{ color: "#c8102e" }}>Critical 7 (16%)</b> · <b style={{ color: "#b97a0c" }}>High 15 (33%)</b> · <b>Medium 23 (51%)</b></p>
+        <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Maintenance Risk Summary</p>
+          <p style={{ margin: "3px 0", display: "flex", gap: 10, alignItems: "center" }}>
+            <span style={{ display: "inline-flex", width: 62, height: 62, borderRadius: "50%", flex: "none", background: "conic-gradient(#e0483e 0deg 58deg, #f59e0b 58deg 177deg, #f7c948 177deg 360deg)", alignItems: "center", justifyContent: "center" }}><span style={{ width: 42, height: 42, borderRadius: "50%", background: "#fff", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}><b style={{ fontSize: 14, lineHeight: 1 }}>45</b><span style={{ fontSize: 7, color: "#6b7280" }}>At Risk Assets</span></span></span>
+            <span style={{ fontSize: 10.8, lineHeight: 1.6 }}><b style={{ color: "#c8102e" }}>Critical 7 (16%)</b><br /><b style={{ color: "#b97a0c" }}>High 15 (33%)</b><br /><b>Medium 23 (51%)</b></span>
+          </p>
           <p style={{ margin: "3px 0 0", fontSize: 10.8, lineHeight: 1.6 }}>Top Risk Drivers: Vibration anomalies · Rising temperature · Pressure variance · Runtime exceeded.</p></div>
         <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Open Maintenance Risks — View all (7)</p>
           <p style={{ margin: "3px 0", fontSize: 10.8, lineHeight: 1.6 }}>🔴 <b>Compressor 1 (CP-01)</b> vibration above threshold — Fort Collins, Utilities — CRITICAL — 10 min ago<br />🔴 <b>Boiler 2 (BLR-02)</b> tube temperature rising — Cartersville, Utilities — CRITICAL — 25 min ago<br />🟠 <b>Pump P-12</b> pressure variance detected — Los Angeles, Line 3 — WARNING — 45 min ago<br />🔵 <b>CIP Skid 2</b> maintenance window approaching — Newark, Utilities — INFO — 1 hr ago</p></div>
-        <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Upcoming Maintenance &amp; Recommended Actions</p>
-          <p style={{ margin: "3px 0", fontSize: 10.8, lineHeight: 1.6 }}>CIP Skid 2 — Preventive Maintenance — May 18, 8:00 AM — Newark<br />Miller 3 — Vibration Analysis — May 18, 10:00 AM — Cartersville<br />Brite Tank 8 — Inspection — May 19, 9:00 AM — Columbus</p>
-          <p style={{ margin: "5px 0 0", fontSize: 10.8, lineHeight: 1.6 }}><b>Actions:</b> Inspect Compressor 1 bearings (High, Open) · Check Boiler 2 heat exchanger tubes (High, Open) · Replace Pump P-12 seals (Medium, Open)</p></div>
       </div>
     </div>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1.2fr", gap: 9, marginTop: 9, alignItems: "start" }}>
+      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Upcoming Maintenance</p>
+        <p style={{ margin: "3px 0", fontSize: 10.8, lineHeight: 1.6 }}>CIP Skid 2 — Preventive Maintenance — May 18, 8:00 AM — Newark<br />Miller 3 — Vibration Analysis — May 18, 10:00 AM — Cartersville<br />Brite Tank 8 — Inspection — May 19, 9:00 AM — Columbus</p></div>
+      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Recommended Actions</p>
+        <p style={{ margin: "3px 0", fontSize: 10.8, lineHeight: 1.6 }}>Inspect Compressor 1 bearings (High, Open) · Check Boiler 2 heat exchanger tubes (High, Open) · Replace Pump P-12 seals (Medium, Open)</p></div>
+      <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Health Distribution</p>
+        {[["Healthy (90–100%)", 22, "#18a957"], ["Good (70–89%)", 36, "#5da85f"], ["Fair (50–69%)", 28, "#f5a800"], ["Poor (30–49%)", 10, "#e07b1f"], ["Critical (0–29%)", 4, "#e0483e"]].map(([l, v, c]) => <p key={l as string} style={{ margin: "3px 0", display: "flex", gap: 7, alignItems: "center", fontSize: 10.5 }}><span style={{ width: 128 }}>{l}</span><span style={{ flex: 1, height: 8, background: "#eee9dc", borderRadius: 4 }}><span style={{ display: "block", height: 8, width: `${v}%`, background: c as string, borderRadius: 4 }} /></span><b>{v}%</b></p>)}
+      </div>
+    </div>
+    </HiFi>
   </Bo>;
 }
 
@@ -1634,12 +1692,12 @@ export function BrewOpsFiller2() {
   const ALTS = [["Schedule maintenance within 7 days", "Next Best Action — Replace drive-end bearing on Filler 2 — Est. downtime: 2.5 hours — Create Work Order"], ["Monitor closely", "Increase monitoring for 7 days — Medium risk"], ["Plan during next PM window", "Schedule during next planned maintenance — Higher risk"], ["No action", "Risk of unplanned failure increases — Not recommended"]];
   const stCol = (s: string) => s === "High" ? "#c8102e" : s === "Medium" ? "#b97a0c" : "#18a957";
   return <BoX n="38" title="Filler 2 — Online" sub="Control Tower — Packaging Line 2 — Filler 2. Brew House Columbus — Asset ID: FLR-02. Last data received May 17, 2024 8:42 AM — Live. User as printed: Alex R., Reliability Engineer." dark={false} label="BrewOps Filler 2 asset detail - interactive rebuild of Budweiser_38">
-    <HiFi active="Investigations">
+    <HiFi active="Production">
       <div style={{ display: "flex", gap: 14, fontSize: 11, borderBottom: "1.5px solid #e7e2d9", paddingBottom: 6, marginBottom: 9 }}>
         {["Overview", "History", "Alerts (3)", "Work Orders (2)", "Documents"].map((t, i) => <span key={t} style={{ fontWeight: i === 0 ? 800 : 500, color: i === 0 ? "#c8102e" : "#5b6470", borderBottom: i === 0 ? "2.5px solid #c8102e" : "none", paddingBottom: 5 }}>{t}</span>)}
       </div>
       <Stats items={[["Health Score", "82% Healthy", "up 7% vs prior 7D"], ["RUL Estimate", "18 days", "Moderate risk — down 6 days"], ["Predicted Failure", "Jun 4, 2024", "± 3 days"], ["Utilization (7D)", "87.3%", "up 3.1% vs prior 7D"], ["OEE Impact (Est.)", "4.2%", "down 0.6% vs prior 7D"]]} />
-      <div style={{ display: "grid", gridTemplateColumns: "1.35fr 1fr 1fr", gap: 9, marginTop: 9, alignItems: "start" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1.3fr 0.95fr 1.05fr", gap: 9, marginTop: 9, alignItems: "start" }}>
         <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 12px" }}>
           <p className="tks-kicker" style={{ marginTop: 0 }}>Sensor Trends — 7D</p>
           <svg viewBox="0 0 300 118" style={{ width: "100%", display: "block" }} role="img" aria-label="Sensor trends chart with anomaly window May 15 to 16">
@@ -1657,7 +1715,7 @@ export function BrewOpsFiller2() {
           </div>
           <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Sensor Summary</p>
           <table className="tks-table tks-table--micro"><thead><tr><th>Sensor</th><th>Measure</th><th>Latest</th><th>Baseline</th><th>Deviation</th><th>Status</th></tr></thead>
-            <tbody>{SENSORS38.map((r2, i) => <tr key={r2[0]} onClick={() => setSensor(i)} style={{ cursor: "pointer", background: i === sensor ? "#f3ead2" : undefined }}><td>{r2[0]}</td><td>{r2[1]}</td><td><b>{r2[2]}</b></td><td>{r2[3]}</td><td>{r2[4]}</td><td style={{ color: stCol(r2[5]), fontWeight: 700 }}>{r2[5]}</td></tr>)}</tbody></table>
+            <tbody>{SENSORS38.map((r2, i) => <tr key={r2[0]} onClick={() => setSensor(i)} style={{ cursor: "pointer", background: i === sensor ? "#f3ead2" : undefined }}><td style={{ whiteSpace: "nowrap" }}><b>{r2[0]}</b></td><td style={{ whiteSpace: "nowrap" }}>{r2[1]}</td><td style={{ whiteSpace: "nowrap" }}><b>{r2[2]}</b></td><td style={{ whiteSpace: "nowrap" }}>{r2[3]}</td><td>{r2[4]}</td><td style={{ color: stCol(r2[5]), fontWeight: 700 }}>{r2[5]}</td></tr>)}</tbody></table>
           <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>Asset Health Breakdown</p>
           {HEALTH38.map(([n, v]) => <p key={n} style={{ margin: "3px 0", display: "flex", gap: 7, alignItems: "center", fontSize: 10.6 }}><span style={{ width: 82 }}>{n}</span><span style={{ flex: 1 }}><Bar pct={v} label={`${n} health ${v} percent`} /></span><b>{v}%</b></p>)}
         </div>
@@ -1708,22 +1766,18 @@ export function BrewOpsQualityFlow() {
   const WF = [["1. Detect", "AI inspection", "1,248 items"], ["2. Review", "Human verification", "86 items"], ["3. Resolved", "Approved / Escalated", "76 items"], ["4. Corrective Action", "CAPA / Prevent Recurrence", "5 actions"]];
   const stPill = (s: string) => s === "Needs Review" ? "#b97a0c" : s === "Escalated" ? "#c8102e" : "#2563eb";
   return <Bo n="39" title="Quality Inspection Flow" sub="Optional Quality Module - End-to-end defect detection, human verification, traceability, and corrective action. May 10 - May 17, 2024 (7D) - Brewery Columbus. User as printed: Alex R., Quality Manager." dark={false} label="BrewOps quality inspection flow - interactive rebuild of Budweiser_39">
-    <div style={{ display: "grid", gridTemplateColumns: "132px 1fr 252px", gap: 10, alignItems: "start" }}>
-      <div style={{ display: "grid", gap: 6 }}>
-        {WF.map(([t, d, n], i) => <button key={t} type="button" onClick={() => setWf(i)} aria-pressed={i === wf} style={{ textAlign: "left", background: i === wf ? "#102A43" : "#fff", color: i === wf ? "#fff" : "#141a21", border: `1.5px solid ${i === wf ? "#102A43" : "#ddd6c9"}`, borderRadius: 10, padding: "8px 10px", cursor: "pointer", font: "inherit" }}>
-          <b style={{ fontSize: 11.5 }}>{t}</b><br /><span style={{ fontSize: 9.8, opacity: 0.85 }}>{d}</span><br /><b style={{ fontSize: 13 }}>{n}</b>{i < 3 ? <span aria-hidden="true" style={{ display: "block", textAlign: "center", opacity: 0.6 }}>↓</span> : null}
-        </button>)}
-      </div>
-      <div>
+    <HiFi active="Quality">
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 6 }}>
+      {WF.map(([t, d, n], i) => <button key={t} type="button" onClick={() => setWf(i)} aria-pressed={i === wf} style={{ textAlign: "left", background: i === wf ? "#102A43" : "#fff", color: i === wf ? "#fff" : "#141a21", border: `1.5px solid ${i === wf ? "#102A43" : "#ddd6c9"}`, borderRadius: 10, padding: "7px 10px", cursor: "pointer", font: "inherit", position: "relative" }}>
+        <b style={{ fontSize: 11.5 }}>{t}</b>{i < 3 ? <span aria-hidden="true" style={{ position: "absolute", right: -11, top: "50%", transform: "translateY(-50%)", zIndex: 1, color: "#8a93a0", fontSize: 13 }}>→</span> : null}<br /><span style={{ fontSize: 9.8, opacity: 0.85 }}>{d}</span> · <b style={{ fontSize: 12.5 }}>{n}</b>
+      </button>)}
+    </div>
+    <div style={{ display: "grid", gridTemplateColumns: "1.45fr 1fr 0.95fr", gap: 9, marginTop: 9, alignItems: "start" }}>
+      <div style={{ minWidth: 0 }}>
         <p className="tks-kicker" style={{ marginTop: 0 }}>Inspection Queue (86) · Reviewed 76 · Escalated 10 · All Items 1,248</p>
         <table className="tks-table tks-table--micro"><thead><tr><th>Item ID</th><th>Line</th><th>Defect Type</th><th>Detected</th><th>AI Conf.</th><th>Status</th><th>Priority</th></tr></thead>
-          <tbody>{QUEUE39.map((r2, i) => <tr key={r2[0]} onClick={() => { setItem(i); setVerdict(null); }} style={{ cursor: "pointer", background: i === item ? "#f3ead2" : undefined }}><td>{r2[0].replace("ITM-2024-", "")}</td><td>{r2[1]}</td><td>{r2[2]}</td><td>{r2[3]}</td><td><b>{r2[4]}</b></td><td><span style={{ background: stPill(r2[5]), color: "#fff", borderRadius: 999, padding: "0 7px", fontSize: 9.3, fontWeight: 700 }}>{r2[5]}</span></td><td style={{ color: r2[6] === "High" ? "#c8102e" : "#b97a0c", fontWeight: 700 }}>{r2[6]}</td></tr>)}</tbody></table>
+          <tbody>{QUEUE39.map((r2, i) => <tr key={r2[0]} onClick={() => { setItem(i); setVerdict(null); }} style={{ cursor: "pointer", background: i === item ? "#f3ead2" : undefined }}><td style={{ whiteSpace: "nowrap" }}>{r2[0]}</td><td>{r2[1]}</td><td>{r2[2]}</td><td style={{ whiteSpace: "nowrap" }}>{r2[3]}</td><td><b>{r2[4]}</b></td><td><span style={{ background: stPill(r2[5]), color: "#fff", borderRadius: 999, padding: "0 7px", fontSize: 9.3, fontWeight: 700 }}>{r2[5]}</span></td><td style={{ color: r2[6] === "High" ? "#c8102e" : "#b97a0c", fontWeight: 700 }}>{r2[6]}</td></tr>)}</tbody></table>
         <p style={{ margin: "4px 0 0", fontSize: 10.3 }}>Showing 1 to 8 of 86 items · 10 per page · pages 1–5 … 9 as printed.</p>
-        <div className="tks-card" style={{ marginTop: 8 }}><p className="tks-kicker" style={{ marginTop: 0 }}>Traceability (item 0001 panel as printed)</p>
-          <p style={{ margin: "3px 0", fontSize: 10.8, lineHeight: 1.6 }}>Batch ID: BRW-0517-L3-0842 · Production Time: May 17, 2024 08:00–09:00 AM · Line / Equipment: Line 3 — Filler · Material Lot: CAP-ALU-0517-A · Downstream Impact: 2,340 units. View full traceability.</p>
-          <p className="tks-kicker" style={{ margin: "8px 0 2px" }}>Recent Corrective Actions</p>
-          <p style={{ margin: "3px 0", fontSize: 10.8, lineHeight: 1.6 }}>Capper Torque Adjustment — Line 3 — May 16 — <b>Open</b> — Due in 2d · Seal Temperature Check — Line 2 — May 15 — <b>In Progress</b> — Due in 1d · Vision Sensor Cleaning — Line 1 — May 14 — <b>Resolved</b> — Completed</p>
-        </div>
       </div>
       <div className="tks-card" aria-live="polite" style={{ borderColor: "#c8102e" }}><p className="tks-kicker" style={{ marginTop: 0 }}>Defect Overview — {cur[0]} — {cur[5]} — 1 of 86</p>
         <p style={{ margin: "4px 0", fontSize: 11, lineHeight: 1.6 }}>Defect Type: <b>{cur[2]}</b><br />Line / Area: {cur[1]} · Detected: {cur[3]}<br />AI Confidence: <b>{cur[4]}</b> · Priority: {cur[6]}<br />Rule / Model: CapSeal_v2.3 (as printed for item 0001)</p>
@@ -1738,10 +1792,19 @@ export function BrewOpsQualityFlow() {
           <button type="button" className="tks-btn tks-btn--ghost" aria-pressed={verdict === "escalate"} onClick={() => setVerdict("escalate")}>Escalate</button>
           <button type="button" className="tks-btn tks-btn--ghost" aria-pressed={verdict === "reject"} onClick={() => setVerdict("reject")}>Reject</button></p>
         <p aria-live="polite" style={{ margin: "5px 0 0", fontSize: 10.3 }}>{verdict ? `Verification staged: ${verdict} for ${cur[0]} (explorer state; printed status: ${cur[5]}).` : ""}</p>
-        <p className="tks-kicker" style={{ margin: "9px 0 2px" }}>Corrective Action</p>
-        <p style={{ margin: "3px 0", fontSize: 10.6, lineHeight: 1.6 }}>Action Type: Select action type · Description: Describe the corrective action… · Assign to: Select owner · Target Date: Select date · <b>Create Action</b></p>
+      </div>
+      <div style={{ display: "grid", gap: 9 }}>
+        <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Traceability (item 0001 panel as printed)</p>
+          <p style={{ margin: "3px 0", fontSize: 10.8, lineHeight: 1.6 }}>Batch ID: BRW-0517-L3-0842 · Production Time: May 17, 2024 08:00–09:00 AM · Line / Equipment: Line 3 — Filler · Material Lot: CAP-ALU-0517-A · Downstream Impact: 2,340 units. View full traceability.</p>
+        </div>
+        <div className="tks-card"><p className="tks-kicker" style={{ marginTop: 0 }}>Corrective Action</p>
+          <p style={{ margin: "3px 0", fontSize: 10.6, lineHeight: 1.6 }}>Action Type: Select action type · Description: Describe the corrective action… · Assign to: Select owner · Target Date: Select date · <b>Create Action</b></p>
+          <p className="tks-kicker" style={{ margin: "9px 0 2px" }}>Recent Corrective Actions</p>
+          <p style={{ margin: "3px 0", fontSize: 10.8, lineHeight: 1.6 }}>Capper Torque Adjustment — Line 3 — May 16 — <b>Open</b> — Due in 2d · Seal Temperature Check — Line 2 — May 15 — <b>In Progress</b> — Due in 1d · Vision Sensor Cleaning — Line 1 — May 14 — <b>Resolved</b> — Completed</p>
+        </div>
       </div>
     </div>
+    </HiFi>
   </Bo>;
 }
 
@@ -1757,9 +1820,9 @@ export function BrewOpsCopilotPanel() {
   const [q, setQ] = useState(4);
   const [open, setOpen] = useState(true);
   return <BoX n="40" title="Control Tower — with BrewOps Copilot panel" sub="The file-31 Control Tower (Brewery Columbus selected, May 10 – May 17, 2024) with the Copilot panel open at right." dark={false} label="BrewOps control tower with copilot - interactive rebuild of Budweiser_40">
-    <div style={{ display: "grid", gridTemplateColumns: open ? "150px 1fr 250px" : "150px 1fr", gap: 10, alignItems: "start" }}>
+    <div style={{ display: "grid", gridTemplateColumns: open ? "118px minmax(0,1fr) 232px" : "118px minmax(0,1fr)", gap: 9, alignItems: "start" }}>
       <Side31 active="Control Tower" />
-      <CTDash compact />
+      <div style={{ minWidth: 0 }}><CTDash compact /></div>
       {open && <div style={{ background: "#fff", border: "1.5px solid #7c4dff", borderRadius: 13, padding: "10px 12px", color: "#141a21", fontSize: 11 }}>
         <p style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: 0 }}><b>✦ BrewOps Copilot</b><span style={{ display: "flex", gap: 5, alignItems: "center" }}><span style={{ background: "#7c4dff", color: "#fff", borderRadius: 4, padding: "0 6px", fontSize: 8.8, fontWeight: 800 }}>BETA</span><button type="button" className="tks-chip" aria-expanded={open} onClick={() => setOpen(false)}>✕</button></span></p>
         <p style={{ margin: "8px 0", lineHeight: 1.6 }}>{"Hi Alex! I'm your BrewOps Copilot. I can help you explore your operations, investigate issues, and uncover insights. What would you like to know?"}</p>
@@ -1787,7 +1850,8 @@ export function BrewOpsCopilotStates() {
   const [s, setS] = useState(0);
   const [approved, setApproved] = useState(false);
   const bannerCols = ["#b97a0c", "#e07b1f", "#18a957"];
-  return <Bo n="41" title="BrewOps Copilot State Gallery" sub={"The printed title spells it \"State Gailery\" — transcribed as printed. The Copilot responds with appropriate transparency and guardrails based on data confidence and decision context. Legend: Observation (What was detected) · Inference (What it likely means) · Recommendation (What we suggest) · Action (What was taken)."} dark={false} label="BrewOps copilot state gallery - interactive rebuild of Budweiser_41">
+  return <Bo n="41" title="BrewOps Copilot State Gailery" sub={"The Copilot responds with appropriate transparency and guardrails based on data confidence and decision context. Legend: Observation (What was detected) · Inference (What it likely means) · Recommendation (What we suggest) · Action (What was taken)."} dark={false} label="BrewOps copilot state gallery - interactive rebuild of Budweiser_41">
+    <HiFi active="Insights">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 9, alignItems: "start" }}>
       {STATES41.map((cur, i) => <button key={cur.name} type="button" onClick={() => { setS(i); setApproved(false); }} aria-pressed={i === s} style={{ textAlign: "left", background: "#fff", border: `1.5px solid ${i === s ? "#7c4dff" : "#ddd6c9"}`, borderRadius: 12, padding: 0, overflow: "hidden", cursor: "pointer", font: "inherit", color: "#141a21" }}>
         <span style={{ display: "block", background: "#f6f2ff", borderBottom: "1px solid #e4dcff", padding: "7px 11px" }}>
@@ -1806,6 +1870,7 @@ export function BrewOpsCopilotStates() {
         </span>
       </button>)}
     </div>
+    </HiFi>
   </Bo>;
 }
 
@@ -1824,13 +1889,17 @@ export function BrewOpsScorecard() {
     <div style={{ display: "grid", gridTemplateColumns: "168px 1fr 190px", gap: 10, alignItems: "start" }}>
       <div style={{ display: "grid", gap: 9 }}>
         <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "10px 12px" }}>
-          <p className="tks-kicker" style={{ marginTop: 0 }}>Outcome Summary</p>
-          <b style={{ fontSize: 26, color: "#137a3f" }}>6 / 6</b>
-          <p style={{ margin: "3px 0 0", fontSize: 10.6, lineHeight: 1.55 }}>Verified outcomes — all outcome measures have verified evidence.</p>
+          <p className="tks-kicker" style={{ marginTop: 0 }}>Budweiser Case Study</p>
+          <b style={{ fontSize: 14.5, lineHeight: 1.35 }}>BrewOps Intelligence Demonstrator</b>
+          <p style={{ margin: "4px 0 0", fontSize: 10.6, lineHeight: 1.6 }}>A design-led demonstrator summarizing verified outcomes across deployability, expert review, accessibility, testing, usability, and scenario coverage.</p>
         </div>
         <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "10px 12px", fontSize: 10.6, lineHeight: 1.6 }}>
           <p className="tks-kicker" style={{ marginTop: 0 }}>Legend</p>
           <p style={{ margin: 0 }}><span style={{ color: "#137a3f" }}>●</span> <b>Verified evidence</b> — backed by documented proof or system data<br /><span style={{ color: "#b97a0c" }}>●</span> <b>Projected value</b> — estimated based on early signals and industry benchmarks</p>
+        </div>
+        <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "10px 12px", fontSize: 10.8, lineHeight: 1.6 }}>
+          <p className="tks-kicker" style={{ marginTop: 0 }}>About This Scorecard</p>
+          <p style={{ margin: 0 }}>Measures reflect the current state of the BrewOps Intelligence demonstrator as of May 17, 2024. Future value will be tracked post-launch.</p>
         </div>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9 }}>
@@ -1842,14 +1911,18 @@ export function BrewOpsScorecard() {
         </button>)}
       </div>
       <div style={{ display: "grid", gap: 9 }}>
+        <div style={{ background: "#f2faf4", border: "1px solid #bfe3cc", borderRadius: 11, padding: "10px 12px" }}>
+          <p className="tks-kicker" style={{ marginTop: 0 }}>Outcome Summary — Verified</p>
+          <b style={{ fontSize: 26, color: "#137a3f" }}>6 / 6</b>
+          <p style={{ margin: "3px 0 0", fontSize: 10.6, lineHeight: 1.55 }}>Verified outcomes — all outcome measures have verified evidence.</p>
+        </div>
         <div style={{ background: "#fff8ec", border: "1px solid #ecd9ac", borderRadius: 11, padding: "10px 12px" }}>
           <p className="tks-kicker" style={{ marginTop: 0 }}>Projected Impact — Tracking Post-Launch</p>
           <p style={{ margin: 0, fontSize: 10.8, lineHeight: 1.6 }}>Business impact and adoption metrics will be reported after pilot deployment.</p>
-          <p style={{ margin: "6px 0 0", fontSize: 10.8 }}><b>Next Update: June 14, 2024</b> — Post-pilot outcomes and business impact will be published.</p>
         </div>
-        <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "10px 12px", fontSize: 10.8, lineHeight: 1.6 }}>
-          <p className="tks-kicker" style={{ marginTop: 0 }}>About This Scorecard</p>
-          <p style={{ margin: 0 }}>Measures reflect the current state of the BrewOps Intelligence demonstrator as of May 17, 2024. Future value will be tracked post-launch.</p>
+        <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "10px 12px" }}>
+          <p className="tks-kicker" style={{ marginTop: 0 }}>Next Update</p>
+          <p style={{ margin: 0, fontSize: 10.8, lineHeight: 1.6 }}><b>June 14, 2024</b> — Post-pilot outcomes and business impact will be published.</p>
         </div>
       </div>
     </div>
@@ -1891,9 +1964,9 @@ export function BrewOpsArchitecture() {
           <p className="tks-kicker" style={{ marginTop: 0 }}>Cross-Cutting Services</p>
           <p style={{ margin: 0, fontSize: 10.5, lineHeight: 1.65 }}>Notification Service (Email, SMS, In-App, Webhooks) · Feature Flags (Rollout &amp; Experimentation) · Configuration Service (Centralized Config) · Data Quality Service (Monitoring &amp; Rules) · Job Scheduler (Airflow / Temporal) · Backup &amp; DR (Backup, Restore, Disaster Recovery)</p>
         </div>
-        <div style={{ background: "#102A43", color: "#dbe5f0", borderRadius: 11, padding: "10px 12px" }}>
-          <p className="tks-kicker" style={{ marginTop: 0, color: "#f5c86b" }}>Platform Foundations</p>
-          <p style={{ margin: 0, fontSize: 10.4, lineHeight: 1.65 }}><b style={{ color: "#fff" }}>Authorization &amp; Security:</b> Identity Provider (OIDC / SAML) · RBAC / ABAC · MFA &amp; SSO · Secrets Management · Row &amp; Field Level Security<br /><b style={{ color: "#fff" }}>Observability &amp; Operations:</b> Logging (ELK / OpenSearch) · Metrics (Prometheus / Grafana) · Tracing (OpenTelemetry) · Alerting &amp; Incident Management · Audit Logs<br /><b style={{ color: "#fff" }}>Deployment &amp; Infrastructure:</b> Deployed on AWS (Multi-AZ) · VPC &amp; Networking · EKS (Kubernetes) · Auto Scaling · CI/CD (GitHub Actions) · IaC (Terraform) · Monitoring (CloudWatch) · WAF &amp; Security (DDoS, Firewall, Shield)</p>
+        <div style={{ background: "#fff", border: "1px solid #e7e2d9", color: "#141a21", borderRadius: 11, padding: "10px 12px" }}>
+          <p className="tks-kicker" style={{ marginTop: 0, color: "#b97a0c" }}>Platform Foundations</p>
+          <p style={{ margin: 0, fontSize: 10.4, lineHeight: 1.65 }}><b>Authorization &amp; Security:</b> Identity Provider (OIDC / SAML) · RBAC / ABAC · MFA &amp; SSO · Secrets Management · Row &amp; Field Level Security<br /><b>Observability &amp; Operations:</b> Logging (ELK / OpenSearch) · Metrics (Prometheus / Grafana) · Tracing (OpenTelemetry) · Alerting &amp; Incident Management · Audit Logs<br /><b>Deployment &amp; Infrastructure:</b> Deployed on AWS (Multi-AZ) · VPC &amp; Networking · EKS (Kubernetes) · Auto Scaling · CI/CD (GitHub Actions) · IaC (Terraform) · Monitoring (CloudWatch) · WAF &amp; Security (DDoS, Firewall, Shield)</p>
         </div>
       </div>
     </div>
@@ -1926,30 +1999,23 @@ export function BrewOpsDataFlow() {
         <span style={{ display: "block", borderTop: `2px solid ${stepCols[i]}`, marginTop: 6, paddingTop: 4, fontSize: 9.2, fontWeight: 700, lineHeight: 1.45 }}>✓ {outcome}</span>
       </button>)}
     </div>
-    <div style={{ background: "#102A43", color: "#fff", borderRadius: 10, padding: "9px 13px", marginTop: 10 }}>
+    <div style={{ background: "#fff", border: "1px solid #ddd6c9", color: "#141a21", borderRadius: 10, padding: "9px 13px", marginTop: 10 }}>
       <b style={{ fontSize: 11.5 }}>Flow Principles</b>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 9, marginTop: 5, fontSize: 10.2, lineHeight: 1.55 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr) 0.8fr", gap: 9, marginTop: 5, fontSize: 10.2, lineHeight: 1.55 }}>
         <p style={{ margin: 0 }}><b>End-to-end visibility</b> — Track every step from signal to resolution</p>
         <p style={{ margin: 0 }}><b>Right information, right time</b> — Surface the most relevant context automatically</p>
         <p style={{ margin: 0 }}><b>Human-in-the-loop</b> — Keep operators in control with clear recommendations</p>
         <p style={{ margin: 0 }}><b>Trusted &amp; traceable</b> — Every action is logged, auditable, and compliant</p>
         <p style={{ margin: 0 }}><b>Continuous improvement</b> — Capture outcomes to improve models and processes</p>
+        <p style={{ margin: 0, color: "#5b6470" }}><b style={{ color: "#141a21" }}>Legend</b> — Detect · Route · Retrieve · Recommend · Act · Audit</p>
       </div>
     </div>
-    <p style={{ margin: "8px 0 0", fontSize: 10.5, color: "#5b6470" }}>Legend: Detect · Route · Retrieve · Recommend · Act · Audit — CLARITY · FOCUS · TRUST · SPEED, as across the foundations boards. v1.0 — May 2025 (footer as printed).</p>
+    <p style={{ margin: "8px 0 0", fontSize: 10.5, color: "#5b6470" }}>CLARITY · FOCUS · TRUST · SPEED, as across the foundations boards. v1.0 — May 2025 (footer as printed).</p>
   </BoX>;
 }
 
 /* ---------------- 45 - BrewOps in Action (bw-43) ---------------- */
-const KPIS45: Array<[string, string, string]> = [
-  ["Total Production (HL)", "24,560", "up 8.4% vs prior 7D"],
-  ["OEE", "87.3%", "up 3.1% vs prior 7D"],
-  ["On-Time Delivery", "92.1%", "up 2.8% vs prior 7D"],
-  ["Inventory Health", "78%", "down 5% vs prior 7D"],
-  ["Critical Alerts", "3", "up 2 vs prior 7D"],
-];
 export function BrewOpsInAction() {
-  const [k, setK] = useState(0);
   const [checks, setChecks] = useState<boolean[]>([true, true, true, true]);
   const CHECKS = ["Type Safe", "Accessible", "Themed", "Tested"];
   const code45 = [
@@ -1981,32 +2047,32 @@ export function BrewOpsInAction() {
     "  );",
     "};",
   ];
-  return <Bo n="45" title="BrewOps Intelligence in Action" sub="From real-time insights to real results. Built with reusable components, consistent patterns, and production-ready code. Case Study — bw-43-code-and-ui-proof." dark={false} label="BrewOps in action code proof - interactive rebuild of Budweiser_45">
-    <div style={{ display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: 11, alignItems: "start" }}>
+  return <Bo n="45" serif title="BrewOps Intelligence in Action" sub="From real-time insights to real results. Built with reusable components, consistent patterns, and production-ready code. Case Study — bw-43-code-and-ui-proof." dark={false} label="BrewOps in action code proof - interactive rebuild of Budweiser_45">
+    <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 11, alignItems: "start" }}>
       <div>
         <p className="tks-kicker" style={{ marginTop: 0 }}>Live dashboard — the file-31 Control Tower, rendered by the component</p>
         <div style={{ border: "1px solid #e0d9c8", borderRadius: 12, padding: 9, background: "#faf8f5" }}>
-          <CTDash compact />
+          <div style={{ display: "grid", gridTemplateColumns: "118px minmax(0,1fr)", gap: 9, alignItems: "start" }}>
+            <Side31 active="Control Tower" />
+            <div style={{ minWidth: 0 }}><CTDash /></div>
+          </div>
         </div>
-        <p style={{ margin: "8px 0 0", fontSize: 10.8 }}>The printed KPI cards (select to inspect the rendered card):</p>
-        <Chips items={KPIS45.map(([t]) => t)} value={k} onPick={setK} />
-        <div className="tks-card" aria-live="polite" style={{ marginTop: 7 }}><p className="tks-kicker" style={{ marginTop: 0 }}>{KPIS45[k][0]}</p><b style={{ fontSize: 21 }}>{KPIS45[k][1]}</b><p style={{ margin: "3px 0 0", fontSize: 10.8 }}>{KPIS45[k][2]} — rendered with the printed props: title, value, delta, deltaLabel, trend, icon and chart slots — exactly the KpiCardProps contract in the code panel.</p></div>
       </div>
       <div style={{ position: "relative" }}>
         <div style={{ background: "#0d1520", borderRadius: 12, padding: "11px 0 26px", overflow: "hidden" }}>
           <p style={{ margin: "0 13px 7px", fontSize: 10.3, color: "#9fb4c8", fontFamily: "ui-monospace, monospace" }}>KpiCard.tsx — TSX (as printed, abridged)</p>
-          <ol style={{ margin: 0, padding: "0 10px 0 36px", fontFamily: "ui-monospace, monospace", fontSize: 9.4, lineHeight: 1.6, color: "#d7e3ee" }}>
+          <ol style={{ margin: 0, padding: "0 10px 0 36px", fontFamily: "ui-monospace, monospace", fontSize: 8.8, lineHeight: 1.6, color: "#d7e3ee" }}>
             {code45.map((ln, i) => <li key={i} style={{ whiteSpace: "pre" }}>{ln || " "}</li>)}
           </ol>
         </div>
-        <div style={{ position: "absolute", right: 12, bottom: -14, background: "#fff", border: "1.5px solid #18a957", borderRadius: 11, boxShadow: "0 10px 24px rgba(17,17,17,0.18)", padding: "9px 13px", width: 218 }}>
-          <p style={{ margin: 0, display: "flex", gap: 6, alignItems: "center" }}><span style={{ background: "#18a957", color: "#fff", borderRadius: "50%", width: 19, height: 19, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11 }}>✓</span><b style={{ fontSize: 12.5 }}>Production Ready</b></p>
-          <p style={{ display: "flex", gap: 4, flexWrap: "wrap", margin: "7px 0 0" }}>{CHECKS.map((c2, i) => <button key={c2} type="button" className="tks-chip" aria-pressed={checks[i]} onClick={() => setChecks((v) => v.map((x, j) => (j === i ? !x : x)))} style={{ fontSize: 9.8 }}>{checks[i] ? "✓ " : ""}{c2}</button>)}</p>
-          <p aria-live="polite" style={{ margin: "5px 0 0", fontSize: 9.8, color: "#5b6470" }}>{checks.filter(Boolean).length} / 4 qualities checked on the printed panel. Built with BrewOps UI.</p>
+        <div style={{ position: "absolute", right: 10, bottom: 10, background: "#fff", border: "1.5px solid #18a957", borderRadius: 11, boxShadow: "0 10px 24px rgba(17,17,17,0.18)", padding: "8px 11px", width: 168 }}>
+          <p style={{ margin: 0, display: "flex", gap: 6, alignItems: "center" }}><span style={{ background: "#18a957", color: "#fff", borderRadius: "50%", width: 17, height: 17, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 10, flex: "none" }}>✓</span><b style={{ fontSize: 11.5 }}>Production Ready</b></p>
+          <p style={{ display: "flex", gap: 4, flexWrap: "wrap", margin: "7px 0 0" }}>{CHECKS.map((c2, i) => <button key={c2} type="button" className="tks-chip" aria-pressed={checks[i]} onClick={() => setChecks((v) => v.map((x, j) => (j === i ? !x : x)))} style={{ fontSize: 9.2, padding: "2px 7px" }}>{checks[i] ? "✓ " : ""}{c2}</button>)}</p>
+          <p aria-live="polite" style={{ margin: "5px 0 0", fontSize: 9.5, color: "#5b6470" }}>{checks.filter(Boolean).length} / 4 qualities checked on the printed panel. Built with BrewOps UI.</p>
         </div>
       </div>
     </div>
-    <p style={{ margin: "22px 0 0", fontSize: 10.8 }}>BrewOps Intelligence Design System v1.0 — May 2024 (as printed).</p>
+    <p style={{ margin: "12px 0 0", fontSize: 10.8 }}>BrewOps Intelligence Design System v1.0 — May 2024 (as printed).</p>
   </Bo>;
 }
 
@@ -2038,10 +2104,13 @@ export function BrewOpsQualityEvidence() {
   const [suite, setSuite] = useState(4);
   const panel46: React.CSSProperties = { background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "10px 12px" };
   const scoreRing = (v: number) => <span style={{ display: "inline-flex", width: 44, height: 44, borderRadius: "50%", background: `conic-gradient(#18a957 ${v}%, #e8e4da ${v}%)`, alignItems: "center", justifyContent: "center" }}><span style={{ width: 34, height: 34, borderRadius: "50%", background: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 13 }}>{v}</span></span>;
-  return <Bo n="46" title="BW-44: Quality Evidence" sub="Proof of quality across testing, accessibility, performance, contracts, and deployment. DATE: May 17, 2024 8:42 AM CDT — ENVIRONMENT: Staging (Preview) — BUILD: #20240517.42, Commit 7f3a9c1 — TRIGGERED BY: alex.r@abbev.com, CI Pipeline (all as printed)." dark={false} label="BrewOps BW-44 quality evidence - interactive rebuild of Budweiser_46">
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, alignItems: "start" }}>
+  return <Bo n="46" serif title="BW-44: Quality Evidence" sub="Proof of quality across testing, accessibility, performance, contracts, and deployment. DATE: May 17, 2024 8:42 AM CDT — ENVIRONMENT: Staging (Preview) — BUILD: #20240517.42, Commit 7f3a9c1 — TRIGGERED BY: alex.r@abbev.com, CI Pipeline (all as printed)." dark={false} label="BrewOps BW-44 quality evidence - interactive rebuild of Budweiser_46">
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 9, alignItems: "start" }}>
       <div style={panel46}><p className="tks-kicker" style={{ marginTop: 0 }}>1 · Automated Tests</p>
-        <Stats items={[["Total", "362"], ["Passed", "344 · 95.0%"], ["Failed", "12 · 3.3%"], ["Skipped", "6 · 1.7%"], ["Duration", "17m 13s"]]} />
+        <p style={{ margin: "0 0 2px", display: "flex", gap: 9, alignItems: "center" }}>
+          <span style={{ display: "inline-flex", width: 46, height: 46, borderRadius: "50%", flex: "none", background: "conic-gradient(#18a957 342deg, #e8e4da 342deg)", alignItems: "center", justifyContent: "center" }}><span style={{ width: 35, height: 35, borderRadius: "50%", background: "#fff", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}><b style={{ fontSize: 11.5, lineHeight: 1 }}>362</b><span style={{ fontSize: 6.8, color: "#6b7280" }}>95% passed</span></span></span>
+          <span style={{ fontSize: 10.4, lineHeight: 1.65 }}>Passed <b>344 · 95.0%</b><br />Failed <b style={{ color: "#c8102e" }}>12 · 3.3%</b> · Skipped <b>6 · 1.7%</b><br />Duration <b>17m 13s</b></span>
+        </p>
         <table className="tks-table tks-table--micro" style={{ marginTop: 8 }}><thead><tr><th>Suite</th><th>Tests</th><th>Passed</th><th>Failed</th><th>Skipped</th><th>Duration</th></tr></thead>
           <tbody>{SUITES46.map(([n, t, p2, f, sk, d], i) => <tr key={n} onClick={() => setSuite(i)} style={{ cursor: "pointer", background: i === suite ? "#f3ead2" : undefined }}><td>{n}</td><td>{t}</td><td>{p2}</td><td style={{ color: f > 0 ? "#c8102e" : undefined }}>{f}</td><td>{sk}</td><td>{d}</td></tr>)}<tr><td><b>TOTAL</b></td><td><b>362</b></td><td><b>344</b></td><td><b>12</b></td><td><b>6</b></td><td><b>17m 13s</b></td></tr></tbody></table>
         <p aria-live="polite" style={{ margin: "5px 0 0", fontSize: 10.3 }}>Selected: <b>{SUITES46[suite][0]}</b> — {SUITES46[suite][2]} of {SUITES46[suite][1]} passed. The CI log prints per-suite counts differently (e.g. Unit tests — Passed (142/142)) — both as printed.</p>
@@ -2049,24 +2118,26 @@ export function BrewOpsQualityEvidence() {
       <div style={panel46}><p className="tks-kicker" style={{ marginTop: 0 }}>2 · Accessibility (axe-core)</p>
         <p style={{ margin: 0, display: "flex", gap: 10, alignItems: "center" }}>{scoreRing(96)}<span style={{ fontSize: 11, lineHeight: 1.6 }}><b>Overall Score 96 / 100 — Good — AA</b><br />WCAG 2.1 AA · Last scan: May 17, 2024 8:35 AM<br />Issues: <b>0 Critical · 2 Serious · 7 Moderate · 12 Minor</b></span></p>
         <p style={{ margin: "7px 0 0", fontSize: 10.8, lineHeight: 1.65 }}><b>Top issues:</b> Buttons must have discernible text (2, Serious) · Color contrast ratio is insufficient (4, Moderate) · Form elements must have labels (3, Moderate) · Links should have discernible text (2, Minor). View full accessibility report.</p>
-        <p className="tks-kicker" style={{ margin: "10px 0 4px" }}>3 · Performance (Lighthouse)</p>
-        <p style={{ margin: 0, display: "flex", gap: 12 }}>{[["Performance", 98], ["Accessibility", 97], ["Best Practices", 100], ["SEO", 93]].map(([l, v]) => <span key={l as string} style={{ textAlign: "center" }}>{scoreRing(v as number)}<span style={{ display: "block", fontSize: 9.3, color: "#5b6470", marginTop: 2 }}>{l}</span></span>)}</p>
+      </div>
+      <div style={panel46}><p className="tks-kicker" style={{ marginTop: 0 }}>3 · Performance (Lighthouse)</p>
+        <p style={{ margin: 0, display: "flex", gap: 7 }}>{[["Performance", 98], ["Accessibility", 97], ["Best Practices", 100], ["SEO", 93]].map(([l, v]) => <span key={l as string} style={{ textAlign: "center" }}>{scoreRing(v as number)}<span style={{ display: "block", fontSize: 8.8, color: "#5b6470", marginTop: 2 }}>{l}</span></span>)}</p>
         <table className="tks-table tks-table--micro" style={{ marginTop: 8 }}><thead><tr><th>Metric</th><th>This Run</th><th>Previous</th><th>Change</th></tr></thead><tbody>
           <tr><td>First Contentful Paint</td><td>0.8 s</td><td>1.1 s</td><td>↓ 27%</td></tr><tr><td>Largest Contentful Paint</td><td>1.2 s</td><td>1.6 s</td><td>↓ 25%</td></tr><tr><td>Total Blocking Time</td><td>40 ms</td><td>90 ms</td><td>↓ 56%</td></tr><tr><td>Cumulative Layout Shift</td><td>0.03</td><td>0.07</td><td>↓ 57%</td></tr><tr><td>Speed Index</td><td>1.3 s</td><td>1.8 s</td><td>↓ 28%</td></tr></tbody></table>
         <p style={{ margin: "5px 0 0", fontSize: 10.3 }}>Device: Mobile · Network: 4G · Throttling: Moderate (as printed).</p>
       </div>
       <div style={panel46}><p className="tks-kicker" style={{ marginTop: 0 }}>4 · API Contracts (Pact)</p>
-        <Stats items={[["Pacts Verified", "100%"], ["Total Pacts", "38"], ["Verified", "38"], ["Failed", "0"], ["Pending", "0"]]} />
-        <table className="tks-table tks-table--micro" style={{ marginTop: 8 }}><thead><tr><th>Provider</th><th>Consumer</th><th>Pact</th><th>Result</th><th>Duration</th></tr></thead>
+        <p style={{ margin: "0 0 2px", fontSize: 10.4, lineHeight: 1.65 }}>Pacts Verified <b style={{ color: "#137a3f" }}>100%</b> · Total Pacts <b>38</b> · Verified <b>38</b> · Failed <b>0</b> · Pending <b>0</b></p>
+        <table className="tks-table tks-table--micro" style={{ marginTop: 6 }}><thead><tr><th>Provider</th><th>Consumer</th><th>Pact</th><th>Result</th><th>Duration</th></tr></thead>
           <tbody>{PACTS46.map(([p2, c2, pact, d]) => <tr key={pact}><td>{p2}</td><td>{c2}</td><td>{pact}</td><td style={{ color: "#137a3f", fontWeight: 700 }}>✓ Verified</td><td>{d}</td></tr>)}</tbody></table>
         <p style={{ margin: "5px 0 0", fontSize: 10.3 }}>View all pact results (as printed).</p>
-        <p className="tks-kicker" style={{ margin: "10px 0 3px" }}>Environment &amp; Deployment</p>
-        <p style={{ margin: 0, fontSize: 10.8, lineHeight: 1.65 }}>Commit 7f3a9c1 (View diff) · Image abbev/bw-44:20240517.42 · Deployed May 17, 8:52 AM (CDT) · By CI Pipeline (GitHub Actions)<br /><b>Progression:</b> ✓ Build → ✓ Test → ✓ Security Scan → ✓ Deploy Staging → ✓ Smoke Tests → ✓ Complete<br /><b>Health checks:</b> /health 200 OK 98 ms · /ready 200 OK 102 ms · /metrics 200 OK 110 ms — <b>Staging Healthy</b>, all systems operational.</p>
       </div>
       <div style={{ background: "#0d1117", borderRadius: 11, padding: "10px 0", overflow: "hidden" }}>
         <p style={{ margin: "0 13px 7px", fontSize: 10.3, color: "#8b949e", fontFamily: "ui-monospace, monospace" }}>5 · CI / Deployment Log (excerpt) — Pipeline: Success</p>
-        <ol style={{ margin: 0, padding: "0 10px 0 36px", fontFamily: "ui-monospace, monospace", fontSize: 9.2, lineHeight: 1.65, color: "#c9d1d9" }}>{CILOG46.map((line) => <li key={line} style={{ whiteSpace: "pre-wrap" }}>{line}</li>)}</ol>
+        <ol style={{ margin: 0, padding: "0 10px 0 36px", fontFamily: "ui-monospace, monospace", fontSize: 8.8, lineHeight: 1.65, color: "#c9d1d9" }}>{CILOG46.map((line) => <li key={line} style={{ whiteSpace: "pre-wrap" }}>{line}</li>)}</ol>
         <p style={{ margin: "7px 13px 2px", fontSize: 10, color: "#8b949e" }}>Artifacts: test-report.html · coverage/lcov.info · pact/ · lighthouse.json</p>
+      </div>
+      <div style={panel46}><p className="tks-kicker" style={{ marginTop: 0 }}>6 · Environment &amp; Deployment</p>
+        <p style={{ margin: 0, fontSize: 10.8, lineHeight: 1.65 }}>Commit 7f3a9c1 (View diff) · Image abbev/bw-44:20240517.42 · Deployed May 17, 8:52 AM (CDT) · By CI Pipeline (GitHub Actions)<br /><b>Progression:</b> ✓ Build → ✓ Test → ✓ Security Scan → ✓ Deploy Staging → ✓ Smoke Tests → ✓ Complete<br /><b>Health checks:</b> /health 200 OK 98 ms · /ready 200 OK 102 ms · /metrics 200 OK 110 ms — <b>Staging Healthy</b>, all systems operational.</p>
       </div>
     </div>
     <p style={{ margin: "9px 0 0", fontSize: 10.3, color: "#8a93a0" }}>v1.0 — May 2025 (footer as printed).</p>
@@ -2093,10 +2164,18 @@ const TARGETS47: Array<[string, string]> = [["Task success rate", ">= 80%"], ["T
 export function BrewOpsUsabilityPlan() {
   const [t, setT] = useState(0);
   return <BoX n="47" serif title="Evaluating the BrewOps demonstrator" sub="USABILITY TEST PLAN — This plan outlines how we will evaluate the usability of the BrewOps Intelligence demonstrator with real users in realistic contexts. This is a plan with targets — not test results." dark={false} label="BrewOps usability test plan - interactive rebuild of Budweiser_47">
-    <div style={{ display: "grid", gridTemplateColumns: "196px 1fr", gap: 11, alignItems: "start" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "104px minmax(0,1fr)", gap: 10, alignItems: "start" }}>
+      <div style={{ display: "grid", gap: 2, fontSize: 10.3 }}>
+        <p className="tks-kicker" style={{ margin: "0 0 5px" }}>Case Study</p>
+        {["Overview", "The Challenge", "Our Approach", "The Demonstrator", "Impact", "Usability Test Plan"].map((nv, i) => <span key={nv} style={{ padding: "4px 8px", borderRadius: 6, borderLeft: i === 5 ? "3px solid #c8102e" : "3px solid transparent", background: i === 5 ? "#fdf0f3" : "transparent", fontWeight: i === 5 ? 800 : 500, color: i === 5 ? "#c8102e" : "#4a5462" }}>{nv}</span>)}
+      </div>
+      <div style={{ minWidth: 0 }}>
+        <p style={{ margin: "0 0 8px", display: "flex", gap: 16, justifyContent: "flex-end", fontSize: 9.5, letterSpacing: "0.14em", fontWeight: 800, color: "#8a93a0" }}><span>CLARITY</span><span>FOCUS</span><span>TRUST</span><span>SPEED</span></p>
+    <div style={{ display: "grid", gridTemplateColumns: "196px minmax(0,1fr)", gap: 11, alignItems: "start" }}>
       <div style={{ display: "grid", gap: 9 }}>
         <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "10px 12px" }}>
-          <p className="tks-kicker" style={{ marginTop: 0 }}>Participants — 8–10 total</p>
+          <p className="tks-kicker" style={{ marginTop: 0 }}>Participants</p>
+          <p style={{ margin: "0 0 4px" }}><b style={{ fontSize: 24, color: "#c8102e", lineHeight: 1 }}>8–10</b> <span style={{ fontSize: 10.6, color: "#5b6470" }}>Total participants</span></p>
           <p style={{ margin: 0, fontSize: 10.8, lineHeight: 1.7 }}>Brewery Operators <b>4–5</b><br />Quality Analysts <b>2–3</b><br />Shift Leads / Supervisors <b>2–2</b> (range as printed)<br />Data / Reliability Engineers <b>1–2</b></p>
         </div>
         <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "10px 12px" }}>
@@ -2123,6 +2202,8 @@ export function BrewOpsUsabilityPlan() {
             {TARGETS47.map(([m, tg]) => <p key={m} style={{ margin: "4px 0", fontSize: 10.8, display: "flex", gap: 6 }}><span style={{ color: "#137a3f", fontWeight: 800 }}>✓</span><span style={{ flex: 1 }}>{m}</span><b>{tg}</b></p>)}
           </div>
         </div>
+      </div>
+    </div>
       </div>
     </div>
     <p style={{ margin: "9px 0 0", fontSize: 10.3, color: "#8a93a0" }}>v1.0 — May 2025 (footer as printed).</p>
@@ -2163,11 +2244,11 @@ export function BrewOpsFindingsMatrix() {
           <rect x="170" y="28" width="126" height="84" fill="#e0483e" opacity="0.13" />
           <rect x="44" y="112" width="126" height="84" fill="#8a93a0" opacity="0.08" />
           <rect x="170" y="112" width="126" height="84" fill="#18a957" opacity="0.08" />
-          <text x="176" y="40" fontSize="8" fill="#c8102e" fontWeight="700">HIGH PRIORITY</text>
-          <text x="50" y="40" fontSize="8" fill="#8a6d1f" fontWeight="700">MONITOR</text>
-          <text x="176" y="190" fontSize="8" fill="#4a7a58" fontWeight="700">MEDIUM PRIORITY</text>
-          <text x="50" y="124" fontSize="8" fill="#5b6470" fontWeight="700">LOW PRIORITY</text>
-          {[1, 2, 3, 4, 5].map((v) => <g key={v}><line x1={px(v)} y1="28" x2={px(v)} y2="196" stroke="#e3ded2" /><line x1="44" y1={py(v)} x2="296" y2={py(v)} stroke="#e3ded2" /><text x={px(v) - 2} y="210" fontSize="8" fill="#8a93a0">{v}</text><text x="34" y={py(v) + 3} fontSize="8" fill="#8a93a0">{v}</text></g>)}
+          <text x="172" y="40" fontSize="7.5" fill="#c8102e" fontWeight="700">HIGH PRIORITY</text>
+          <text x="50" y="40" fontSize="7.5" fill="#8a6d1f" fontWeight="700">MONITOR</text>
+          <text x="176" y="190" fontSize="7.5" fill="#4a7a58" fontWeight="700">MEDIUM PRIORITY</text>
+          <text x="50" y="124" fontSize="7.5" fill="#5b6470" fontWeight="700">LOW PRIORITY</text>
+          {[1, 2, 3, 4, 5].map((v) => <g key={v}><line x1={px(v)} y1="28" x2={px(v)} y2="196" stroke="#e3ded2" /><line x1="44" y1={py(v)} x2="296" y2={py(v)} stroke="#e3ded2" /><text x={px(v) - 2} y="210" fontSize="7.5" fill="#8a93a0">{v}</text><text x="34" y={py(v) + 3} fontSize="7.5" fill="#8a93a0">{v}</text></g>)}
           <line x1="44" y1="196" x2="296" y2="196" stroke="#8a93a0" /><line x1="44" y1="28" x2="44" y2="196" stroke="#8a93a0" />
           <text x="120" y="222" fontSize="8.5" fill="#5b6470">Frequency (Occurrence) →</text>
           <text x="12" y="120" fontSize="8.5" fill="#5b6470" transform="rotate(-90 12 120)">Severity (Impact) →</text>
@@ -2214,6 +2295,8 @@ export function BrewOpsIteration47() {
   const labels49 = ["High Priority", "Investigation Needed", "FYI", "Resolved"];
   const sev49 = ["#c8102e", "#b97a0c", "#2563eb", "#18a957"];
   return <BoX n="49" serif title="Iteration #47: Improve alert clarity and actionability" sub="Refining the Alert / Risk Queue to reduce cognitive load and drive faster, confident action. BrewOps Intelligence Design System v1.0 - May 2024." dark={false} label="BrewOps iteration 47 alert clarity - interactive rebuild of Budweiser_49">
+    <div style={{ position: "relative" }}>
+    <span aria-hidden="true" style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", zIndex: 2, width: 34, height: 34, borderRadius: "50%", background: "#102A43", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 19, fontWeight: 800, boxShadow: "0 4px 12px rgba(17,17,17,0.25)" }}>›</span>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 11, alignItems: "start" }}>
       <div style={{ background: "#f4f1ea", border: "1px solid #ddd6c9", borderRadius: 12, padding: "11px 13px" }}>
         <b style={{ fontSize: 13, color: "#a31621" }}>BEFORE — Alert / Risk Queue · View all (7)</b>
@@ -2247,6 +2330,7 @@ export function BrewOpsIteration47() {
         </div>
       </div>
     </div>
+    </div>
   </BoX>;
 }
 
@@ -2265,28 +2349,31 @@ export function BrewOpsTechnicalResults() {
   const panel50: React.CSSProperties = { background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "10px 12px" };
   return <BoX n="50" serif title="Technical results" sub="Measurable outcomes from the BrewOps Intelligence demonstrator." dark={false} label="BrewOps technical results - interactive rebuild of Budweiser_50">
     <div style={{ display: "grid", gridTemplateColumns: "148px 1fr", gap: 11, alignItems: "start" }}>
-      <div style={{ background: "#102A43", borderRadius: 11, padding: "11px 9px", display: "grid", gap: 2 }}>
-        {["Overview", "Visual Foundations", "Component Library", "Technical Results", "Evaluation Summary", "Learnings"].map((nv) => <span key={nv} style={{ color: nv === "Technical Results" ? "#fff" : "#a9bccd", background: nv === "Technical Results" ? "rgba(255,255,255,0.13)" : "transparent", borderRadius: 7, padding: "5px 9px", fontSize: 10.6, fontWeight: nv === "Technical Results" ? 700 : 500 }}>{nv}</span>)}
-        <p style={{ margin: "9px 4px 0", fontSize: 9.6, color: "#7e93ab", lineHeight: 1.6 }}><b style={{ color: "#dbe5f0" }}>Legend</b><br />Measured — collected from system or users<br />Observed — validated in demo or pilot sessions<br />Simulated — modeled or estimated for comparison<br /><br />© 2024 Anheuser-Busch (as printed)</p>
+      <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "11px 9px", display: "grid", gap: 2 }}>
+        {["Overview", "Visual Foundations", "Component Library", "Technical Results", "Evaluation Summary", "Learnings"].map((nv) => <span key={nv} style={{ color: nv === "Technical Results" ? "#8a5c00" : "#3c4652", background: nv === "Technical Results" ? "#fdf3e0" : "transparent", borderRadius: 7, padding: "5px 9px", fontSize: 10.6, fontWeight: nv === "Technical Results" ? 700 : 500 }}>{nv}</span>)}
+        <p style={{ margin: "9px 4px 0", fontSize: 9.6, color: "#6b7280", lineHeight: 1.6 }}><b style={{ color: "#141a21" }}>Legend</b><br />Measured — collected from system or users<br />Observed — validated in demo or pilot sessions<br />Simulated — modeled or estimated for comparison<br /><br />© 2024 Anheuser-Busch (as printed)</p>
       </div>
-      <div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9 }}>
-          {TECH50.slice(0, 6).map(([title, summary, metrics], pi) => <button key={title} type="button" onClick={() => setS(pi)} aria-pressed={pi === s} style={{ ...panel50, textAlign: "left", cursor: "pointer", font: "inherit", color: "#141a21", border: pi === s ? "1.5px solid #102A43" : panel50.border }}>
+      <div style={{ minWidth: 0 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 9 }}>
+          {[TECH50[0], TECH50[2], TECH50[3], TECH50[1], TECH50[4], TECH50[5]].map(([title, summary, metrics], pi) => <button key={title} type="button" onClick={() => setS(pi)} aria-pressed={pi === s} style={{ ...panel50, textAlign: "left", cursor: "pointer", font: "inherit", color: "#141a21", border: pi === s ? "1.5px solid #102A43" : panel50.border }}>
             <b style={{ fontSize: 12.3 }}>{title}</b>
+            {(title.startsWith("Accessibility") || title.startsWith("Test Coverage")) ? <span style={{ display: "flex", marginTop: 6 }}><span style={{ display: "inline-flex", width: 44, height: 44, borderRadius: "50%", background: `conic-gradient(#18a957 ${title.startsWith("Accessibility") ? 96 : 82}%, #e8e4da ${title.startsWith("Accessibility") ? 96 : 82}%)`, alignItems: "center", justifyContent: "center" }}><span style={{ width: 33, height: 33, borderRadius: "50%", background: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 11.5 }}>{title.startsWith("Accessibility") ? "96%" : "82%"}</span></span></span> : null}
             <span style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5, marginTop: 7 }}>
-              {metrics.map(([k, v, d]) => <span key={k} style={{ background: "#faf8f5", border: "1px solid #eee9dc", borderRadius: 7, padding: "5px 8px" }}><span style={{ display: "block", fontSize: 9.2, color: "#8a93a0" }}>{k}</span><b style={{ fontSize: 14.5 }}>{v}</b>{d ? <span style={{ display: "block", fontSize: 9, color: "#137a3f" }}>{d}</span> : null}</span>)}
+              {metrics.map(([k, v, d]) => <span key={k} style={{ background: "#faf8f5", border: "1px solid #eee9dc", borderRadius: 7, padding: "5px 8px" }}><span style={{ display: "block", fontSize: 9.2, color: "#8a93a0" }}>{k}</span><b style={{ fontSize: 13.5 }}>{v}</b>{d ? <span style={{ display: "block", fontSize: 9, color: "#137a3f" }}>{d}</span> : null}</span>)}
             </span>
             <span style={{ display: "block", fontSize: 9.9, lineHeight: 1.55, color: "#5b6470", marginTop: 7 }}>{summary}</span>
-            {pi === 0 ? <svg viewBox="0 0 260 40" style={{ width: "100%", display: "block", marginTop: 6 }} role="img" aria-label="Response time over time P95, baseline versus demonstrator"><polyline points="4,8 40,10 76,9 112,11 148,9 184,10 220,9 252,10" fill="none" stroke="#e0483e" strokeWidth="1.8" /><polyline points="4,26 40,28 76,25 112,29 148,26 184,28 220,26 252,27" fill="none" stroke="#18a957" strokeWidth="1.8" /><text x="196" y="7" fontSize="7" fill="#e0483e">Baseline P95</text><text x="182" y="38" fontSize="7" fill="#18a957">Demonstrator P95 · 00:00–24:00</text></svg> : null}
-            {pi === 1 ? <span style={{ display: "flex", gap: 3, marginTop: 6 }}>{["May 11", "May 12", "May 13", "May 14", "May 15", "May 16", "May 17"].map((d) => <span key={d} style={{ flex: 1, background: "#18a957", color: "#fff", borderRadius: 5, padding: "3px 0", textAlign: "center", fontSize: 8.6 }}>{d.replace("May ", "5/")} ✓</span>)}</span> : null}
+            {title.startsWith("Performance") ? <svg viewBox="0 0 260 40" style={{ width: "100%", display: "block", marginTop: 6 }} role="img" aria-label="Response time over time P95, baseline versus demonstrator"><polyline points="4,8 40,10 76,9 112,11 148,9 184,10 220,9 252,10" fill="none" stroke="#e0483e" strokeWidth="1.8" /><polyline points="4,26 40,28 76,25 112,29 148,26 184,28 220,26 252,27" fill="none" stroke="#18a957" strokeWidth="1.8" /><text x="196" y="7" fontSize="7" fill="#e0483e">Baseline P95</text><text x="182" y="38" fontSize="7" fill="#18a957">Demonstrator P95 · 00:00–24:00</text></svg> : null}
+            {title.startsWith("Reliability") ? <span style={{ display: "flex", gap: 3, marginTop: 6 }}>{["May 11", "May 12", "May 13", "May 14", "May 15", "May 16", "May 17"].map((d) => <span key={d} style={{ flex: 1, background: "#18a957", color: "#fff", borderRadius: 5, padding: "3px 0", textAlign: "center", fontSize: 8.6 }}>{d.replace("May ", "5/")} ✓</span>)}</span> : null}
           </button>)}
         </div>
-        <div style={{ ...panel50, marginTop: 9 }}>
-          <b style={{ fontSize: 12.3 }}>{TECH50[6][0]}</b>
-          <p style={{ margin: "4px 0 0", fontSize: 10.6, lineHeight: 1.65 }}>{TECH50[6][1]}</p>
-          <p style={{ margin: "5px 0 0", display: "flex", gap: 12, fontSize: 10.8 }}>{TECH50[6][2].map(([k, v]) => <span key={k}>{k}: <b>{v}</b></span>)}</p>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9, marginTop: 9, alignItems: "start" }}>
+          <div style={panel50}>
+            <b style={{ fontSize: 12.3 }}>{TECH50[6][0]}</b>
+            <p style={{ margin: "4px 0 0", fontSize: 10.6, lineHeight: 1.65 }}>{TECH50[6][1]}</p>
+            <p style={{ margin: "5px 0 0", display: "flex", gap: 12, fontSize: 10.8 }}>{TECH50[6][2].map(([k, v]) => <span key={k}>{k}: <b>{v}</b></span>)}</p>
+          </div>
+          <p style={{ margin: 0, fontSize: 10.6, lineHeight: 1.6, background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "10px 12px" }}><b>Notes &amp; Methodology:</b> Measured metrics collected from the demonstrator in a controlled pilot environment. Observed metrics gathered from user sessions and expert reviews. Simulated metrics modeled using historical baselines and capacity planning. View methodology details (as printed). Note: the Performance panel prints the P95 baseline as both 5.94s and 5.12s — transcribed as printed.</p>
         </div>
-        <p style={{ margin: "9px 0 0", fontSize: 10.6, lineHeight: 1.6 }}><b>Notes &amp; Methodology:</b> Measured metrics collected from the demonstrator in a controlled pilot environment. Observed metrics gathered from user sessions and expert reviews. Simulated metrics modeled using historical baselines and capacity planning. View methodology details (as printed). Note: the Performance panel prints the P95 baseline as both 5.94s and 5.12s — transcribed as printed.</p>
         <p style={{ margin: "7px 0 0", fontSize: 10, color: "#8a93a0" }}>BrewOps Intelligence — Design System v1.0 (footer as printed).</p>
       </div>
     </div>

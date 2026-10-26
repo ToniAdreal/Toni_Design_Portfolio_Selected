@@ -287,7 +287,7 @@ export function NextCardRewardsShowcase() {
         foot={<p style={{ marginTop: 12 }}><span className="nc-acc" style={{ fontWeight: 700 }}>Use Freely. Reward Yourself.</span><br /><span className="ncp-mut">Next Card, For Your Next.</span></p>} />
       <div style={{ flex: 1, minWidth: 0 }}>
         <div className="ncp-row" style={{ flexWrap: "wrap", marginBottom: 10 }}>
-          {phone(0, 134, <><div className="ncp-card"><p className="ncp-dim" style={{ margin: 0 }}>Points Balance</p><p style={{ fontSize: 16, fontWeight: 800, margin: "1px 0" }}>6,350</p><p className="ncp-dim" style={{ margin: 0 }}>≈ ¥63.50</p><p style={{ display: "flex", justifyContent: "space-between", margin: "5px 0 0" }}><span className="ncp-dim">Expiring on Dec 31, 2025</span><span className="nc-acc">1,200 pts</span></p></div>
+          {phone(0, 134, <><div className="ncp-card" style={{ backgroundImage: "url(/projects/crops/next-card/rewards-cardart.jpg)", backgroundSize: "auto 78%", backgroundPosition: "right center", backgroundRepeat: "no-repeat" }}><p className="ncp-dim" style={{ margin: 0 }}>Points Balance</p><p style={{ fontSize: 16, fontWeight: 800, margin: "1px 0" }}>6,350</p><p className="ncp-dim" style={{ margin: 0 }}>≈ ¥63.50</p><p style={{ display: "flex", justifyContent: "space-between", margin: "5px 0 0" }}><span className="ncp-dim">Expiring on Dec 31, 2025</span><span className="nc-acc">1,200 pts</span></p></div>
             <div className="ncp-card"><p style={{ margin: 0 }}><b>Your Progress</b></p><p className="ncp-dim" style={{ margin: "2px 0 4px" }}>Silver | Spend ¥4,000 more to reach Gold</p><Bar pct={60} /><p className="ncp-dim" style={{ margin: "3px 0 0", textAlign: "right" }}>¥6,000 / ¥10,000</p></div>
             <p style={{ display: "flex", justifyContent: "space-between", margin: "0 0 2px" }}><b>Earn More</b><span className="ncp-dim">All Categories ›</span></p>
             {EARN46.map(([t, d, m]) => <p key={t} style={{ display: "flex", justifyContent: "space-between", margin: "3.5px 0" }}><span>{t}<br /><span className="ncp-dim">{d}</span></span><b className="nc-acc">{m}</b></p>)}
@@ -297,7 +297,7 @@ export function NextCardRewardsShowcase() {
             <div className="ncp-card"><p style={{ margin: 0 }}><b>Base Earning</b><span style={{ float: "right" }} className="nc-acc"><b>1X</b></span></p><p className="ncp-dim" style={{ margin: "2px 0 0" }}>1 pt for every ¥10 spent</p></div>
             <p style={{ margin: "0 0 2px" }}><b>Category Earning (Monthly)</b></p><p className="ncp-dim" style={{ margin: "0 0 4px" }}>Earn more in your favorite categories.</p>{catRows}
             <p className="ncp-dim">Category updates on the 1st of each month. Points will be credited after the transaction settles.</p></>)}
-          {phone(3, 134, <><div style={{ height: 52, borderRadius: 8, background: "radial-gradient(circle at 70% 40%, #c8a06a 8%, #5a3a22 42%, #17130f)", marginBottom: 6 }} />
+          {phone(3, 134, <><img src="/projects/crops/next-card/rewards-coffee.jpg" alt="" style={{ width: "100%", height: 46, objectFit: "cover", borderRadius: 8, display: "block", marginBottom: 6 }} />
             <p className="ncp-kick" style={{ margin: 0 }}>Dining Bonus</p>
             <p style={{ fontWeight: 800, fontSize: 12, margin: "2px 0" }}>Earn 10X Points on Weekend Dining <span className="nc-acc">10X</span></p>
             <p className="ncp-mut" style={{ margin: "3px 0" }}>Validity<br />May 1 – Jun 30, 2025</p>
@@ -307,6 +307,7 @@ export function NextCardRewardsShowcase() {
             <button type="button" className="ncp-cta" aria-pressed={reg} onClick={(e) => { e.stopPropagation(); setReg(true); }}>{reg ? "✓ Registered" : "Register Now"}</button>
             <p style={{ textAlign: "center", margin: "5px 0 0" }} className="ncp-dim">Terms &amp; Conditions</p></>)}
           {phone(4, 134, <><p style={{ display: "flex", justifyContent: "space-between", margin: "0 0 4px" }}><span className="ncp-dim">Available Points</span><span className="ncp-dim">History</span></p>
+            <img src="/projects/crops/next-card/rewards-coins.jpg" alt="" style={{ width: 42, height: 30, objectFit: "cover", borderRadius: 6, float: "right" }} />
             <p style={{ fontSize: 16, fontWeight: 800, margin: 0 }}>6,350</p><p className="ncp-dim" style={{ margin: "0 0 6px" }}>≈ ¥63.50</p>
             <p style={{ display: "flex", gap: 7, margin: "0 0 6px" }}><b style={{ borderBottom: `2px solid ${ORANGE}` }}>All</b><span className="ncp-dim">Lifestyle</span><span className="ncp-dim">Digital</span><span className="ncp-dim">Merchandise</span></p>
             {[["Lifestyle Vouchers", "From 2,000 pts"], ["Partner Offers", "From 1,500 pts"], ["Digital Subscriptions", "From 1,000 pts"], ["Merchandise", "From 3,000 pts"], ["Experiences", "From 2,500 pts"]].map(([t, d]) => <p key={t} style={{ display: "flex", justifyContent: "space-between", margin: "5px 0" }}><span>{t}<br /><span className="ncp-dim">{d}</span></span><span className="ncp-dim">›</span></p>)}
@@ -318,7 +319,7 @@ export function NextCardRewardsShowcase() {
             {[["Dining Spend", "Earned · May 18, 2025", "250 pts"], ["Lifestyle Voucher", "Redeemed · May 17, 2025", "−2,000 pts"], ["Shopping Spend", "Earned · May 12, 2025", "480 pts"], ["Bonus Points", "Earned · May 10, 2025", "300 pts"]].map(([t, d, v]) => <p key={t} style={{ margin: "5px 0" }}><span style={{ display: "flex", justifyContent: "space-between", gap: 5 }}><b>{t}</b><b style={{ whiteSpace: "nowrap" }}>{v}</b></span><span className="ncp-dim">{d}</span></p>)}
             <p className="ncp-dim" style={{ textAlign: "center", marginTop: 6 }}>That&apos;s all for now</p></>)}
           {phone(6, 112, <><p className="ncp-dim" style={{ margin: 0 }}>Lifestyle Voucher</p><p style={{ fontWeight: 800, margin: "2px 0 5px" }}>¥20 Café Voucher</p>
-            <div style={{ height: 44, borderRadius: 8, background: "radial-gradient(circle at 30% 60%, #6a4a2a, #241a10 70%)", marginBottom: 5 }} />
+            <img src="/projects/crops/next-card/rewards-cafe.jpg" alt="" style={{ width: "100%", height: 40, objectFit: "cover", borderRadius: 8, display: "block", marginBottom: 5 }} />
             <p style={{ margin: 0 }}><b className="nc-acc" style={{ fontSize: 13 }}>2,000 pts</b></p>
             {[["Order Number", "R25051800123"], ["Redeemed On", "May 18, 2025 14:30"], ["Status", "Completed"]].map(([k, v]) => <p key={k} style={{ margin: "5px 0" }}><span className="ncp-dim" style={{ display: "block", fontSize: 8.5 }}>{k}</span><span style={{ whiteSpace: "nowrap" }}>{v}</span></p>)}
             <span className="ncp-cta ghost">View Voucher</span></>)}
@@ -331,7 +332,6 @@ export function NextCardRewardsShowcase() {
         </div>
       </div>
     </div>
-    <p className="ncp-readout" aria-live="polite"><b style={{ color: "#fff" }}>{R46[scr][0]}</b> — {R46[scr][1]}</p>
   </NcShell>;
 }
 

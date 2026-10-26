@@ -45,7 +45,7 @@ export function DeepViseDashboardHero() {
         <div style={{ fontSize: 21, fontWeight: 800 }}>DeepVise</div>
         <span style={{ width: 34, height: 3, background: CYAN, borderRadius: 2, margin: "7px 0 14px" }} />
         <p style={{ fontSize: 16.5, fontWeight: 700, lineHeight: 1.45, margin: 0 }}>Private machine intelligence for predictive maintenance and explainable credit review.</p>
-        <p style={{ marginTop: "auto", paddingTop: 16, fontSize: 10.5, color: "#8fa5bd" }}>Press photograph panel on the original slide — represented structurally.</p>
+        <img src="/projects/crops/deepvise/press-hero.jpg" alt="Servo press photograph from the original slide (crop, no text)" style={{ marginTop: "auto", paddingTop: 14, width: "100%", height: 148, objectFit: "cover", borderRadius: 9, display: "block" }} />
       </div>
       <div style={{ background: "#0e1c2e", border: "1px solid #22344d", borderRadius: 13, overflow: "hidden", fontSize: 11 }}>
         <div style={{ display: "flex", justifyContent: "space-between", padding: "7px 13px", borderBottom: "1px solid #22344d", color: "#c6d2e0" }}>
@@ -116,7 +116,6 @@ export function DeepViseDashboardHero() {
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 0, marginTop: 13, background: "#0d1a2b", border: "1px solid #22344d", borderRadius: 11 }}>
       {[["👤", "Solo Product Designer and Developer"], ["📅", "2024 FinTechathon competition prototype"], ["</>", "Built with FATE"]].map(([i, t], ix) => <div key={t} style={{ display: "flex", gap: 10, alignItems: "center", padding: "10px 16px", borderLeft: ix ? "1px solid #22344d" : "none" }}><span style={{ width: 30, height: 30, flex: "none", borderRadius: "50%", border: `1.5px solid ${ix === 2 ? "#6C5CE7" : CYAN}`, color: ix === 2 ? "#b3a6f5" : CYAN, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 13 }}>{i}</span><b style={{ fontSize: 12.5 }}>{t}</b></div>)}
     </div>
-    <p aria-live="polite" style={{ margin: "8px 0 0", fontSize: 11, color: "#8fa5bd" }}>Dashboard tab: <b style={{ color: "#e8eef5" }}>{tabs[tab]}</b> (Overview shown, as printed).</p>
   </Shell>;
 }
 
@@ -209,7 +208,6 @@ export function DeepViseBlueprint() {
       <span><b style={{ color: INK }}>Expiry (examples):</b> 24 months, 180 days, 2 years, 3 years, 7 years (see evidence objects for specifics)</span>
       <span style={{ border: "1px solid #c8d4e2", borderRadius: 7, padding: "5px 8px" }}><b style={{ color: INK }}>Source and evidence boundary</b> — Original deck pages 28–30 support the operational sequence; pages 32–34 support the enterprise–lender sequence. Built, reconstructed and proposed steps are visually distinct.</span>
     </div>
-    <p aria-live="polite" style={{ margin: "8px 0 0", fontSize: 11, color: "#55606e" }}>Stage in focus: <b>{stage + 1} {STAGES15[stage]}</b>.</p>
   </Shell>;
 }
 
@@ -252,7 +250,7 @@ export function DeepViseConcepts() {
     </div>
     <div style={{ marginTop: 12, border: "1.5px solid #bfe3ea", background: "#f2fbfc", borderRadius: 11, padding: "9px 15px", fontSize: 12.5, display: "flex", gap: 10, alignItems: "center" }}>
       <span style={{ width: 24, height: 24, flex: "none", borderRadius: "50%", background: "#0e7c86", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800 }}>✓</span>
-      <span><b>Why this direction wins:</b> It delivers lender value while making the path to the decision transparent, permissioned and auditable — building trust with regulators, partners and customers. <span aria-live="polite" style={{ color: "#55606e" }}>· Focused: {CONCEPTS24[sel].title}</span></span>
+      <span><b>Why this direction wins:</b> It delivers lender value while making the path to the decision transparent, permissioned and auditable — building trust with regulators, partners and customers.</span>
     </div>
   </Shell>;
 }

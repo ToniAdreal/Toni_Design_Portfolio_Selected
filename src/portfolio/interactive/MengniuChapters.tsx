@@ -507,12 +507,11 @@ export function MengniuMinimap({ n = "10" }: { n?: string }) {
 const HEX11: Array<[string, number]> = [["Feed", 88], ["Water", 92], ["Space", 85], ["Rest", 93], ["Air", 87], ["Light", 90]];
 export function MengniuCowOverlay({ n = "11" }: { n?: string }) {
   const [h, setH] = useState(-1);
-  const hex = (label: string, value: number | string, big?: boolean): React.CSSProperties => ({ clipPath: "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)", background: big ? GREEN : "#12241a", border: "none", color: "#fff", width: big ? 118 : 92, height: big ? 102 : 80, display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontSize: big ? 15 : 12.5, fontWeight: 800, cursor: "pointer" });
+  const hex = (label: string, value: number | string, big?: boolean): React.CSSProperties => ({ clipPath: "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)", background: big ? GREEN : "#12241ae6", border: "none", color: "#fff", width: big ? 118 : 92, height: big ? 102 : 80, display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontSize: big ? 15 : 12.5, fontWeight: 800, cursor: "pointer" });
   return <Mn n={n} title="" dark label="Mengniu cow 0986 health overlay — interactive rebuild">
-    <div style={{ position: "relative", minHeight: 330, borderRadius: 12, overflow: "hidden", background: "linear-gradient(180deg,#241d16 0%,#171310 55%,#0d0b09 100%)", padding: "18px 14px" }}>
-      <p aria-hidden="true" style={{ position: "absolute", inset: "auto 0 0 0", height: 90, background: "repeating-linear-gradient(90deg,transparent 0 46px,#ffffff10 46px 48px)", margin: 0 }} />
-      <p style={{ margin: "0 0 4px", fontSize: 10.4, color: "#9db8a7", textAlign: "center" }}>Barn photograph as printed — ear tags, collar and lane signs in frame; represented structurally.</p>
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 6, flexWrap: "wrap", position: "relative" }}>
+    <div style={{ position: "relative", minHeight: 340, borderRadius: 12, overflow: "hidden", background: "#0d0b09 url(/projects/crops/mengniu/barn-0986.jpg) left center / auto 100% no-repeat", padding: "18px 14px" }}>
+      <p aria-hidden="true" style={{ position: "absolute", inset: "0 0 0 auto", width: "46%", background: "linear-gradient(90deg,transparent,#0d0b09d9 45%)", margin: 0 }} />
+      <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 6, flexWrap: "wrap", position: "relative", paddingRight: 10 }}>
         <div style={{ display: "grid", gap: 6 }}>
           {HEX11.slice(0, 3).map(([d, v], i) => <button key={d} type="button" onClick={() => setH(i)} aria-pressed={h === i} style={{ ...hex(d, v), outline: h === i ? `2px solid ${GREEN}` : "none", outlineOffset: 2 }}>{d}<span style={{ fontSize: 17 }}>{v}</span></button>)}
         </div>
@@ -521,7 +520,7 @@ export function MengniuCowOverlay({ n = "11" }: { n?: string }) {
           {HEX11.slice(3).map(([d, v], i) => <button key={d} type="button" onClick={() => setH(i + 3)} aria-pressed={h === i + 3} style={{ ...hex(d, v), outline: h === i + 3 ? `2px solid ${GREEN}` : "none", outlineOffset: 2 }}>{d}<span style={{ fontSize: 17 }}>{v}</span></button>)}
         </div>
       </div>
-      <p aria-live="polite" style={{ margin: "12px 0 0", textAlign: "center", fontSize: 11.4, color: "#cfe3d6" }}>{h === -1 ? "Cow 0986 — overall state Healthy. Select a hexagon to read a dimension." : `${HEX11[h][0]} ${HEX11[h][1]} — one of the six health dimensions overlaid on the animal in the barn.`}</p>
+      <p aria-live="polite" style={{ margin: "12px 0 0", textAlign: "right", fontSize: 11.4, color: "#cfe3d6", position: "relative" }}>{h === -1 ? "Cow 0986 — overall state Healthy. Select a hexagon to read a dimension." : `${HEX11[h][0]} ${HEX11[h][1]} — one of the six health dimensions overlaid on the animal in the barn.`}</p>
     </div>
   </Mn>;
 }

@@ -13,10 +13,40 @@ const AMBER = "#f5a800";
 const PAPER = "#faf8f5";
 const INK = "#141a21";
 
+/* Pass-3 density retune: the printed slides are tight 16:9 boards, so
+   the shared kit's type/padding is scaled down inside BrewOps slides
+   only (scoped under .bo3; the shared stylesheet is untouched). */
+export const BO3_CSS = `
+.bo3 .tks-head{padding-bottom:5px;font-size:11.5px}
+.bo3 .tks-head b{font-size:14px}
+.bo3 h3{margin:9px 0 4px}
+.bo3 .tks-lede{font-size:13.2px;margin:0 0 10px;line-height:1.4;max-width:none}
+.bo3 .tks-foot{margin-top:10px;padding-top:6px;font-size:9.5px}
+.bo3 .tks-card{padding:9px 11px}
+.bo3 .tks-grid{gap:8px}
+.bo3 .tks-table{font-size:11.8px}
+.bo3 .tks-table th{font-size:10.5px;padding:5px 7px}
+.bo3 .tks-table td{padding:4px 7px}
+.bo3 .tks-table--micro{font-size:11px}
+.bo3 .tks-table--micro th{font-size:9px;padding:4px 5px}
+.bo3 .tks-table--micro td{padding:4px 5px}
+.bo3 .tks-chip{padding:3px 9px;font-size:11.5px}
+.bo3 .tks-tag{font-size:11px;padding:1px 6px}
+.bo3 .tks-btn{padding:5px 12px;font-size:12.5px}
+.bo3 .tks-note{padding:8px 10px}
+.bo3 .tks-node{padding:7px 9px;font-size:11.5px}
+.bo3 .tks-detail{margin-top:8px;padding:6px 2px 0;font-size:11.8px}
+.bo3 .tks-kicker{font-size:10.5px}
+.bo3 .tks-table td{border-right:1px solid rgba(127,127,127,0.16)}
+.bo3 .tks-table td:last-child{border-right:none}
+`;
+const BO3_ROOT: React.CSSProperties = { padding: "16px 20px 10px", fontSize: 12.6, lineHeight: 1.45 };
+
 export function BoX({ n, title, sub, children, label, dark = true, serif = false }: { n: string; title: ReactNode; sub?: string; children: ReactNode; label: string; dark?: boolean; serif?: boolean }) {
-  return <div className={`tks${dark ? " tks--dark" : ""}`} style={dark ? { background: "#0a141f" } : { background: PAPER, color: INK }} role="region" aria-label={label}>
+  return <div className={`tks bo3${dark ? " tks--dark" : ""}`} style={dark ? { background: "#0a141f", ...BO3_ROOT } : { background: PAPER, color: INK, ...BO3_ROOT }} role="region" aria-label={label}>
+    <style>{BO3_CSS}</style>
     <div className="tks-head"><span><b>BrewOps <span style={{ color: AMBER }}>Intelligence</span></b>&nbsp;&nbsp;|&nbsp;&nbsp;{n} of 50</span><span className="tks-brand" style={{ fontSize: 12, color: RED, fontStyle: "italic" }}>Budweiser</span></div>
-    <h3 style={{ fontSize: 40, ...(serif ? { fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: 600 } : {}) }}>{title}</h3>
+    <h3 style={{ fontSize: 26, ...(serif ? { fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: 600 } : {}) }}>{title}</h3>
     {sub ? <p className="tks-lede">{sub}</p> : null}
     {children}
     <div className="tks-foot"><span>BrewOps Intelligence — as printed on the slide</span><span>Data-informed. Human-led. Outcome-driven.</span></div>
@@ -32,26 +62,26 @@ export function Spark({ points, color, w = 74, h = 22 }: { points: string; color
 /* ---------------- Shared hi-fi sidebar (files 31-50) ---------------- */
 const NAV31: Array<[string, string]> = [["⌂", "Control Tower"], ["⌂", "Overview"], ["📈", "Insights"], ["📋", "Investigations"], ["🗄", "Production"], ["📦", "Inventory"], ["⬡", "Logistics"], ["🛡", "Quality"], ["✓", "Approvals"], ["📄", "Reports"], ["⚙", "Settings"]];
 export function Side31({ active = "Control Tower" }: { active?: string }) {
-  return <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 12, padding: "10px 9px", display: "flex", flexDirection: "column", gap: 2, fontSize: 10.5, color: "#3c4652" }}>
-    <div style={{ padding: "0 2px 7px" }}>
-      <div style={{ background: RED, color: "#fff", fontStyle: "italic", fontWeight: 800, fontSize: 12.5, borderRadius: 3, padding: "2px 7px", transform: "skewX(-6deg)", display: "inline-block" }}>Budweiser</div>
-      <div style={{ fontWeight: 800, letterSpacing: "0.14em", fontSize: 10.5, color: INK, marginTop: 6, lineHeight: 1.3 }}>BREWOPS<br />INTELLIGENCE 🌾</div>
+  return <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 12, padding: "8px 7px", display: "flex", flexDirection: "column", gap: 1, fontSize: 9.8, color: "#3c4652" }}>
+    <div style={{ padding: "0 2px 6px" }}>
+      <div style={{ background: RED, color: "#fff", fontStyle: "italic", fontWeight: 800, fontSize: 11, borderRadius: 3, padding: "2px 6px", transform: "skewX(-6deg)", display: "inline-block" }}>Budweiser</div>
+      <div style={{ fontWeight: 800, letterSpacing: "0.13em", fontSize: 9.5, color: INK, marginTop: 5, lineHeight: 1.3 }}>BREWOPS<br />INTELLIGENCE 🌾</div>
     </div>
-    {NAV31.map(([ic, t]) => <span key={t} style={{ display: "flex", gap: 7, alignItems: "center", padding: "4px 7px", borderRadius: 7, background: t === active ? "#fdf3e0" : "transparent", color: t === active ? "#8a5c00" : "#3c4652", fontWeight: t === active ? 700 : 400 }}><span aria-hidden="true" style={{ width: 13, textAlign: "center" }}>{ic}</span>{t}</span>)}
-    <div style={{ border: "1px solid #e7e2d9", borderRadius: 8, padding: "6px 8px", marginTop: 8 }}>
+    {NAV31.map(([ic, t]) => <span key={t} style={{ display: "flex", gap: 6, alignItems: "center", padding: "3px 6px", borderRadius: 7, background: t === active ? "#fdf3e0" : "transparent", color: t === active ? "#8a5c00" : "#3c4652", fontWeight: t === active ? 700 : 400, whiteSpace: "nowrap" }}><span aria-hidden="true" style={{ width: 12, textAlign: "center" }}>{ic}</span>{t}</span>)}
+    <div style={{ border: "1px solid #e7e2d9", borderRadius: 8, padding: "5px 7px", marginTop: 6, lineHeight: 1.45 }}>
       <span style={{ color: "#18a957" }}>●</span> <b style={{ color: INK }}>System Status</b><br /><span style={{ color: "#6b7280" }}>All systems operational</span>
     </div>
-    <div style={{ display: "flex", gap: 7, alignItems: "center", border: "1px solid #e7e2d9", borderRadius: 8, padding: "6px 8px", marginTop: 5 }}>
-      <span style={{ width: 22, height: 22, borderRadius: "50%", background: "#2b2f36", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 700 }}>AR</span>
-      <span><b style={{ color: INK }}>Alex R.</b><br /><span style={{ color: "#6b7280" }}>Supply Chain Ops</span></span><span style={{ marginLeft: "auto" }}>▾</span>
+    <div style={{ display: "flex", gap: 6, alignItems: "center", border: "1px solid #e7e2d9", borderRadius: 8, padding: "5px 7px", marginTop: 4 }}>
+      <span style={{ width: 20, height: 20, borderRadius: "50%", background: "#2b2f36", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 8.5, fontWeight: 700, flex: "none" }}>AR</span>
+      <span style={{ lineHeight: 1.35 }}><b style={{ color: INK }}>Alex R.</b><br /><span style={{ color: "#6b7280" }}>Supply Chain Ops</span></span><span style={{ marginLeft: "auto" }}>▾</span>
     </div>
-    <span style={{ color: "#6b7280", marginTop: 6 }}>‹ Collapse</span>
-    <span style={{ borderTop: "1px solid #e7e2d9", marginTop: 7, paddingTop: 6, color: "#8a8f98", fontSize: 9 }}>BrewOps Intelligence Design System | v1.0 · May 2024</span>
+    <span style={{ color: "#6b7280", marginTop: 5 }}>‹ Collapse</span>
+    <span style={{ borderTop: "1px solid #e7e2d9", marginTop: 6, paddingTop: 5, color: "#8a8f98", fontSize: 8.5, lineHeight: 1.45 }}>BrewOps Intelligence Design System | v1.0 · May 2024</span>
   </div>;
 }
 
 export function HiFi({ active, children }: { active?: string; children: ReactNode }) {
-  return <div style={{ display: "grid", gridTemplateColumns: "150px 1fr", gap: 11, alignItems: "start" }}>
+  return <div style={{ display: "grid", gridTemplateColumns: "118px minmax(0,1fr)", gap: 10, alignItems: "start" }}>
     <Side31 active={active} />
     <div style={{ minWidth: 0 }}>{children}</div>
   </div>;
@@ -75,7 +105,7 @@ const MARKC = ["#f5a800", "#e07b1f", "#2563eb", "#18a957", "#7c4dff"];
 function Marker({ i }: { i: number }) {
   return <span style={{ position: "absolute", top: -8, left: -8, width: 19, height: 19, borderRadius: "50%", background: MARKC[i], color: "#fff", fontWeight: 800, fontSize: 11, display: "inline-flex", alignItems: "center", justifyContent: "center", boxShadow: "0 1px 4px rgba(0,0,0,0.3)", zIndex: 2 }}>{i + 1}</span>;
 }
-const panel: React.CSSProperties = { background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "9px 11px", position: "relative" };
+const panel: React.CSSProperties = { background: "#fff", border: "1px solid #e7e2d9", borderRadius: 11, padding: "7px 9px", position: "relative" };
 const kick: React.CSSProperties = { fontSize: 9.5, fontWeight: 800, letterSpacing: "0.11em", color: "#6b7280", margin: "0 0 6px" };
 
 export function CTDash({ markers = false, compact = false }: { markers?: boolean; compact?: boolean }) {
@@ -92,7 +122,7 @@ export function CTDash({ markers = false, compact = false }: { markers?: boolean
       {markers ? <Marker i={0} /> : null}
       {KPIS_CT.map(([k, v, d, s, c, up], i) => <div key={k} style={panel}>
         <span style={{ color: "#6b7280", fontSize: 9.8 }}>{k}</span>
-        <div style={{ fontSize: 19, fontWeight: 800, margin: "1px 0" }}>{v}</div>
+        <div style={{ fontSize: 17, fontWeight: 800, margin: "1px 0" }}>{v}</div>
         <span style={{ color: up ? "#18a957" : "#e0483e", fontWeight: 700, fontSize: 10 }}>{d}</span> <span style={{ color: "#8a8f98", fontSize: 9.5 }}>{s}</span>
         <Spark points={["0,16 12,13 24,15 36,10 48,12 60,7 74,5", "0,14 12,16 24,11 36,13 48,9 60,11 74,6", "0,15 12,12 24,14 36,10 48,12 60,8 74,6", "0,8 12,11 24,9 36,13 48,11 60,15 74,14", "0,12 12,8 24,14 36,9 48,13 60,10 74,12"][i]} color={c} />
       </div>)}
@@ -101,7 +131,7 @@ export function CTDash({ markers = false, compact = false }: { markers?: boolean
       <div style={panel}>
         <p style={kick}>PRODUCTION TREND <span style={{ float: "right", border: "1px solid #ddd6c9", borderRadius: 5, padding: "0 6px" }}>Daily ▾</span></p>
         <span style={{ fontSize: 9.5, color: "#8a8f98" }}><span style={{ color: "#f5a800" }}>—</span> Actual (HL) · <span style={{ color: "#9aa1ab" }}>- -</span> Target (HL)</span>
-        <svg viewBox="0 0 300 96" width="100%" height="96" role="img" aria-label="Production trend May 10 to 17, actual above target throughout">
+        <svg viewBox="0 0 300 96" width="100%" height="78" role="img" aria-label="Production trend May 10 to 17, actual above target throughout">
           {[16, 40, 64, 88].map((y) => <line key={y} x1="22" y1={y} x2="298" y2={y} stroke="#eee7da" />)}
           <text x="0" y="19" fontSize="7.5" fill="#8a8f98">40K</text><text x="0" y="43" fontSize="7.5" fill="#8a8f98">30K</text><text x="0" y="67" fontSize="7.5" fill="#8a8f98">20K</text><text x="0" y="91" fontSize="7.5" fill="#8a8f98">10K</text>
           <polyline points="26,86 62,76 98,70 134,58 170,62 206,50 242,54 278,38 296,34" fill="none" stroke="#9aa1ab" strokeWidth="1.4" strokeDasharray="4 3" />
@@ -113,8 +143,8 @@ export function CTDash({ markers = false, compact = false }: { markers?: boolean
         {markers ? <Marker i={1} /> : null}
         <p style={kick}>INVENTORY RISK SUMMARY</p>
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-          <span style={{ display: "inline-flex", width: 74, height: 74, borderRadius: "50%", flex: "none", background: "conic-gradient(#e0483e 0deg 43deg, #f59e0b 43deg 151deg, #f7c948 151deg 360deg)", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ width: 50, height: 50, borderRadius: "50%", background: "#fff", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}><b style={{ fontSize: 15, lineHeight: 1 }}>152</b><span style={{ fontSize: 7.5, color: "#6b7280" }}>At Risk SKUs</span></span>
+          <span style={{ display: "inline-flex", width: 64, height: 64, borderRadius: "50%", flex: "none", background: "conic-gradient(#e0483e 0deg 43deg, #f59e0b 43deg 151deg, #f7c948 151deg 360deg)", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ width: 43, height: 43, borderRadius: "50%", background: "#fff", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}><b style={{ fontSize: 13, lineHeight: 1 }}>152</b><span style={{ fontSize: 7, color: "#6b7280" }}>At Risk SKUs</span></span>
           </span>
           <div style={{ fontSize: 10.3, lineHeight: 1.7 }}>
             <span style={{ color: "#e0483e" }}>■</span> High Risk <b>18 (12%)</b><br />
@@ -128,7 +158,7 @@ export function CTDash({ markers = false, compact = false }: { markers?: boolean
     <div style={{ display: "grid", gridTemplateColumns: "0.9fr 1.25fr 1.15fr", gap: 8, marginTop: 8 }}>
       <div style={panel}>
         <p style={kick}>LOGISTICS STATUS <span style={{ float: "right", color: RED }}>View map</span></p>
-        {[["🚚", "Shipments In Transit", "62", "↑ 6 vs prior 7D", "#18a957"], ["📦", "On-Time Delivery", "92.1%", "↑ 2.8%", "#18a957"], ["⏱", "Delayed Shipments", "7", "↓ 2 vs prior 7D", "#e0483e"], ["🔁", "Pending Transfers", "14", "—", "#8a8f98"]].map(([ic, k, v, d, c]) => <p key={k} style={{ margin: "5px 0", display: "flex", gap: 6, alignItems: "baseline" }}><span aria-hidden="true">{ic}</span><span style={{ flex: 1, color: "#3c4652" }}>{k}</span><b>{v}</b><span style={{ color: c, fontSize: 9.3 }}>{d}</span></p>)}
+        {[["🚚", "Shipments In Transit", "62", "↑ 6 vs prior 7D", "#18a957"], ["📦", "On-Time Delivery", "92.1%", "↑ 2.8%", "#18a957"], ["⏱", "Delayed Shipments", "7", "↓ 2 vs prior 7D", "#e0483e"], ["🔁", "Pending Transfers", "14", "—", "#8a8f98"]].map(([ic, k, v, d, c]) => <p key={k} style={{ margin: "5px 0", display: "flex", gap: 6, alignItems: "baseline" }}><span aria-hidden="true">{ic}</span><span style={{ flex: 1, color: "#3c4652" }}>{k}</span><b>{v}</b><span style={{ color: c, fontSize: 9, whiteSpace: "nowrap" }}>{d}</span></p>)}
       </div>
       <div style={panel}>
         {markers ? <Marker i={3} /> : null}
@@ -199,7 +229,7 @@ const PANELS16: Array<{ t: string; time: string; cap: string; body: ReactNode }>
     <p style={{ margin: "5px 0 0", background: "rgba(24,169,87,0.14)", border: "1px solid #18a957", borderRadius: 7, padding: "5px 8px" }}>✓ <b style={{ color: "#4ade80" }}>Status: Approved</b> — Approved by VP of Operations · 8:34 AM</p>
   </> },
   { t: "HANDOFF TO LOGISTICS & EXECUTION LOG", time: "8:45 AM", cap: "The plan is handed off to logistics and operations, and an execution log confirms actions are in motion.", body: <>
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 8 }}>
       <div>
         <p style={{ margin: "0 0 3px" }}><b style={{ color: "#fff" }}>Handoff to Logistics</b></p>
         {[["1", "Expedite inbound from Cartersville", "Arrives May 29 · +4.1 KHL"], ["2", "Reroute Midwest demand to Fairfield", "May 27 – Jun 1 · +3.3 KHL"], ["3", "Prioritize production: 12oz Cans", "May 25 – Jun 1 · +2.2 KHL"]].map(([n2, a, b]) => <p key={n2} style={{ margin: "3px 0", fontSize: 10.3 }}><b style={{ color: "#fff" }}>{n2}. {a}</b><br /><span style={{ color: "#8fa5bd", fontSize: 9.5 }}>{b}</span> <span style={{ color: "#18a957" }}>✓</span></p>)}
@@ -217,23 +247,25 @@ export function BrewOpsStoryboard() {
   const [sel, setSel] = useState(0);
   return <BoX n="16" title="A Planner's Shift: From Alert to Execution" sub="bw-14-shift-storyboard · Hypothesis-Based Proto-Role Storyboard for the BrewOps Supply Planner. Hypothesis: An AI copilot empowers planners to anticipate, decide, and act—faster and with confidence." label="BrewOps planner storyboard — rebuild of Budweiser_16">
     <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 9 }}>
-      {PANELS16.map((p, i) => <button key={p.t} type="button" onClick={() => setSel(i)} aria-pressed={i === sel} style={{ textAlign: "left", background: "#0e1c2c", border: `1.5px solid ${i === sel ? AMBER : "#22344d"}`, borderRadius: 11, padding: "9px 11px", cursor: "pointer", font: "inherit", color: "#c6d2e0" }}>
+      {PANELS16.map((p, i) => <button key={p.t} type="button" onClick={() => setSel(i)} aria-pressed={i === sel} style={{ textAlign: "left", background: "#0e1c2c", border: `1.5px solid ${i === sel ? AMBER : "#22344d"}`, borderRadius: 11, padding: "8px 10px", cursor: "pointer", font: "inherit", color: "#c6d2e0" }}>
         <span style={{ display: "flex", alignItems: "center", gap: 7 }}>
           <span style={{ width: 19, height: 19, borderRadius: "50%", border: "1.5px solid #2F80ED", color: "#7db3f5", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 11, flex: "none" }}>{i + 1}</span>
           <b style={{ color: "#fff", fontSize: 11, letterSpacing: "0.02em", flex: 1 }}>{p.t}</b>
           <span style={{ color: "#8fa5bd", fontSize: 10.5 }}>{p.time}</span>
         </span>
-        <span style={{ display: "block", background: "#0a141f", border: "1px solid #22344d", borderRadius: 8, padding: "7px 9px", margin: "7px 0", fontSize: 10.5, lineHeight: 1.5 }}>{p.body}</span>
+        <span style={{ display: "flex", gap: 7, margin: "7px 0", alignItems: "stretch" }}>
+          <img src={`/projects/crops/brewops/panel-${i + 1}.webp`} alt="" style={{ width: 42, flex: "none", objectFit: "cover", borderRadius: 7, border: "1px solid #22344d" }} />
+          <span style={{ flex: 1, minWidth: 0, display: "block", background: "#0a141f", border: "1px solid #22344d", borderRadius: 8, padding: "7px 9px", fontSize: 10.5, lineHeight: 1.5 }}>{p.body}</span>
+        </span>
         <span style={{ display: "block", fontSize: 10.8, lineHeight: 1.5, color: "#a9bccd" }}>{p.cap}</span>
       </button>)}
     </div>
-    <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1.2fr 1.6fr 0.9fr", gap: 10, border: "1px solid #22344d", borderRadius: 10, padding: "8px 13px", marginTop: 10, fontSize: 10.8 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1.2fr 1.6fr 0.9fr", gap: 10, border: "1px solid #22344d", borderRadius: 10, padding: "7px 11px", marginTop: 9, fontSize: 10.4 }}>
       <span><b style={{ color: "#2F80ED" }}>Proto-Role: Supply Planner</b><br />Mission: Prevent service risk and protect revenue.</span>
       <span><b style={{ color: "#2F80ED" }}>Key Outcome</b><br />Faster decisions, aligned execution, and measurable impact.</span>
       <span><b style={{ color: "#2F80ED" }}>Success Metrics</b><br />Shortfall reduction · Service level lift · Revenue protected · Decision cycle time</span>
       <span><span style={{ color: "#2F80ED" }}>⬢</span> AI-Powered Insight<br /><span style={{ color: AMBER }}>⬢</span> Human Decision</span>
     </div>
-    <p style={{ margin: "7px 0 0", fontSize: 10.5, color: "#8fa5bd" }}>The panels' screen close-ups are dashboard details (photographic monitor shots on the original) — their content is transcribed in each panel; panel {sel + 1} is highlighted.</p>
   </BoX>;
 }
 
@@ -288,7 +320,7 @@ export function BrewOpsAnnotatedShell() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 6 }}>
               {[["Total Production (bbl)", "1.52M", "↑ 8.4% vs prior 7 days", "0,14 10,10 20,12 30,7 40,9 50,5"], ["OEE", "78%", "↓ 3.1pp vs prior 7 days", "0,8 10,13 20,7 30,12 40,8 50,11"], ["Quality Yield", "96.2%", "↑ 1.4pp vs prior 7 days", "0,12 10,9 20,11 30,8 40,10 50,7"], ["Water Usage (bbl)", "3.21M", "↑ 5.7% vs prior 7 days", "0,13 10,10 20,12 30,9 40,11 50,8"]].map(([k, v, d, pts]) => <div key={k} style={{ border: "1px solid #e2e4e8", borderRadius: 8, padding: "6px 8px" }}>
                 <span style={{ fontSize: 9.3, color: "#5b6470" }}>{k}</span><div style={{ fontSize: 15, fontWeight: 800 }}>{v}</div>
-                <span style={{ fontSize: 8.8, color: "#5b6470" }}>{d}</span><Spark points={pts} color="#6b7280" w={50} h={16} />
+                <span style={{ fontSize: 8.8, color: "#5b6470", whiteSpace: "nowrap" }}>{d}</span><Spark points={pts} color="#6b7280" w={50} h={16} />
               </div>)}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 6, marginTop: 6 }}>
@@ -341,7 +373,7 @@ export function BrewOpsAnnotatedShell() {
         {callout(8, CALLOUTS_R[2][0], CALLOUTS_R[2][1], "r")}
       </div>
     </div>
-    <p style={{ margin: "8px 0 0", fontSize: 10.5, color: "#5b6470" }}><span style={{ color: RED, fontStyle: "italic", fontWeight: 800 }}>Budweiser</span> · KING OF BEERS — printed bottom-left; callout {hot} is highlighted.</p>
+    <p style={{ margin: "8px 0 0", fontSize: 10.5, color: "#5b6470" }}><span style={{ color: RED, fontStyle: "italic", fontWeight: 800 }}>Budweiser</span> · KING OF BEERS — printed bottom-left.</p>
   </BoX>;
 }
 
@@ -349,9 +381,9 @@ export function BrewOpsAnnotatedShell() {
 export function BrewOpsCopilotFull() {
   const [evOpen, setEvOpen] = useState(true);
   return <BoX n="32" title="Control Tower" sub="The file-31 Control Tower with the BrewOps Copilot panel open at right — question, observation, inference, recommendation and the action taken." dark={false} label="BrewOps control tower with copilot — rebuild of Budweiser_32">
-    <div style={{ display: "grid", gridTemplateColumns: "150px 1fr 252px", gap: 11, alignItems: "start" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "118px minmax(0,1fr) 238px", gap: 9, alignItems: "start" }}>
       <Side31 active="Control Tower" />
-      <CTDash compact />
+      <div style={{ minWidth: 0 }}><CTDash compact /></div>
       <div style={{ background: "#fff", border: "1px solid #e7e2d9", borderRadius: 12, padding: "10px 12px", fontSize: 10.8, color: INK }}>
         <p style={{ margin: 0, display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 19, height: 19, borderRadius: "50%", background: RED, color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 10 }}>✦</span><b>BrewOps Copilot</b><span style={{ background: "#e8f0fe", color: "#2563eb", borderRadius: 4, padding: "0 5px", fontSize: 8.5, fontWeight: 800 }}>BETA</span><span style={{ marginLeft: "auto", color: "#8a8f98" }}>··· ✕</span></p>
         <p style={{ background: "#f1f2f4", borderRadius: "4px 12px 12px 12px", padding: "7px 10px", margin: "9px 0 6px", lineHeight: 1.5 }}>Why are CO2 levels spiking on Line 3 and what should we do?</p>

@@ -47,12 +47,15 @@ export function TokentaThesisEvolution() {
   const s = THESIS_STAGES[active];
   return <div className="tks tks--dark" role="region" aria-label="Tokenta thesis evolution — interactive rebuild of Tokenta_06">
     <Head n="06." />
-    <h3>Thesis evolution</h3>
-    <p className="tks-lede">From marketplace to evidence-first exchange. Our thesis evolved in three steps. The evidence-first exchange is the end-state—where verification, escrow, settlement, and reputation make liquidity credible.</p>
-    <div className="tks-grid" style={{ gridTemplateColumns: "1fr auto 1fr auto 1.35fr", alignItems: "stretch" }}>
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24 }}>
+      <div><h3>Thesis evolution</h3>
+      <p className="tks-lede" style={{ margin: 0 }}>From marketplace to evidence-first exchange.</p></div>
+      <p style={{ maxWidth: 360, fontSize: 12, lineHeight: 1.5, color: "#b9b9be", margin: "18px 0 0" }}>Our thesis evolved in three steps. The evidence-first exchange is the end-state—where verification, escrow, settlement, and reputation make liquidity credible.</p>
+    </div>
+    <div className="tks-grid" style={{ gridTemplateColumns: "1fr auto 0.88fr auto 1.35fr", alignItems: "stretch", marginTop: 14 }}>
       <button type="button" className={`tks-card${active === 0 ? " is-on" : ""}`} aria-pressed={active === 0} onClick={() => setActive(0)}>
         <span className="tks-num tks-num--light">1</span> <b>API marketplace</b><br /><span style={{ color: "#b9b9be" }}>Discover and connect.</span>
-        <table className="tks-table tks-table--micro" style={{ marginTop: 8 }}><thead><tr><th>Asset</th><th>Type</th><th>Creator</th><th>Price</th></tr></thead>
+        <table className="tks-table tks-table--micro" style={{ marginTop: 8, fontSize: 10.5, whiteSpace: "nowrap" }}><thead><tr><th>Asset</th><th>Type</th><th>Creator</th><th>Price</th></tr></thead>
           <tbody>{[["Credit Score API", "FinData"], ["KYC Verification", "IDLabs"], ["Fraud Signals", "RiskCore"], ["Bank Statement", "OpenBank"]].map(([a, c]) => <tr key={a}><td>{a}</td><td>REST</td><td>{c}</td><td>Free</td></tr>)}</tbody></table>
         <ul style={{ margin: "10px 0 8px", paddingLeft: 16, color: "#c9c9ce", fontSize: 12.5 }}>{THESIS_STAGES[0].bullets.map((b) => <li key={b}>{b}</li>)}</ul>
         <p style={{ margin: 0 }}>{THESIS_STAGES[0].tags.map((t) => <span key={t} className="tks-tag">{t}</span>)}</p>
@@ -71,11 +74,11 @@ export function TokentaThesisEvolution() {
       <button type="button" className={`tks-card${active === 2 ? " is-on" : ""}`} aria-pressed={active === 2} onClick={() => setActive(2)}>
         <span className="tks-num" style={{ background: "#fff", color: "#111" }}>3</span> <b>Evidence-first exchange</b> <span className="tks-chip" style={{ float: "right" }}>✓ Chosen Direction</span><br />
         <span style={{ color: "#b9b9be" }}>Verifiable, escrowed, and settled.</span>
-        <div className="tks-flow" style={{ marginTop: 8 }}>
-          {["Buyer — NeuralWorks · Reputation 92", "Verification — Provenance ✓ Audit ✓ Quality ✓ · Status: pass", "Escrow — 18,500 TKA · Locked", "Settlement — Release + Record · On-chain", "Reputation — Reputation ↑ · History on-chain"].map((t, i, arr) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow">→</span>}<span className="tks-node" style={{ fontSize: 10.5 }}>{t}</span></span>)}
+        <div className="tks-flow" style={{ marginTop: 8, flexWrap: "nowrap", gap: 4 }}>
+          {["Buyer — NeuralWorks · Rep 92", "Verification — Pass ✓", "Escrow — 18,500 TKA · Locked", "Settlement — On-chain", "Reputation — ↑ On-chain"].map((t, i, arr) => <span key={t} style={{ display: "contents" }}>{i > 0 && <span className="tks-arrow" style={{ fontSize: 13 }}>→</span>}<span className="tks-node" style={{ fontSize: 9.5, padding: 6, flex: "1 1 0" }}>{t}</span></span>)}
         </div>
         <p style={{ margin: "8px 0 0", border: "1px dashed #3a3b3f", borderRadius: 6, padding: "5px 8px", textAlign: "center" }}>Immutable audit trail</p>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 14px", marginTop: 10, fontSize: 12.5, color: "#c9c9ce" }}>{THESIS_STAGES[2].bullets.map((b) => <span key={b}>{b}</span>)}</div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 14px", marginTop: 10, fontSize: 11.5, color: "#c9c9ce" }}>{THESIS_STAGES[2].bullets.map((b) => <span key={b}>{b}</span>)}</div>
         <p style={{ margin: "10px 0 0", borderTop: "1px solid #2c2d30", paddingTop: 8, fontSize: 13 }}><b>Stronger together:</b> verification, escrow, settlement, and reputation make liquidity credible and networks compounding.</p>
       </button>
     </div>
