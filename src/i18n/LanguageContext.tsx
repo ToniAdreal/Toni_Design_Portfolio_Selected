@@ -235,8 +235,18 @@ class DomTranslator {
 const translator = new DomTranslator();
 
 function readInitialLang(): Language {
+  // Pass 12: language choice is session-scoped. A fresh visit always starts
+  // in English; the toggle applies for the rest of the browsing session
+  // (sessionStorage survives in-session navigation, dies with the tab).
+  // The legacy localStorage key is ignored and removed so a stale stored
+  // "zh" from earlier passes can never leak into the new behaviour.
   try {
-    return window.localStorage.getItem(STORAGE_KEY) === "zh" ? "zh" : "en";
+    window.localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* ignore */
+  }
+  try {
+    return window.sessionStorage.getItem(STORAGE_KEY) === "zh" ? "zh" : "en";
   } catch {
     return "en";
   }
@@ -256,7 +266,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      window.localStorage.setItem(STORAGE_KEY, lang);
+      window.sessionStorage.setItem(STORAGE_KEY, lang);
     } catch {
       /* private mode — language simply will not persist */
     }

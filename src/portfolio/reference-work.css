@@ -102,3 +102,8 @@
 @media (prefers-reduced-motion: reduce) {
   .ref-work-page *, .ref-work-page *::before, .ref-work-page *::after { transition-duration: .001ms !important; animation-duration: .001ms !important; }
 }
+
+/* Pass 12 — zh work-index heading: Noto Sans SC at weight 400 reads lighter
+   than the EN Arial 400 at this size; step up one weight and relax the
+   Latin-tight tracking for CJK. Scoped to zh-CN; EN unchanged. */
+html[lang="zh-CN"] .ref-work-heading { font-weight: 500; letter-spacing: -.03em; }

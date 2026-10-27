@@ -53,3 +53,27 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
  .reference-coordinate-readout{left:7%;bottom:235px;font-size:9px}.reference-work-link{font-size:24px}.reference-chapter-links{gap:14px;font-size:10px;margin-top:25px}.reference-corner{display:none}
 }
 @media(prefers-reduced-motion:reduce){.reference-word-strip{animation:none}.reference-work-link>span:last-child,.reference-bottom-line button span{transition:none}}
+
+/* Pass 12 — Chinese hero parity (scoped to zh-CN; English stays identical).
+   EN hero words vary in width (Proof/Design/Signal/Build/System = 5/6/6/5/6
+   letters) at one size, which gives the composition its rhythm. ZH words are
+   uniform 2-glyph blocks, so at the EN size they read as small, evenly
+   weighted squares floating in space. Rebalance per slot: larger sizes in
+   the EN width order (System widest, then Design, Signal, Proof, Build),
+   a real weight hierarchy (black/blue 700, gray 500 to mirror EN's gray
+   word sitting lighter), and near-zero tracking (CJK needs no Latin-style
+   tightening). Slot positions are unchanged except word-3 nudged 0.9% down
+   so its bigger box cannot collide with word-1 at short viewports. */
+html[lang="zh-CN"] .reference-word{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;font-weight:700;letter-spacing:-.01em}
+html[lang="zh-CN"] .reference-word-0{font-size:clamp(80px,10.6vw,205px)}
+html[lang="zh-CN"] .reference-word-1{font-size:clamp(88px,11.4vw,220px)}
+html[lang="zh-CN"] .reference-word-2{font-size:clamp(85px,11vw,212px)}
+html[lang="zh-CN"] .reference-word-3{font-size:clamp(82px,10.9vw,210px);top:50.2%}
+html[lang="zh-CN"] .reference-word-4{font-size:clamp(92px,11.9vw,230px);font-weight:500}
+html[lang="zh-CN"] .reference-manifesto{letter-spacing:-.02em}
+@media(max-width:767px){
+ html[lang="zh-CN"] .reference-word{font-size:clamp(58px,16.8vw,118px)}
+ html[lang="zh-CN"] .reference-word-1{font-size:clamp(64px,18.4vw,128px)}
+ html[lang="zh-CN"] .reference-word-3{top:65%}
+ html[lang="zh-CN"] .reference-word-4{font-size:clamp(62px,17.8vw,124px)}
+}
