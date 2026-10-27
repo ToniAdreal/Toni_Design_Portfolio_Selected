@@ -79,11 +79,12 @@ function Chapter({ chapter, index, onEnter, projectSlug }: { chapter: CaseChapte
       {chapter.images.map((image, imageIndex) => {
         // Interactive V2: every known case-study screen renders as real
         // components (bespoke rebuild or shared KitScreen) instead of the
-        // printed image. Captions/rationale are unchanged.
+        // printed image. Pass 11: the under-slide caption/rationale strip
+        // was removed site-wide on the user's instruction — the data
+        // fields remain but no longer render under the slides.
         const interactive = interactiveFor(projectSlug, chapter, image, imageIndex);
         return <figure className="ref-case-gallery-item" key={image.src}>
           <div className="ref-case-image-mask">{interactive ?? <img src={image.src} alt={image.alt} loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"} decoding="async" />}</div>
-          <figcaption><span>{image.caption}</span><span>{image.rationale}</span></figcaption>
         </figure>;
       })}
     </div>}
