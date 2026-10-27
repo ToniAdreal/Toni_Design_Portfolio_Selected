@@ -64,13 +64,23 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
    word sitting lighter), and near-zero tracking (CJK needs no Latin-style
    tightening). Slot positions are unchanged except word-3 nudged 0.9% down
    so its bigger box cannot collide with word-1 at short viewports. */
-html[lang="zh-CN"] .reference-word{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;font-weight:700;letter-spacing:-.01em}
+/* Pass 13 — the user found Noto Sans SC 700 still read as ordinary UI
+   bold next to the EN Poppins hero ("font doesn't match the site").
+   Three faces were captured full-viewport and judged against the EN
+   hero (qa/pass13-): Noto Serif SC 900 reads editorial/newspaper —
+   a different site; ZCOOL QingKe HuangYou's true letterforms (verified
+   from the font file) are rounded and playful, and it silently fell
+   back in captures. Winner: Noto Sans SC 900 (Black) — the same heavy
+   grotesque register as the EN hero, with real display mass; tracking
+   tightened to -.02em. The gray word keeps one step down (700) for
+   the pass-12 weight hierarchy. Manifesto shares the display face. */
+html[lang="zh-CN"] .reference-word{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;font-weight:900;letter-spacing:-.02em}
 html[lang="zh-CN"] .reference-word-0{font-size:clamp(80px,10.6vw,205px)}
 html[lang="zh-CN"] .reference-word-1{font-size:clamp(88px,11.4vw,220px)}
 html[lang="zh-CN"] .reference-word-2{font-size:clamp(85px,11vw,212px)}
 html[lang="zh-CN"] .reference-word-3{font-size:clamp(82px,10.9vw,210px);top:50.2%}
-html[lang="zh-CN"] .reference-word-4{font-size:clamp(92px,11.9vw,230px);font-weight:500}
-html[lang="zh-CN"] .reference-manifesto{letter-spacing:-.02em}
+html[lang="zh-CN"] .reference-word-4{font-size:clamp(92px,11.9vw,230px);font-weight:700}
+html[lang="zh-CN"] .reference-manifesto{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;font-weight:900;letter-spacing:-.02em}
 @media(max-width:767px){
  html[lang="zh-CN"] .reference-word{font-size:clamp(58px,16.8vw,118px)}
  html[lang="zh-CN"] .reference-word-1{font-size:clamp(64px,18.4vw,128px)}
