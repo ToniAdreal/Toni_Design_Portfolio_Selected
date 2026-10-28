@@ -6,7 +6,7 @@
   min-height: 100%;
   background: #fff;
   color: var(--work-ink);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", Helvetica, sans-serif;
 }
 
 .ref-work-page * { box-sizing: border-box; }
@@ -102,3 +102,11 @@
 @media (prefers-reduced-motion: reduce) {
   .ref-work-page *, .ref-work-page *::before, .ref-work-page *::after { transition-duration: .001ms !important; animation-duration: .001ms !important; }
 }
+
+/* Pass 12 — zh work-index heading: Noto Sans SC at weight 400 reads lighter
+   than the EN Arial 400 at this size; step up one weight and relax the
+   Latin-tight tracking for CJK. Scoped to zh-CN; EN unchanged.
+   Pass 13 — the heading takes the hero's winning display face
+   (Noto Sans SC 900, see reference-journey.css) so the two giant
+   zh titles share one voice; tracking stays -.03em. */
+html[lang="zh-CN"] .ref-work-heading { font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; font-weight: 900; letter-spacing: -.03em; }

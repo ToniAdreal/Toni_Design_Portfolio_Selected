@@ -29,30 +29,30 @@ export const tokenta: Project = {
         },
         {
           file: 'Tokenta_02.png',
-          title: 'Ecosystem Architecture Overview',
-          caption: 'A high-level visual representation of the asset lifecycle from creation to settlement. This infographic simplifies the complex decentralized infrastructure into digestible flows.',
-          rationale: 'Translating complex on-chain mechanics into clear visual metaphors accelerates user comprehension and trust.',
+          title: 'Solo Ownership',
+          caption: 'Solo ownership across ten disciplines — the full Tokenta product carried by one designer, end to end.',
+          rationale: 'Establishing individual ownership and range before the product detail begins.',
           tags: ['Infographic', 'System Architecture']
         },
         {
           file: 'Tokenta_03.png',
-          title: 'Value Proposition Dashboard',
-          caption: 'The primary dashboard view highlighting platform statistics, current liquidity, and active verifications. The layout prioritizes macro-level metrics before driving users into specific asset categories.',
-          rationale: 'Displaying aggregate platform health and activity reinforces the network effect and encourages user participation.',
+          title: 'The Fragmented Market',
+          caption: 'The fragmented market the platform answers: seven printed artifacts from the pre-platform workflow, including Pricing_Terms_v3.xlsx and Invoice #INV-2025-0412.',
+          rationale: 'Grounding the product in the messy artifacts it replaces.',
           tags: ['Dashboard', 'Data Visualization']
         },
         {
           file: 'Tokenta_04.png',
-          title: 'Core Modalities Navigation',
-          caption: 'The navigation system specifically tailored for filtering Models, Datasets, and Agents. The UI employs distinct iconography and color coding to differentiate these primary asset classes.',
-          rationale: 'Clear delineation of asset types prevents cognitive overload when browsing heterogeneous technical components.',
+          title: 'Risk Map',
+          caption: 'The risk map: five printed risks for a marketplace in AI assets, each with its designed response.',
+          rationale: 'Naming the risks early so the trust design can answer them directly.',
           tags: ['Navigation', 'Taxonomy']
         },
         {
           file: 'Tokenta_05.png',
-          title: 'Trust & Verification Badging',
-          caption: 'An overview of the platform\'s trust indicators, showing how verification status is communicated across different components. These badges serve as the fundamental unit of trust on the exchange.',
-          rationale: 'Consistent, universally recognizable trust indicators are crucial for reducing friction in high-value asset transactions.',
+          title: 'The Closed Trust Loop',
+          caption: 'The closed trust loop — a five-node cycle in which verification, escrow, and reputation reinforce each other.',
+          rationale: 'Showing trust as a system loop rather than a single feature.',
           tags: ['UI Components', 'Trust Design']
         }
       ]
@@ -64,37 +64,37 @@ export const tokenta: Project = {
       images: [
         {
           file: 'Tokenta_06.png',
-          title: 'Asset Marketplace Grid',
-          caption: 'The primary discovery interface featuring dense but scannable asset cards. Each card surfaces critical metadata including performance metrics, verification status, and pricing.',
-          rationale: 'Optimizing information density allows professional buyers to evaluate multiple assets simultaneously without losing crucial context.',
+          title: 'Thesis Evolution',
+          caption: 'How the product thesis evolved — the position the rest of the case study defends.',
+          rationale: 'Making the design argument explicit before showing screens.',
           tags: ['Marketplace', 'Card Design']
         },
         {
           file: 'Tokenta_07.png',
-          title: 'Advanced Filtering Interface',
-          caption: 'A robust sidebar filtration system allowing users to drill down by modality, parameter count, license type, and attestation level. The interface supports complex multi-variable queries.',
-          rationale: 'Technical buyers require granular control over their search parameters to find precise fits for their specialized use cases.',
+          title: 'Product Principles',
+          caption: 'The product principles that governed every Tokenta design decision.',
+          rationale: 'Principles as decision tools, not decoration.',
           tags: ['Search', 'Filtering']
         },
         {
           file: 'Tokenta_08.png',
-          title: 'Model Detail Page',
-          caption: 'The comprehensive view for a specific AI model, featuring performance benchmarks, hardware requirements, and the full verification trail. The layout separates technical specs from commercial terms.',
-          rationale: 'Segregating technical evaluation from commercial negotiation streamlines the distinct phases of the buyer journey.',
+          title: 'Scope Boundary',
+          caption: 'The scope boundary: what Tokenta covers, and what it deliberately leaves out.',
+          rationale: 'A clear boundary keeps a trust product credible.',
           tags: ['Detail View', 'Information Architecture']
         },
         {
           file: 'Tokenta_09.png',
-          title: 'Dataset Exploration View',
-          caption: 'A specialized interface for evaluating datasets, including data schema previews, distribution metrics, and provenance tracking. Visual summaries help users gauge data quality quickly.',
-          rationale: 'Evaluating data requires different affordances than evaluating code; providing schema previews builds confidence prior to purchase.',
+          title: 'User Roles',
+          caption: 'The user roles on the platform — buyers, sellers, and verifiers — and what each one is trusted to do.',
+          rationale: 'Role clarity is the foundation of the permission model.',
           tags: ['Data Viz', 'Preview Interface']
         },
         {
           file: 'Tokenta_10.png',
-          title: 'Agent Capability Matrix',
-          caption: 'The profile view for autonomous agents, highlighting their API integrations, permission scopes, and execution history. The design emphasizes security boundaries and operational limits.',
-          rationale: 'When purchasing autonomous capabilities, understanding security perimeters is the user\'s primary concern.',
+          title: 'Object Model',
+          caption: 'The object model: the platform’s core entities and how they relate.',
+          rationale: 'A shared object model keeps marketplace, verification, and escrow consistent.',
           tags: ['Security UI', 'Profile Design']
         }
       ]
@@ -106,37 +106,37 @@ export const tokenta: Project = {
       images: [
         {
           file: 'Tokenta_11.png',
-          title: 'Verification Pipeline Overview',
-          caption: 'The 5-stage attestation pipeline interface, showing an asset moving through Provenance, Audit, Probe, Quorum, and Listing phases. The stepper provides clear visibility into current status.',
-          rationale: 'Transparent progress tracking through complex asynchronous processes reduces user anxiety and support overhead.',
+          title: 'Trust Architecture',
+          caption: 'The trust architecture — how provenance, audit, and attestation are layered into the platform.',
+          rationale: 'Architecture first: trust is structural, not a badge.',
           tags: ['Stepper', 'Process Flow']
         },
         {
           file: 'Tokenta_12.png',
-          title: 'Provenance Tracking Interface',
-          caption: 'The cryptographic provenance view detailing the origin and chain of custody for a dataset or model. The UI visualizes the cryptographic signatures tying the asset to its creators.',
-          rationale: 'Visualizing cryptographic proof transforms abstract blockchain concepts into tangible guarantees of authenticity.',
+          title: 'End-to-End Service Blueprint',
+          caption: 'The end-to-end service blueprint, from listing an asset to settled payment.',
+          rationale: 'Blueprinting the whole service exposes the handoffs where trust breaks.',
           tags: ['Provenance', 'Cryptography']
         },
         {
           file: 'Tokenta_13.png',
-          title: 'Security Audit & Probing Results',
-          caption: 'The detailed report view for automated security probes and manual audits. Vulnerability scores and structural integrity metrics are presented with clear severity indicators.',
-          rationale: 'Standardized security reporting formats allow technical teams to rapidly assess risk without parsing heterogeneous audit documents.',
+          title: 'Route Map',
+          caption: 'The route map of the product surface — how the main journeys connect.',
+          rationale: 'A route-level view keeps deep product structure navigable.',
           tags: ['Security', 'Reporting']
         },
         {
           file: 'Tokenta_14.png',
-          title: 'Attestor Quorum Dashboard',
-          caption: 'The decentralized consensus interface showing the 5/7 attestor quorum in action. The view displays individual attestor nodes, their stakes, and their current voting status.',
-          rationale: 'Exposing the mechanics of decentralized consensus reinforces the platform\'s core value proposition of trustless verification.',
+          title: 'Navigation Priorities',
+          caption: 'Navigation priorities, demonstrated live: header, mobile menu, breadcrumb, and table-of-contents patterns.',
+          rationale: 'Priority order in navigation is a trust decision as much as a usability one.',
           tags: ['Consensus', 'Node Monitoring']
         },
         {
           file: 'Tokenta_15.png',
-          title: 'Final Listing Authorization',
-          caption: 'The culminating step where verified assets are minted and listed. The interface summarizes all attestations and requires a final cryptographic signature from the asset owner.',
-          rationale: 'A clear, definitive finalization step ensures users understand they are committing an immutable record to the ledger.',
+          title: 'Content Template System',
+          caption: 'Five reusable page templates — Product, Developer, Institutional, Career, and Legal detail — created breadth without turning the site into one-off pages.',
+          rationale: 'Templates scale a content-heavy trust platform without diluting it.',
           tags: ['Transaction', 'Confirmation']
         }
       ]
@@ -148,37 +148,37 @@ export const tokenta: Project = {
       images: [
         {
           file: 'Tokenta_16.png',
-          title: 'Active Order Room',
-          caption: 'The centralized hub for negotiating a specific asset transfer. The split-pane design places communication on one side and structured deal terms on the other.',
-          rationale: 'Combining unstructured chat with structured parameter negotiation prevents miscommunication during complex commercial agreements.',
-          tags: ['Communication', 'Layout']
+          title: 'Visual Inspiration',
+          caption: 'Five reference panels — institutional terminals, audit logs, code consoles, market-data grids, regulatory documents — tagged density, precision, explicit states, traceability, legibility. References are directional, not copied.',
+          rationale: 'The design language borrows the rigor of institutional systems rather than the spectacle of typical crypto marketing.',
+          tags: ['Design Language', 'References']
         },
         {
           file: 'Tokenta_17.png',
-          title: 'Term Sheet Builder',
-          caption: 'The interactive interface for defining licensing terms, usage limits, and payment schedules. The component translates legal and technical constraints into smart contract parameters.',
-          rationale: 'Abstracting smart contract logic into a familiar term sheet format bridges the gap between legal intent and on-chain execution.',
-          tags: ['Forms', 'Smart Contracts']
+          title: 'Wireframe Wall',
+          caption: 'Six wireframe screens — Dashboard, Marketplace, Asset detail, Order Room, Escrow, Analytics — resolved through hierarchy before final styling, over five design questions: density, navigation, comparison, state legibility, responsive prioritization. (Slide header as printed: 20.)',
+          rationale: 'Dense institutional screens were resolved through hierarchy before final styling.',
+          tags: ['Wireframes', 'Process']
         },
         {
           file: 'Tokenta_18.png',
-          title: 'Counter-Offer Workflow',
-          caption: 'The differential view highlighting proposed changes in a counter-offer. The UI uses standard diff paradigms to show modifications to price, scope, or duration clearly.',
-          rationale: 'Applying developer-familiar diff patterns to commercial terms minimizes the risk of overlooked modifications during rapid negotiation.',
+          title: 'Brand Foundations',
+          caption: 'Brand foundations as printed for the Tokenta identity: palette, type, spacing, and state chips.',
+          rationale: 'Identity grounded in the same restraint as the product UI.',
           tags: ['Diff View', 'Workflow']
         },
         {
           file: 'Tokenta_19.png',
-          title: 'Multi-party Signature Flow',
-          caption: 'The coordinated signing experience requiring authorization from multiple stakeholders. The interface tracks pending signatures and provides context for the required cryptographic actions.',
-          rationale: 'Enterprise transactions often require multi-sig approval; coordinating this asynchronously demands clear status visibility for all parties.',
+          title: 'Data as Decoration',
+          caption: 'Before/after: data as decoration versus data as evidence — with the 359-asset marketplace table the claim rests on.',
+          rationale: 'A trust platform cannot decorate with the data it asks users to rely on.',
           tags: ['Multi-sig', 'Coordination']
         },
         {
           file: 'Tokenta_20.png',
-          title: 'Agreement Finalization State',
-          caption: 'The success state confirming that terms have been locked and the smart contract deployed. The design emphasizes finality and provides immediate next steps for the escrow phase.',
-          rationale: 'Strong visual confirmation of agreement finality provides necessary closure before transitioning to the capital-intensive escrow phase.',
+          title: 'Design Tokens',
+          caption: 'Design tokens with live previews — colour, type, spacing, radius, and motion values.',
+          rationale: 'Tokens make the system’s restraint repeatable.',
           tags: ['Success State', 'Transition']
         }
       ]
@@ -190,37 +190,37 @@ export const tokenta: Project = {
       images: [
         {
           file: 'Tokenta_21.png',
-          title: 'Design Token Architecture',
-          caption: 'An overview of the semantic design tokens powering the platform. The visualization demonstrates how core values map to component-specific implementations.',
-          rationale: 'A robust token architecture is essential for maintaining consistency across a dense, data-heavy application while supporting future theming.',
+          title: 'Density Study',
+          caption: 'A density study: how much information a Tokenta screen can carry before it stops being trustworthy.',
+          rationale: 'Density is a deliberate variable in data-heavy trust interfaces.',
           tags: ['Design Tokens', 'Architecture']
         },
         {
           file: 'Tokenta_22.png',
-          title: 'Typography & Layout Grids',
-          caption: 'The structural foundation of the platform, showing the modular scale and spatial system. The dense 4px grid supports the high information density required by technical users.',
-          rationale: 'Rigorous spatial systems are the invisible framework that makes complex, data-dense interfaces feel organized rather than overwhelming.',
+          title: 'Verification: Six Stages',
+          caption: 'The six stages of verification an asset passes through before it can be listed.',
+          rationale: 'Staging verification makes an opaque process inspectable.',
           tags: ['Grid', 'Typography']
         },
         {
           file: 'Tokenta_23.png',
-          title: 'Component Library: Data Display',
-          caption: 'A selection of the core data visualization and display components, including tables, graphs, and metric cards. The components are designed for maximum legibility.',
-          rationale: 'Standardizing data display patterns reduces cognitive load, allowing users to focus on the data itself rather than how to read it.',
+          title: 'Component Library',
+          caption: 'The component library as printed — the shared parts the product screens are assembled from.',
+          rationale: 'A library view proves the system, not just the screens.',
           tags: ['Components', 'Data Design']
         },
         {
           file: 'Tokenta_24.png',
-          title: 'Component Library: Interaction',
-          caption: 'The interactive elements of the system, showcasing form controls, state buttons, and complex input mechanisms. The system prioritizes clear affordances and feedback states.',
-          rationale: 'Unambiguous interaction patterns are critical in Web3 interfaces where actions often involve financial commitment.',
+          title: 'Responsive Grid',
+          caption: 'The responsive grid, with a live breakpoint switcher showing how Tokenta layouts adapt.',
+          rationale: 'Trust surfaces must survive every viewport, not just the demo size.',
           tags: ['Interactive', 'Forms']
         },
         {
           file: 'Tokenta_25.png',
-          title: 'Dark Mode Implementation',
-          caption: 'The platform rendered in its dark theme, utilizing a specific palette designed to reduce eye strain during extended analytical sessions. The contrast ratios are carefully calibrated for data visualization.',
-          rationale: 'Technical users often prefer dark modes for deep work; achieving the right contrast ensures data remains legible without harsh glare.',
+          title: 'Homepage Hero',
+          caption: 'The homepage hero, with its working terminal and verify interaction.',
+          rationale: 'The hero demonstrates the product promise instead of only stating it.',
           tags: ['Theming', 'Accessibility']
         }
       ]
@@ -232,37 +232,37 @@ export const tokenta: Project = {
       images: [
         {
           file: 'Tokenta_26.png',
-          title: 'Escrow Funding Interface',
-          caption: 'The secure portal for depositing funds into the transaction smart contract. The interface details the exact token amounts, network fees, and current blockchain congestion.',
-          rationale: 'Absolute clarity around financial commitments and network conditions is necessary to prevent user error during large capital movements.',
+          title: 'Terminal Overview',
+          caption: 'The terminal overview: market tabs, chart ranges, order book, and execution log.',
+          rationale: 'Power users judge a trust platform by its terminal.',
           tags: ['Escrow', 'Web3 Finance']
         },
         {
           file: 'Tokenta_27.png',
-          title: 'Asset Delivery & Decryption',
-          caption: 'The secure handover process where the buyer receives and decrypts the purchased AI asset. The UI guides the user through the cryptographic key exchange.',
-          rationale: 'Abstracting the complexity of secure key exchange into a guided flow ensures successful asset delivery regardless of user technical expertise.',
+          title: 'Homepage Storyline',
+          caption: 'The homepage storyline — the order in which the public site makes its argument.',
+          rationale: 'Sequence is persuasion: proof before promise.',
           tags: ['Decryption', 'Asset Delivery']
         },
         {
           file: 'Tokenta_28.png',
-          title: 'Settlement Confirmation',
-          caption: 'The final settlement screen showing the release of escrowed funds to the seller upon verified delivery. The immutable transaction receipt is prominently displayed.',
-          rationale: 'The transaction receipt serves as the ultimate proof of outcome, providing finality and a permanent record for institutional accounting.',
+          title: 'Marketplace Grid',
+          caption: 'The real marketplace grid: 612 assets with working type and capability filters and sorting.',
+          rationale: 'Discovery at catalogue scale is where verification metadata earns its place.',
           tags: ['Settlement', 'Receipt']
         },
         {
           file: 'Tokenta_29.png',
-          title: 'Dispute Resolution Center',
-          caption: 'The interface for handling exceptions or failed deliveries. It surfaces the arbitration parameters defined during negotiation and provides tools for evidence submission.',
-          rationale: 'Designing for failure states gracefully is paramount in decentralized systems where traditional customer support channels are replaced by arbitration protocols.',
+          title: 'Buyer & Seller Views',
+          caption: 'Buyer and seller views as printed — tabulated asset views for both sides of the market. (The printed tables show real-estate assets, an inconsistency in the source deck, kept as printed.)',
+          rationale: 'Two-sided views keep both parties working from the same record.',
           tags: ['Arbitration', 'Edge Cases']
         },
         {
           file: 'Tokenta_30.png',
-          title: 'Portfolio & Asset Management',
-          caption: 'The user\'s post-purchase inventory, showing acquired models, datasets, and agents. The dashboard tracks usage limits, license expirations, and integration status.',
-          rationale: 'A comprehensive management interface transforms the platform from a simple marketplace into an ongoing operational tool for AI teams.',
+          title: 'Search Query Builder',
+          caption: 'A working search query builder — removable rules and chips with a live results preview.',
+          rationale: 'Structured search beats keyword hope for technical assets.',
           tags: ['Inventory', 'Management']
         }
       ]

@@ -1,0 +1,36 @@
+/* ALLWEB3 bespoke chapters — scoped overrides on top of the shared
+   .tks slide kit (tokenta-slides.css). The ALLWEB3 deck language as
+   printed: near-black green-tinted surfaces, cyber-green (#00FF00)
+   actions and accents. Everything is scoped under .tks.aw3 so no
+   other project's slides are affected. */
+
+.tks.aw3 { background: #050805; border-color: #1d2b1d; }
+.tks.aw3 .tks-head { border-bottom-color: #00ff00; }
+.tks.aw3 .tks-lede { color: #b9d9b9; }
+.tks.aw3 .tks-card { background: #0a120a; border-color: #223522; color: #e8f5e8; }
+.tks.aw3 .tks-card.is-on { border-color: #00ff00; box-shadow: 0 0 0 1px #00ff00; }
+.tks.aw3 .tks-chip { background: #0a120a; border-color: #2c4a2c; color: #e8f5e8; }
+.tks.aw3 .tks-chip[aria-pressed="true"] { background: #00ff00; color: #021202; border-color: #00ff00; font-weight: 700; }
+.tks.aw3 .tks-btn { background: #00ff00; color: #021202; border-color: #00ff00; font-weight: 700; }
+.tks.aw3 .tks-btn--ghost { background: transparent; color: #d9f7d9; border-color: #3d6b3d; }
+.tks.aw3 .tks-node { background: #0a120a; border-color: #223522; color: #e8f5e8; }
+.tks.aw3 .tks-node[aria-pressed="true"] { border-color: #00ff00; box-shadow: 0 0 0 1px #00ff00; }
+.tks.aw3 .tks-detail { background: #0a120a; border-color: #2c4a2c; }
+.tks.aw3 .tks-table { background: #0a120a; color: #e8f5e8; }
+.tks.aw3 .tks-table th { color: #8fbf8f; border-bottom-color: #223522; }
+.tks.aw3 .tks-table td { border-bottom-color: #182818; }
+.tks.aw3 .tks-kicker { color: #86d986; }
+.tks.aw3 .tks-foot { border-top-color: #223522; color: #8fbf8f; }
+.tks.aw3 .tks-tag { background: #0f1c0f; border-color: #2c4a2c; color: #d9f7d9; }
+.tks.aw3 .tks-num { background: #00ff00; color: #021202; }
+.tks.aw3 .tks-num--light { background: transparent; color: #00ff00; border-color: #00ff00; }
+.tks.aw3 input[type="range"] { accent-color: #00ff00; }
+
+.aw3-input, .aw3-select, .aw3-area {
+  background: #0a120a; border: 1px solid #2c4a2c; color: #eaffea;
+  border-radius: 6px; padding: 6px 8px; font: inherit; width: 100%;
+}
+.aw3-bar { background: #1a2b1a; height: 8px; border-radius: 4px; overflow: hidden; }
+.aw3-bar > div { background: #00ff00; height: 100%; }
+.aw3-green { color: #00ff00; }
+.aw3-dim { color: #a9c9a9; }
